@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import mango_bg from "../../../public/mango_bg.jpg";
 
 // Material UI Icons
@@ -48,6 +49,8 @@ function page() {
           </div>
           <button className="btn">Login</button>
         </form>
+
+        <div className='w-[100%] mt-5'>Don't have an account? <Link href="/register"><span className='text-green-600 font-bold'>Sign up.</span></Link></div>
       </div>
     </div>
   );
