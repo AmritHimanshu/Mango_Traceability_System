@@ -1,11 +1,5 @@
 import type { Metadata } from "next";
-import { Funnel_Display } from "next/font/google";
 import "../../styles/style.css"
-
-const rubik = Funnel_Display({
-  variable: "--font-rubik-vinyl",
-  // subsets: ["serif"],
-});
 
 export const metadata: Metadata = {
   title: "Login - Mango Traceability System",
