@@ -10,7 +10,22 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function page() {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
-  const [isVisibleConfirmPassword, setIsVisibleConfirmPassword] = useState(false);
+  const [isVisibleConfirmPassword, setIsVisibleConfirmPassword] =
+    useState(false);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirm_password: "",
+  });
+
+  const handleFormState = (e: any) => {
+    let name = e.target.name;
+    let value = e.target.value;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   return (
     <div
@@ -21,7 +36,14 @@ function page() {
         <form action="" className="space-y-5">
           <div className="flex items-start flex-col">
             <label htmlFor="name">Name</label>
-            <input type="text" id="name" className="input-tag" placeholder="John Doe" />
+            <input
+              type="text"
+              id="name"
+              name="name"
+              className="input-tag"
+              placeholder="John Doe"
+              onChange={(e) => handleFormState(e)}
+            />
           </div>
 
           <div className="flex items-start flex-col">
@@ -29,14 +51,23 @@ function page() {
             <input
               type="text"
               id="email"
+              name="email"
               className="input-tag"
               placeholder="John@xyz.com"
+              onChange={(e) => handleFormState(e)}
             />
           </div>
 
           <div>
             <label htmlFor="phone">Phone Number</label>
-            <input type="tel" id="phone" className="input-tag" placeholder="+91 9876543210" />
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              className="input-tag"
+              placeholder="+91 9876543210"
+              onChange={(e) => handleFormState(e)}
+            />
           </div>
 
           <div className="flex items-start flex-col">
@@ -45,8 +76,10 @@ function page() {
               <input
                 type={`${isVisiblePassword ? "text" : "password"}`}
                 id="password"
+                name="password"
                 className="outline-none w-full bg-transparent"
                 placeholder="Enter your password"
+                onChange={(e) => handleFormState(e)}
               />
               {isVisiblePassword ? (
                 <VisibilityIcon
@@ -66,16 +99,22 @@ function page() {
               <input
                 type={`${isVisibleConfirmPassword ? "text" : "password"}`}
                 id="cpassword"
+                name="confirm_password"
                 className="outline-none w-full bg-transparent"
                 placeholder="Confirm your password"
+                onChange={(e) => handleFormState(e)}
               />
               {isVisibleConfirmPassword ? (
                 <VisibilityIcon
-                  onClick={() => setIsVisibleConfirmPassword(!isVisibleConfirmPassword)}
+                  onClick={() =>
+                    setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
+                  }
                 />
               ) : (
                 <VisibilityOffIcon
-                  onClick={() => setIsVisibleConfirmPassword(!isVisibleConfirmPassword)}
+                  onClick={() =>
+                    setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
+                  }
                 />
               )}
             </div>

@@ -11,6 +11,9 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 function page() {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <div
       className="flex items-center justify-center h-[100vh]"
@@ -23,18 +26,25 @@ function page() {
             <input
               type="text"
               id="email"
+              name="email"
+              value={email}
               className="input-tag"
               placeholder="John@xyz.com"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
+
           <div className="flex items-start flex-col">
             <label htmlFor="password">Password</label>
             <div className="flex justify-between input-tag">
               <input
                 type={`${isVisiblePassword ? "text" : "password"}`}
                 id="password"
+                name="password"
+                value={password}
                 className="outline-none w-full bg-transparent"
                 placeholder="Enter your password"
+                onChange={(e) => setPassword(e.target.value)}
               />
               {isVisiblePassword ? (
                 <VisibilityIcon
@@ -50,7 +60,12 @@ function page() {
           <button className="btn">Login</button>
         </form>
 
-        <div className='w-[100%] mt-5'>Don't have an account? <Link href="/register"><span className='text-green-600 font-bold'>Sign up.</span></Link></div>
+        <div className="w-[100%] mt-5">
+          Don't have an account?{" "}
+          <Link href="/register">
+            <span className="text-green-600 font-bold">Sign up.</span>
+          </Link>
+        </div>
       </div>
     </div>
   );
