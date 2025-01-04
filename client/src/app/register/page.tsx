@@ -21,7 +21,7 @@ function page() {
     confirm_password: "",
   });
 
-  const handleFormState = (e: any) => {
+  const handleFormState = (e: React.ChangeEvent<HTMLInputElement>) => {
     let name = e.target.name;
     let value = e.target.value;
     setFormData((prev) => ({ ...prev, [name]: value }));
