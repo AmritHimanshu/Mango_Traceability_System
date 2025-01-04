@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Funnel_Display } from "next/font/google";
+import Header from "./Header";
 import "./globals.css";
 
 const funnel = Funnel_Display({
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body
         className={`${funnel.className} antialiased`}
       >
+        <Header />
         {children}
       </body>
     </html>

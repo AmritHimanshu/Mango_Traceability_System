@@ -29,7 +29,7 @@ function page() {
 
   return (
     <div
-      className="flex items-center justify-center h-[100vh]"
+      className="flex items-center justify-center h-[calc(100vh-56px)]"
       style={{ backgroundImage: `url(${mango_bg.src})` }}
     >
       <div className="p-5 w-[300px] bg-white bg-opacity-90 rounded-md">
