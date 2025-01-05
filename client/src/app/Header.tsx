@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import mango_logo from "../../public/Mango_logo.png";
 import Header_Menu from "./Header_Menu";
@@ -11,22 +11,11 @@ import CloseIcon from "@mui/icons-material/Close";
 
 function Header() {
 
-  const menu_ref = useRef<HTMLDivElement>(null);
-
   const [isMenu, setIsMenu] = useState(false);
-
-  useEffect(()=>{
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menu_ref.current && menu_ref.current.contains(event.target as Node)) {
-          setIsMenu(false);
-      }
-  };
-
-  document.addEventListener('mousedown', handleClickOutside);
-  return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-  };
-  },[menu_ref])
+  
+  const handleIsMenuState = ()=>{
+    setIsMenu(false);
+  }
 
   return (
     <>
@@ -54,8 +43,8 @@ function Header() {
         )}
       </div>
       {isMenu && (
-        <div ref={menu_ref}>
-          <Header_Menu />
+        <div>
+          <Header_Menu onNavigationComplete={handleIsMenuState}/>
         </div>
       )}
     </>
