@@ -14,7 +14,7 @@ function Header() {
 
   return (
     <>
-      <div className="py-2 px-4 bg-green-100 flex items-center justify-between">
+      <div className="py-2 px-4 bg-green-100 flex items-center justify-between relative">
         <div className="flex items-center justify-start">
           <Image
             src={mango_logo}
@@ -39,8 +39,7 @@ function Header() {
       </div>
       {isMenu && (
         <div>
-          {" "}
-          <Header_Menu />{" "}
+          <Header_Menu />
         </div>
       )}
     </>
