@@ -18,9 +18,10 @@ function page() {
     phone: "",
     password: "",
     confirm_password: "",
+    role: "",
   });
 
-  const handleFormState = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFormState = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     let name = e.target.name;
     let value = e.target.value;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -123,12 +124,13 @@ function page() {
             </div>
           </div>
 
-          <select name="role" id="role" className="p-2 outline-none border-[1px] border-black rounded-md">
+          <select name="role" id="role" className="p-2 outline-none border-[1px] border-black rounded-md" onChange={(e)=>handleFormState(e)}>
             <option value="">Select your role</option>
             <option value="Admin">Admin</option>
             <option value="Manager">Manager</option>
             <option value="Farmer">Farmer</option>
           </select>
+          
           <button className="btn">Register</button>
         </form>
 

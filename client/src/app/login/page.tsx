@@ -13,6 +13,7 @@ function page() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
 
   return (
     <div
@@ -58,12 +59,13 @@ function page() {
             </div>
           </div>
 
-          <select name="role" id="role" className="p-2 outline-none border-[1px] border-black rounded-md">
+          <select name="role" id="role" className="p-2 outline-none border-[1px] border-black rounded-md" onChange={(e) => setRole(e.target.value)}>
             <option value="">Select your role</option>
             <option value="Admin">Admin</option>
             <option value="Manager">Manager</option>
             <option value="Farmer">Farmer</option>
           </select>
+
           <button className="btn">Login</button>
         </form>
 
