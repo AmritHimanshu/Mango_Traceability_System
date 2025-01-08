@@ -48,13 +48,14 @@ function page() {
           </div>
 
           <div className="flex items-start flex-col">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email <span className="text-red-600">*</span></label>
             <input
               type="text"
               id="email"
               name="email"
               className="input-tag"
               placeholder="John@xyz.com"
+              required
               onChange={(e) => handleFormState(e)}
             />
           </div>
