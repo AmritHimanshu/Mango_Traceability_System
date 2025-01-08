@@ -22,7 +22,7 @@ function page() {
       <div className="p-5 w-[300px] bg-white bg-opacity-90 rounded-md">
         <form action="" className="space-y-10">
           <div className="flex items-start flex-col">
-            <label htmlFor="email">Farmer id <span className="text-red-600">*</span></label>
+            <label htmlFor="email">Farmer ID <span className="text-red-600">*</span></label>
             <input
               type="text"
               id="email"
