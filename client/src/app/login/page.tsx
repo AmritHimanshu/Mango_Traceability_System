@@ -22,14 +22,14 @@ function page() {
       <div className="p-5 w-[300px] bg-white bg-opacity-90 rounded-md">
         <form action="" className="space-y-10">
           <div className="flex items-start flex-col">
-            <label htmlFor="email">Farmer ID <span className="text-red-600">*</span></label>
+            <label htmlFor="id">Your ID <span className="text-red-600">*</span></label>
             <input
               type="text"
-              id="email"
-              name="email"
+              id="id"
+              name="id"
               value={email}
               className="input-tag"
-              placeholder="John@xyz.com"
+              placeholder="2034567"
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
@@ -57,6 +57,13 @@ function page() {
               )}
             </div>
           </div>
+
+          <select name="role" id="role" className="p-2 outline-none border-[1px] border-black rounded-md">
+            <option value="">Select your role</option>
+            <option value="Admin">Admin</option>
+            <option value="Manager">Manager</option>
+            <option value="Farmer">Farmer</option>
+          </select>
           <button className="btn">Login</button>
         </form>
 
