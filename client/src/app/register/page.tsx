@@ -34,13 +34,14 @@ function page() {
       <div className="p-5 w-[300px] bg-white bg-opacity-90 rounded-md">
         <form action="" className="space-y-5">
           <div className="flex items-start flex-col">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name <span className="text-red-600">*</span></label>
             <input
               type="text"
               id="name"
               name="name"
               className="input-tag"
               placeholder="John Doe"
+              required
               onChange={(e) => handleFormState(e)}
             />
           </div>
@@ -58,19 +59,20 @@ function page() {
           </div>
 
           <div>
-            <label htmlFor="phone">Phone Number</label>
+            <label htmlFor="phone">Phone Number <span className="text-red-600">*</span></label>
             <input
               type="tel"
               id="phone"
               name="phone"
               className="input-tag"
               placeholder="+91 9876543210"
+              required
               onChange={(e) => handleFormState(e)}
             />
           </div>
 
           <div className="flex items-start flex-col">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Password <span className="text-red-600">*</span></label>
             <div className="flex justify-between input-tag">
               <input
                 type={`${isVisiblePassword ? "text" : "password"}`}
@@ -78,6 +80,7 @@ function page() {
                 name="password"
                 className="outline-none w-full bg-transparent"
                 placeholder="Enter your password"
+                required
                 onChange={(e) => handleFormState(e)}
               />
               {isVisiblePassword ? (
@@ -93,7 +96,7 @@ function page() {
           </div>
 
           <div className="flex items-start flex-col">
-            <label htmlFor="cpassword">Confirm Password</label>
+            <label htmlFor="cpassword">Confirm Password <span className="text-red-600">*</span></label>
             <div className="flex justify-between input-tag">
               <input
                 type={`${isVisibleConfirmPassword ? "text" : "password"}`}
@@ -101,6 +104,7 @@ function page() {
                 name="confirm_password"
                 className="outline-none w-full bg-transparent"
                 placeholder="Confirm your password"
+                required
                 onChange={(e) => handleFormState(e)}
               />
               {isVisibleConfirmPassword ? (

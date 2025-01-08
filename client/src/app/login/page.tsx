@@ -22,7 +22,7 @@ function page() {
       <div className="p-5 w-[300px] bg-white bg-opacity-90 rounded-md">
         <form action="" className="space-y-10">
           <div className="flex items-start flex-col">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Farmer id <span className="text-red-600">*</span></label>
             <input
               type="text"
               id="email"
@@ -35,7 +35,7 @@ function page() {
           </div>
 
           <div className="flex items-start flex-col">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Password <span className="text-red-600">*</span></label>
             <div className="flex justify-between input-tag">
               <input
                 type={`${isVisiblePassword ? "text" : "password"}`}
