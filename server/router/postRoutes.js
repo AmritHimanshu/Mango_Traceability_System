@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
 
@@ -33,6 +34,43 @@ router.post('/api/register-user', async (req, res) => {
         }
     } catch (error) {
         console.log("/api/register-user: ", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+router.post('/api/sigin-user', async (req, res) => {
+    const { email, password } = req.body;
+    if(!email || !password){
+        return res.status(422).json({ error: "Fill all the fields" });
+    }
+
+    try {
+        const user = await User.findOne(email);
+        if(!user){
+            return res.status(422).json({error: "Incorrect credentials"});
+        }
+
+        if(!user.isAuthenticated){
+            return res.status(422).json({error: "You have not been authorised yet."});
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if(!isMatch){
+            return res.status(422).json({error: "Incorrect credentials"});
+        }
+
+        const Token = await user.generateAuthToken();
+        res.cookie("jwtoken", Token, {
+            expires: new Date(Date.now() + 25892000000),
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+            path: '/',
+        });
+
+        return res.status(201).json(user);
+    } catch (error) {
+        console.log("/api/sigin-user: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 });
