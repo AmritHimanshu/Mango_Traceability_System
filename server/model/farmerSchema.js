@@ -7,7 +7,6 @@ const farmerSchema = new mongoose.Schema(
             type: ObjectId,
             ref: "USER",
             required: true
-
         },
         geoFenceData: [
             {
