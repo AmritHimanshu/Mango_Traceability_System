@@ -3,8 +3,8 @@ const router = express.Router();
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
 
-const authenticateUser = require('../middleware/authenticateUser');
-const User = require('../model/userSchema');
+const authenticateUser = require('../../middleware/authenticateUser');
+const User = require('../../model/userSchema');
 
 
 router.get('/api/pending-farmers', authenticateUser, async (req, res) => {
@@ -22,8 +22,5 @@ router.get('/api/pending-farmers', authenticateUser, async (req, res) => {
     }
 });
 
-router.get('/', (req, res) => {
-    res.status(200).send({ message: "Hi! I am Singh Sahab (get)" });
-});
 
 module.exports = router;

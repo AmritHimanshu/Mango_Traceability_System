@@ -3,10 +3,10 @@ const router = express.Router();
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
 
-const { notifyFarmer } = require('../functions/sendMail');
-const authenticateUser = require('../middleware/authenticateUser');
+const { notifyFarmer } = require('../../functions/sendMail');
+const authenticateUser = require('../../middleware/authenticateUser');
 
-const User = require('../model/userSchema');
+const User = require('../../model/userSchema');
 
 
 router.put('/api/authenticate-user/:id', authenticateUser, async (req, res) => {
@@ -39,5 +39,6 @@ router.put('/api/authenticate-user/:id', authenticateUser, async (req, res) => {
         return res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
 
 module.exports = router;

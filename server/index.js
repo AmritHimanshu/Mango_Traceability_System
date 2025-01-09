@@ -17,9 +17,9 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(require('./router/getRoutes'));
 app.use(require('./router/postRoutes'));
-app.use(require('./router/putRoutes'));
+app.use(require('./router/admin/getRoutes'));
+app.use(require('./router/admin/putRoutes'));
 
 app.listen(PORT, () => {
     console.log(`The server is running at port ${PORT}`);
