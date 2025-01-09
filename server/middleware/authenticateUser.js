@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../model/userSchema');
 
-const authenticateFarmer = async (req, res, next) => {
+const authenticateUser = async (req, res, next) => {
     try {
         const token = req.cookies.jwtoken;
         const verifyToken = jwt.verify(token, process.env.SECRET_KEY);
@@ -27,4 +27,4 @@ const authenticateFarmer = async (req, res, next) => {
     }
 }
 
-module.exports = authenticateFarmer;
+module.exports = authenticateUser;
