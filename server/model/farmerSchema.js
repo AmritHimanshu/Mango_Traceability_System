@@ -23,7 +23,6 @@ const farmerSchema = new mongoose.Schema(
                 name: {
                     type: String,
                     required: true
-
                 },
                 ploughingDate: Date,
                 weedingDate: Date,
