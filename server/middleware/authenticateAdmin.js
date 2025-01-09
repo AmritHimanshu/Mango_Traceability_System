@@ -15,7 +15,9 @@ const authenticateAdmin = async (req, res, next) => {
             return res.status(401).json({ error: "User not found" });
         }
 
-        
+        req.rootUser = rootUser;
+
+        next();
     } catch (error) {
         if (error.name === 'TokenExpiredError') {
             return res.status(401).json({ error: "Unauthorized: Token has expired" });
