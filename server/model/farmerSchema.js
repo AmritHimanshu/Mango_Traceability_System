@@ -5,7 +5,7 @@ const farmerSchema = new mongoose.Schema(
     {
         userId: {
             type: ObjectId,
-            ref: "User",
+            ref: "USER",
             required: true
 
         },
