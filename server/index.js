@@ -11,10 +11,13 @@ require('./db/conn');
 
 app.use(cors({
     origin: true,
+    credentials: true,
 }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(require('./router/route'));
 
 app.listen(PORT, () => {
     console.log(`The server is running at port ${PORT}`);
