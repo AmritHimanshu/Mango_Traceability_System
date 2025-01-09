@@ -15,6 +15,10 @@ const authenticateAdmin = async (req, res, next) => {
             return res.status(401).json({ error: "User not found" });
         }
 
+        if(rootUser.role === 'Farmer'){
+            return res.status(401).json({error: "You don't have permission."});
+        }
+
         req.rootUser = rootUser;
 
         next();
