@@ -201,6 +201,7 @@ function page() {
             name="role"
             id="role"
             className="p-2 outline-none border-[1px] border-black rounded-md"
+            required
             onChange={(e) => handleFormState(e)}
           >
             <option value="">Select your role</option>

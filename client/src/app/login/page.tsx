@@ -8,33 +8,75 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function page() {
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
 
+  const handleFormData = async (e:React.FormEvent<HTMLFormElement>)=>{
+    e.preventDefault();
+
+    if(!email || !password || !role){
+      alert("Fill all the fields");
+      return;
+    }
+
+    try {
+      const res = await fetch(`${BASE_URL}/api/signin-user`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          role,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.status !== 201) {
+        alert(data.error);
+        return;
+      }
+
+      alert(data.message);
+
+      console.log(data);
+    } catch (error) {
+      console.log("Error: ", error);
+      alert("Error");
+    }
+  }
+
   return (
-    <div
-      className="flex items-center justify-center h-[calc(100vh-56px)]"
-    >
+    <div className="flex items-center justify-center h-[calc(100vh-56px)]">
       <div className="p-5 w-[300px] bg-white bg-opacity-90 rounded-md shadow-md">
-        <form action="" className="space-y-10">
+        <form action="POST" className="space-y-10" onSubmit={(e)=>handleFormData(e)}>
           <div className="flex items-start flex-col">
-            <label htmlFor="id">Your ID <span className="text-red-600">*</span></label>
+            <label htmlFor="id">
+              Email/Farmer ID <span className="text-red-600">*</span>
+            </label>
             <input
               type="text"
               id="id"
               name="id"
               value={email}
               className="input-tag"
-              placeholder="2034567"
+              placeholder="2034567/example@gmail.com"
+              required
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
           <div className="flex items-start flex-col">
-            <label htmlFor="password">Password <span className="text-red-600">*</span></label>
+            <label htmlFor="password">
+              Password <span className="text-red-600">*</span>
+            </label>
             <div className="flex justify-between input-tag">
               <input
                 type={`${isVisiblePassword ? "text" : "password"}`}
@@ -43,6 +85,7 @@ function page() {
                 value={password}
                 className="outline-none w-full bg-transparent"
                 placeholder="Enter your password"
+                required
                 onChange={(e) => setPassword(e.target.value)}
               />
               {isVisiblePassword ? (
@@ -57,14 +100,20 @@ function page() {
             </div>
           </div>
 
-          <select name="role" id="role" className="p-2 outline-none border-[1px] border-black rounded-md" onChange={(e) => setRole(e.target.value)}>
+          <select
+            name="role"
+            id="role"
+            className="p-2 outline-none border-[1px] border-black rounded-md"
+            required
+            onChange={(e) => setRole(e.target.value)}
+          >
             <option value="">Select your role</option>
             <option value="Admin">Admin</option>
             <option value="Manager">Manager</option>
             <option value="Farmer">Farmer</option>
           </select>
 
-          <button className="btn">Login</button>
+          <button type="submit" className="btn">Login</button>
         </form>
 
         <div className="w-[100%] mt-5">

@@ -45,8 +45,8 @@ router.post('/api/register-user', async (req, res) => {
 });
 
 router.post('/api/sigin-user', async (req, res) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
+    const { email, password, role } = req.body;
+    if (!email || !password || !role) {
         return res.status(422).json({ error: "Fill all the fields" });
     }
 
@@ -58,6 +58,10 @@ router.post('/api/sigin-user', async (req, res) => {
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
+            return res.status(422).json({ error: "Incorrect credentials" });
+        }
+
+        if (user.role !== role) {
             return res.status(422).json({ error: "Incorrect credentials" });
         }
 
