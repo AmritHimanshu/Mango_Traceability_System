@@ -59,15 +59,15 @@ function page() {
         <form action="POST" className="space-y-10" onSubmit={(e)=>handleFormData(e)}>
           <div className="flex items-start flex-col">
             <label htmlFor="id">
-              Email/Farmer ID <span className="text-red-600">*</span>
+              Email <span className="text-red-600">*</span>
             </label>
             <input
-              type="text"
+              type="email"
               id="id"
               name="id"
               value={email}
               className="input-tag"
-              placeholder="2034567/example@gmail.com"
+              placeholder="example@gmail.com"
               required
               onChange={(e) => setEmail(e.target.value)}
             />
