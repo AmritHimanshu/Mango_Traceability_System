@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Funnel_Display } from "next/font/google";
-import Header from "./Header";
+import Header from "./components/Header";
 import "./globals.css";
 
 const funnel = Funnel_Display({

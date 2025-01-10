@@ -10,7 +10,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function page() {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
-  const [isVisibleConfirmPassword, setIsVisibleConfirmPassword] = useState(false);
+  const [isVisibleConfirmPassword, setIsVisibleConfirmPassword] =
+    useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -21,10 +22,24 @@ function page() {
     role: "",
   });
 
-  const handleFormState = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleFormState = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     let name = e.target.name;
     let value = e.target.value;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFormData = async () => {
+    const { name, email, phone, password, confirm_password, role } = formData;
+    if (!name || !email || !phone || !password || !confirm_password || !role) {
+      alert("Fill all the fields");
+      return;
+    }
+    if (password !== confirm_password) {
+      alert("Passwords not matched");
+      return;
+    }
   };
 
   return (
@@ -33,9 +48,11 @@ function page() {
       style={{ backgroundImage: `url(${mango_bg.src})` }}
     >
       <div className="p-5 w-[300px] bg-white bg-opacity-90 rounded-md">
-        <form action="" className="space-y-5">
+        <form action="POST" onSubmit={handleFormData} className="space-y-5">
           <div className="flex items-start flex-col">
-            <label htmlFor="name">Name <span className="text-red-600">*</span></label>
+            <label htmlFor="name">
+              Name <span className="text-red-600">*</span>
+            </label>
             <input
               type="text"
               id="name"
@@ -48,7 +65,9 @@ function page() {
           </div>
 
           <div className="flex items-start flex-col">
-            <label htmlFor="email">Email <span className="text-red-600">*</span></label>
+            <label htmlFor="email">
+              Email <span className="text-red-600">*</span>
+            </label>
             <input
               type="text"
               id="email"
@@ -61,7 +80,9 @@ function page() {
           </div>
 
           <div>
-            <label htmlFor="phone">Phone Number <span className="text-red-600">*</span></label>
+            <label htmlFor="phone">
+              Phone Number <span className="text-red-600">*</span>
+            </label>
             <input
               type="tel"
               id="phone"
@@ -74,7 +95,9 @@ function page() {
           </div>
 
           <div className="flex items-start flex-col">
-            <label htmlFor="password">Password <span className="text-red-600">*</span></label>
+            <label htmlFor="password">
+              Password <span className="text-red-600">*</span>
+            </label>
             <div className="flex justify-between input-tag">
               <input
                 type={`${isVisiblePassword ? "text" : "password"}`}
@@ -98,7 +121,9 @@ function page() {
           </div>
 
           <div className="flex items-start flex-col">
-            <label htmlFor="cpassword">Confirm Password <span className="text-red-600">*</span></label>
+            <label htmlFor="cpassword">
+              Confirm Password <span className="text-red-600">*</span>
+            </label>
             <div className="flex justify-between input-tag">
               <input
                 type={`${isVisibleConfirmPassword ? "text" : "password"}`}
@@ -125,13 +150,18 @@ function page() {
             </div>
           </div>
 
-          <select name="role" id="role" className="p-2 outline-none border-[1px] border-black rounded-md" onChange={(e)=>handleFormState(e)}>
+          <select
+            name="role"
+            id="role"
+            className="p-2 outline-none border-[1px] border-black rounded-md"
+            onChange={(e) => handleFormState(e)}
+          >
             <option value="">Select your role</option>
             <option value="Manager">Manager</option>
             <option value="Farmer">Farmer</option>
           </select>
 
-          <button className="btn">Register</button>
+          <button type="submit" className="btn">Register</button>
         </form>
 
         <div className="w-[100%] mt-5">
