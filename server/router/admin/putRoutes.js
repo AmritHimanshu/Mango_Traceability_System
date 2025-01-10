@@ -23,8 +23,8 @@ router.put('/api/authenticate-user/:id', authenticateUser, async (req, res) => {
             return res.status(404).json({ error: "User not found" });
         }
 
-        if (user.role !== "Farmer") {
-            return res.status(400).json({ error: "Only farmers require authentication" });
+        if (user.role !== "Farmer" || user.role !== "Manager") {
+            return res.status(400).json({ error: "Admin doesn't require authentication" });
         }
 
         user.isAuthenticated = isAuthenticated;
