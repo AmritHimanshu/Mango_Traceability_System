@@ -4,8 +4,8 @@ const bcrypt = require('bcryptjs');
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
 
-const { notifyAdmins } = require('../functions/sendMail');
-const User = require('../model/userSchema');
+const { notifyAdmins } = require('../../functions/sendMail');
+const User = require('../../model/userSchema');
 
 
 router.post('/api/register-user', async (req, res) => {
