@@ -11,9 +11,16 @@ const transporter = nodemailer.createTransport({
 });
 
 // Send Mail to Admins
-const notifyAdmins = async (farmer) => {
+const notifyAdmins = async (user) => {
     try {
-        const admins = await User.find({ role: { $in: ["Admin", "Manager"] } }, "email");
+        let admins;
+        if(user.role === 'Farmer'){
+            admins = await User.find({ role: { $in: ["Admin", "Manager"] } }, "email");
+        }
+        else{
+            admins = await User.find({ role: { $in: ["Admin"] } }, "email");
+        }
+        
         const adminEmails = admins.map((admin) => admin.email);
 
         if (adminEmails.length === 0) {
@@ -24,11 +31,12 @@ const notifyAdmins = async (farmer) => {
         const mailOptions = {
             from: process.env.EMAIL_ID,
             to: adminEmails,
-            subject: "New Farmer Registration Request",
-            text: `A new farmer has registered. 
-                   Name: ${farmer.name} 
-                   Email: ${farmer.email}
-                   Phone: ${farmer.phone}
+            subject: "New User Registration Request",
+            text: `A new user has registered. 
+                   Name: ${user.name} 
+                   Email: ${user.email}
+                   Phone: ${user.phone}
+                   Role: ${user.role}
                    
                    Please visit the dashboard to approve or reject this registration.`,
         };
@@ -41,21 +49,21 @@ const notifyAdmins = async (farmer) => {
 };
 
 // Send Mail to Farmer
-const notifyFarmer = async (farmer, status) => {
+const notifyUser = async (user, status) => {
     try {
         const mailOptions = {
             from: process.env.EMAIL_ID,
-            to: farmer.email,
+            to: user.email,
             subject: `Registration ${status ? "Approved" : "Rejected"}`,
-            text: `Dear ${farmer.name}, your registration has been ${status ? "approved" : "rejected"}. 
+            text: `Dear ${user.name}, your registration has been ${status ? "approved" : "rejected"}. 
                 Now you can login to your account.`,
         };
 
         const info = await transporter.sendMail(mailOptions);
-        console.log("Email sent to farmer:", info.response);
+        console.log("Email sent to user:", info.response);
     } catch (error) {
-        console.error("Error sending email to farmer:", error.message);
+        console.error("Error sending email to user:", error.message);
     }
 };
 
-module.exports = { notifyAdmins, notifyFarmer };
+module.exports = { notifyAdmins, notifyUser };

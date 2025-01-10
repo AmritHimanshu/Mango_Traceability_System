@@ -3,7 +3,7 @@ const router = express.Router();
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
 
-const { notifyFarmer } = require('../../functions/sendMail');
+const { notifyUser } = require('../../functions/sendMail');
 const authenticateUser = require('../../middleware/authenticateUser');
 
 const User = require('../../model/userSchema');
@@ -30,7 +30,7 @@ router.put('/api/authenticate-user/:id', authenticateUser, async (req, res) => {
         user.isAuthenticated = isAuthenticated;
         await user.save();
 
-        await notifyFarmer(user, isAuthenticated);
+        await notifyUser(user, isAuthenticated);
 
         const status = isAuthenticated ? "approved" : "rejected";
         return res.status(200).json({ message: `User has been ${status}` });

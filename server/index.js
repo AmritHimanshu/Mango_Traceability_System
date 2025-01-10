@@ -17,7 +17,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(require('./router/postRoutes'));
+app.use(require('./router/common/postRoutes'));
 app.use(require('./router/admin/getRoutes'));
 app.use(require('./router/admin/putRoutes'));
 
