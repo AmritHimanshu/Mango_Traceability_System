@@ -44,7 +44,7 @@ router.post('/api/register-user', async (req, res) => {
     }
 });
 
-router.post('/api/sigin-user', async (req, res) => {
+router.post('/api/signin-user', async (req, res) => {
     const { email, password, role } = req.body;
     if (!email || !password || !role) {
         return res.status(422).json({ error: "Fill all the fields" });
