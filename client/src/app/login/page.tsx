@@ -44,7 +44,7 @@ function page() {
         return;
       }
 
-      alert(data.message);
+      alert("Successfully signed in");
 
       console.log(data);
     } catch (error) {
