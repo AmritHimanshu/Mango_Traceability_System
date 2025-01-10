@@ -20,7 +20,7 @@ function Header_Menu({ onNavigationComplete } : HeaderMenuProps) {
   };
 
   return (
-    <div className="h-[calc(100vh-56px)] p-[20px] absolute w-full bg-[#f6fff6]">
+    <div className="h-[calc(100vh-56px)] p-[20px] absolute w-full bg-[#f0f9ff]">
       {!user ? (
         <div className="space-y-3">
           <div

@@ -50,13 +50,13 @@ router.post('/api/sigin-user', async (req, res) => {
             return res.status(422).json({error: "Incorrect credentials"});
         }
 
-        if(!user.isAuthenticated){
-            return res.status(422).json({error: "You have not been authorised yet."});
-        }
-
         const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch){
             return res.status(422).json({error: "Incorrect credentials"});
+        }
+
+        if(!user.isAuthenticated){
+            return res.status(422).json({error: "You have not been authorised yet."});
         }
 
         const Token = await user.generateAuthToken();

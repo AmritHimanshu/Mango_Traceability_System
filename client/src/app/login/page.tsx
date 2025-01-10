@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import mango_bg from "../../../public/mango_bg.jpg";
 
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -18,9 +17,8 @@ function page() {
   return (
     <div
       className="flex items-center justify-center h-[calc(100vh-56px)]"
-      style={{ backgroundImage: `url(${mango_bg.src})` }}
     >
-      <div className="p-5 w-[300px] bg-white bg-opacity-90 rounded-md">
+      <div className="p-5 w-[300px] bg-white bg-opacity-90 rounded-md shadow-md">
         <form action="" className="space-y-10">
           <div className="flex items-start flex-col">
             <label htmlFor="id">Your ID <span className="text-red-600">*</span></label>

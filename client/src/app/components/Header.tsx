@@ -19,7 +19,7 @@ function Header() {
 
   return (
     <>
-      <div className="py-2 px-4 bg-green-100 flex items-center justify-between relative">
+      <div className="py-2 px-4 bg-sky-100 flex items-center justify-between relative">
         <Link href="/">
           <div className="flex items-center justify-start">
             <Image

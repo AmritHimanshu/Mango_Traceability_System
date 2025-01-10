@@ -2,13 +2,15 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import mango_bg from "../../../public/mango_bg.jpg";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function page() {
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   const [isVisibleConfirmPassword, setIsVisibleConfirmPassword] =
     useState(false);
@@ -30,25 +32,68 @@ function page() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFormData = async () => {
+  const validatePhoneNumber = (phoneNumber: string) => {
+    const phoneNumberObj = parsePhoneNumberFromString(phoneNumber, "IN");
+    return phoneNumberObj?.isValid();
+  };
+
+  const handleFormData = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     const { name, email, phone, password, confirm_password, role } = formData;
     if (!name || !email || !phone || !password || !confirm_password || !role) {
       alert("Fill all the fields");
       return;
     }
+
     if (password !== confirm_password) {
       alert("Passwords not matched");
       return;
     }
+
+    if (!validatePhoneNumber(phone)) {
+      alert("Invalid phone number");
+      return;
+    }
+
+    try {
+      const res = await fetch(`${BASE_URL}/api/register-user`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          password,
+          confirm_password,
+          role,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.status !== 201) {
+        alert(data.error);
+        return;
+      }
+
+      console.log(data);
+    } catch (error) {
+      console.log("Error: ", error);
+      alert("Error");
+    }
   };
 
   return (
-    <div
-      className="flex items-center justify-center h-[calc(100vh-56px)]"
-      style={{ backgroundImage: `url(${mango_bg.src})` }}
-    >
-      <div className="p-5 w-[300px] bg-white bg-opacity-90 rounded-md">
-        <form action="POST" onSubmit={handleFormData} className="space-y-5">
+    <div className="flex items-center justify-center h-[calc(100vh-56px)]">
+      <div className="p-5 w-[300px] bg-white bg-opacity-90 rounded-md shadow-md">
+        <form
+          action="POST"
+          onSubmit={(e) => handleFormData(e)}
+          className="space-y-5"
+        >
           <div className="flex items-start flex-col">
             <label htmlFor="name">
               Name <span className="text-red-600">*</span>
@@ -161,7 +206,9 @@ function page() {
             <option value="Farmer">Farmer</option>
           </select>
 
-          <button type="submit" className="btn">Register</button>
+          <button type="submit" className="btn">
+            Register
+          </button>
         </form>
 
         <div className="w-[100%] mt-5">
