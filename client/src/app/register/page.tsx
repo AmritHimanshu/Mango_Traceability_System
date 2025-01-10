@@ -79,6 +79,8 @@ function page() {
         return;
       }
 
+      alert(data.message);
+
       console.log(data);
     } catch (error) {
       console.log("Error: ", error);

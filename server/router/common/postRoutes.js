@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-import { parsePhoneNumberFromString } from 'libphonenumber-js';
+const parsePhoneNumberFromString = require('libphonenumber-js');
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
 

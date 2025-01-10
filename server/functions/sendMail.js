@@ -14,13 +14,13 @@ const transporter = nodemailer.createTransport({
 const notifyAdmins = async (user) => {
     try {
         let admins;
-        if(user.role === 'Farmer'){
-            admins = await User.find({ role: { $in: ["Admin", "Manager"] } }, "email");
+        if (user.role === 'Farmer') {
+            admins = await User.find({ role: { $in: ["Admin", "Manager"] }, isAuthenticated: true }, "email");
         }
-        else{
-            admins = await User.find({ role: { $in: ["Admin"] } }, "email");
+        else {
+            admins = await User.find({ role: { $in: ["Admin"] }, isAuthenticated: true }, "email");
         }
-        
+
         const adminEmails = admins.map((admin) => admin.email);
 
         if (adminEmails.length === 0) {
