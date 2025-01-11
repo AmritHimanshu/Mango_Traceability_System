@@ -2,10 +2,14 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
-
-interface HandleOnClickProps {
-    handleOnClick: (e: React.MouseEvent<HTMLDivElement>) => void;
-}
+import { HandleOnClickProps } from "@/utils/types/interfaces";
+import {
+  FARMER_MANAGEMENT,
+  LOGOUT,
+  MANAGER_MANAGEMENT,
+  OVERVIEW,
+  PENDING_REQUESTS,
+} from "@/utils/paths/paths";
 
 function Admin_Header({ handleOnClick }: HandleOnClickProps) {
   const pathname = usePathname();
@@ -14,41 +18,41 @@ function Admin_Header({ handleOnClick }: HandleOnClickProps) {
     <div className="space-y-3">
       <div
         className={`py-3 w-full border-b-[1px] border-black font-bold ${
-          pathname === "/" ? "text-green-800" : "text-black"
+          pathname === OVERVIEW ? "text-green-800" : "text-black"
         }`}
-        onClick={(e) => handleOnClick(e)}
+        onClick={() => handleOnClick(OVERVIEW)}
       >
         Overview
       </div>
       <div
         className={`py-3 w-full border-b-[1px] border-black font-bold ${
-          pathname === "/manager-management" ? "text-green-800" : "text-black"
+          pathname === MANAGER_MANAGEMENT ? "text-green-800" : "text-black"
         }`}
-        onClick={(e) => handleOnClick(e)}
+        onClick={() => handleOnClick(MANAGER_MANAGEMENT)}
       >
         Manager Management
       </div>
       <div
         className={`py-3 w-full border-b-[1px] border-black font-bold ${
-          pathname === "/farmer-management" ? "text-green-800" : "text-black"
+          pathname === FARMER_MANAGEMENT ? "text-green-800" : "text-black"
         }`}
-        onClick={(e) => handleOnClick(e)}
+        onClick={() => handleOnClick(FARMER_MANAGEMENT)}
       >
         Farmer Management
       </div>
       <div
         className={`py-3 w-full border-b-[1px] border-black font-bold ${
-          pathname === "/pending-requests" ? "text-green-800" : "text-black"
+          pathname === PENDING_REQUESTS ? "text-green-800" : "text-black"
         }`}
-        onClick={(e) => handleOnClick(e)}
+        onClick={() => handleOnClick(PENDING_REQUESTS)}
       >
         Pending requests
       </div>
       <div
         className={`py-3 w-full border-b-[1px] border-black font-bold ${
-          pathname === "/logout" ? "text-green-800" : "text-black"
+          pathname === LOGOUT ? "text-green-800" : "text-black"
         }`}
-        onClick={(e) => handleOnClick(e)}
+        onClick={() => handleOnClick(LOGOUT)}
       >
         Logout
       </div>

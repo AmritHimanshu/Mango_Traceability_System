@@ -2,10 +2,8 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
-
-interface HandleOnClickProps {
-  handleOnClick: (e: React.MouseEvent<HTMLDivElement>) => void;
-}
+import { HandleOnClickProps } from "@/utils/types/interfaces";
+import { LOGIN, REGISTER } from "@/utils/paths/paths";
 
 function Common_Header({ handleOnClick }: HandleOnClickProps) {
   const pathname = usePathname();
@@ -14,17 +12,17 @@ function Common_Header({ handleOnClick }: HandleOnClickProps) {
     <div className="space-y-3">
       <div
         className={`py-3 w-full border-b-[1px] border-black font-bold ${
-          pathname === "/login" ? "text-green-800" : "text-black"
+          pathname === LOGIN ? "text-green-800" : "text-black"
         }`}
-        onClick={(e) => handleOnClick(e)}
+        onClick={() => handleOnClick(LOGIN)}
       >
         Login
       </div>
       <div
         className={`py-3 w-full border-b-[1px] border-black font-bold ${
-          pathname === "/register" ? "text-green-800" : "text-black"
+          pathname === REGISTER ? "text-green-800" : "text-black"
         }`}
-        onClick={(e) => handleOnClick(e)}
+        onClick={() => handleOnClick(REGISTER)}
       >
         Register
       </div>

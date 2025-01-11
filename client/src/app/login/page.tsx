@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { useAppSelector } from "@/store/store";
 import { setUserState } from "@/store/features/userSlice";
 import { useAppDispatch } from "@/store/store";
 
@@ -12,8 +11,6 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
-  const userState = useAppSelector((state) => state.user.userState);
 
   const dispatch = useAppDispatch();
 
