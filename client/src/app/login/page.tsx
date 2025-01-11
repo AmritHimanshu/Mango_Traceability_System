@@ -2,6 +2,9 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useAppSelector } from "@/store/store";
+import { setUserState } from "@/store/features/userSlice";
+import { useAppDispatch } from "@/store/store";
 
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -10,16 +13,20 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+  const authState = useAppSelector((state) => state.user.userState);
+
+  const dispatch = useAppDispatch();
+
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
 
-  const handleFormData = async (e:React.FormEvent<HTMLFormElement>)=>{
+  const handleFormData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if(!email || !password || !role){
+    if (!email || !password || !role) {
       alert("Fill all the fields");
       return;
     }
@@ -46,17 +53,23 @@ function page() {
 
       alert("Successfully signed in");
 
+      dispatch(setUserState(data));
+
       console.log(data);
     } catch (error) {
       console.log("Error: ", error);
       alert("Error");
     }
-  }
+  };
 
   return (
     <div className="flex items-center justify-center h-[calc(100vh-56px)]">
       <div className="p-5 w-[300px] bg-white bg-opacity-90 rounded-md shadow-md">
-        <form action="POST" className="space-y-10" onSubmit={(e)=>handleFormData(e)}>
+        <form
+          action="POST"
+          className="space-y-10"
+          onSubmit={(e) => handleFormData(e)}
+        >
           <div className="flex items-start flex-col">
             <label htmlFor="id">
               Email <span className="text-red-600">*</span>
@@ -113,7 +126,9 @@ function page() {
             <option value="Farmer">Farmer</option>
           </select>
 
-          <button type="submit" className="btn">Login</button>
+          <button type="submit" className="btn">
+            Login
+          </button>
         </form>
 
         <div className="w-[100%] mt-5">

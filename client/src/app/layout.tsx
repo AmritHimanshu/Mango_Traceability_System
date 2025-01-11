@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ReduxProvider from "@/store/redux-provider";
 import { Funnel_Display } from "next/font/google";
 import Header from "./components/Header";
 import "./globals.css";
@@ -18,13 +19,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${funnel.className} antialiased`}
-      >
-        <Header />
-        {children}
-      </body>
-    </html>
+    <ReduxProvider>
+      <html lang="en">
+        <body className={`${funnel.className} antialiased`}>
+          <Header />
+          {children}
+        </body>
+      </html>
+    </ReduxProvider>
   );
 }
