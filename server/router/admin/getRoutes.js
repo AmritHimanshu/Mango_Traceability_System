@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const cookieParser = require("cookie-parser");
-router.use(cookieParser());
 
 const authenticateAdmin = require('../../middleware/authenticateAdmin');
 const User = require('../../model/userSchema');
@@ -10,7 +8,7 @@ const User = require('../../model/userSchema');
 router.get('/api/pending-farmers', authenticateAdmin, async (req, res) => {
     try {
         if (req.rootUser.role !== 'Admin') {
-            return res.status(403).json({error: "You don't have permission."});
+            return res.status(403).json({ error: "You don't have permission." });
         }
 
         const pendingFarmers = await User.find({ role: "Farmer", isAuthenticated: false }).select("-password");
@@ -21,6 +19,15 @@ router.get('/api/pending-farmers', authenticateAdmin, async (req, res) => {
         return res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+router.get('/api/fetch-no-of-farmers', authenticateAdmin, async (req, res) => {
+    try {
+        console.log(req.rootUser);
+    } catch (error) {
+        console.log("/api/fetch-no-of-farmers: ", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+})
 
 
 module.exports = router;

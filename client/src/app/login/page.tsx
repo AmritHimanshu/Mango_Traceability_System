@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { setUserState } from "@/store/features/userSlice";
 import { useAppDispatch } from "@/store/store";
+import { useRouter } from "next/navigation";
 
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -12,6 +13,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
@@ -32,8 +34,9 @@ function page() {
       const res = await fetch(`${BASE_URL}/api/signin-user`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({
           email,
           password,
@@ -48,10 +51,10 @@ function page() {
         return;
       }
 
-      alert("Successfully signed in");
-
       dispatch(setUserState(data));
-
+      router.push('/');
+      
+      alert("Successfully signed in");
       console.log(data);
     } catch (error) {
       console.log("Error: ", error);

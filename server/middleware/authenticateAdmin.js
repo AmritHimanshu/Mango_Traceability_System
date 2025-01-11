@@ -4,9 +4,6 @@ const User = require('../model/userSchema');
 const authenticateAdmin = async (req, res, next) => {
     try {
         const token = req.cookies.jwtoken;
-        if (!token) {
-            return res.redirect("/login");
-        }
 
         const verifyToken = jwt.verify(token, process.env.SECRET_KEY);
 

@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const cookieParser = require("cookie-parser");
-router.use(cookieParser());
 
 const { notifyUser } = require('../../functions/sendMail');
 const authenticateAdmin = require('../../middleware/authenticateAdmin');

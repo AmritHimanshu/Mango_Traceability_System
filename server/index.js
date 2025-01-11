@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const dotenv = require('dotenv');
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
 
 const authenticateAdmin = require('./middleware/authenticateAdmin');
 

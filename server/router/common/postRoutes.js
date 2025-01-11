@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const parsePhoneNumberFromString = require('libphonenumber-js');
-const cookieParser = require("cookie-parser");
-router.use(cookieParser());
 
 const { notifyAdmins } = require('../../functions/sendMail');
 const User = require('../../model/userSchema');
@@ -55,7 +53,7 @@ router.post('/api/signin-user', async (req, res) => {
         if (!user) {
             return res.status(422).json({ error: "Incorrect credentials" });
         }
-        
+
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(422).json({ error: "Incorrect credentials" });
@@ -73,8 +71,8 @@ router.post('/api/signin-user', async (req, res) => {
         res.cookie("jwtoken", Token, {
             expires: new Date(Date.now() + 25892000000),
             httpOnly: true,
-            secure: true,
-            sameSite: 'None',
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
             path: '/',
         });
 
