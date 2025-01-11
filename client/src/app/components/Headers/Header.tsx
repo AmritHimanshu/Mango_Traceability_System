@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import mango_logo from "../../../public/Mango_logo.png";
+import mango_logo from "../../../../public/Mango_logo.png";
 import Header_Menu from "./Header_Menu";
 
 // Material UI Icon

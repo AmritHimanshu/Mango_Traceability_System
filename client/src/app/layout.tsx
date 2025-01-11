@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ReduxProvider from "@/store/redux-provider";
 import { Funnel_Display } from "next/font/google";
-import Header from "./components/Header";
+import Header from "./components/Headers/Header";
 import "./globals.css";
 
 const funnel = Funnel_Display({
