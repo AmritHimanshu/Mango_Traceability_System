@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
+import { useRouter } from "next/navigation";
 
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -10,6 +11,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const router = useRouter();
 
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   const [isVisibleConfirmPassword, setIsVisibleConfirmPassword] =
@@ -80,6 +83,7 @@ function page() {
       }
 
       alert(data.message);
+      router.push('/login');
 
       console.log(data);
     } catch (error) {
