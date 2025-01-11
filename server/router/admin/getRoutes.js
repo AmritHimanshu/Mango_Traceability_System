@@ -5,7 +5,7 @@ const authenticateAdmin = require('../../middleware/authenticateAdmin');
 const User = require('../../model/userSchema');
 
 
-router.get('/api/pending-farmers', authenticateAdmin, async (req, res) => {
+router.get('/api/pending-farmers', async (req, res) => {
     try {
         if (req.rootUser.role !== 'Admin') {
             return res.status(403).json({ error: "You don't have permission." });
@@ -20,7 +20,7 @@ router.get('/api/pending-farmers', authenticateAdmin, async (req, res) => {
     }
 });
 
-router.get('/api/fetch-no-of-farmers', authenticateAdmin, async (req, res) => {
+router.get('/api/fetch-no-of-farmers', async (req, res) => {
     try {
         console.log(req.rootUser);
     } catch (error) {

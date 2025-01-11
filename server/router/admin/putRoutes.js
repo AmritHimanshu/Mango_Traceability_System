@@ -7,7 +7,7 @@ const authenticateAdmin = require('../../middleware/authenticateAdmin');
 const User = require('../../model/userSchema');
 
 
-router.put('/api/authenticate-user/:id', authenticateAdmin, async (req, res) => {
+router.put('/api/authenticate-user/:id', async (req, res) => {
     const { id } = req.params;
     const { isAuthenticated } = req.body;
 
