@@ -64,7 +64,7 @@ function page() {
 
   return (
     <div className="flex items-center justify-center h-[calc(100vh-56px)]">
-      <div className="p-5 w-[300px] bg-white bg-opacity-90 rounded-md shadow-md">
+      <div className="p-5 w-[300px] bg-cardBackground bg-opacity-90 rounded-md shadow-md">
         <form
           action="POST"
           className="space-y-10"
