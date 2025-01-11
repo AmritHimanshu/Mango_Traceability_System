@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import mango_logo from "../../../../public/Mango_logo.png";
+import mango_logo from "../../../../public/assets/Mango_logo.png";
 import Header_Menu from "./Header_Menu";
 
 // Material UI Icon
@@ -17,9 +17,23 @@ function Header() {
     setIsMenu(false);
   };
 
+  useEffect(() => {
+    
+    if (isMenu) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isMenu]);
+
+
   return (
     <>
-      <div className="py-2 px-4 bg-sky-100 flex items-center justify-between relative">
+      <div className="py-2 px-4 bg-sky-100 flex items-center justify-between  sticky top-0 z-50">
         <Link href="/">
           <div className="flex items-center justify-start">
             <Image

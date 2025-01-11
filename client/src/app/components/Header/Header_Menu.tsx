@@ -18,7 +18,7 @@ function Header_Menu({ onNavigationComplete }: HeaderMenuProps) {
   };
 
   return (
-    <div className="h-[calc(100vh-56px)] p-[20px] absolute w-full bg-white">
+    <div className="h-[calc(100vh-56px)] p-[20px] absolute z-40 w-full bg-white">
       {!userState ? (
         <Common_Header handleOnClick={handleOnClick} />
       ) : (
