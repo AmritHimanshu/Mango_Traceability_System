@@ -51,11 +51,11 @@ router.post('/api/signin-user', async (req, res) => {
     }
 
     try {
-        const user = await User.findOne({ email }, "-password -tokens");
+        const user = await User.findOne({ email });
         if (!user) {
             return res.status(422).json({ error: "Incorrect credentials" });
         }
-
+        
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(422).json({ error: "Incorrect credentials" });
@@ -78,7 +78,9 @@ router.post('/api/signin-user', async (req, res) => {
             path: '/',
         });
 
-        return res.status(201).json(user);
+        const safeUser = await User.findOne({ email }).select("-password -tokens");
+
+        return res.status(201).json(safeUser);
     } catch (error) {
         console.log("/api/sigin-user: ", error);
         return res.status(500).json({ error: "Internal Server Error" });

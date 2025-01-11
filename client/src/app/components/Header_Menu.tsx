@@ -1,17 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { useAppSelector } from "@/store/store";
 
 interface HeaderMenuProps {
-    onNavigationComplete: () => void;
-  }
+  onNavigationComplete: () => void;
+}
 
-function Header_Menu({ onNavigationComplete } : HeaderMenuProps) {
+function Header_Menu({ onNavigationComplete }: HeaderMenuProps) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [user, setUser] = useState(false);
+  const userState = useAppSelector((state) => state.user.userState);
 
   const handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const url = `/${e.currentTarget.innerText.toLowerCase()}`;
@@ -21,7 +22,7 @@ function Header_Menu({ onNavigationComplete } : HeaderMenuProps) {
 
   return (
     <div className="h-[calc(100vh-56px)] p-[20px] absolute w-full bg-white">
-      {!user ? (
+      {!userState ? (
         <div className="space-y-3">
           <div
             className={`py-3 w-full border-b-[1px] border-black font-bold ${

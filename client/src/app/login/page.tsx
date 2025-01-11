@@ -13,7 +13,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-  const authState = useAppSelector((state) => state.user.userState);
+  const userState = useAppSelector((state) => state.user.userState);
 
   const dispatch = useAppDispatch();
 

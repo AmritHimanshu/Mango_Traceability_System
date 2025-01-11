@@ -13,7 +13,7 @@ router.get('/api/pending-farmers', authenticateUser, async (req, res) => {
             return res.status(401).json({error: "You don't have permission."});
         }
 
-        const pendingFarmers = await User.find({ role: "Farmer", isAuthenticated: false }, "-password");
+        const pendingFarmers = await User.find({ role: "Farmer", isAuthenticated: false }).select("-password");
 
         return res.status(200).json(pendingFarmers);
     } catch (error) {
