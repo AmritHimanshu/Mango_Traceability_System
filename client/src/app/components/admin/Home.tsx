@@ -30,15 +30,6 @@ function Home() {
         <div className="p-5 text-xl text-red-600 text-center font-bold bg-cardBackground rounded-md">
           Total number of pending farmers: {noOfPendingFarmers}
         </div>
-        <div className="p-5 text-xl text-red-600 text-center font-bold bg-cardBackground rounded-md">
-          Total number of pending farmers: {noOfPendingFarmers}
-        </div>
-        <div className="p-5 text-xl text-red-600 text-center font-bold bg-cardBackground rounded-md">
-          Total number of pending farmers: {noOfPendingFarmers}
-        </div>
-        <div className="p-5 text-xl text-red-600 text-center font-bold bg-cardBackground rounded-md">
-          Total number of pending farmers: {noOfPendingFarmers}
-        </div>
       </div>
     </div>
   );
