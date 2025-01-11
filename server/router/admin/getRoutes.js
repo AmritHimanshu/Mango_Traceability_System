@@ -3,14 +3,14 @@ const router = express.Router();
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
 
-const authenticateUser = require('../../middleware/authenticateUser');
+const authenticateAdmin = require('../../middleware/authenticateAdmin');
 const User = require('../../model/userSchema');
 
 
-router.get('/api/pending-farmers', authenticateUser, async (req, res) => {
+router.get('/api/pending-farmers', authenticateAdmin, async (req, res) => {
     try {
-        if (req.rootUser.role === 'Farmer') {
-            return res.status(401).json({error: "You don't have permission."});
+        if (req.rootUser.role !== 'Admin') {
+            return res.status(403).json({error: "You don't have permission."});
         }
 
         const pendingFarmers = await User.find({ role: "Farmer", isAuthenticated: false }).select("-password");

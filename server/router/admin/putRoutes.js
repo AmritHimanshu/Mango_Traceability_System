@@ -4,18 +4,18 @@ const cookieParser = require("cookie-parser");
 router.use(cookieParser());
 
 const { notifyUser } = require('../../functions/sendMail');
-const authenticateUser = require('../../middleware/authenticateUser');
+const authenticateAdmin = require('../../middleware/authenticateAdmin');
 
 const User = require('../../model/userSchema');
 
 
-router.put('/api/authenticate-user/:id', authenticateUser, async (req, res) => {
+router.put('/api/authenticate-user/:id', authenticateAdmin, async (req, res) => {
     const { id } = req.params;
     const { isAuthenticated } = req.body;
 
     try {
-        if (req.rootUser.role === 'Farmer') {
-            return res.status(401).json({error: "You don't have permission."});
+        if (req.rootUser.role !== 'Admin') {
+            return res.status(403).json({error: "You don't have permission."});
         }
 
         const user = await User.findById(id);
@@ -23,7 +23,7 @@ router.put('/api/authenticate-user/:id', authenticateUser, async (req, res) => {
             return res.status(404).json({ error: "User not found" });
         }
 
-        if (user.role !== "Farmer" && user.role !== "Manager") {
+        if (user.role === "Admin") {
             return res.status(400).json({ error: "Admin doesn't require authentication" });
         }
 

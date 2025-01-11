@@ -4,6 +4,10 @@ const User = require('../model/userSchema');
 const authenticateAdmin = async (req, res, next) => {
     try {
         const token = req.cookies.jwtoken;
+        if (!token) {
+            return res.redirect("/login");
+        }
+
         const verifyToken = jwt.verify(token, process.env.SECRET_KEY);
 
         if (!verifyToken) {
@@ -15,8 +19,8 @@ const authenticateAdmin = async (req, res, next) => {
             return res.status(401).json({ error: "User not found" });
         }
 
-        if(rootUser.role === 'Farmer'){
-            return res.status(401).json({error: "You don't have permission."});
+        if(rootUser.role !== 'Admin'){
+            return res.status(403).json({error: "You don't have permission."});
         }
 
         req.rootUser = rootUser;

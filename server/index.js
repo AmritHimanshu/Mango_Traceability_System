@@ -3,11 +3,17 @@ const app = express();
 const cors = require('cors');
 const dotenv = require('dotenv');
 
+const authenticateAdmin = require('./middleware/authenticateAdmin');
+
 dotenv.config({ path: './.env' });
 
 const PORT = process.env.PORT || 5000;
 
 require('./db/conn');
+
+const postRoutes = require('./router/common/postRoutes');
+const adminGetRoutes = require('./router/admin/getRoutes');
+const adminPutRoutes = require('./router/admin/putRoutes');
 
 app.use(cors({
     origin: true,
@@ -17,9 +23,9 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(require('./router/common/postRoutes'));
-app.use(require('./router/admin/getRoutes'));
-app.use(require('./router/admin/putRoutes'));
+app.use(postRoutes);
+app.use('/admin', authenticateAdmin, adminGetRoutes);
+app.use('/admin', authenticateAdmin, adminPutRoutes);
 
 app.listen(PORT, () => {
     console.log(`The server is running at port ${PORT}`);
