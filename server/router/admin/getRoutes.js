@@ -19,9 +19,12 @@ router.get('/api/pending-farmers', async (req, res) => {
     }
 });
 
-router.get('/api/fetch-no-of-farmers', async (req, res) => {
+router.get('/api/fetch-no-of-users', async (req, res) => {
     try {
-        console.log(req.rootUser);
+        const farmers = await User.find({ role: 'Farmer' });
+        const managers = await User.find({ role: 'Manager' });
+        const verifiedFarmers = await User.find({ role: 'Farmer', isAuthenticated: true });
+        return res.status(201).json({ farmers: farmers.length, managers: managers.length, verifiedFarmers: verifiedFarmers.length });
     } catch (error) {
         console.log("/api/fetch-no-of-farmers: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
