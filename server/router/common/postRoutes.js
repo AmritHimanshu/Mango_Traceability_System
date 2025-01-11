@@ -51,7 +51,7 @@ router.post('/api/signin-user', async (req, res) => {
     }
 
     try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }, "-password -tokens");
         if (!user) {
             return res.status(422).json({ error: "Incorrect credentials" });
         }
