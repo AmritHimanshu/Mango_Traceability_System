@@ -100,31 +100,34 @@ function Home() {
         <div className="bg-gray-50 p-3 mt-10">
           <div className="pb-2 text-lg font-bold">Recent Requests:</div>
           <div className="space-y-7">
-          {pendingRequests.map((request, index) => (
-            <div key={index} className="space-y-2">
-              <div className="flex space-x-2 text-[16px]">
-                <div>{index + 1}.</div>
-                <div className="font-medium text-gray-600">
-                  <div>Name: {request.name}</div>
-                  <div>Email: {request.email}</div>
-                  <div>Ph no.: {request.phone}</div>
-                  <div>Role: {request.role}</div>
-                  <div>
-                    Date:{" "}
-                    {new Date(request.createdAt).toLocaleString("en-IN", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "numeric",
-                      hour: "numeric",
-                      minute: "numeric",
-                      hour12: true,
-                    })}
+            {pendingRequests.map((request, index) => (
+              <div key={index} className="space-y-2">
+                <div className="flex space-x-2 text-[16px]">
+                  <div>{index + 1}.</div>
+                  <div className="font-medium text-gray-600">
+                    <div>Name: {request.name}</div>
+                    <div>Email: {request.email}</div>
+                    <div>Ph no.: {request.phone}</div>
+                    <div>Role: {request.role}</div>
+                    <div>
+                      Date:{" "}
+                      {new Date(request.createdAt).toLocaleString("en-IN", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: true,
+                      })}
+                    </div>
                   </div>
                 </div>
+                <div className="flex space-x-3">
+                  <button className="btn bg-green-400">Accept</button>
+                  <button className="btn bg-red-500 text-white">Reject</button>
+                </div>
               </div>
-              <div className="flex space-x-3"><button className="btn bg-green-400">Accept</button><button className="btn bg-red-500 text-white">Reject</button></div>
-            </div>
-          ))}
+            ))}
           </div>
 
           <div className="mt-5 underline text-end">view all</div>
