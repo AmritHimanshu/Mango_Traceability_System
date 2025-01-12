@@ -7,7 +7,6 @@ import Mango_tree from "../../../../public/assets/Mango_tree.png";
 import HomeCard from "./components/HomeCard";
 import "../../../styles/style.css";
 
-
 function Home() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -41,7 +40,7 @@ function Home() {
 
   const fetchPendingRequests = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/admin/api/pending-requests`, {
+      const res = await fetch(`${BASE_URL}/admin/api/few-pending-requests`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -64,7 +63,7 @@ function Home() {
   }, []);
 
   return (
-    <div className="px-3 py-5">
+    <div className="py-5">
       <Image
         src={Mango_tree}
         alt="Mango Tree"
@@ -74,7 +73,7 @@ function Home() {
         className="m-auto"
       />
 
-      <div className="space-y-5">
+      <div className="space-y-5 px-3">
         <HomeCard
           title="Total number of managers"
           description={noOfManagers}
@@ -98,18 +97,38 @@ function Home() {
       </div>
 
       {pendingRequests && (
-        <>
-          <div className="mt-10 text-lg font-bold">Pending Requests:</div>
+        <div className="bg-gray-50 p-3 mt-10">
+          <div className="pb-2 text-lg font-bold">Recent Requests:</div>
+          <div className="space-y-5">
           {pendingRequests.map((request, index) => (
-            <div key={index} className="grid grid-cols-2 text-end">
-              <p className="space-x-2">
-                <span>{index + 1}.</span>
-                <span>{request.email}</span>
-              </p>
-              <p className="">{request.role}</p>
+            <div key={index} className="space-y-2">
+              <div className="flex space-x-2 text-[16px]">
+                <div>{index + 1}.</div>
+                <div className="font-medium text-gray-600">
+                  <div>Name: {request.name}</div>
+                  <div>Email: {request.email}</div>
+                  <div>Ph no.: {request.phone}</div>
+                  <div>Role: {request.role}</div>
+                  <div>
+                    Date:{" "}
+                    {new Date(request.createdAt).toLocaleString("en-IN", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                      hour12: true,
+                    })}
+                  </div>
+                </div>
+              </div>
+              <div className="flex space-x-3"><button className="btn bg-green-400">Accept</button><button className="btn bg-red-500 text-white">Reject</button></div>
             </div>
           ))}
-        </>
+          </div>
+
+          <div className="mt-5 underline text-end">view all</div>
+        </div>
       )}
     </div>
   );

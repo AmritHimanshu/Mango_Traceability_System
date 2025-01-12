@@ -4,13 +4,13 @@ const router = express.Router();
 const User = require('../../model/userSchema');
 
 
-router.get('/api/pending-requests', async (req, res) => {
+router.get('/api/few-pending-requests', async (req, res) => {
     try {
         if (req.rootUser.role !== 'Admin') {
             return res.status(403).json({ error: "You don't have permission." });
         }
 
-        const pendingRequests = await User.find({ isAuthenticated: false }).select("-password -tokens -updatedAt").sort("-createdAt");
+        const pendingRequests = await User.find({ isAuthenticated: false }).select("-password -tokens -updatedAt").sort("-createdAt").limit(3);
 
         return res.status(200).json(pendingRequests);
     } catch (error) {

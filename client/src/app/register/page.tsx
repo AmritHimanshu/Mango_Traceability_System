@@ -211,7 +211,7 @@ function page() {
             <option value="Farmer">Farmer</option>
           </select>
 
-          <button type="submit" className="btn">
+          <button type="submit" className="btn bg-black text-white">
             Register
           </button>
         </form>

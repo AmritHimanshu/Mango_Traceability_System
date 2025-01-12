@@ -1,5 +1,5 @@
 .btn{
-    @apply py-2 px-4 rounded-md bg-black font-bold w-full m-auto text-white
+    @apply py-2 px-4 rounded-md font-bold w-full m-auto
 }
 
 .input-tag{
