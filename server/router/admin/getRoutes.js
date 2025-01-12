@@ -21,12 +21,12 @@ router.get('/api/few-pending-requests', async (req, res) => {
 
 router.get('/api/fetch-no-of-users', async (req, res) => {
     try {
-        const farmers = await User.find({ role: 'Farmer' });
-        const managers = await User.find({ role: 'Manager' });
+        const managers = await User.find({ role: 'Manager', isAuthenticated: true, isRejected: false });
         const verifiedFarmers = await User.find({ role: 'Farmer', isAuthenticated: true });
-        const pendingRequests = await User.find({ role: { $in: ['Farmer', 'Manager'] }, isAuthenticated: false, isRejected: false });
+        const pendingRequests = await User.find({ isAuthenticated: false, isRejected: false });
+        const rejectedRequests = await User.find({ isRejected: true });
 
-        return res.status(201).json({ noOfFarmers: farmers.length, noOfManagers: managers.length, noOfVerifiedFarmers: verifiedFarmers.length, noOfPendingRequests: pendingRequests.length });
+        return res.status(201).json({ noOfManagers: managers.length, noOfVerifiedFarmers: verifiedFarmers.length, noOfPendingRequests: pendingRequests.length, noOfRejectedRequests: rejectedRequests.length });
     } catch (error) {
         console.log("/api/fetch-no-of-farmers: ", error);
         return res.status(500).json({ error: "Internal Server Error" });

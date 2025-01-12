@@ -14,6 +14,7 @@ function Home() {
   const [noOfManagers, setNoOfManagers] = useState(0);
   const [noOfVerifiedFarmers, setNoOfVerifiedFarmers] = useState(0);
   const [noOfPendingRequests, setNoOfPendingRequests] = useState(0);
+  const [noOfRejectedRequests, sestNoOfRejectedRequests] = useState(0);
   const [pendingRequests, setPendingRequests] = useState<pendingRequests[]>([]);
 
   const fetchNoOfFarmers = async () => {
@@ -32,6 +33,7 @@ function Home() {
       setNoOfManagers(data.noOfManagers);
       setNoOfVerifiedFarmers(data.noOfVerifiedFarmers);
       setNoOfPendingRequests(data.noOfPendingRequests);
+      sestNoOfRejectedRequests(data.noOfRejectedRequests);
     } catch (error) {
       console.log(error);
       alert("Error fetchNoOfFarmers");
@@ -74,7 +76,7 @@ function Home() {
       });
 
       const data = await res.json();
-      if(res.status !== 200){
+      if (res.status !== 200) {
         alert(data.error);
         console.log(data.error);
       }
@@ -99,16 +101,10 @@ function Home() {
 
       <div className="space-y-5 px-3">
         <HomeCard
-          title="Total number of managers"
-          description="(including rejected ones)"
+          title="Total number of verified managers"
+          description=""
           count={noOfManagers}
           textColor="orange"
-        />
-        <HomeCard
-          title="Total number of farmers"
-          description="(including rejected ones)"
-          count={noOfFarmers}
-          textColor="blue"
         />
         <HomeCard
           title="Total number of verified farmers"
@@ -120,6 +116,12 @@ function Home() {
           title="Total number of pending requests"
           description=""
           count={noOfPendingRequests}
+          textColor="violet"
+        />
+        <HomeCard
+          title="Total number of rejected requests"
+          description=""
+          count={noOfRejectedRequests}
           textColor="red"
         />
       </div>
@@ -130,7 +132,7 @@ function Home() {
           <div className="space-y-7">
             {pendingRequests.map((request, index) => (
               <div key={index} className="space-y-2">
-                <div className="flex space-x-2 text-[16px]">
+                <div className="flex space-x-2 text-[16px] text-">
                   <div>{index + 1}.</div>
                   <div className="font-medium text-gray-600">
                     <div>Name: {request.name}</div>
