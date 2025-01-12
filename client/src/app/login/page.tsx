@@ -55,7 +55,6 @@ function page() {
       router.push('/');
       
       alert("Successfully signed in");
-      console.log(data);
     } catch (error) {
       console.log("Error: ", error);
       alert("Error");

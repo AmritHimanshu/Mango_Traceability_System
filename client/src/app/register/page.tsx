@@ -84,8 +84,6 @@ function page() {
 
       alert(data.message);
       router.push('/login');
-
-      console.log(data);
     } catch (error) {
       console.log("Error: ", error);
       alert("Error");
