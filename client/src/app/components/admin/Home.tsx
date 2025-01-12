@@ -74,8 +74,12 @@ function Home() {
       });
 
       const data = await res.json();
+      if(res.status !== 200){
+        alert(data.error);
+        console.log(data.error);
+      }
       alert(data.message);
-      console.log(data);
+      fetchPendingRequests();
     } catch (error) {
       console.log(error);
       alert("Error acceptRequest");
@@ -96,22 +100,26 @@ function Home() {
       <div className="space-y-5 px-3">
         <HomeCard
           title="Total number of managers"
-          description={noOfManagers}
+          description="(including rejected ones)"
+          count={noOfManagers}
           textColor="orange"
         />
         <HomeCard
           title="Total number of farmers"
-          description={noOfFarmers}
+          description="(including rejected ones)"
+          count={noOfFarmers}
           textColor="blue"
         />
         <HomeCard
           title="Total number of verified farmers"
-          description={noOfVerifiedFarmers}
+          description=""
+          count={noOfVerifiedFarmers}
           textColor="green"
         />
         <HomeCard
           title="Total number of pending requests"
-          description={noOfPendingRequests}
+          description=""
+          count={noOfPendingRequests}
           textColor="red"
         />
       </div>
@@ -128,7 +136,7 @@ function Home() {
                     <div>Name: {request.name}</div>
                     <div>Email: {request.email}</div>
                     <div>Ph no.: {request.phone}</div>
-                    <div>Role: {request.role}</div>
+                    <div className="font-semibold">Role: {request.role}</div>
                     <div>
                       Date:{" "}
                       {new Date(request.createdAt).toLocaleString("en-IN", {

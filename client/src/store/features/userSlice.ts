@@ -1,18 +1,7 @@
+import { IUserState, userSchema } from "@/utils/Types/interfaces";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-export interface userSchema {
-  _id: string;
-  name: string;
-  email: string;
-  phone: string;
-  role: "Admin" | "Manager" | "Farmer";
-  isAuthenticated: boolean;
-}
-
-export interface IUserState {
-  userState: userSchema | null;
-}
 
 const initialState: IUserState = {
   userState: null,

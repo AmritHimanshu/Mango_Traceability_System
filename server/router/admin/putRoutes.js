@@ -29,6 +29,8 @@ router.put('/api/authenticate-user/:id', async (req, res) => {
         }
 
         user.isAuthenticated = isAuthenticated;
+        
+        if(isAuthenticated === false) user.isRejected = true; 
         await user.save();
 
         await notifyUser(user, isAuthenticated);

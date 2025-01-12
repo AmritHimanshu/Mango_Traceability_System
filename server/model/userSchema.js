@@ -40,6 +40,11 @@ const userSchema = new mongoose.Schema(
             default: false
 
         },
+        isRejected:
+        {
+            type: Boolean,
+            default: false
+        },
         tokens: [
             {
                 token: {
