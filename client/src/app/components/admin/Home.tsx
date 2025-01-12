@@ -5,8 +5,8 @@ import Image from "next/image";
 import { pendingRequests } from "@/utils/Types/interfaces";
 import Mango_tree from "../../../../public/assets/Mango_tree.png";
 import HomeCard from "./components/HomeCard";
-import "../../../styles/style.css";
 import UserCard from "./components/UserCard";
+import "../../../styles/style.css";
 
 function Home() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
