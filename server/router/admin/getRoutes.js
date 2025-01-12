@@ -20,8 +20,8 @@ router.get('/api/few-pending-requests', async (req, res) => {
 });
 
 router.get('/api/pending-requests', async (req, res) => {
-    const limit = req.params.limit;
-    const skip = req.params.skip;
+    const limit = req.query.limit;
+    const skip = req.query.skip;
     try {
         const pendingRequests = await User.find({ isAuthenticated: false, isRejected: false }).select("-password -tokens -updatedAt").sort("-createdAt").skip(parseInt(skip)).limit(parseInt(limit));
 

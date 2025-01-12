@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAppSelector } from "@/store/store";
 import AdminHome from './components/admin/Home';
+import "../styles/style.css";
 
 export default function Home() {
 

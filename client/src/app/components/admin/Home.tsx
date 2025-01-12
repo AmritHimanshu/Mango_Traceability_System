@@ -7,7 +7,6 @@ import { pendingRequests } from "@/utils/Types/interfaces";
 import Mango_tree from "../../../../public/assets/Mango_tree.png";
 import HomeCard from "./components/HomeCard";
 import UserCard from "./components/UserCard";
-import "../../../styles/style.css";
 
 function Home() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -53,7 +52,6 @@ function Home() {
       });
 
       const data = await res.json();
-      console.log(data);
       setPendingRequests(data);
     } catch (error) {
       console.log(error);
@@ -136,12 +134,21 @@ function Home() {
           <div className="space-y-7">
             {pendingRequests.map((request, index) => (
               <div key={index} className="space-y-2">
-                <UserCard index={index} request={request} authenticateReq={authenticateReq}/>
+                <UserCard
+                  index={index}
+                  request={request}
+                  authenticateReq={authenticateReq}
+                />
               </div>
             ))}
           </div>
 
-          <div className="mt-5 underline text-end" onClick={()=>router.push('/admin/pending-requests')}>view all</div>
+          <div
+            className="mt-5 underline text-end"
+            onClick={() => router.push("/admin/pending-requests")}
+          >
+            view all
+          </div>
         </div>
       )}
     </div>
