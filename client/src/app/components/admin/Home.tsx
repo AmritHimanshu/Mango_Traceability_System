@@ -2,19 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { pendingRequests } from "@/utils/Types/interfaces";
 import Mango_tree from "../../../../public/assets/Mango_tree.png";
 import HomeCard from "./components/HomeCard";
 import "../../../styles/style.css";
 
-interface pendingRequests {
-  createdAt: string;
-  email: string;
-  isAuthenticated: boolean;
-  name: string;
-  phone: number;
-  role: string;
-  _id: string;
-}
 
 function Home() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -83,10 +75,26 @@ function Home() {
       />
 
       <div className="space-y-5">
-        <HomeCard title="Total number of managers" description={noOfManagers} textColor="orange"/>
-        <HomeCard title="Total number of farmers" description={noOfFarmers} textColor="blue"/>
-        <HomeCard title="Total number of verified farmers" description={noOfVerifiedFarmers} textColor="green"/>
-        <HomeCard title="Total number of pending requests" description={noOfPendingRequests} textColor="red"/>
+        <HomeCard
+          title="Total number of managers"
+          description={noOfManagers}
+          textColor="orange"
+        />
+        <HomeCard
+          title="Total number of farmers"
+          description={noOfFarmers}
+          textColor="blue"
+        />
+        <HomeCard
+          title="Total number of verified farmers"
+          description={noOfVerifiedFarmers}
+          textColor="green"
+        />
+        <HomeCard
+          title="Total number of pending requests"
+          description={noOfPendingRequests}
+          textColor="red"
+        />
       </div>
 
       {pendingRequests && (
@@ -94,7 +102,10 @@ function Home() {
           <div className="mt-10 text-lg font-bold">Pending Requests:</div>
           {pendingRequests.map((request, index) => (
             <div key={index} className="grid grid-cols-2 text-end">
-              <p className="space-x-2"><span>{index + 1}.</span><span>{request.email}</span></p>
+              <p className="space-x-2">
+                <span>{index + 1}.</span>
+                <span>{request.email}</span>
+              </p>
               <p className="">{request.role}</p>
             </div>
           ))}
