@@ -6,6 +6,7 @@ import { pendingRequests } from "@/utils/Types/interfaces";
 import Mango_tree from "../../../../public/assets/Mango_tree.png";
 import HomeCard from "./components/HomeCard";
 import "../../../styles/style.css";
+import UserCard from "./components/UserCard";
 
 function Home() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -79,7 +80,7 @@ function Home() {
         console.log(data.error);
       }
       alert(data.message);
-      
+
       fetchNoOfFarmers();
       fetchPendingRequests();
     } catch (error) {
@@ -132,40 +133,7 @@ function Home() {
           <div className="space-y-7">
             {pendingRequests.map((request, index) => (
               <div key={index} className="space-y-2">
-                <div className="flex space-x-2 text-[16px] text-">
-                  <div>{index + 1}.</div>
-                  <div className="font-medium text-gray-600">
-                    <div>Name: {request.name}</div>
-                    <div>Email: {request.email}</div>
-                    <div>Ph no.: {request.phone}</div>
-                    <div className="font-semibold">Role: {request.role}</div>
-                    <div>
-                      Date:{" "}
-                      {new Date(request.createdAt).toLocaleString("en-IN", {
-                        day: "2-digit",
-                        month: "2-digit",
-                        year: "numeric",
-                        hour: "numeric",
-                        minute: "numeric",
-                        hour12: true,
-                      })}
-                    </div>
-                  </div>
-                </div>
-                <div className="flex space-x-3">
-                  <button
-                    className="btn bg-green-400"
-                    onClick={() => authenticateReq(request._id, true)}
-                  >
-                    Accept
-                  </button>
-                  <button
-                    className="btn bg-red-500 text-white"
-                    onClick={() => authenticateReq(request._id, false)}
-                  >
-                    Reject
-                  </button>
-                </div>
+                <UserCard index={index} request={request} authenticateReq={authenticateReq}/>
               </div>
             ))}
           </div>

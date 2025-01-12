@@ -42,3 +42,9 @@ export type HomeCardProps = {
   count: number;
   textColor: string;
 };
+
+export type UserCardProps = {
+  index: number;
+  request: pendingRequests;
+  authenticateReq: (id: string, status: boolean) => void;
+}
