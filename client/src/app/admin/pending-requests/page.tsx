@@ -28,7 +28,12 @@ function page() {
 
       const data = await res.json();
       console.log(data);
-      setPendingRequests(data);
+      setPendingRequests((prev)=>{
+        if(prev.length === 0) return data;
+        else{
+          return [...prev, ...data];
+        }
+      })
     } catch (error) {
       console.log(error);
       alert("Error fetchPendingRequests");
