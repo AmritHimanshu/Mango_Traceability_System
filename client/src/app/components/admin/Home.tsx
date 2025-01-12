@@ -10,8 +10,7 @@ import "../../../styles/style.css";
 function Home() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-  const [noOfFarmers, setNoOfFarmers] = useState(0);
-  const [noOfManagers, setNoOfManagers] = useState(0);
+  const [noOfVerifiedManagers, setNoOfVerifiedManagers] = useState(0);
   const [noOfVerifiedFarmers, setNoOfVerifiedFarmers] = useState(0);
   const [noOfPendingRequests, setNoOfPendingRequests] = useState(0);
   const [noOfRejectedRequests, sestNoOfRejectedRequests] = useState(0);
@@ -29,8 +28,7 @@ function Home() {
 
       const data = await res.json();
 
-      setNoOfFarmers(data.noOfFarmers);
-      setNoOfManagers(data.noOfManagers);
+      setNoOfVerifiedManagers(data.noOfVerifiedManagers);
       setNoOfVerifiedFarmers(data.noOfVerifiedFarmers);
       setNoOfPendingRequests(data.noOfPendingRequests);
       sestNoOfRejectedRequests(data.noOfRejectedRequests);
@@ -103,7 +101,7 @@ function Home() {
         <HomeCard
           title="Total number of verified managers"
           description=""
-          count={noOfManagers}
+          count={noOfVerifiedManagers}
           textColor="orange"
         />
         <HomeCard
