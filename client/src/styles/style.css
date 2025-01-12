@@ -5,3 +5,11 @@
 .input-tag{
     @apply outline-none pt-2 border-b-2 border-black w-full bg-transparent
 }
+
+.admin-card{
+    @apply p-5 text-[16px] text-center font-bold bg-cardBackground rounded-md
+}
+
+.admin-card>p{
+    @apply text-[20px]
+}

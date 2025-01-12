@@ -2,14 +2,14 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
-import { HandleOnClickProps } from "@/utils/types/interfaces";
+import { HandleOnClickProps } from "@/utils/Types/interfaces";
 import {
   FARMER_MANAGEMENT,
   LOGOUT,
   MANAGER_MANAGEMENT,
   OVERVIEW,
   PENDING_REQUESTS,
-} from "@/utils/paths/paths";
+} from "@/utils/Paths/paths";
 
 function Admin_Header({ handleOnClick }: HandleOnClickProps) {
   const pathname = usePathname();

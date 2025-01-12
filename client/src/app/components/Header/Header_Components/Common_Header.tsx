@@ -2,8 +2,8 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
-import { HandleOnClickProps } from "@/utils/types/interfaces";
-import { LOGIN, REGISTER } from "@/utils/paths/paths";
+import { HandleOnClickProps } from "@/utils/Types/interfaces";
+import { LOGIN, REGISTER } from "@/utils/Paths/paths";
 
 function Common_Header({ handleOnClick }: HandleOnClickProps) {
   const pathname = usePathname();

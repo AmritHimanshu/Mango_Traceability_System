@@ -4,15 +4,15 @@ const router = express.Router();
 const User = require('../../model/userSchema');
 
 
-router.get('/api/pending-farmers', async (req, res) => {
+router.get('/api/pending-requests', async (req, res) => {
     try {
         if (req.rootUser.role !== 'Admin') {
             return res.status(403).json({ error: "You don't have permission." });
         }
 
-        const pendingFarmers = await User.find({ role: "Farmer", isAuthenticated: false }).select("-password");
+        const pendingRequests = await User.find({ isAuthenticated: false }).select("-password -tokens -updatedAt").sort("-createdAt");
 
-        return res.status(200).json(pendingFarmers);
+        return res.status(200).json(pendingRequests);
     } catch (error) {
         console.log("/api/pending-farmers: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
@@ -24,7 +24,9 @@ router.get('/api/fetch-no-of-users', async (req, res) => {
         const farmers = await User.find({ role: 'Farmer' });
         const managers = await User.find({ role: 'Manager' });
         const verifiedFarmers = await User.find({ role: 'Farmer', isAuthenticated: true });
-        return res.status(201).json({ farmers: farmers.length, managers: managers.length, verifiedFarmers: verifiedFarmers.length });
+        const pendingRequests = await User.find({ role: { $in: ['Farmer', 'Manager'] }, isAuthenticated: false });
+
+        return res.status(201).json({ noOfFarmers: farmers.length, noOfManagers: managers.length, noOfVerifiedFarmers: verifiedFarmers.length, noOfPendingRequests: pendingRequests.length });
     } catch (error) {
         console.log("/api/fetch-no-of-farmers: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
