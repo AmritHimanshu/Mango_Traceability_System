@@ -20,7 +20,7 @@ function Home() {
   const [noOfRejectedRequests, sestNoOfRejectedRequests] = useState(0);
   const [pendingRequests, setPendingRequests] = useState<pendingRequests[]>([]);
 
-  const fetchNoOfFarmers = async () => {
+  const fetchNoOfUsers = async () => {
     try {
       const res = await fetch(`${BASE_URL}/admin/api/fetch-no-of-users`, {
         method: "GET",
@@ -62,7 +62,7 @@ function Home() {
   };
 
   useEffect(() => {
-    fetchNoOfFarmers();
+    fetchNoOfUsers();
     fetchPendingRequests();
   }, []);
 
@@ -84,7 +84,7 @@ function Home() {
       }
       alert(data.message);
 
-      fetchNoOfFarmers();
+      fetchNoOfUsers();
       fetchPendingRequests();
     } catch (error) {
       console.log(error);
