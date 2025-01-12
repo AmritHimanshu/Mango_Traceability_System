@@ -79,6 +79,8 @@ function Home() {
         console.log(data.error);
       }
       alert(data.message);
+      
+      fetchNoOfFarmers();
       fetchPendingRequests();
     } catch (error) {
       console.log(error);
