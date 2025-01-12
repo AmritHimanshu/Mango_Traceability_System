@@ -34,7 +34,7 @@ function Home() {
       setNoOfPendingRequests(data.noOfPendingRequests);
     } catch (error) {
       console.log(error);
-      alert("Error fetchFarmers");
+      alert("Error fetchNoOfFarmers");
     }
   };
 
@@ -53,7 +53,7 @@ function Home() {
       setPendingRequests(data);
     } catch (error) {
       console.log(error);
-      alert("Error fetchFarmers");
+      alert("Error fetchPendingRequests");
     }
   };
 
@@ -61,6 +61,26 @@ function Home() {
     fetchNoOfFarmers();
     fetchPendingRequests();
   }, []);
+
+  const authenticateReq = async (id: string, status: boolean) => {
+    try {
+      const res = await fetch(`${BASE_URL}/admin/api/authenticate-user/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ isAuthenticated: status }),
+      });
+
+      const data = await res.json();
+      alert(data.message);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+      alert("Error acceptRequest");
+    }
+  };
 
   return (
     <div className="py-5">
@@ -123,8 +143,18 @@ function Home() {
                   </div>
                 </div>
                 <div className="flex space-x-3">
-                  <button className="btn bg-green-400">Accept</button>
-                  <button className="btn bg-red-500 text-white">Reject</button>
+                  <button
+                    className="btn bg-green-400"
+                    onClick={() => authenticateReq(request._id, true)}
+                  >
+                    Accept
+                  </button>
+                  <button
+                    className="btn bg-red-500 text-white"
+                    onClick={() => authenticateReq(request._id, false)}
+                  >
+                    Reject
+                  </button>
                 </div>
               </div>
             ))}

@@ -15,6 +15,10 @@ router.put('/api/authenticate-user/:id', async (req, res) => {
             return res.status(403).json({error: "You don't have permission."});
         }
 
+        if(isAuthenticated === undefined){
+            return res.status(401).json({error: "Bad request"});
+        }
+
         const user = await User.findById(id);
         if (!user) {
             return res.status(404).json({ error: "User not found" });
