@@ -14,9 +14,9 @@ function HomeCard({ title, description, textColor }: HomeCardProps) {
     const textColorClass = allowedColors[textColor] || "text-black";
 
   return (
-    <div className={`admin-card ${textColorClass}`}>
+    <div className={`p-5 text-[16px] text-center font-bold bg-cardBackground rounded-md ${textColorClass}`}>
       {title}
-      <p>{description}</p>
+      <p className="text-[20px]">{description}</p>
     </div>
   );
 }
