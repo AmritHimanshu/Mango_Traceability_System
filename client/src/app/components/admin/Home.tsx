@@ -99,7 +99,7 @@ function Home() {
       {pendingRequests && (
         <div className="bg-gray-50 p-3 mt-10">
           <div className="pb-2 text-lg font-bold">Recent Requests:</div>
-          <div className="space-y-5">
+          <div className="space-y-7">
           {pendingRequests.map((request, index) => (
             <div key={index} className="space-y-2">
               <div className="flex space-x-2 text-[16px]">
