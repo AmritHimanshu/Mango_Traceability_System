@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { pendingRequests } from "@/utils/Types/interfaces";
 import Mango_tree from "../../../../public/assets/Mango_tree.png";
 import HomeCard from "./components/HomeCard";
@@ -10,6 +11,8 @@ import "../../../styles/style.css";
 
 function Home() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const router = useRouter();
 
   const [noOfVerifiedManagers, setNoOfVerifiedManagers] = useState(0);
   const [noOfVerifiedFarmers, setNoOfVerifiedFarmers] = useState(0);
@@ -138,7 +141,7 @@ function Home() {
             ))}
           </div>
 
-          <div className="mt-5 underline text-end">view all</div>
+          <div className="mt-5 underline text-end" onClick={()=>router.push('/admin/pending-requests')}>view all</div>
         </div>
       )}
     </div>

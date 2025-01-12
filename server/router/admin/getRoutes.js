@@ -14,6 +14,19 @@ router.get('/api/few-pending-requests', async (req, res) => {
 
         return res.status(200).json(pendingRequests);
     } catch (error) {
+        console.log("/api/few-pending-farmers: ", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+router.get('/api/pending-requests', async (req, res) => {
+    const limit = req.params.limit;
+    const skip = req.params.skip;
+    try {
+        const pendingRequests = await User.find({ isAuthenticated: false, isRejected: false }).select("-password -tokens -updatedAt").sort("-createdAt").skip(parseInt(skip)).limit(parseInt(limit));
+
+        return res.status(200).json(pendingRequests);
+    } catch (error) {
         console.log("/api/pending-farmers: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
