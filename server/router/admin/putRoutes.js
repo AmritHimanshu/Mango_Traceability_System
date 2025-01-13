@@ -36,7 +36,7 @@ router.put('/api/authenticate-user/:id', async (req, res) => {
         await notifyUser(user, isAuthenticated);
 
         const status = isAuthenticated ? "approved" : "rejected";
-        return res.status(200).json({ message: `User has been ${status}` });
+        return res.status(201).json({ message: `User has been ${status}` });
     } catch (error) {
         console.log("/api/authenticate-user: ", error);
         return res.status(500).json({ error: "Internal Server Error" });

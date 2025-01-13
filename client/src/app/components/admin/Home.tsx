@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { pendingRequests } from "@/utils/Types/interfaces";
+import { LOGIN } from "@/utils/Paths/paths";
 import Mango_tree from "../../../../public/assets/Mango_tree.png";
 import HomeCard from "./components/HomeCard";
 import UserCard from "./components/UserCard";
@@ -31,6 +32,11 @@ function Home() {
 
       const data = await res.json();
 
+      if(res.status !== 201){
+        router.push(LOGIN);
+        return;
+      }
+
       setNoOfVerifiedManagers(data.noOfVerifiedManagers);
       setNoOfVerifiedFarmers(data.noOfVerifiedFarmers);
       setNoOfPendingRequests(data.noOfPendingRequests);
@@ -52,6 +58,10 @@ function Home() {
       });
 
       const data = await res.json();
+      if (res.status !== 201) {
+        router.push(LOGIN);
+        return;
+      }
       setPendingRequests(data);
     } catch (error) {
       console.log(error);
@@ -76,9 +86,9 @@ function Home() {
       });
 
       const data = await res.json();
-      if (res.status !== 200) {
-        alert(data.error);
-        console.log(data.error);
+      if (res.status !== 201) {
+        router.push(LOGIN);
+        return;
       }
       alert(data.message);
 

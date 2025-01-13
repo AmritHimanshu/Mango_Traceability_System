@@ -85,5 +85,9 @@ router.post('/api/signin-user', async (req, res) => {
     }
 });
 
+router.get('/',(req,res)=>{
+    return res.status(200).json({message: "I am Singh Sahab"});
+})
+
 
 module.exports = router;

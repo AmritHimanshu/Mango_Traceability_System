@@ -1,12 +1,19 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+// import { useAppSelector } from "@/store/store";
 import { pendingRequests } from "@/utils/Types/interfaces";
+import { LOGIN } from "@/utils/Paths/paths";
 import UserCard from "@/app/components/admin/components/UserCard";
 import "../../../styles/style.css";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  // const userState = useAppSelector((state) => state.user.userState);
+
+  const router = useRouter();
 
   const [pendingRequests, setPendingRequests] = useState<pendingRequests[]>([]);
 
@@ -27,6 +34,10 @@ function page() {
       );
 
       const data = await res.json();
+      if(res.status !== 201){
+        alert(data.error);
+        return router.push(LOGIN);
+      }
       console.log(data);
       setPendingRequests((prev)=>{
         if(prev.length === 0) return data;
