@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { ListUserCardProps } from "@/utils/Types/interfaces";
 
 function ListUserCard({ index, user }: ListUserCardProps) {
