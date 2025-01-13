@@ -46,7 +46,7 @@ export type HomeCardProps = {
 export type PendingUserCardProps = {
   index: number;
   request: User;
-  authenticateReq: (id: string, status: boolean) => void;
+  authenticateReq: (id: string, status: boolean) => Promise<void>;
 }
 
 export type ListUserCardProps = {
