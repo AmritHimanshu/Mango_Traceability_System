@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { pendingRequests } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
-import UserCard from "@/app/components/admin/components/UserCard";
+import ListUserCard from "@/app/components/admin/components/ListUserCard";
 import "../../../styles/style.css";
 
 function page() {
@@ -99,7 +99,7 @@ function page() {
           <div className="space-y-7 bg-gray-50">
             {pendingRequests.map((request, index) => (
               <div key={index} className="space-y-2">
-                <UserCard
+                <ListUserCard
                   index={index}
                   request={request}
                   authenticateReq={authenticateReq}

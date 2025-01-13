@@ -67,7 +67,20 @@ function page() {
 
   return (
     <div className="px-3 py-3 relative">
-      <div></div>
+      {managers.length !== 0 && (
+        <>
+          <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center">
+            Managers
+          </div>
+          <div className="space-y-7 bg-gray-50">
+          {managers.map((manager,index)=>(
+            <div key={index} className="space-y-2">
+
+            </div>
+          ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }

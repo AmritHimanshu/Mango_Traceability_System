@@ -7,7 +7,7 @@ import { pendingRequests } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
 import Mango_tree from "../../../../public/assets/Mango_tree.png";
 import HomeCard from "./components/HomeCard";
-import UserCard from "./components/UserCard";
+import ListUserCard from "./components/ListUserCard";
 
 function Home() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -144,7 +144,7 @@ function Home() {
           <div className="space-y-7">
             {pendingRequests.map((request, index) => (
               <div key={index} className="space-y-2">
-                <UserCard
+                <ListUserCard
                   index={index}
                   request={request}
                   authenticateReq={authenticateReq}

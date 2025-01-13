@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { UserCardProps } from "@/utils/Types/interfaces";
 
-function UserCard({ index, request, authenticateReq }: UserCardProps) {
+function ListUserCard({ index, request, authenticateReq }: UserCardProps) {
   const [selectedButton, setSelectedButton] = useState("");
 
   const handleOnClick = (id: string, status: boolean, buttonText: string) => {
@@ -53,4 +53,4 @@ function UserCard({ index, request, authenticateReq }: UserCardProps) {
   );
 }
 
-export default UserCard;
+export default ListUserCard;
