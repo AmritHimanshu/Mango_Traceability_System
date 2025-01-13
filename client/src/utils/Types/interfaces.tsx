@@ -48,3 +48,8 @@ export type PendingUserCardProps = {
   request: User;
   authenticateReq: (id: string, status: boolean) => void;
 }
+
+export type ListUserCardProps = {
+  index: number;
+  user: User;
+}
