@@ -92,7 +92,7 @@ function page() {
   };
 
   return (
-    <div className="p-3">
+    <div className="px-3 py-5">
       {pendingRequests.length !== 0 && (
         <>
           <div className="pb-2 text-lg font-bold">Recent Requests:</div>
