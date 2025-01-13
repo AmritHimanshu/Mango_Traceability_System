@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/store/store";
 import { HeaderMenuProps } from "@/utils/Types/interfaces";
 import Admin_Header from "./Header_Components/Admin_Header";
+import Farmer_Header from "./Header_Components/Farmer_Header";
 import Common_Header from "./Header_Components/Common_Header";
 
 function Header_Menu({ onNavigationComplete }: HeaderMenuProps) {
@@ -19,12 +20,12 @@ function Header_Menu({ onNavigationComplete }: HeaderMenuProps) {
 
   return (
     <div className="h-[calc(100vh-56px)] p-[20px] absolute z-40 w-full bg-white">
-      {!userState ? (
-        <Common_Header handleOnClick={handleOnClick} />
-      ) : (
-        userState?.role === "Admin" && (
-          <Admin_Header handleOnClick={handleOnClick} />
-        )
+      {!userState && <Common_Header handleOnClick={handleOnClick} />}
+      {userState?.role === "Admin" && (
+        <Admin_Header handleOnClick={handleOnClick} />
+      )}
+      {userState?.role === "Farmer" && (
+        <Farmer_Header handleOnClick={handleOnClick} />
       )}
     </div>
   );
