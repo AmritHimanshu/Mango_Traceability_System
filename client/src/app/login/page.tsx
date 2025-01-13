@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { setUserState } from "@/store/features/userSlice";
 import { useAppDispatch } from "@/store/store";
@@ -22,6 +22,33 @@ function page() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
 
+  const logOut = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/logout`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      if (res.status !== 201) {
+        const error = new Error(data.error);
+        throw error;
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+      alert("Error");
+    }
+  };
+
+  useEffect(() => {
+    logOut();
+  }, []);
+
   const handleFormData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -34,9 +61,9 @@ function page() {
       const res = await fetch(`${BASE_URL}/api/signin-user`, {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify({
           email,
           password,
@@ -52,8 +79,8 @@ function page() {
       }
 
       dispatch(setUserState(data));
-      router.push('/');
-      
+      router.push("/");
+
       alert("Successfully signed in");
     } catch (error) {
       console.log("Error: ", error);

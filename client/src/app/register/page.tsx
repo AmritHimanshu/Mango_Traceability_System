@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { useRouter } from "next/navigation";
@@ -34,6 +34,33 @@ function page() {
     let value = e.target.value;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  const logOut = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/logout`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      if (res.status !== 201) {
+        const error = new Error(data.error);
+        throw error;
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+      alert("Error");
+    }
+  };
+
+  useEffect(() => {
+    logOut();
+  }, []);
 
   const validatePhoneNumber = (phoneNumber: string) => {
     const phoneNumberObj = parsePhoneNumberFromString(phoneNumber, "IN");
@@ -83,7 +110,7 @@ function page() {
       }
 
       alert(data.message);
-      router.push('/login');
+      router.push("/login");
     } catch (error) {
       console.log("Error: ", error);
       alert("Error");
