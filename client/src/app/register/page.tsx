@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { useRouter } from "next/navigation";
+import { LOGOUT_USER, REGISTER_USER } from "@/utils/Apis/api";
+import { LOGIN } from "@/utils/Paths/paths";
 
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -37,7 +39,7 @@ function page() {
 
   const logOut = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/logout`, {
+      const res = await fetch(`${BASE_URL}/${LOGOUT_USER}`, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -87,7 +89,7 @@ function page() {
     }
 
     try {
-      const res = await fetch(`${BASE_URL}/api/register-user`, {
+      const res = await fetch(`${BASE_URL}/${REGISTER_USER}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -110,7 +112,7 @@ function page() {
       }
 
       alert(data.message);
-      router.push("/login");
+      router.push(LOGIN);
     } catch (error) {
       console.log("Error: ", error);
       alert("Error");

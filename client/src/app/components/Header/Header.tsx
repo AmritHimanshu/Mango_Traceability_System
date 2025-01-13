@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import mango_logo from "../../../../public/assets/Mango_logo.png";
 import Header_Menu from "./Header_Menu";
@@ -8,7 +9,6 @@ import Header_Menu from "./Header_Menu";
 // Material UI Icon
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import Link from "next/link";
 
 function Header() {
   const [isMenu, setIsMenu] = useState(false);

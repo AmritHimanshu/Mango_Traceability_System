@@ -5,6 +5,7 @@ import Link from "next/link";
 import { setUserState } from "@/store/features/userSlice";
 import { useAppDispatch } from "@/store/store";
 import { useRouter } from "next/navigation";
+import { LOGOUT_USER, SIGNIN_USER } from "@/utils/Apis/api";
 
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -24,7 +25,7 @@ function page() {
 
   const logOut = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/logout`, {
+      const res = await fetch(`${BASE_URL}/${LOGOUT_USER}`, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -58,7 +59,7 @@ function page() {
     }
 
     try {
-      const res = await fetch(`${BASE_URL}/api/signin-user`, {
+      const res = await fetch(`${BASE_URL}/${SIGNIN_USER}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

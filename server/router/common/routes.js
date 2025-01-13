@@ -51,7 +51,7 @@ router.post('/api/signin-user', async (req, res) => {
     try {
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(422).json({ error: "Incorrect credentials" });
+            return res.status(401).json({ error: "Incorrect credentials" });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
@@ -85,7 +85,7 @@ router.post('/api/signin-user', async (req, res) => {
     }
 });
 
-router.get('/logout', (req, res) => {
+router.get('/api/logout', (req, res) => {
     res.clearCookie('jwtoken', { path: '/' });
     res.status(201).json({ message: 'User Logout' });
 })

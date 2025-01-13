@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
+import { ADMIN_MANAGER_MANAGEMENT } from "@/utils/Apis/api";
 import ListUserCard from "@/app/components/admin/components/ListUserCard";
 
 function page() {
@@ -19,7 +20,7 @@ function page() {
   const fetchManagers = async () => {
     try {
       const res = await fetch(
-        `${BASE_URL}/admin/api/manager-management?limit=${limit}&skip=${skip}`,
+        `${BASE_URL}/${ADMIN_MANAGER_MANAGEMENT}?limit=${limit}&skip=${skip}`,
         {
           method: "GET",
           headers: {

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { User } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
+import { ADMIN_AUTHENTICATE_USER, ADMIN_FETCH_NO_OF_USERS, ADMIN_FEW_PENDING_REQUESTS } from "@/utils/Apis/api";
 import Mango_tree from "../../../../public/assets/Mango_tree.png";
 import HomeCard from "./components/HomeCard";
 import PendingUserCard from "./components/PendingUserCard";
@@ -22,7 +23,7 @@ function Home() {
 
   const fetchNoOfUsers = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/admin/api/fetch-no-of-users`, {
+      const res = await fetch(`${BASE_URL}/${ADMIN_FETCH_NO_OF_USERS}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +50,7 @@ function Home() {
 
   const fetchPendingRequests = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/admin/api/few-pending-requests`, {
+      const res = await fetch(`${BASE_URL}/${ADMIN_FEW_PENDING_REQUESTS}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -76,7 +77,7 @@ function Home() {
 
   const authenticateReq = async (id: string, status: boolean) => {
     try {
-      const res = await fetch(`${BASE_URL}/admin/api/authenticate-user/${id}`, {
+      const res = await fetch(`${BASE_URL}/${ADMIN_AUTHENTICATE_USER}/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

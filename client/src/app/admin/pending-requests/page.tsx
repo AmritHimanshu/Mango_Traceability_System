@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
+import { ADMIN_AUTHENTICATE_USER, ADMIN_PENDING_REQUESTS } from "@/utils/Apis/api";
 import PendingUserCard from "@/app/components/admin/components/PendingUserCard";
 import "../../../styles/style.css";
 
@@ -20,7 +21,7 @@ function page() {
   const fetchPendingRequests = async () => {
     try {
       const res = await fetch(
-        `${BASE_URL}/admin/api/pending-requests?limit=${limit}&skip=${skip}`,
+        `${BASE_URL}/${ADMIN_PENDING_REQUESTS}?limit=${limit}&skip=${skip}`,
         {
           method: "GET",
           headers: {
@@ -69,7 +70,7 @@ function page() {
 
   const authenticateReq = async (id: string, status: boolean) => {
     try {
-      const res = await fetch(`${BASE_URL}/admin/api/authenticate-user/${id}`, {
+      const res = await fetch(`${BASE_URL}/${ADMIN_AUTHENTICATE_USER}/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
