@@ -44,6 +44,19 @@ router.get('/api/fetch-no-of-users', async (req, res) => {
         console.log("/api/fetch-no-of-farmers: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
+});
+
+router.get('/api/manager-management', async (req, res) => {
+    const limit = req.query.limit;
+    const skip = req.query.skip;
+    try {
+        const managers = await User.find({ role: 'Manager', isAuthenticated: true, isRejected: false }).select("-password -tokens -updatedAt").skip(parseInt(skip)).limit(parseInt(limit));
+
+        return res.status(201).json(managers);
+    } catch (error) {
+        console.log("/api/manager-management: ", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
 })
 
 
