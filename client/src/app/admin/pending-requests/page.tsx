@@ -34,7 +34,7 @@ function page() {
       if (res.status !== 201) {
         return router.push(LOGIN);
       }
-      console.log(data);
+      
       setPendingRequests((prev) => {
         if (prev.length === 0) return data;
         else {
