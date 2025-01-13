@@ -4,23 +4,22 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
-import PendingUserCard from "@/app/components/admin/components/PendingUserCard";
-import "../../../styles/style.css";
+import ListUserCard from "@/app/components/admin/components/ListUserCard";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const router = useRouter();
 
-  const [pendingRequests, setPendingRequests] = useState<User[]>([]);
-
+  const [farmers, setFarmers] = useState<User[]>([]);
+  console.log(farmers);
   const limit = 7;
   let skip = 0;
 
-  const fetchPendingRequests = async () => {
+  const fetchFarmers = async () => {
     try {
       const res = await fetch(
-        `${BASE_URL}/admin/api/pending-requests?limit=${limit}&skip=${skip}`,
+        `${BASE_URL}/admin/api/farmer-management?limit=${limit}&skip=${skip}`,
         {
           method: "GET",
           headers: {
@@ -35,7 +34,7 @@ function page() {
         return router.push(LOGIN);
       }
 
-      setPendingRequests((prev) => {
+      setFarmers((prev) => {
         if (prev.length === 0) return data;
         else {
           return [...prev, ...data];
@@ -43,7 +42,7 @@ function page() {
       });
     } catch (error) {
       console.log(error);
-      alert("Error fetchPendingRequests");
+      alert("Error fetchManagers");
     }
   };
 
@@ -53,12 +52,12 @@ function page() {
       document.documentElement.scrollHeight
     ) {
       skip = skip + limit;
-      fetchPendingRequests();
+      fetchFarmers();
     }
   };
 
   useEffect(() => {
-    fetchPendingRequests();
+    fetchFarmers();
 
     window.addEventListener("scroll", handleScroll, true);
 
@@ -67,45 +66,17 @@ function page() {
     };
   }, []);
 
-  const authenticateReq = async (id: string, status: boolean) => {
-    try {
-      const res = await fetch(`${BASE_URL}/admin/api/authenticate-user/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ isAuthenticated: status }),
-      });
-
-      const data = await res.json();
-      if (res.status !== 201) {
-        return router.push(LOGIN);
-      }
-      alert(data.message);
-
-      fetchPendingRequests();
-    } catch (error) {
-      console.log(error);
-      alert("Error acceptRequest");
-    }
-  };
-
   return (
     <div className="px-3 py-3 relative">
-      {pendingRequests.length !== 0 ? (
+      {farmers.length !== 0 ? (
         <>
           <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center">
-            Recent Requests
+            Farmers
           </div>
-          <div className="space-y-7 bg-gray-50">
-            {pendingRequests.map((request, index) => (
-              <div key={index} className="space-y-2">
-                <PendingUserCard
-                  index={index}
-                  request={request}
-                  authenticateReq={authenticateReq}
-                />
+          <div className="space-y-2">
+            {farmers.map((farmer, index) => (
+              <div key={index} className="border-b-[1px] py-3">
+                <ListUserCard index={index} user={farmer} />
               </div>
             ))}
           </div>

@@ -12,7 +12,7 @@ function page() {
   const router = useRouter();
 
   const [managers, setManagers] = useState<User[]>([]);
-  console.log(managers);
+
   const limit = 7;
   let skip = 0;
 
@@ -68,7 +68,7 @@ function page() {
 
   return (
     <div className="px-3 py-3 relative">
-      {managers.length !== 0 && (
+      {managers.length !== 0 ? (
         <>
           <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center">
             Managers
@@ -81,6 +81,8 @@ function page() {
             ))}
           </div>
         </>
+      ) : (
+        <div className="text-center text-gray-500">No records found!</div>
       )}
     </div>
   );
