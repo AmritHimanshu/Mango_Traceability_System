@@ -1,4 +1,4 @@
-// Common POST APIs
+// Common APIs
 export const REGISTER_USER = 'api/register-user';
 export const SIGNIN_USER = 'api/signin-user';
 export const LOGOUT_USER = 'api/logout';
