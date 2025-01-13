@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { HandleOnClickProps } from "@/utils/Types/interfaces";
 import {
   FARMER_MANAGEMENT,
-  LOGOUT,
+  LOGIN,
   MANAGER_MANAGEMENT,
   OVERVIEW,
   PENDING_REQUESTS,
@@ -50,9 +50,9 @@ function Admin_Header({ handleOnClick }: HandleOnClickProps) {
       </div>
       <div
         className={`py-3 w-full border-b-[1px] border-black font-bold ${
-          pathname === LOGOUT ? "text-green-800" : "text-black"
+          pathname === LOGIN ? "text-green-800" : "text-black"
         }`}
-        onClick={() => handleOnClick(LOGOUT)}
+        onClick={() => handleOnClick(LOGIN)}
       >
         Logout
       </div>
