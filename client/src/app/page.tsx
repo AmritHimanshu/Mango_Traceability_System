@@ -5,6 +5,7 @@ import { useAppSelector } from "@/store/store";
 import { useRouter } from "next/navigation";
 import { LOGIN } from "@/utils/Paths/paths";
 import AdminHome from './components/admin/Home';
+import FarmerHome from './components/farmer/Home';
 import "../styles/style.css";
 
 export default function Home() {
@@ -25,6 +26,7 @@ export default function Home() {
   return (
     <div>
       {userState?.role === 'Admin' && <AdminHome />}
+      {userState?.role === 'Farmer' && <FarmerHome />}
     </div>
   );
 }
