@@ -13,7 +13,7 @@ function page() {
   const router = useRouter();
 
   const [farmers, setFarmers] = useState<User[]>([]);
-  console.log(farmers);
+  
   const limit = 7;
   let skip = 0;
 
