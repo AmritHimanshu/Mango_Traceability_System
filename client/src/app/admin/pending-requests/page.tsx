@@ -34,17 +34,16 @@ function page() {
       );
 
       const data = await res.json();
-      if(res.status !== 201){
-        alert(data.error);
+      if (res.status !== 201) {
         return router.push(LOGIN);
       }
       console.log(data);
-      setPendingRequests((prev)=>{
-        if(prev.length === 0) return data;
-        else{
+      setPendingRequests((prev) => {
+        if (prev.length === 0) return data;
+        else {
           return [...prev, ...data];
         }
-      })
+      });
     } catch (error) {
       console.log(error);
       alert("Error fetchPendingRequests");
@@ -83,9 +82,8 @@ function page() {
       });
 
       const data = await res.json();
-      if (res.status !== 200) {
-        alert(data.error);
-        console.log(data.error);
+      if (res.status !== 201) {
+        return router.push(LOGIN);
       }
       alert(data.message);
 
@@ -98,18 +96,22 @@ function page() {
 
   return (
     <div className="p-3">
-      <div className="pb-2 text-lg font-bold">Recent Requests:</div>
-      <div className="space-y-7">
-        {pendingRequests.map((request, index) => (
-          <div key={index} className="space-y-2">
-            <UserCard
-              index={index}
-              request={request}
-              authenticateReq={authenticateReq}
-            />
+      {pendingRequests.length !== 0 && (
+        <>
+          <div className="pb-2 text-lg font-bold">Recent Requests:</div>
+          <div className="space-y-7">
+            {pendingRequests.map((request, index) => (
+              <div key={index} className="space-y-2">
+                <UserCard
+                  index={index}
+                  request={request}
+                  authenticateReq={authenticateReq}
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      )}
     </div>
   );
 }
