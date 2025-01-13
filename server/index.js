@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 
 require('./db/conn');
 
-const postRoutes = require('./router/common/postRoutes');
+const routes = require('./router/common/routes');
 const adminGetRoutes = require('./router/admin/getRoutes');
 const adminPutRoutes = require('./router/admin/putRoutes');
 
@@ -25,7 +25,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(postRoutes);
+app.use(routes);
 app.use('/admin', authenticateAdmin, adminGetRoutes);
 app.use('/admin', authenticateAdmin, adminPutRoutes);
 
