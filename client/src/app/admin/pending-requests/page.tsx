@@ -93,23 +93,21 @@ function page() {
 
   return (
     <div className="px-3 py-3 relative">
+      <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center">
+        Recent Requests
+      </div>
       {pendingRequests.length !== 0 ? (
-        <>
-          <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center">
-            Recent Requests
-          </div>
-          <div className="space-y-7 bg-gray-50">
-            {pendingRequests.map((request, index) => (
-              <div key={index} className="space-y-2">
-                <PendingUserCard
-                  index={index}
-                  request={request}
-                  authenticateReq={authenticateReq}
-                />
-              </div>
-            ))}
-          </div>
-        </>
+        <div className="space-y-7 bg-gray-50">
+          {pendingRequests.map((request, index) => (
+            <div key={index} className="space-y-2">
+              <PendingUserCard
+                index={index}
+                request={request}
+                authenticateReq={authenticateReq}
+              />
+            </div>
+          ))}
+        </div>
       ) : (
         <div className="text-center text-gray-500">No records found!</div>
       )}

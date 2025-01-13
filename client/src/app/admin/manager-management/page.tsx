@@ -68,19 +68,17 @@ function page() {
 
   return (
     <div className="px-3 py-3 relative">
+      <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center">
+        Managers
+      </div>
       {managers.length !== 0 ? (
-        <>
-          <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center">
-            Managers
-          </div>
-          <div className="space-y-2">
-            {managers.map((manager, index) => (
-              <div key={index} className="border-b-[1px] py-3">
-                <ListUserCard index={index} user={manager} />
-              </div>
-            ))}
-          </div>
-        </>
+        <div className="space-y-2">
+          {managers.map((manager, index) => (
+            <div key={index} className="border-b-[1px] py-3">
+              <ListUserCard index={index} user={manager} />
+            </div>
+          ))}
+        </div>
       ) : (
         <div className="text-center text-gray-500">No records found!</div>
       )}
