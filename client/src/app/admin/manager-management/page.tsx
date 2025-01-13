@@ -75,7 +75,7 @@ function page() {
           </div>
           <div className="space-y-2">
             {managers.map((manager, index) => (
-              <div key={index} className="border-b-2 py-3">
+              <div key={index} className="border-b-[1px] py-3">
                 <ListUserCard index={index} user={manager} />
               </div>
             ))}

@@ -13,8 +13,8 @@ function ListUserCard({ index, user }: ListUserCardProps) {
           <div className="truncate overflow-hidden whitespace-nowrap">{user.name}</div>
 
         </div>
-        <div>
-          <button className="bg-black text-white px-2 py-[2px] rounded-md">view</button>
+        <div className="w-[25%]">
+          <button className="w-full bg-black text-white px- py-[3px] rounded-md">view</button>
         </div>
       </div>
     </>
