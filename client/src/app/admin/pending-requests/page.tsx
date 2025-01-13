@@ -14,7 +14,7 @@ function page() {
 
   const [pendingRequests, setPendingRequests] = useState<pendingRequests[]>([]);
 
-  const limit = 15;
+  const limit = 7;
   let skip = 0;
 
   const fetchPendingRequests = async () => {
