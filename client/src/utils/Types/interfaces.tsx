@@ -25,7 +25,7 @@ export type HandleOnClickProps = {
 
 
 // Admin
-export type pendingRequests = {
+export type User = {
   createdAt: string;
   email: string;
   isAuthenticated: boolean;
@@ -43,8 +43,8 @@ export type HomeCardProps = {
   textColor: string;
 };
 
-export type UserCardProps = {
+export type PendingUserCardProps = {
   index: number;
-  request: pendingRequests;
+  request: User;
   authenticateReq: (id: string, status: boolean) => void;
 }

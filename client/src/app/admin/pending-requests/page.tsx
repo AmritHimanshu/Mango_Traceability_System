@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { pendingRequests } from "@/utils/Types/interfaces";
+import { User } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
-import ListUserCard from "@/app/components/admin/components/ListUserCard";
+import PendingUserCard from "@/app/components/admin/components/PendingUserCard";
 import "../../../styles/style.css";
 
 function page() {
@@ -12,7 +12,7 @@ function page() {
 
   const router = useRouter();
 
-  const [pendingRequests, setPendingRequests] = useState<pendingRequests[]>([]);
+  const [pendingRequests, setPendingRequests] = useState<User[]>([]);
 
   const limit = 7;
   let skip = 0;
@@ -99,7 +99,7 @@ function page() {
           <div className="space-y-7 bg-gray-50">
             {pendingRequests.map((request, index) => (
               <div key={index} className="space-y-2">
-                <ListUserCard
+                <PendingUserCard
                   index={index}
                   request={request}
                   authenticateReq={authenticateReq}

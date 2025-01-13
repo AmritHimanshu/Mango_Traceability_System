@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { pendingRequests } from "@/utils/Types/interfaces";
+import { User } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
 
 function page() {
@@ -10,7 +10,7 @@ function page() {
 
   const router = useRouter();
 
-  const [managers, setManagers] = useState<pendingRequests[]>([]);
+  const [managers, setManagers] = useState<User[]>([]);
   console.log(managers);
   const limit = 7;
   let skip = 0;

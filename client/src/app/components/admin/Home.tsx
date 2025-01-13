@@ -3,11 +3,11 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { pendingRequests } from "@/utils/Types/interfaces";
+import { User } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
 import Mango_tree from "../../../../public/assets/Mango_tree.png";
 import HomeCard from "./components/HomeCard";
-import ListUserCard from "./components/ListUserCard";
+import PendingUserCard from "./components/PendingUserCard";
 
 function Home() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -18,7 +18,7 @@ function Home() {
   const [noOfVerifiedFarmers, setNoOfVerifiedFarmers] = useState(0);
   const [noOfPendingRequests, setNoOfPendingRequests] = useState(0);
   const [noOfRejectedRequests, sestNoOfRejectedRequests] = useState(0);
-  const [pendingRequests, setPendingRequests] = useState<pendingRequests[]>([]);
+  const [pendingRequests, setPendingRequests] = useState<User[]>([]);
 
   const fetchNoOfUsers = async () => {
     try {
@@ -144,7 +144,7 @@ function Home() {
           <div className="space-y-7">
             {pendingRequests.map((request, index) => (
               <div key={index} className="space-y-2">
-                <ListUserCard
+                <PendingUserCard
                   index={index}
                   request={request}
                   authenticateReq={authenticateReq}
