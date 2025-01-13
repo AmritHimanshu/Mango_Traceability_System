@@ -6,9 +6,13 @@ import { PendingUserCardProps } from "@/utils/Types/interfaces";
 function PendingUserCard({ index, request, authenticateReq }: PendingUserCardProps) {
   const [selectedButton, setSelectedButton] = useState("");
 
-  const handleOnClick = (id: string, status: boolean, buttonText: string) => {
-    setSelectedButton(buttonText);
-    authenticateReq(id, status);
+  const handleOnClick = async (id: string, status: boolean, buttonText: string) => {
+    try {
+      setSelectedButton(buttonText);
+      await authenticateReq(id, status);
+    } catch (error) {
+      setSelectedButton("");
+    }
   };
 
   return (

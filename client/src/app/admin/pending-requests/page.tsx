@@ -85,7 +85,9 @@ function page() {
       }
       alert(data.message);
 
-      fetchPendingRequests();
+      setPendingRequests((prev)=>{
+        return prev.filter(request => request._id !== id)
+      });
     } catch (error) {
       console.log(error);
       alert("Error acceptRequest");
