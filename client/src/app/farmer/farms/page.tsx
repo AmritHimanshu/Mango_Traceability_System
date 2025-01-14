@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CREATE_FARM } from "@/utils/Paths/paths";
 import ListFarmCard from "@/app/components/farmer/components/ListFarmCard";
@@ -9,6 +9,8 @@ function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const router = useRouter();
+
+  const [farms, setFarms] = useState([0]);
 
   const handleSelectedFarm = async (id: string) => {};
 
@@ -27,56 +29,60 @@ function page() {
         <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center z-30">
           Your farms
         </div>
-        <div className="space-y-3 mt-2">
-          <ListFarmCard
-            key="index1"
-            id="1"
-            name="Name of farm"
-            crop="Crop's name"
-            date="01/11/2025 11:30 AM"
-            handleClick={handleSelectedFarm}
-          />
-          <ListFarmCard
-            key="index2"
-            id="1"
-            name="Name of farm"
-            crop="Crop's name"
-            date="01/11/2025 11:30 AM"
-            handleClick={handleSelectedFarm}
-          />
-          <ListFarmCard
-            key="index3"
-            id="1"
-            name="Name of farm"
-            crop="Crop's name"
-            date="01/11/2025 11:30 AM"
-            handleClick={handleSelectedFarm}
-          />
-          <ListFarmCard
-            key="index4"
-            id="1"
-            name="Name of farm"
-            crop="Crop's name"
-            date="01/11/2025 11:30 AM"
-            handleClick={handleSelectedFarm}
-          />
-          <ListFarmCard
-            key="index5"
-            id="1"
-            name="Name of farm"
-            crop="Crop's name"
-            date="01/11/2025 11:30 AM"
-            handleClick={handleSelectedFarm}
-          />
-          <ListFarmCard
-            key="index6"
-            id="1"
-            name="Name of farm"
-            crop="Crop's name"
-            date="01/11/2025 11:30 AM"
-            handleClick={handleSelectedFarm}
-          />
-        </div>
+        {farms.length !== 0 ? (
+          <div className="space-y-3 mt-2">
+            <ListFarmCard
+              key="index1"
+              id="1"
+              name="Name of farm"
+              crop="Crop's name"
+              date="01/11/2025 11:30 AM"
+              handleClick={handleSelectedFarm}
+            />
+            <ListFarmCard
+              key="index2"
+              id="1"
+              name="Name of farm"
+              crop="Crop's name"
+              date="01/11/2025 11:30 AM"
+              handleClick={handleSelectedFarm}
+            />
+            <ListFarmCard
+              key="index3"
+              id="1"
+              name="Name of farm"
+              crop="Crop's name"
+              date="01/11/2025 11:30 AM"
+              handleClick={handleSelectedFarm}
+            />
+            <ListFarmCard
+              key="index4"
+              id="1"
+              name="Name of farm"
+              crop="Crop's name"
+              date="01/11/2025 11:30 AM"
+              handleClick={handleSelectedFarm}
+            />
+            <ListFarmCard
+              key="index5"
+              id="1"
+              name="Name of farm"
+              crop="Crop's name"
+              date="01/11/2025 11:30 AM"
+              handleClick={handleSelectedFarm}
+            />
+            <ListFarmCard
+              key="index6"
+              id="1"
+              name="Name of farm"
+              crop="Crop's name"
+              date="01/11/2025 11:30 AM"
+              handleClick={handleSelectedFarm}
+            />
+          </div>
+        ) : (
+          <div className="text-center text-gray-500 my-2">No records found!</div>
+        )}
       </div>
     </div>
   );
