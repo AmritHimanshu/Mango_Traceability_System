@@ -20,7 +20,47 @@ function page() {
         </div>
         <div className="space-y-3 mt-2">
           <ListFarmCard
-            key="index"
+            key="index1"
+            id="1"
+            name="Name of farm"
+            crop="Crop's name"
+            date="01/11/2025 11:30 AM"
+            handleClick={handleSelectedFarm}
+          />
+          <ListFarmCard
+            key="index2"
+            id="1"
+            name="Name of farm"
+            crop="Crop's name"
+            date="01/11/2025 11:30 AM"
+            handleClick={handleSelectedFarm}
+          />
+          <ListFarmCard
+            key="index3"
+            id="1"
+            name="Name of farm"
+            crop="Crop's name"
+            date="01/11/2025 11:30 AM"
+            handleClick={handleSelectedFarm}
+          />
+          <ListFarmCard
+            key="index4"
+            id="1"
+            name="Name of farm"
+            crop="Crop's name"
+            date="01/11/2025 11:30 AM"
+            handleClick={handleSelectedFarm}
+          />
+          <ListFarmCard
+            key="index5"
+            id="1"
+            name="Name of farm"
+            crop="Crop's name"
+            date="01/11/2025 11:30 AM"
+            handleClick={handleSelectedFarm}
+          />
+          <ListFarmCard
+            key="index6"
             id="1"
             name="Name of farm"
             crop="Crop's name"
