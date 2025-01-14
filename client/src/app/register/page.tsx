@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/store/store";
+import { setUserState } from "@/store/features/userSlice";
 import { LOGOUT_USER, REGISTER_USER } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
 
@@ -14,6 +16,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
@@ -54,6 +57,8 @@ function page() {
         const error = new Error(data.error);
         throw error;
       }
+
+      dispatch(setUserState(null));
     } catch (error) {
       console.log("Error: ", error);
       alert("Error");
