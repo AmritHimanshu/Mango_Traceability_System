@@ -13,7 +13,6 @@ export type IUserState = {
   userState: userSchema | null;
 };
 
-
 // Headers
 export type HeaderMenuProps = {
   onNavigationComplete: () => void;
@@ -22,7 +21,6 @@ export type HeaderMenuProps = {
 export type HandleOnClickProps = {
   handleOnClick: (url: string) => void;
 };
-
 
 // Admin
 export type User = {
@@ -47,9 +45,18 @@ export type PendingUserCardProps = {
   index: number;
   request: User;
   authenticateReq: (id: string, status: boolean) => Promise<void>;
-}
+};
 
 export type ListUserCardProps = {
   index: number;
   user: User;
-}
+};
+
+// Farmer
+export type ListFarmCardProps = {
+  id: string;
+  name: string;
+  crop: string;
+  date: string;
+  handleClick: (id: string) => Promise<void>;
+};
