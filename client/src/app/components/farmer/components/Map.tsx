@@ -8,6 +8,7 @@ function Map() {
   const [coordinates, setCoordinates] = useState<[number, number][]>([]);
 
   const handleReset = () => setCoordinates([]);
+
   const handleSubmit = () => {
     console.log("Coordinates:", coordinates);
     alert("Coordinates submitted!");
@@ -35,7 +36,7 @@ function Map() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         <MapClickHandler />
-        {<Polygon positions={coordinates} color="blue" />}
+        <Polygon positions={coordinates} color="blue" />
       </MapContainer>
       <div style={{ marginTop: "10px" }}>
         <button onClick={handleReset} style={{ marginRight: "10px" }}>
