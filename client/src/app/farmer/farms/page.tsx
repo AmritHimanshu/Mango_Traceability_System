@@ -15,7 +15,7 @@ function page() {
       </div>
 
       <div className="my-5">
-        <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center z-50">
+        <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center z-30">
           Your farms
         </div>
         <div className="space-y-3 mt-2">

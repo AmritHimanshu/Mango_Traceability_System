@@ -96,7 +96,7 @@ function page() {
 
   return (
     <div className="px-3 py-3 relative">
-      <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center">
+      <div className="py-3 text-lg font-bold sticky top-[56px] z-30 bg-white text-center">
         Recent Requests
       </div>
       {pendingRequests.length !== 0 ? (
