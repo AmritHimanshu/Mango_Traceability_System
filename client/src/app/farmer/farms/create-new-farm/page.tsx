@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { NEW_FARM } from "@/utils/Apis/api";
 import Map from "@/app/components/farmer/components/Map";
 
 function page() {
@@ -13,13 +14,28 @@ function page() {
     console.log(farmName);
     console.log(cropName);
     console.log(coordinates);
-    if(!farmName || !cropName){
-        return alert("Fill all the form");
+    if (!farmName || !cropName) {
+      return alert("Fill all the form");
     }
-    if(coordinates.length < 3){
-        return alert("Select minimum three coordinate");
+    if (coordinates.length < 3) {
+      return alert("Select minimum three coordinate");
     }
     try {
+      const res = await fetch(`${BASE_URL}/${NEW_FARM}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          farmName,
+          cropName,
+          coordinates,
+        }),
+      });
+
+      const data = await res.json();
+      console.log(data);
     } catch (error) {
       console.log("Error: ", error);
       alert("Error");
