@@ -3,15 +3,15 @@
 import React, { useState } from "react";
 import { MapContainer, TileLayer, Polygon, useMapEvents } from "react-leaflet";
 import { LeafletMouseEvent } from "leaflet";
+import { MapProps } from "@/utils/Types/interfaces";
 
-function Map() {
+function Map({ submitForm }: MapProps) {
   const [coordinates, setCoordinates] = useState<[number, number][]>([]);
 
   const handleReset = () => setCoordinates([]);
 
   const handleSubmit = () => {
-    console.log("Coordinates:", coordinates);
-    alert("Coordinates submitted!");
+    submitForm(coordinates);
   };
 
   const MapClickHandler = () => {

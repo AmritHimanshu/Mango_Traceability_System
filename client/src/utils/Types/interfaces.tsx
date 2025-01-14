@@ -60,3 +60,7 @@ export type ListFarmCardProps = {
   date: string;
   handleClick: (id: string) => Promise<void>;
 };
+
+export type MapProps = {
+  submitForm: (coordinates: [number, number][]) => Promise<void>;
+};
