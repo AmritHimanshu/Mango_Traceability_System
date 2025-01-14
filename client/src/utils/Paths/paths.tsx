@@ -5,6 +5,7 @@ export const PENDING_REQUESTS = "/admin/pending-requests";
 
 // Farmers
 export const FARMS = "/farmer/farms";
+export const CREATE_FARM = "/farmer/farms/create-new-farm";
 export const NOTIFICATIONS = "/farmer/notifications";
 export const PROFILE = "/farmer/profile";
 

@@ -1,17 +1,26 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
+import { CREATE_FARM } from "@/utils/Paths/paths";
 import ListFarmCard from "@/app/components/farmer/components/ListFarmCard";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const router = useRouter();
 
   const handleSelectedFarm = async (id: string) => {};
 
   return (
     <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)] relative">
       <div className="my-2">
-        <button className="btn bg-black text-white">Create new farm</button>
+        <button
+          className="btn bg-black text-white"
+          onClick={() => router.push(CREATE_FARM)}
+        >
+          Create new farm
+        </button>
       </div>
 
       <div className="my-5">
