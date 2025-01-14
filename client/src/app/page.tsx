@@ -7,6 +7,7 @@ import { LOGIN } from "@/utils/Paths/paths";
 import AdminHome from './components/admin/Home';
 import FarmerHome from './components/farmer/Home';
 import "../styles/style.css";
+import 'leaflet/dist/leaflet.css';
 
 export default function Home() {
 

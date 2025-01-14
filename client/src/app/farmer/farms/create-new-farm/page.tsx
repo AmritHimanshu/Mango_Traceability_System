@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Map from "@/app/components/farmer/components/Map";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -39,6 +40,8 @@ function page() {
               //   onChange={(e) => setEmail(e.target.value)}
             />
           </div>
+
+          <Map />
         </form>
       </div>
     </div>

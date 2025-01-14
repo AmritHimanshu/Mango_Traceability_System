@@ -1,0 +1,50 @@
+"use client";
+
+import React, { useState } from "react";
+import { MapContainer, TileLayer, Polygon, useMapEvents } from "react-leaflet";
+import { LeafletMouseEvent } from "leaflet";
+
+function Map() {
+  const [coordinates, setCoordinates] = useState<[number, number][]>([]);
+
+  const handleReset = () => setCoordinates([]);
+  const handleSubmit = () => {
+    console.log("Coordinates:", coordinates);
+    alert("Coordinates submitted!");
+  };
+
+  const MapClickHandler = () => {
+    useMapEvents({
+      click: (event: LeafletMouseEvent) => {
+        const { lat, lng } = event.latlng;
+        setCoordinates((prev) => [...prev, [lat, lng]]);
+      },
+    });
+    return null;
+  };
+
+  return (
+    <div>
+      <MapContainer
+        center={[51.505, -0.09]}
+        zoom={13}
+        style={{ height: "500px", width: "100%" }}
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        <MapClickHandler />
+        {<Polygon positions={coordinates} color="blue" />}
+      </MapContainer>
+      <div style={{ marginTop: "10px" }}>
+        <button onClick={handleReset} style={{ marginRight: "10px" }}>
+          Reset
+        </button>
+        <button onClick={handleSubmit}>Submit</button>
+      </div>
+    </div>
+  );
+}
+
+export default Map;
