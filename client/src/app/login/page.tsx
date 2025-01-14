@@ -40,6 +40,8 @@ function page() {
         const error = new Error(data.error);
         throw error;
       }
+
+      dispatch(setUserState(null));
     } catch (error) {
       console.log("Error: ", error);
       alert("Error");
