@@ -1,10 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Map from "@/app/components/farmer/components/Map";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const [farmName, setFarmName] = useState("");
+  const [cropName, setCropName] = useState("");
 
   return (
     <div className="px-3 py-3 min-h-[calc(100vh-56px)] relative">
@@ -19,10 +22,10 @@ function page() {
               type="text"
               id="farmName"
               name="farmName"
-              //   value="{email}"
+              value={farmName}
               className="input-tag"
               required
-              //   onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setFarmName(e.target.value)}
             />
           </div>
 
@@ -34,10 +37,10 @@ function page() {
               type="text"
               id="cropName"
               name="cropName"
-              //   value="{email}"
+              value={cropName}
               className="input-tag"
               required
-              //   onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setCropName(e.target.value)}
             />
           </div>
 
