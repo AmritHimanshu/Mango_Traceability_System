@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const Farmer = require('../../model/farmerSchema');
+
 router.post('/api/new-farm', async (req, res) => {
     try {
         const { farmName, cropName, coordinates } = req.body;
