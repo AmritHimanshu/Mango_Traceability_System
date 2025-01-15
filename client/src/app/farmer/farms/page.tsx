@@ -12,7 +12,7 @@ function page() {
 
   const router = useRouter();
 
-  const [farms, setFarms] = useState([]);
+  const [farms, setFarms] = useState<FarmList[]>([]);
 
   const limit = 10;
   let skip = 0;
@@ -64,7 +64,7 @@ function page() {
     };
   }, []);
 
-  const handleSelectedFarm = async (id: string) => {};
+  const handleSelectedFarm = async (id: number) => {};
 
   return (
     <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)] relative">
@@ -88,8 +88,8 @@ function page() {
                 key={index}
                 id={index}
                 name={farm.farm}
-                crop="farm.crop"
-                date="01/11/2025 11:30 AM"
+                crop={farm.crop.name}
+                date={farm.createdAt}
                 handleClick={handleSelectedFarm}
               />
             ))}
