@@ -15,9 +15,19 @@ router.post('/api/new-farm', async (req, res) => {
             return res.status(422).json({ error: "select minimum 3 coordinates" });
         }
 
-        
+        const farm = new Farmer({
+            userId: req.rootUser,
+            farm: farmName,
+            crop: { name: cropName },
+            geoFenceData: coordinates.map(coord => ({
+                lat: coord[0],
+                lng: coord[1],
+            })),
+        });
 
-        return res.status(201).json({ message: "OK" });
+        const farmRegister = await farm.save();
+
+        return res.status(201).json(farmRegister);
     } catch (error) {
         console.log("/api/new-farm: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
