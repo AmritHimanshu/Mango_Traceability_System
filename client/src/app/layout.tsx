@@ -3,6 +3,7 @@ import ReduxProvider from "@/store/redux-provider";
 import { Funnel_Display } from "next/font/google";
 import Header from "./components/Header/Header";
 import "./globals.css";
+import "../styles/style.css";
 
 const funnel = Funnel_Display({
   variable: "--font-funnel-display",

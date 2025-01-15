@@ -13,7 +13,6 @@ export type IUserState = {
   userState: userSchema | null;
 };
 
-
 // Headers
 export type HeaderMenuProps = {
   onNavigationComplete: () => void;
@@ -22,7 +21,6 @@ export type HeaderMenuProps = {
 export type HandleOnClickProps = {
   handleOnClick: (url: string) => void;
 };
-
 
 // Admin
 export type User = {
@@ -47,9 +45,70 @@ export type PendingUserCardProps = {
   index: number;
   request: User;
   authenticateReq: (id: string, status: boolean) => Promise<void>;
-}
+};
 
 export type ListUserCardProps = {
   index: number;
   user: User;
-}
+};
+
+// Farmer
+export type Farm = {
+  userId: string;
+  farm: string;
+  geoFenceData: { lat: number; lng: number }[];
+  crop: {
+    name: string;
+    ploughingDate?: string;
+    weedingDate?: string;
+    sowingDate?: string;
+    floweringDate?: string;
+    pheromoneTrapDate?: string;
+    lureChangeDate?: string;
+    irrigationDates: {
+      artificial: string[];
+      natural: string[];
+    };
+    fertilizerApplications: {
+      date: string;
+      volume: number;
+    }[];
+    pesticideApplications: {
+      date: string;
+      volume: number;
+    }[];
+    bagging: {
+      date: string;
+      quantity: number;
+    }[];
+    specialCare: {
+      date: string;
+      name: string;
+    }[];
+    harvest?: {
+      date: string;
+      yield: number;
+    };
+  };
+  createdAt: string;
+};
+
+export type FarmList = {
+  userId: string;
+  farm: string;
+  crop: {
+    name: string;
+  };
+  createdAt: string;
+  _id: string;
+};
+
+export type ListFarmCardProps = {
+  idx: number;
+  farm: FarmList;
+  handleClick: (id: string) => Promise<void>;
+};
+
+export type MapProps = {
+  submitForm: (coordinates: [number, number][]) => Promise<void>;
+};

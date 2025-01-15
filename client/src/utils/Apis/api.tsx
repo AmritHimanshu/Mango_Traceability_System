@@ -17,3 +17,11 @@ export const ADMIN_FARMER_MANAGEMENT = 'admin/api/farmer-management';
 
 // Admin PUT APIs
 export const ADMIN_AUTHENTICATE_USER = 'admin/api/authenticate-user';
+
+
+// Farmer GET APIs
+export const FARMER_FETCH_FARMS_LIST = 'farmer/api/fetch-farms-list';
+export const FARMER_FETCH_FARM_DATA = 'farmer/api/fetch-farm-data';
+// 
+// Farmer POST APIs
+export const FARMER_NEW_FARM = 'farmer/api/new-farm';
