@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CREATE_FARM } from "@/utils/Paths/paths";
+import { CREATE_FARM, FARMS, LOGIN } from "@/utils/Paths/paths";
 import { FARMER_FETCH_FARMS_LIST } from "@/utils/Apis/api";
 import { FarmList } from "@/utils/Types/interfaces";
 import ListFarmCard from "@/app/components/farmer/components/ListFarmCard";
@@ -31,6 +31,11 @@ function page() {
       );
 
       const data = await res.json();
+
+      if(res.status !== 201){
+        router.push(LOGIN);
+        return;
+      }
       
       setFarms((prev) => {
         if (prev.length === 0) return data;
@@ -65,7 +70,7 @@ function page() {
   }, []);
 
   const handleSelectedFarm = async (id: string) => {
-    console.log(id);
+    router.push(`${FARMS}/${id}`);
   };
 
   return (
