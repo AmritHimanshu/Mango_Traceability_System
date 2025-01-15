@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+var mongoose = require('mongoose');
 
 const Farmer = require('../../model/farmerSchema');
 
@@ -22,11 +23,12 @@ router.get('/api/fetch-farms-list', async (req, res) => {
 
 router.get('/api/fetch-farm-data/:id', async (req, res) => {
     try {
-        const id = req.params;
+        const { id } = req.params;
+        const _id = new mongoose.Types.ObjectId(id);
 
+        const farmData = await Farmer.findOne({userId: req.rootUser._id, _id: _id});
 
-
-        return res.status(201).json({ message: "Done!" });
+        return res.status(201).json(farmData);
     } catch (error) {
         console.log("/api/fetch-farm-data: ", error);
         return res.status(500).json({ error: "Internal Server Error" });

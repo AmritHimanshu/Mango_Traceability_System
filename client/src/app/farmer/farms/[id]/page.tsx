@@ -24,9 +24,9 @@ function page() {
 
       const data = await res.json();
 
-      if (res.status !== 201) {
-        router.push(LOGIN);
-      }
+    //   if (res.status !== 201) {
+    //     router.push(LOGIN);
+    //   }
 
       console.log(data);
     } catch (error) {
