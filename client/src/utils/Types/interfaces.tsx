@@ -53,8 +53,48 @@ export type ListUserCardProps = {
 };
 
 // Farmer
+export type FarmList = {
+  userId: string;
+  farm: string;
+  geoFenceData: { lat: number; lng: number }[];
+  crop: {
+    name: string;
+    ploughingDate?: string;
+    weedingDate?: string;
+    sowingDate?: string;
+    floweringDate?: string;
+    pheromoneTrapDate?: string;
+    lureChangeDate?: string;
+    irrigationDates: {
+      artificial: string[];
+      natural: string[];
+    };
+    fertilizerApplications: {
+      date: string;
+      volume: number;
+    }[];
+    pesticideApplications: {
+      date: string;
+      volume: number;
+    }[];
+    bagging: {
+      date: string;
+      quantity: number;
+    }[];
+    specialCare: {
+      date: string;
+      name: string;
+    }[];
+    harvest?: {
+      date: string;
+      yield: number;
+    };
+  };
+  createdAt: string;
+};
+
 export type ListFarmCardProps = {
-  id: string;
+  id: number;
   name: string;
   crop: string;
   date: string;

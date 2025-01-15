@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CREATE_FARM } from "@/utils/Paths/paths";
 import { FARMER_FETCH_FARMS_LIST } from "@/utils/Apis/api";
+import { FarmList } from "@/utils/Types/interfaces";
 import ListFarmCard from "@/app/components/farmer/components/ListFarmCard";
 
 function page() {
@@ -11,30 +12,57 @@ function page() {
 
   const router = useRouter();
 
-  const [farms, setFarms] = useState([0]);
+  const [farms, setFarms] = useState([]);
+
+  const limit = 10;
+  let skip = 0;
 
   const fetchFarms = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/${FARMER_FETCH_FARMS_LIST}`,{
-        method: 'GET',
-        headers:{
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include'
-      });
+      const res = await fetch(
+        `${BASE_URL}/${FARMER_FETCH_FARMS_LIST}?limit=${limit}&skip=${skip}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
 
       const data = await res.json();
-      // setFarms(data);
       console.log(data);
+      setFarms((prev) => {
+        if (prev.length === 0) return data;
+        else {
+          return [...prev, ...data];
+        }
+      });
     } catch (error) {
       console.log("Error: ", error);
       alert("Error");
     }
   };
 
-  useEffect(()=>{
+  const handleScroll = () => {
+    if (
+      document.documentElement.clientHeight + window.scrollY >=
+      document.documentElement.scrollHeight
+    ) {
+      skip = skip + limit;
+      fetchFarms();
+    }
+  };
+
+  useEffect(() => {
     fetchFarms();
-  },[]);
+
+    window.addEventListener("scroll", handleScroll, true);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll, true);
+    };
+  }, []);
 
   const handleSelectedFarm = async (id: string) => {};
 
@@ -55,57 +83,21 @@ function page() {
         </div>
         {farms.length !== 0 ? (
           <div className="space-y-3 mt-2">
-            <ListFarmCard
-              key="index1"
-              id="1"
-              name="Name of farm"
-              crop="Crop's name"
-              date="01/11/2025 11:30 AM"
-              handleClick={handleSelectedFarm}
-            />
-            <ListFarmCard
-              key="index2"
-              id="1"
-              name="Name of farm"
-              crop="Crop's name"
-              date="01/11/2025 11:30 AM"
-              handleClick={handleSelectedFarm}
-            />
-            <ListFarmCard
-              key="index3"
-              id="1"
-              name="Name of farm"
-              crop="Crop's name"
-              date="01/11/2025 11:30 AM"
-              handleClick={handleSelectedFarm}
-            />
-            <ListFarmCard
-              key="index4"
-              id="1"
-              name="Name of farm"
-              crop="Crop's name"
-              date="01/11/2025 11:30 AM"
-              handleClick={handleSelectedFarm}
-            />
-            <ListFarmCard
-              key="index5"
-              id="1"
-              name="Name of farm"
-              crop="Crop's name"
-              date="01/11/2025 11:30 AM"
-              handleClick={handleSelectedFarm}
-            />
-            <ListFarmCard
-              key="index6"
-              id="1"
-              name="Name of farm"
-              crop="Crop's name"
-              date="01/11/2025 11:30 AM"
-              handleClick={handleSelectedFarm}
-            />
+            {farms.map((farm, index) => (
+              <ListFarmCard
+                key={index}
+                id={index}
+                name={farm.farm}
+                crop="farm.crop"
+                date="01/11/2025 11:30 AM"
+                handleClick={handleSelectedFarm}
+              />
+            ))}
           </div>
         ) : (
-          <div className="text-center text-gray-500 my-2">No records found!</div>
+          <div className="text-center text-gray-500 my-2">
+            No records found!
+          </div>
         )}
       </div>
     </div>
