@@ -9,6 +9,7 @@ router.get('/api/fetch-farms-list', async (req, res) => {
             return res.status(403).json({ error: "You don't have permission." });
         }
         const farmList = await Farmer.find({ userId: req.rootUser._id });
+        
         return res.status(201).json(farmList);
     } catch (error) {
         console.log("/api/fetch-farms-list: ", error);
