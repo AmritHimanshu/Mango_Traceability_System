@@ -20,4 +20,17 @@ router.get('/api/fetch-farms-list', async (req, res) => {
     }
 });
 
+router.get('/api/fetch-farm-data/:id', async (req, res) => {
+    try {
+        const id = req.params;
+
+
+
+        return res.status(201).json({ message: "Done!" });
+    } catch (error) {
+        console.log("/api/fetch-farm-data: ", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 module.exports = router;
