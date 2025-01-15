@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { FARMER_FETCH_FARM_DATA } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
@@ -11,6 +11,9 @@ function page() {
   const router = useRouter();
   const pathname = usePathname();
   const id = pathname.split("/").pop();
+
+  const [farm, setFarm] = useState();
+  console.log(farm);
 
   const fetchFarmData = async () => {
     try {
@@ -24,11 +27,12 @@ function page() {
 
       const data = await res.json();
 
-    //   if (res.status !== 201) {
-    //     router.push(LOGIN);
-    //   }
+      if (res.status !== 201) {
+        router.push(LOGIN);
+      }
 
-      console.log(data);
+      // console.log(data);
+      setFarm(data);
     } catch (error) {
       console.log("Error: ", error);
       alert("Error");
