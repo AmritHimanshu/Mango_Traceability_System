@@ -3,27 +3,21 @@
 import React from "react";
 import { ListFarmCardProps } from "@/utils/Types/interfaces";
 
-function ListFarmCard({
-  id,
-  name,
-  crop,
-  date,
-  handleClick,
-}: ListFarmCardProps) {
+function ListFarmCard({ idx, farm, handleClick }: ListFarmCardProps) {
   return (
     <>
       <div className="flex justify-between">
         <div className="flex space-x-2 w-[65%]">
-          <div>1. </div>
+          <div>{idx + 1} </div>
           <div className="space-y-[2px] w-[90%]">
             <div className="font-medium truncate overflow-hidden whitespace-nowrap">
-              {name}
+              {farm.farm}
             </div>
             <div className="text-[14px] truncate overflow-hidden whitespace-nowrap">
-              {crop}
+              {farm.crop.name}
             </div>
             <div className="text-[11px] text-gray-600">
-              {new Date(date).toLocaleString("en-IN", {
+              {new Date(farm.createdAt).toLocaleString("en-IN", {
                 day: "2-digit",
                 month: "2-digit",
                 year: "numeric",
@@ -37,7 +31,7 @@ function ListFarmCard({
         <div className="relative w-[30%]">
           <button
             className="btn bg-black text-white text-[10px] absolute bottom-0"
-            onClick={() => handleClick(id)}
+            onClick={() => handleClick(farm)}
           >
             view details
           </button>

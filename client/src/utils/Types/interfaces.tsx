@@ -94,11 +94,9 @@ export type FarmList = {
 };
 
 export type ListFarmCardProps = {
-  id: number;
-  name: string;
-  crop: string;
-  date: string;
-  handleClick: (id: number) => Promise<void>;
+  idx: number;
+  farm: FarmList;
+  handleClick: (farm: FarmList) => Promise<void>;
 };
 
 export type MapProps = {

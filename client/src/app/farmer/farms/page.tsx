@@ -31,7 +31,7 @@ function page() {
       );
 
       const data = await res.json();
-      console.log(data);
+      
       setFarms((prev) => {
         if (prev.length === 0) return data;
         else {
@@ -64,7 +64,9 @@ function page() {
     };
   }, []);
 
-  const handleSelectedFarm = async (id: number) => {};
+  const handleSelectedFarm = async (farm: FarmList) => {
+    console.log(farm)
+  };
 
   return (
     <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)] relative">
@@ -86,10 +88,8 @@ function page() {
             {farms.map((farm, index) => (
               <ListFarmCard
                 key={index}
-                id={index}
-                name={farm.farm}
-                crop={farm.crop.name}
-                date={farm.createdAt}
+                idx={index}
+                farm={farm}
                 handleClick={handleSelectedFarm}
               />
             ))}
