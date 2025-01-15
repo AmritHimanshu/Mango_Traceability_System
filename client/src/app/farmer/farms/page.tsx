@@ -31,7 +31,7 @@ function page() {
       );
 
       const data = await res.json();
-      console.log(data);
+      
       setFarms((prev) => {
         if (prev.length === 0) return data;
         else {
