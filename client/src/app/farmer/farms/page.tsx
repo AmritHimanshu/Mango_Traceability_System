@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CREATE_FARM } from "@/utils/Paths/paths";
+import { FARMER_FETCH_FARMS_LIST } from "@/utils/Apis/api";
 import ListFarmCard from "@/app/components/farmer/components/ListFarmCard";
 
 function page() {
@@ -11,6 +12,29 @@ function page() {
   const router = useRouter();
 
   const [farms, setFarms] = useState([0]);
+
+  const fetchFarms = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/${FARMER_FETCH_FARMS_LIST}`,{
+        method: 'GET',
+        headers:{
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include'
+      });
+
+      const data = await res.json();
+      // setFarms(data);
+      console.log(data);
+    } catch (error) {
+      console.log("Error: ", error);
+      alert("Error");
+    }
+  };
+
+  useEffect(()=>{
+    fetchFarms();
+  },[]);
 
   const handleSelectedFarm = async (id: string) => {};
 

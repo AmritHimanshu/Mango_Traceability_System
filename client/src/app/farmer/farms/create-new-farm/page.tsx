@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { NEW_FARM } from "@/utils/Apis/api";
+import { FARMER_NEW_FARM } from "@/utils/Apis/api";
 import { FARMS } from "@/utils/Paths/paths";
 import Map from "@/app/components/farmer/components/Map";
 
@@ -22,7 +22,7 @@ function page() {
       return alert("Select minimum three coordinate");
     }
     try {
-      const res = await fetch(`${BASE_URL}/${NEW_FARM}`, {
+      const res = await fetch(`${BASE_URL}/${FARMER_NEW_FARM}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

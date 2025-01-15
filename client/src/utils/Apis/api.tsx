@@ -19,5 +19,8 @@ export const ADMIN_FARMER_MANAGEMENT = 'admin/api/farmer-management';
 export const ADMIN_AUTHENTICATE_USER = 'admin/api/authenticate-user';
 
 
+// Farmer GET APIs
+export const FARMER_FETCH_FARMS_LIST = 'farmer/api/fetch-farms-list';
+
 // Farmer POST APIs
-export const NEW_FARM = 'farmer/api/new-farm';
+export const FARMER_NEW_FARM = 'farmer/api/new-farm';

@@ -18,6 +18,7 @@ const routes = require('./router/common/routes');
 const adminGetRoutes = require('./router/admin/getRoutes');
 const adminPutRoutes = require('./router/admin/putRoutes');
 const farmerPostRoutes = require('./router/farmer/postRoutes');
+const farmerGetRoutes = require('./router/farmer/getRoutes');
 
 app.use(cors({
     origin: true,
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(routes);
 app.use('/admin', authenticateAdmin, adminGetRoutes);
 app.use('/admin', authenticateAdmin, adminPutRoutes);
+app.use('/farmer', authenticateFarmer, farmerGetRoutes);
 app.use('/farmer', authenticateFarmer, farmerPostRoutes);
 
 app.listen(PORT, () => {
