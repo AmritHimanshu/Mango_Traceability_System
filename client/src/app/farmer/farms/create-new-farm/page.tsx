@@ -1,19 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { NEW_FARM } from "@/utils/Apis/api";
+import { FARMS } from "@/utils/Paths/paths";
 import Map from "@/app/components/farmer/components/Map";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+  const router = useRouter();
+
   const [farmName, setFarmName] = useState("");
   const [cropName, setCropName] = useState("");
 
   const handlesubmitForm = async (coordinates: [number, number][]) => {
-    console.log(farmName);
-    console.log(cropName);
-    console.log(coordinates);
     if (!farmName || !cropName) {
       return alert("Fill all the form");
     }
@@ -36,6 +37,14 @@ function page() {
 
       const data = await res.json();
       console.log(data);
+
+      if(res.status !== 201){
+        alert(data.error);
+        return;
+      }
+
+      alert(data.message);
+      router.push(FARMS);
     } catch (error) {
       console.log("Error: ", error);
       alert("Error");

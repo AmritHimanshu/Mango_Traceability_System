@@ -27,7 +27,7 @@ router.post('/api/new-farm', async (req, res) => {
 
         const farmRegister = await farm.save();
 
-        return res.status(201).json(farmRegister);
+        return res.status(201).json({message: "Farm registered successfully!"});
     } catch (error) {
         console.log("/api/new-farm: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
