@@ -38,11 +38,11 @@ function Map({ submitForm }: MapProps) {
         <MapClickHandler />
         <Polygon positions={coordinates} color="blue" />
       </MapContainer>
-      <div style={{ marginTop: "10px" }}>
+      <div className="mt-5 space-y-5">
         <button onClick={handleReset} style={{ marginRight: "10px" }}>
           Reset
         </button>
-        <button onClick={handleSubmit}>Submit</button>
+        <button className="btn bg-black text-white" onClick={handleSubmit}>Create farm</button>
       </div>
     </div>
   );

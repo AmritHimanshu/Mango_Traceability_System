@@ -33,7 +33,7 @@ function Header() {
 
   return (
     <>
-      <div className="py-2 px-4 bg-sky-100 flex items-center justify-between  sticky top-0 z-50">
+      <div className="py-2 px-4 bg-sky-100 flex items-center justify-between  sticky top-0 z-[9999]">
         <Link href="/">
           <div className="flex items-center justify-start">
             <Image
