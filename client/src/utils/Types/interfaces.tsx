@@ -53,7 +53,7 @@ export type ListUserCardProps = {
 };
 
 // Farmer
-export type FarmList = {
+export type Farm = {
   userId: string;
   farm: string;
   geoFenceData: { lat: number; lng: number }[];
@@ -93,10 +93,20 @@ export type FarmList = {
   createdAt: string;
 };
 
+export type FarmList = {
+  userId: string;
+  farm: string;
+  crop: {
+    name: string;
+  };
+  createdAt: string;
+  _id: string;
+};
+
 export type ListFarmCardProps = {
   idx: number;
   farm: FarmList;
-  handleClick: (farm: FarmList) => Promise<void>;
+  handleClick: (id: string) => Promise<void>;
 };
 
 export type MapProps = {

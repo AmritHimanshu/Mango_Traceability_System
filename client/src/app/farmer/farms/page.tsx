@@ -31,7 +31,7 @@ function page() {
       );
 
       const data = await res.json();
-      
+      console.log(data);
       setFarms((prev) => {
         if (prev.length === 0) return data;
         else {
@@ -64,8 +64,8 @@ function page() {
     };
   }, []);
 
-  const handleSelectedFarm = async (farm: FarmList) => {
-    console.log(farm)
+  const handleSelectedFarm = async (id: string) => {
+    console.log(id);
   };
 
   return (

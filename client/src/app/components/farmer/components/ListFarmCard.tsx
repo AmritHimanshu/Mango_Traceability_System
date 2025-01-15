@@ -4,6 +4,7 @@ import React from "react";
 import { ListFarmCardProps } from "@/utils/Types/interfaces";
 
 function ListFarmCard({ idx, farm, handleClick }: ListFarmCardProps) {
+  
   return (
     <>
       <div className="flex justify-between">
@@ -31,7 +32,7 @@ function ListFarmCard({ idx, farm, handleClick }: ListFarmCardProps) {
         <div className="relative w-[30%]">
           <button
             className="btn bg-black text-white text-[10px] absolute bottom-0"
-            onClick={() => handleClick(farm)}
+            onClick={() => handleClick(farm._id)}
           >
             view details
           </button>
