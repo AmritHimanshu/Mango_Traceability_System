@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { LoadingBarRef } from "react-top-loading-bar";
+import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import { User } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
 import { ADMIN_FARMER_MANAGEMENT } from "@/utils/Apis/api";
@@ -9,6 +11,8 @@ import ListUserCard from "@/app/components/admin/components/ListUserCard";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const loadingBarRef = useRef<LoadingBarRef>(null);
 
   const router = useRouter();
 
@@ -18,6 +22,10 @@ function page() {
   let skip = 0;
 
   const fetchFarmers = async () => {
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
     try {
       const res = await fetch(
         `${BASE_URL}/${ADMIN_FARMER_MANAGEMENT}?limit=${limit}&skip=${skip}`,
@@ -51,6 +59,10 @@ function page() {
       console.log(error);
       alert(error);
     }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
   };
 
   const handleScroll = () => {
@@ -75,6 +87,8 @@ function page() {
 
   return (
     <div className="px-3 py-3 relative">
+      <CustomLoadingBar ref={loadingBarRef} />
+
       <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center z-30">
         Farmers
       </div>

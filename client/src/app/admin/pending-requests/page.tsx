@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { LoadingBarRef } from "react-top-loading-bar";
+import CustomLoadingBar from "../../components/loadingBar/CustomLoadingBar";
 import { User } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
 import {
@@ -14,6 +16,8 @@ import "../../../styles/style.css";
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+  const loadingBarRef = useRef<LoadingBarRef>(null);
+
   const router = useRouter();
 
   const [pendingRequests, setPendingRequests] = useState<User[]>([]);
@@ -22,6 +26,10 @@ function page() {
   let skip = 0;
 
   const fetchPendingRequests = async () => {
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+    
     try {
       const res = await fetch(
         `${BASE_URL}/${ADMIN_PENDING_REQUESTS}?limit=${limit}&skip=${skip}`,
@@ -55,6 +63,10 @@ function page() {
       console.log(error);
       alert("Error fetchPendingRequests");
     }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
   };
 
   const handleScroll = () => {
@@ -78,6 +90,10 @@ function page() {
   }, []);
 
   const authenticateReq = async (id: string, status: boolean) => {
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
     try {
       const res = await fetch(`${BASE_URL}/${ADMIN_AUTHENTICATE_USER}/${id}`, {
         method: "PUT",
@@ -108,10 +124,16 @@ function page() {
       console.log(error);
       alert("Error acceptRequest");
     }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
   };
 
   return (
     <div className="px-3 py-3 relative">
+      <CustomLoadingBar ref={loadingBarRef} />
+
       <div className="py-3 text-lg font-bold sticky top-[56px] z-30 bg-white text-center">
         Recent Requests
       </div>

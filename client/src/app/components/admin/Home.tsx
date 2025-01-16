@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { LoadingBarRef } from "react-top-loading-bar";
+import CustomLoadingBar from "../loadingBar/CustomLoadingBar";
 import { User } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
 import {
@@ -17,6 +19,8 @@ import PendingUserCard from "./components/PendingUserCard";
 function Home() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+  const loadingBarRef = useRef<LoadingBarRef>(null);
+
   const router = useRouter();
 
   const [noOfVerifiedManagers, setNoOfVerifiedManagers] = useState(0);
@@ -26,6 +30,10 @@ function Home() {
   const [pendingRequests, setPendingRequests] = useState<User[]>([]);
 
   const fetchNoOfUsers = async () => {
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
     try {
       const res = await fetch(`${BASE_URL}/${ADMIN_FETCH_NO_OF_USERS}`, {
         method: "GET",
@@ -54,6 +62,10 @@ function Home() {
     } catch (error) {
       console.log("Error: ", error);
       alert(error);
+    }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
     }
   };
 
@@ -124,6 +136,8 @@ function Home() {
 
   return (
     <div className="py-5">
+      <CustomLoadingBar ref={loadingBarRef} />
+      
       <Image
         src={Mango_tree}
         alt="Mango Tree"

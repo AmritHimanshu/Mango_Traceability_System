@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { setUserState } from "@/store/features/userSlice";
 import { useAppDispatch } from "@/store/store";
-import { useRouter } from "next/navigation";
+import { LoadingBarRef } from "react-top-loading-bar";
+import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
 import { LOGOUT_USER, SIGNIN_USER } from "@/utils/Apis/api";
 
 // Material UI Icons
@@ -13,6 +15,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const loadingBarRef = useRef<LoadingBarRef>(null);
 
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -60,6 +64,10 @@ function page() {
       return;
     }
 
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
     try {
       const res = await fetch(`${BASE_URL}/${SIGNIN_USER}`, {
         method: "POST",
@@ -89,10 +97,16 @@ function page() {
       console.log("Error: ", error);
       alert(error);
     }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
   };
 
   return (
     <div className="flex items-center justify-center h-[calc(100vh-56px)]">
+      <CustomLoadingBar ref={loadingBarRef} />
+
       <div className="p-5 w-[300px] bg-cardBackground bg-opacity-90 rounded-md shadow-md">
         <form
           action="POST"
