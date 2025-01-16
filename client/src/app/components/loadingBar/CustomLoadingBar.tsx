@@ -6,7 +6,7 @@ import LoadingBar, { LoadingBarRef } from "react-top-loading-bar";
 const CustomLoadingBar = forwardRef<LoadingBarRef>((props, ref) => {
   return (
     <LoadingBar
-      color="#f11946"
+      color="#0098d1"
       height={4}     
       ref={ref}      
       {...props}      
