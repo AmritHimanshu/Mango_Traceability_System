@@ -32,11 +32,16 @@ function page() {
 
       const data = await res.json();
 
-      if(res.status !== 201){
+      if (res.status !== 201 && res.status !== 500) {
         router.push(LOGIN);
         return;
       }
-      
+
+      if (res.status === 500) {
+        const error = new Error(data.error);
+        throw error;
+      }
+
       setFarms((prev) => {
         if (prev.length === 0) return data;
         else {
@@ -45,7 +50,7 @@ function page() {
       });
     } catch (error) {
       console.log("Error: ", error);
-      alert("Error");
+      alert(error);
     }
   };
 
