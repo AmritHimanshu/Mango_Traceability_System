@@ -12,11 +12,11 @@ router.put('/api/authenticate-user/:id', async (req, res) => {
 
     try {
         if (req.rootUser.role !== 'Admin') {
-            return res.status(403).json({error: "You don't have permission."});
+            return res.status(401).json({error: "You don't have permission."});
         }
 
         if(isAuthenticated === undefined){
-            return res.status(401).json({error: "Bad request"});
+            return res.status(400).json({error: "Bad request"});
         }
 
         const user = await User.findById(id);

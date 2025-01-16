@@ -112,15 +112,15 @@ function page() {
       const data = await res.json();
 
       if (res.status !== 201) {
-        alert(data.error);
-        return;
+        const error = new Error(data.error);
+        throw error;
       }
 
       alert(data.message);
       router.push(LOGIN);
     } catch (error) {
       console.log("Error: ", error);
-      alert("Error");
+      alert(error);
     }
   };
 

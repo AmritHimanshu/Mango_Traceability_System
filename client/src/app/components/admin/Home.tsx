@@ -5,7 +5,11 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { User } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
-import { ADMIN_AUTHENTICATE_USER, ADMIN_FETCH_NO_OF_USERS, ADMIN_FEW_PENDING_REQUESTS } from "@/utils/Apis/api";
+import {
+  ADMIN_AUTHENTICATE_USER,
+  ADMIN_FETCH_NO_OF_USERS,
+  ADMIN_FEW_PENDING_REQUESTS,
+} from "@/utils/Apis/api";
 import Mango_tree from "../../../../public/assets/Mango_tree.png";
 import HomeCard from "./components/HomeCard";
 import PendingUserCard from "./components/PendingUserCard";
@@ -33,9 +37,14 @@ function Home() {
 
       const data = await res.json();
 
-      if(res.status !== 201){
+      if (res.status !== 201 && res.status !== 500) {
         router.push(LOGIN);
         return;
+      }
+
+      if (res.status === 500) {
+        const error = new Error(data.error);
+        throw error;
       }
 
       setNoOfVerifiedManagers(data.noOfVerifiedManagers);
@@ -43,8 +52,8 @@ function Home() {
       setNoOfPendingRequests(data.noOfPendingRequests);
       sestNoOfRejectedRequests(data.noOfRejectedRequests);
     } catch (error) {
-      console.log(error);
-      alert("Error fetchNoOfFarmers");
+      console.log("Error: ", error);
+      alert(error);
     }
   };
 
@@ -59,14 +68,20 @@ function Home() {
       });
 
       const data = await res.json();
-      if (res.status !== 201) {
+      if (res.status !== 201 && res.status !== 500) {
         router.push(LOGIN);
         return;
       }
+
+      if(res.status === 500){
+        const error = new Error(data.error);
+        throw error;
+      }
+
       setPendingRequests(data);
     } catch (error) {
       console.log(error);
-      alert("Error fetchPendingRequests");
+      alert(error);
     }
   };
 
@@ -87,17 +102,23 @@ function Home() {
       });
 
       const data = await res.json();
-      if (res.status !== 201) {
+      if (res.status !== 201 && res.status !== 500) {
         router.push(LOGIN);
         return;
       }
+
+      if(res.status === 500){
+        const error = new Error(data.error);
+        throw error;
+      }
+
       alert(data.message);
 
       fetchNoOfUsers();
       fetchPendingRequests();
     } catch (error) {
       console.log(error);
-      alert("Error acceptRequest");
+      alert(error);
     }
   };
 
@@ -141,7 +162,9 @@ function Home() {
 
       {pendingRequests && (
         <div className="bg-gray-50 p-3 mt-10">
-          <div className="pb-2 text-lg font-bold text-center underline">Recent Requests</div>
+          <div className="pb-2 text-lg font-bold text-center underline">
+            Recent Requests
+          </div>
           <div className="space-y-7">
             {pendingRequests.map((request, index) => (
               <div key={index} className="space-y-2">
