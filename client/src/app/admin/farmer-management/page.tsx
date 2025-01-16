@@ -13,7 +13,7 @@ function page() {
   const router = useRouter();
 
   const [farmers, setFarmers] = useState<User[]>([]);
-  
+
   const limit = 7;
   let skip = 0;
 
@@ -31,8 +31,14 @@ function page() {
       );
 
       const data = await res.json();
-      if (res.status !== 201) {
-        return router.push(LOGIN);
+      if (res.status !== 201 && res.status !== 500) {
+        router.push(LOGIN);
+        return;
+      }
+
+      if (res.status === 500) {
+        const error = new Error(data.error);
+        throw error;
       }
 
       setFarmers((prev) => {
@@ -43,7 +49,7 @@ function page() {
       });
     } catch (error) {
       console.log(error);
-      alert("Error fetchManagers");
+      alert(error);
     }
   };
 

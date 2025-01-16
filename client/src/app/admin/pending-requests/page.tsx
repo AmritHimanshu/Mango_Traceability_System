@@ -4,7 +4,10 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
-import { ADMIN_AUTHENTICATE_USER, ADMIN_PENDING_REQUESTS } from "@/utils/Apis/api";
+import {
+  ADMIN_AUTHENTICATE_USER,
+  ADMIN_PENDING_REQUESTS,
+} from "@/utils/Apis/api";
 import PendingUserCard from "@/app/components/admin/components/PendingUserCard";
 import "../../../styles/style.css";
 
@@ -32,8 +35,14 @@ function page() {
       );
 
       const data = await res.json();
-      if (res.status !== 201) {
-        return router.push(LOGIN);
+      if (res.status !== 201 && res.status !== 500) {
+        router.push(LOGIN);
+        return;
+      }
+
+      if (res.status === 500) {
+        const error = new Error(data.error);
+        throw error;
       }
 
       setPendingRequests((prev) => {
@@ -80,13 +89,20 @@ function page() {
       });
 
       const data = await res.json();
-      if (res.status !== 201) {
-        return router.push(LOGIN);
+      if (res.status !== 201 && res.status !== 500) {
+        router.push(LOGIN);
+        return;
       }
+
+      if (res.status === 500) {
+        const error = new Error(data.error);
+        throw error;
+      }
+
       alert(data.message);
 
-      setPendingRequests((prev)=>{
-        return prev.filter(request => request._id !== id)
+      setPendingRequests((prev) => {
+        return prev.filter((request) => request._id !== id);
       });
     } catch (error) {
       console.log(error);

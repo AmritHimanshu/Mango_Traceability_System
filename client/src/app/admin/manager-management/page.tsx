@@ -31,8 +31,14 @@ function page() {
       );
 
       const data = await res.json();
-      if (res.status !== 201) {
-        return router.push(LOGIN);
+      if (res.status !== 201 && res.status !== 500) {
+        router.push(LOGIN);
+        return;
+      }
+
+      if (res.status === 500) {
+        const error = new Error(data.error);
+        throw error;
       }
 
       setManagers((prev) => {
