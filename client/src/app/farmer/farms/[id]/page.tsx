@@ -27,15 +27,20 @@ function page() {
 
       const data = await res.json();
 
-      if (res.status !== 201) {
+      if (res.status !== 201 && res.status !== 500) {
         router.push(LOGIN);
+        return;
       }
 
-      // console.log(data);
+      if (res.status === 500) {
+        const error = new Error(data.error);
+        throw error;
+      }
+
       setFarm(data);
     } catch (error) {
       console.log("Error: ", error);
-      alert("Error");
+      alert(error);
     }
   };
 

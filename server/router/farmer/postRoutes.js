@@ -8,11 +8,11 @@ router.post('/api/new-farm', async (req, res) => {
         const { farmName, cropName, coordinates } = req.body;
 
         if (!farmName || !cropName || !coordinates) {
-            return res.status(422).json({ error: "Fill all the fields" });
+            return res.status(400).json({ error: "Fill all the fields" });
         }
 
         if (coordinates.length < 3) {
-            return res.status(422).json({ error: "select minimum 3 coordinates" });
+            return res.status(400).json({ error: "select minimum 3 coordinates" });
         }
 
         const farm = new Farmer({

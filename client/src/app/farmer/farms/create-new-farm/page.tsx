@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FARMER_NEW_FARM } from "@/utils/Apis/api";
-import { FARMS } from "@/utils/Paths/paths";
+import { FARMS, LOGIN } from "@/utils/Paths/paths";
 import Map from "@/app/components/farmer/components/Map";
 
 function page() {
@@ -38,16 +38,21 @@ function page() {
       const data = await res.json();
       console.log(data);
 
-      if(res.status !== 201){
-        alert(data.error);
+      if (res.status !== 201 && res.status !== 400 && res.status !== 500) {
+        router.push(LOGIN);
         return;
+      }
+
+      if (res.status === 500 || res.status === 400) {
+        const error = new Error(data.error);
+        throw error;
       }
 
       alert(data.message);
       router.push(FARMS);
     } catch (error) {
       console.log("Error: ", error);
-      alert("Error");
+      alert(error);
     }
   };
 
