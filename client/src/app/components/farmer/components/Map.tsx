@@ -10,6 +10,7 @@ import {
 } from "react-leaflet";
 import { LeafletMouseEvent } from "leaflet";
 import { MapProps } from "@/utils/Types/interfaces";
+import 'leaflet/dist/leaflet.css';
 
 function Map({ submitForm }: MapProps) {
   const [coordinates, setCoordinates] = useState<[number, number][]>([]);
