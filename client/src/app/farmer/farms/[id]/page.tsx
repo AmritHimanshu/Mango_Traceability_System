@@ -4,6 +4,14 @@ import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { FARMER_FETCH_FARM_DATA } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
+import dynamic from "next/dynamic";
+import { Farm } from "@/utils/Types/interfaces";
+const Map = dynamic(
+  () => import("@/app/components/farmer/components/MapCoordinates"),
+  {
+    ssr: false,
+  }
+);
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -12,7 +20,7 @@ function page() {
   const pathname = usePathname();
   const id = pathname.split("/").pop();
 
-  const [farm, setFarm] = useState();
+  const [farm, setFarm] = useState<Farm>();
   console.log(farm);
 
   const fetchFarmData = async () => {
@@ -43,14 +51,14 @@ function page() {
     fetchFarmData();
   }, []);
 
-  const handlesubmitForm = async (coordinates: [number, number][]) => {};
 
   return (
-    <div>
-      <div>
-        {/* <Map submitForm={handlesubmitForm} /> */}
-        This is id farmer
-      </div>
+    <div className="px-3 py-3 min-h-[calc(100vh-56px)]">
+      {farm && (
+        <>
+          <Map coordinates={farm.geoFenceData}/>
+        </>
+      )}
     </div>
   );
 }

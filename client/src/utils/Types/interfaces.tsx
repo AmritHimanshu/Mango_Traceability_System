@@ -112,3 +112,7 @@ export type ListFarmCardProps = {
 export type MapProps = {
   submitForm: (coordinates: [number, number][]) => Promise<void>;
 };
+
+export type MapCoordinatesProps = {
+  coordinates: { lat: number; lng: number }[];
+};
