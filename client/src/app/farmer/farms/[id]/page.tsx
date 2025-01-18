@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { FARMER_FETCH_FARM_DATA } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
-import Map from "@/app/components/farmer/components/Map";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -49,7 +48,8 @@ function page() {
   return (
     <div>
       <div>
-        <Map submitForm={handlesubmitForm} />
+        {/* <Map submitForm={handlesubmitForm} /> */}
+        This is id farmer
       </div>
     </div>
   );
