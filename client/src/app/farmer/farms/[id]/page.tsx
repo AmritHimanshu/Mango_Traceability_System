@@ -39,7 +39,6 @@ function page() {
         router.push(LOGIN);
       }
 
-      // console.log(data);
       setFarm(data);
     } catch (error) {
       console.log("Error: ", error);
@@ -53,11 +52,61 @@ function page() {
 
 
   return (
-    <div className="px-3 py-3 min-h-[calc(100vh-56px)]">
+    <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)]">
       {farm && (
-        <>
+        <form className="space-y-10 my-5">
           <Map coordinates={farm.geoFenceData}/>
-        </>
+
+          <div className="flex items-start flex-col">
+            <label htmlFor="">Farm Name:</label>
+            <input type="text" className="input-tag"/>
+          </div>
+
+          <div className="flex items-start flex-col">
+            <label htmlFor="">Crop Name:</label>
+            <input type="text" className="input-tag"/>
+          </div>
+
+          <div className="flex items-start flex-col">
+            <label htmlFor="">Ploughing Date:</label>
+            <input type="text" className="input-tag"/>
+          </div>
+
+          <div className="flex items-start flex-col">
+            <label htmlFor="">Weeding Date:</label>
+            <input type="text" className="input-tag"/>
+          </div>
+
+          <div className="flex items-start flex-col">
+            <label htmlFor="">Sowing Date:</label>
+            <input type="text" className="input-tag"/>
+          </div>
+
+          <div className="flex items-start flex-col">
+            <label htmlFor="">Flowering Date:</label>
+            <input type="text" className="input-tag"/>
+          </div>
+
+          <div className="flex items-start flex-col">
+            <label htmlFor="">Pheromone Trap Date:</label>
+            <input type="text" className="input-tag"/>
+          </div>
+
+          <div className="flex items-start flex-col">
+            <label htmlFor="">Lure Change Date:</label>
+            <input type="text" className="input-tag"/>
+          </div>
+
+          <div className="flex items-start flex-col">
+            <label htmlFor="">Irrigation Date:</label>
+            <input type="text" className="input-tag"/>
+          </div>
+
+          <div className="flex items-start flex-col">
+            <label htmlFor="">Harvest Date:</label>
+            <input type="text" className="input-tag"/>
+          </div>
+        </form>
       )}
     </div>
   );

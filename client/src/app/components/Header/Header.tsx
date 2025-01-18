@@ -18,22 +18,20 @@ function Header() {
   };
 
   useEffect(() => {
-    
     if (isMenu) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     }
 
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     };
   }, [isMenu]);
 
-
   return (
-    <>
-      <div className="py-2 px-4 bg-sky-100 flex items-center justify-between  sticky top-0 z-[9999]">
+    <div className="sticky top-0 z-[9999]">
+      <div className="py-2 px-4 bg-sky-100 flex items-center justify-between">
         <Link href="/">
           <div className="flex items-center justify-start">
             <Image
@@ -58,12 +56,13 @@ function Header() {
           <CloseIcon onClick={() => setIsMenu(!isMenu)} />
         )}
       </div>
+
       {isMenu && (
         <div>
           <Header_Menu onNavigationComplete={handleIsMenuState} />
         </div>
       )}
-    </>
+    </div>
   );
 }
 
