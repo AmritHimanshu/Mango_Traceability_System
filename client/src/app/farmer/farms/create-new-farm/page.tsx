@@ -4,7 +4,10 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FARMER_NEW_FARM } from "@/utils/Apis/api";
 import { FARMS } from "@/utils/Paths/paths";
-import Map from "@/app/components/farmer/components/Map";
+import dynamic from "next/dynamic";
+const Map = dynamic(() => import("@/app/components/farmer/components/Map"), {
+  ssr: false,
+});
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -38,7 +41,7 @@ function page() {
       const data = await res.json();
       console.log(data);
 
-      if(res.status !== 201){
+      if (res.status !== 201) {
         alert(data.error);
         return;
       }
@@ -52,7 +55,7 @@ function page() {
   };
 
   return (
-    <div className="px-3 py-3 min-h-[calc(100vh-56px)] relative">
+    <div className="px-3 py-3 min-h-[calc(100vh-56px)]">
       <div className="bg-cardBackground bg-opacity-90 rounded-md shadow-md p-5 space-y-3">
         <div className="text-center font-medium">Enter data of farm</div>
         <div className="space-y-10">
