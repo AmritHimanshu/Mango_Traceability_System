@@ -2,7 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { FARMER_FETCH_FARM_DATA, FARMER_SAVE_FARM_DATA } from "@/utils/Apis/api";
+import {
+  FARMER_FETCH_FARM_DATA,
+  FARMER_SAVE_FARM_DATA,
+} from "@/utils/Apis/api";
 import { FARMS, LOGIN } from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
 const Map = dynamic(
@@ -42,7 +45,6 @@ function page() {
     specialCare: [],
     harvest: "",
   });
-  console.log(farm);
 
   const [changedFarmData, setChangedFarmData] = useState({});
   const [fertilizerApplications, setFertilizerApplications] = useState({
@@ -82,27 +84,25 @@ function page() {
         router.push(LOGIN);
       }
 
-      console.log("Data: ", data);
-
       setFarm({
         farm: data.farm || "",
-        crop: data.crop.name || "",
+        crop: data.crop || "",
         geoFenceData: data.geoFenceData || [{ lat: 0, lng: 0 }],
-        ploughingDate: data.crop.ploughingDate || "",
-        weedingDate: data.crop.weedingDate || "",
-        sowingDate: data.crop.sowingDate || "",
-        floweringDate: data.crop.floweringDate || "",
-        pheromoneTrapDate: data.crop.pheromoneTrapDate || "",
-        lureChangeDate: data.crop.lureChangeDate || "",
+        ploughingDate: data.ploughingDate || "",
+        weedingDate: data.weedingDate || "",
+        sowingDate: data.sowingDate || "",
+        floweringDate: data.floweringDate || "",
+        pheromoneTrapDate: data.pheromoneTrapDate || "",
+        lureChangeDate: data.lureChangeDate || "",
         irrigationDates: {
-          artificial: data.crop.irrigationDates?.artificial || "",
-          natural: data.crop.irrigationDates?.natural || "",
+          artificial: data.irrigationDates?.artificial || "",
+          natural: data.irrigationDates?.natural || "",
         },
-        fertilizerApplications: data.crop.fertilizerApplications || [],
-        pesticideApplications: data.crop.pesticideApplications || [],
-        bagging: data.crop.bagging || [],
-        specialCare: data.crop.specialCare || [],
-        harvest: data.crop.harvest || "",
+        fertilizerApplications: data.fertilizerApplications || [],
+        pesticideApplications: data.pesticideApplications || [],
+        bagging: data.bagging || [],
+        specialCare: data.specialCare || [],
+        harvest: data.harvest || "",
       });
     } catch (error) {
       console.log("Error: ", error);
@@ -131,13 +131,17 @@ function page() {
         ...Object.fromEntries(
           Object.entries(changedFarmData).filter(([key, value]) => value !== "")
         ),
-        ...(fertilizerApplications.date && fertilizerApplications.volume !== "0" ? { fertilizerApplications } : {}),
-        ...(pesticideApplications.date && pesticideApplications.volume !== "0" ? { pesticideApplications } : {}),
+        ...(fertilizerApplications.date && fertilizerApplications.volume !== "0"
+          ? { fertilizerApplications }
+          : {}),
+        ...(pesticideApplications.date && pesticideApplications.volume !== "0"
+          ? { pesticideApplications }
+          : {}),
         ...(bagging.date && bagging.quantity !== "0" ? { bagging } : {}),
         ...(specialCare.date && specialCare.name ? { specialCare } : {}),
         ...(harvest.date && harvest.yield !== "0" ? { harvest } : {}),
       };
-  
+
       if (Object.keys(payload).length === 0) {
         alert("No changes to save!");
         router.push(`${FARMS}/${id}`);
@@ -146,18 +150,18 @@ function page() {
 
       console.log(payload);
 
-      const res = await fetch(`${BASE_URL}/${FARMER_SAVE_FARM_DATA}/${id}`,{
-        method:'PUT',
-        headers:{
-          'Content-Type': 'application/json',
+      const res = await fetch(`${BASE_URL}/${FARMER_SAVE_FARM_DATA}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
         },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify(payload),
       });
 
       const data = await res.json();
 
-      if(res.status !== 201){
+      if (res.status !== 201) {
         alert(data.error);
         console.log(data.error);
         return;
@@ -169,7 +173,6 @@ function page() {
       alert("Error while saving changes.");
     }
   };
-  
 
   return (
     <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)]">
@@ -209,7 +212,11 @@ function page() {
               type="date"
               id="ploughingDate"
               name="ploughingDate"
-              value={farm.ploughingDate}
+              value={
+                farm.ploughingDate
+                  ? new Date(farm.ploughingDate).toISOString().split("T")[0]
+                  : ""
+              }
               className="input-tag"
               disabled={!(edit === "true")}
               onChange={(e) => handleOnChange(e)}
@@ -222,7 +229,11 @@ function page() {
               type="date"
               id="weedingDate"
               name="weedingDate"
-              value={farm.weedingDate}
+              value={
+                farm.weedingDate
+                  ? new Date(farm.weedingDate).toISOString().split("T")[0]
+                  : ""
+              }
               className="input-tag"
               disabled={!(edit === "true")}
               onChange={(e) => handleOnChange(e)}
@@ -235,7 +246,11 @@ function page() {
               type="date"
               id="sowingDate"
               name="sowingDate"
-              value={farm.sowingDate}
+              value={
+                farm.sowingDate
+                  ? new Date(farm.sowingDate).toISOString().split("T")[0]
+                  : ""
+              }
               className="input-tag"
               disabled={!(edit === "true")}
               onChange={(e) => handleOnChange(e)}
@@ -248,7 +263,11 @@ function page() {
               type="date"
               id="floweringDate"
               name="floweringDate"
-              value={farm.floweringDate}
+              value={
+                farm.floweringDate
+                  ? new Date(farm.floweringDate).toISOString().split("T")[0]
+                  : ""
+              }
               className="input-tag"
               disabled={!(edit === "true")}
               onChange={(e) => handleOnChange(e)}
@@ -261,7 +280,11 @@ function page() {
               type="date"
               id="pheromoneTrapDate"
               name="pheromoneTrapDate"
-              value={farm.pheromoneTrapDate}
+              value={
+                farm.pheromoneTrapDate
+                  ? new Date(farm.pheromoneTrapDate).toISOString().split("T")[0]
+                  : ""
+              }
               className="input-tag"
               disabled={!(edit === "true")}
               onChange={(e) => handleOnChange(e)}
@@ -274,7 +297,11 @@ function page() {
               type="date"
               id="lureChangeDate"
               name="lureChangeDate"
-              value={farm.lureChangeDate}
+              value={
+                farm.lureChangeDate
+                  ? new Date(farm.lureChangeDate).toISOString().split("T")[0]
+                  : ""
+              }
               className="input-tag"
               disabled={!(edit === "true")}
               onChange={(e) => handleOnChange(e)}
