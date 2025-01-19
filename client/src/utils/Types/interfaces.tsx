@@ -57,38 +57,36 @@ export type Farm = {
   userId: string;
   farm: string;
   geoFenceData: { lat: number; lng: number }[];
-  crop: {
+  crop: string;
+  ploughingDate: string;
+  weedingDate: string;
+  sowingDate: string;
+  floweringDate: string;
+  pheromoneTrapDate: string;
+  lureChangeDate: string;
+  irrigationDates: {
+    artificial: string[];
+    natural: string[];
+  };
+  fertilizerApplications: {
+    date: string;
+    volume: number;
+  }[];
+  pesticideApplications: {
+    date: string;
+    volume: number;
+  }[];
+  bagging: {
+    date: string;
+    quantity: number;
+  }[];
+  specialCare: {
+    date: string;
     name: string;
-    ploughingDate?: string;
-    weedingDate?: string;
-    sowingDate?: string;
-    floweringDate?: string;
-    pheromoneTrapDate?: string;
-    lureChangeDate?: string;
-    irrigationDates: {
-      artificial: string[];
-      natural: string[];
-    };
-    fertilizerApplications: {
-      date: string;
-      volume: number;
-    }[];
-    pesticideApplications: {
-      date: string;
-      volume: number;
-    }[];
-    bagging: {
-      date: string;
-      quantity: number;
-    }[];
-    specialCare: {
-      date: string;
-      name: string;
-    }[];
-    harvest?: {
-      date: string;
-      yield: number;
-    };
+  }[];
+  harvest: {
+    date: string;
+    yield: number;
   };
   createdAt: string;
 };
@@ -96,9 +94,7 @@ export type Farm = {
 export type FarmList = {
   userId: string;
   farm: string;
-  crop: {
-    name: string;
-  };
+  crop: string;
   createdAt: string;
   _id: string;
 };

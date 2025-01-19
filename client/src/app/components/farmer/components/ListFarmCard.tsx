@@ -15,7 +15,7 @@ function ListFarmCard({ idx, farm, handleClick }: ListFarmCardProps) {
               {farm.farm}
             </div>
             <div className="text-[14px] truncate overflow-hidden whitespace-nowrap">
-              {farm.crop.name}
+              {farm.crop}
             </div>
             <div className="text-[11px] text-gray-600">
               {new Date(farm.createdAt).toLocaleString("en-IN", {

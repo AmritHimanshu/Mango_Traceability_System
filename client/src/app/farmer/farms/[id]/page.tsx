@@ -42,6 +42,7 @@ function page() {
     specialCare: [],
     harvest: "",
   });
+  console.log(farm);
 
   const [changedFarmData, setChangedFarmData] = useState({});
   const [fertilizerApplications, setFertilizerApplications] = useState({
@@ -80,6 +81,8 @@ function page() {
       if (res.status !== 201) {
         router.push(LOGIN);
       }
+
+      console.log("Data: ", data);
 
       setFarm({
         farm: data.farm || "",

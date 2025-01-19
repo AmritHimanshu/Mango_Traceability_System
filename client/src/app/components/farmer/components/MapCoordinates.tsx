@@ -13,7 +13,6 @@ import {
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Fix for Leaflet marker icons not showing
 const customIcon = new L.Icon({
   iconRetinaUrl:
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
@@ -27,24 +26,22 @@ const customIcon = new L.Icon({
   shadowSize: [41, 41], // Shadow size
 });
 
+function FitBounds({ coordinates }: { coordinates: { lat: number; lng: number }[] }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (coordinates.length > 0) {
+      const bounds = L.latLngBounds(
+        coordinates.map((coord) => L.latLng(coord.lat, coord.lng))
+      );
+      map.fitBounds(bounds, { padding: [20, 20] });
+    }
+  }, [coordinates, map]);
+
+  return null;
+}
+
 function MapCoordinates({ coordinates }: MapCoordinatesProps) {
-  const ResizeHandler = () => {
-    const map = useMap();
-    useEffect(() => {
-      const resizeTimeout = setTimeout(() => {
-        if (map) {
-          map.invalidateSize();
-        }
-      }, 500);
-      return () => clearTimeout(resizeTimeout);
-    }, [map]);
-    return null;
-  };
-
-  const bounds = L.latLngBounds(
-    coordinates.map((coord) => L.latLng(coord.lat, coord.lng))
-  );
-
   return (
     <div>
       <MapContainer
@@ -56,7 +53,6 @@ function MapCoordinates({ coordinates }: MapCoordinatesProps) {
           border: "2px solid black",
           overflow: "hidden",
         }}
-        bounds={bounds}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -80,7 +76,7 @@ function MapCoordinates({ coordinates }: MapCoordinatesProps) {
           </Marker>
         ))}
 
-        <ResizeHandler />
+        <FitBounds coordinates={coordinates} />
       </MapContainer>
     </div>
   );

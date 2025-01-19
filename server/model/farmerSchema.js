@@ -29,62 +29,60 @@ const farmerSchema = new mongoose.Schema(
             }
         ],
         crop: {
-            name: {
-                type: String,
-                required: true
-            },
-            ploughingDate: {
-                type: Date
-            },
-            weedingDate: {
-                type: Date
-            },
-            sowingDate: {
-                type: Date
-            },
-            floweringDate: {
-                type: Date
-            },
-            pheromoneTrapDate: {
-                type: Date
-            },
-            lureChangeDate: {
-                type: Date
-            },
-            irrigationDates: {
-                artificial: [Date],
-                natural: [Date],
-            },
-            fertilizerApplications: [
-                {
-                    date: Date,
-                    volume: Number
-                },
-            ],
-            pesticideApplications: [
-                {
-                    date: Date,
-                    volume: Number
-                },
-            ],
-            bagging: [
-                {
-                    date: Date,
-                    quantity: Number
-                },
-            ],
-            specialCare: [
-                {
-                    date: Date,
-                    name: String
-                },
-            ],
-            harvest: {
-                date: Date,
-                yield: Number,
-            },
-            qrCode: String,
+            type: String,
+            required: true
         },
+        ploughingDate: {
+            type: Date
+        },
+        weedingDate: {
+            type: Date
+        },
+        sowingDate: {
+            type: Date
+        },
+        floweringDate: {
+            type: Date
+        },
+        pheromoneTrapDate: {
+            type: Date
+        },
+        lureChangeDate: {
+            type: Date
+        },
+        irrigationDates: {
+            artificial: [Date],
+            natural: [Date],
+        },
+        fertilizerApplications: [
+            {
+                date: Date,
+                volume: Number
+            },
+        ],
+        pesticideApplications: [
+            {
+                date: Date,
+                volume: Number
+            },
+        ],
+        bagging: [
+            {
+                date: Date,
+                quantity: Number
+            },
+        ],
+        specialCare: [
+            {
+                date: Date,
+                name: String
+            },
+        ],
+        harvest: {
+            date: Date,
+            yield: Number,
+        },
+        qrCode: String,
     },
     {
         timestamps: true
