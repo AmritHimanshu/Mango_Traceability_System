@@ -20,8 +20,17 @@ router.put('/api/save-farm-data/:id', async (req, res) => {
         for (const key in updates) {
             if (arrayFieldsKeys.includes(key)) {
                 arrayFields[key] = updates[key];
-            }
-            else {
+            } else if (key === 'irrigationDates') {
+                const { artificial, natural } = updates[key];
+
+                if (artificial && artificial.length > 0) {
+                    arrayFields['irrigationDates.artificial'] = artificial;
+                }
+
+                if (natural && natural.length > 0) {
+                    arrayFields['irrigationDates.natural'] = natural;
+                }
+            } else {
                 nonArrayFields[key] = updates[key];
             }
         }
@@ -30,9 +39,10 @@ router.put('/api/save-farm-data/:id', async (req, res) => {
 
         if (Object.keys(arrayFields).length > 0) {
             updateQuery.$push = {};
+
             for (const key in arrayFields) {
-                updateQuery.$push[key] = arrayFields[key];
-            }
+                updateQuery.$push[key] = { $each: Array.isArray(arrayFields[key]) ? arrayFields[key] : [arrayFields[key]] };
+            }            
         }
 
         if (Object.keys(nonArrayFields).length > 0) {

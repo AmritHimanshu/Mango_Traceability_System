@@ -47,6 +47,9 @@ function page() {
   });
 
   const [changedFarmData, setChangedFarmData] = useState({});
+
+  const [artificial, setArtificial] = useState("");
+  const [natural, setNatural] = useState("");
   const [fertilizerApplications, setFertilizerApplications] = useState({
     date: "",
     volume: "0",
@@ -131,6 +134,14 @@ function page() {
         ...Object.fromEntries(
           Object.entries(changedFarmData).filter(([key, value]) => value !== "")
         ),
+        ...(artificial || natural
+          ? {
+              irrigationDates: {
+                artificial: artificial ? [artificial] : [],
+                natural: natural ? [natural] : [],
+              },
+            }
+          : {}),
         ...(fertilizerApplications.date && fertilizerApplications.volume !== "0"
           ? { fertilizerApplications }
           : {}),
@@ -148,8 +159,6 @@ function page() {
         return;
       }
 
-      console.log(payload);
-
       const res = await fetch(`${BASE_URL}/${FARMER_SAVE_FARM_DATA}/${id}`, {
         method: "PUT",
         headers: {
@@ -162,12 +171,11 @@ function page() {
       const data = await res.json();
 
       if (res.status !== 201) {
-        alert(data.error);
-        console.log(data.error);
-        return;
+        return router.push(LOGIN);
       }
 
       alert(data.message);
+      router.push(`${FARMS}/${id}`);
     } catch (error) {
       console.log("Error: ", error);
       alert("Error while saving changes.");
@@ -308,18 +316,31 @@ function page() {
             />
           </div>
 
-          <div className="flex items-start flex-col">
-            <label htmlFor="irrigationDates">Irrigation Dates:</label>
+          <div className="flex items-start flex-col space-y-3">
+            <div className="font-bold">Irrigation Dates:</div>
             {edit && (
-              <input
-                type="text"
-                id="irrigationDates"
-                name="irrigationDates"
-                value=""
-                className="input-tag"
-                disabled={!(edit === "true")}
-                onChange={(e) => handleOnChange(e)}
-              />
+              <>
+                <label htmlFor="artificial">Artificial</label>
+                <input
+                  type="date"
+                  id="artificial"
+                  name="artificial"
+                  value={artificial}
+                  className="input-tag"
+                  disabled={!(edit === "true")}
+                  onChange={(e) => setArtificial(e.target.value)}
+                />
+                <label htmlFor="natural">Natural</label>
+                <input
+                  type="date"
+                  id="natural"
+                  name="natural"
+                  value={natural}
+                  className="input-tag"
+                  disabled={!(edit === "true")}
+                  onChange={(e) => setNatural(e.target.value)}
+                />
+              </>
             )}
           </div>
 
@@ -522,7 +543,7 @@ function page() {
             </button>
           ) : (
             <button className="btn bg-black text-white" onClick={handleOnEdit}>
-              Edit
+              Edit / Add
             </button>
           )}
         </div>
