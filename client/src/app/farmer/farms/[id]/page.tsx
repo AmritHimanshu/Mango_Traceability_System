@@ -216,6 +216,11 @@ function page() {
         return;
       }
 
+      if (res.status === 500) {
+        const error = new Error(data.error);
+        throw error;
+      }
+
       alert(data.message);
       router.push(`${FARMS}/${id}`);
     } catch (error) {
