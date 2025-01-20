@@ -52,8 +52,6 @@ function page() {
     harvest: { date: "", yield: "" },
   });
 
-  console.log(farm);
-
   const [changedFarmData, setChangedFarmData] = useState({});
 
   const [artificial, setArtificial] = useState("");
