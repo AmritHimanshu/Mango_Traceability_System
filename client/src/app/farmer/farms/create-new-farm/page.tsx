@@ -46,11 +46,16 @@ function page() {
         return;
       }
 
+      if (res.status === 500 || res.status === 400) {
+        const error = new Error(data.error);
+        throw error;
+      }
+
       alert(data.message);
       router.push(FARMS);
     } catch (error) {
       console.log("Error: ", error);
-      alert("Error");
+      alert(error);
     }
   };
 

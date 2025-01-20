@@ -84,8 +84,9 @@ function page() {
 
       const data = await res.json();
 
-      if (res.status !== 201) {
+      if (res.status !== 201 && res.status !== 500) {
         router.push(LOGIN);
+        return;
       }
 
       setFarm({
@@ -110,7 +111,7 @@ function page() {
       });
     } catch (error) {
       console.log("Error: ", error);
-      alert("Error");
+      alert(error);
     }
   };
 

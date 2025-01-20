@@ -1,17 +1,25 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { LoadingBarRef } from "react-top-loading-bar";
+import CustomLoadingBar from "../loadingBar/CustomLoadingBar";
 import { User } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
-import { ADMIN_AUTHENTICATE_USER, ADMIN_FETCH_NO_OF_USERS, ADMIN_FEW_PENDING_REQUESTS } from "@/utils/Apis/api";
+import {
+  ADMIN_AUTHENTICATE_USER,
+  ADMIN_FETCH_NO_OF_USERS,
+  ADMIN_FEW_PENDING_REQUESTS,
+} from "@/utils/Apis/api";
 import Mango_tree from "../../../../public/assets/Mango_tree.png";
 import HomeCard from "./components/HomeCard";
 import PendingUserCard from "./components/PendingUserCard";
 
 function Home() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const loadingBarRef = useRef<LoadingBarRef>(null);
 
   const router = useRouter();
 
@@ -22,6 +30,10 @@ function Home() {
   const [pendingRequests, setPendingRequests] = useState<User[]>([]);
 
   const fetchNoOfUsers = async () => {
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
     try {
       const res = await fetch(`${BASE_URL}/${ADMIN_FETCH_NO_OF_USERS}`, {
         method: "GET",
@@ -33,9 +45,14 @@ function Home() {
 
       const data = await res.json();
 
-      if(res.status !== 201){
+      if (res.status !== 201 && res.status !== 500) {
         router.push(LOGIN);
         return;
+      }
+
+      if (res.status === 500) {
+        const error = new Error(data.error);
+        throw error;
       }
 
       setNoOfVerifiedManagers(data.noOfVerifiedManagers);
@@ -43,8 +60,12 @@ function Home() {
       setNoOfPendingRequests(data.noOfPendingRequests);
       sestNoOfRejectedRequests(data.noOfRejectedRequests);
     } catch (error) {
-      console.log(error);
-      alert("Error fetchNoOfFarmers");
+      console.log("Error: ", error);
+      alert(error);
+    }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
     }
   };
 
@@ -59,14 +80,20 @@ function Home() {
       });
 
       const data = await res.json();
-      if (res.status !== 201) {
+      if (res.status !== 201 && res.status !== 500) {
         router.push(LOGIN);
         return;
       }
+
+      if(res.status === 500){
+        const error = new Error(data.error);
+        throw error;
+      }
+
       setPendingRequests(data);
     } catch (error) {
       console.log(error);
-      alert("Error fetchPendingRequests");
+      alert(error);
     }
   };
 
@@ -87,22 +114,30 @@ function Home() {
       });
 
       const data = await res.json();
-      if (res.status !== 201) {
+      if (res.status !== 201 && res.status !== 500) {
         router.push(LOGIN);
         return;
       }
+
+      if(res.status === 500){
+        const error = new Error(data.error);
+        throw error;
+      }
+
       alert(data.message);
 
       fetchNoOfUsers();
       fetchPendingRequests();
     } catch (error) {
       console.log(error);
-      alert("Error acceptRequest");
+      alert(error);
     }
   };
 
   return (
     <div className="py-5">
+      <CustomLoadingBar ref={loadingBarRef} />
+      
       <Image
         src={Mango_tree}
         alt="Mango Tree"
@@ -141,7 +176,9 @@ function Home() {
 
       {pendingRequests && (
         <div className="bg-gray-50 p-3 mt-10">
-          <div className="pb-2 text-lg font-bold text-center underline">Recent Requests</div>
+          <div className="pb-2 text-lg font-bold text-center underline">
+            Recent Requests
+          </div>
           <div className="space-y-7">
             {pendingRequests.map((request, index) => (
               <div key={index} className="space-y-2">

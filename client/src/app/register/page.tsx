@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/store/store";
 import { setUserState } from "@/store/features/userSlice";
+import { LoadingBarRef } from "react-top-loading-bar";
+import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
 import { LOGOUT_USER, REGISTER_USER } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
 
@@ -15,6 +17,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const loadingBarRef = useRef<LoadingBarRef>(null);
 
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -93,6 +97,10 @@ function page() {
       return;
     }
 
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
     try {
       const res = await fetch(`${BASE_URL}/${REGISTER_USER}`, {
         method: "POST",
@@ -112,20 +120,26 @@ function page() {
       const data = await res.json();
 
       if (res.status !== 201) {
-        alert(data.error);
-        return;
+        const error = new Error(data.error);
+        throw error;
       }
 
       alert(data.message);
       router.push(LOGIN);
     } catch (error) {
       console.log("Error: ", error);
-      alert("Error");
+      alert(error);
+    }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
     }
   };
 
   return (
     <div className="flex items-center justify-center h-[calc(100vh-56px)]">
+      <CustomLoadingBar ref={loadingBarRef} />
+
       <div className="p-5 w-[300px] bg-cardBackground bg-opacity-90 rounded-md shadow-md">
         <form
           action="POST"

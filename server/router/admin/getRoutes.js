@@ -7,7 +7,7 @@ const User = require('../../model/userSchema');
 router.get('/api/few-pending-requests', async (req, res) => {
     try {
         if (req.rootUser.role !== 'Admin') {
-            return res.status(403).json({ error: "You don't have permission." });
+            return res.status(401).json({ error: "You don't have permission." });
         }
 
         const pendingRequests = await User.find({ role: { $in: ["Manager", "Farmer"] }, isAuthenticated: false, isRejected: false }).select("-password -tokens -updatedAt").sort("-createdAt").limit(3);
