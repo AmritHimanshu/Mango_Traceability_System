@@ -419,7 +419,7 @@ function page() {
               edit) && (
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Irrigation Dates:</div>
-                {edit && (
+                {edit ? (
                   <>
                     <label htmlFor="artificial">Artificial</label>
                     <input
@@ -442,6 +442,8 @@ function page() {
                       onChange={(e) => setNatural(e.target.value)}
                     />
                   </>
+                ) : (
+                  <></>
                 )}
               </div>
             )}
