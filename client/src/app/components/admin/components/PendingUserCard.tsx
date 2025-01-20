@@ -10,6 +10,7 @@ function PendingUserCard({ index, request, authenticateReq }: PendingUserCardPro
     try {
       setSelectedButton(buttonText);
       await authenticateReq(id, status);
+      setSelectedButton("");
     } catch (error) {
       setSelectedButton("");
     }
