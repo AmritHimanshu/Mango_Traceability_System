@@ -112,3 +112,13 @@ export type MapProps = {
 export type MapCoordinatesProps = {
   coordinates: { lat: number; lng: number }[];
 };
+
+export type TableColumn = {
+  header: string;
+  key: string;
+};
+
+export type ListFarmApplicationsDataProps = {
+  data: Array<Record<string, any>>;
+  columns: TableColumn[];
+};

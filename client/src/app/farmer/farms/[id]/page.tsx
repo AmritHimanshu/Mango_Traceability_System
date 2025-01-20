@@ -16,6 +16,7 @@ const Map = dynamic(
     ssr: false,
   }
 );
+import ListFarmApplicationsData from "@/app/components/farmer/components/ListFarmApplicationsData";
 import CloseIcon from "@mui/icons-material/Close";
 
 function page() {
@@ -44,7 +45,7 @@ function page() {
       artificial: [],
       natural: [],
     },
-    fertilizerApplications: [],
+    fertilizerApplications: [{ date: "", volume: "" }],
     pesticideApplications: [],
     bagging: [],
     specialCare: [],
@@ -414,7 +415,8 @@ function page() {
             )}
 
             {(farm.irrigationDates.artificial.length > 0 ||
-              farm.irrigationDates.natural.length > 0 || edit) && (
+              farm.irrigationDates.natural.length > 0 ||
+              edit) && (
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Irrigation Dates:</div>
                 {edit && (
@@ -447,7 +449,7 @@ function page() {
             {(farm.fertilizerApplications.length > 0 || edit) && (
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Fertilizer Application:</div>
-                {edit && (
+                {edit ? (
                   <>
                     <label htmlFor="fertilizerDate">Date:</label>
                     <input
@@ -464,7 +466,7 @@ function page() {
                         }))
                       }
                     />
-                    <label htmlFor="fertilizerVolume">Volume (in litre):</label>
+                    <label htmlFor="fertilizerVolume">Volume (L):</label>
                     <input
                       type="number"
                       id="fertilizerApplications fertilizerVolume"
@@ -480,6 +482,14 @@ function page() {
                       }
                     />
                   </>
+                ) : (
+                  <ListFarmApplicationsData
+                    data={farm.fertilizerApplications}
+                    columns={[
+                      { header: "Date", key: "date" },
+                      { header: "Volume (L)", key: "volume" },
+                    ]}
+                  />
                 )}
               </div>
             )}
@@ -487,7 +497,7 @@ function page() {
             {(farm.pesticideApplications.length > 0 || edit) && (
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Pesticide Application:</div>
-                {edit && (
+                {edit ? (
                   <>
                     <label htmlFor="pesticideDate">Date:</label>
                     <input
@@ -520,6 +530,14 @@ function page() {
                       }
                     />
                   </>
+                ) : (
+                  <ListFarmApplicationsData
+                    data={farm.pesticideApplications}
+                    columns={[
+                      { header: "Date", key: "date" },
+                      { header: "Volume (L)", key: "volume" },
+                    ]}
+                  />
                 )}
               </div>
             )}
@@ -527,7 +545,7 @@ function page() {
             {(farm.bagging.length > 0 || edit) && (
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Bagging:</div>
-                {edit && (
+                {edit ? (
                   <>
                     <label htmlFor="bagginDate">Date:</label>
                     <input
@@ -560,6 +578,14 @@ function page() {
                       }
                     />
                   </>
+                ) : (
+                  <ListFarmApplicationsData
+                    data={farm.bagging}
+                    columns={[
+                      { header: "Date", key: "date" },
+                      { header: "Quantity", key: "quantity" },
+                    ]}
+                  />
                 )}
               </div>
             )}
@@ -567,7 +593,7 @@ function page() {
             {(farm.specialCare.length > 0 || edit) && (
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Special care:</div>
-                {edit && (
+                {edit ? (
                   <>
                     <label htmlFor="specialCareDate">Date:</label>
                     <input
@@ -600,6 +626,14 @@ function page() {
                       }
                     />
                   </>
+                ) : (
+                  <ListFarmApplicationsData
+                    data={farm.specialCare}
+                    columns={[
+                      { header: "Date", key: "date" },
+                      { header: "Name", key: "name" },
+                    ]}
+                  />
                 )}
               </div>
             )}
