@@ -48,8 +48,10 @@ function page() {
     pesticideApplications: [],
     bagging: [],
     specialCare: [],
-    harvest: "",
+    harvest: { date: "", yield: "" },
   });
+
+  console.log(farm);
 
   const [changedFarmData, setChangedFarmData] = useState({});
 
@@ -281,7 +283,7 @@ function page() {
               </div>
             )}
 
-            {farm.ploughingDate && (
+            {(farm.ploughingDate || edit) && (
               <div className="flex items-start flex-col">
                 <label htmlFor="ploughingDate" className="font-bold">
                   Ploughing Date:
@@ -302,7 +304,7 @@ function page() {
               </div>
             )}
 
-            {farm.weedingDate && (
+            {(farm.weedingDate || edit) && (
               <div className="flex items-start flex-col">
                 <label htmlFor="weedingDate" className="font-bold">
                   Weeding Date:
@@ -323,7 +325,7 @@ function page() {
               </div>
             )}
 
-            {farm.sowingDate && (
+            {(farm.sowingDate || edit) && (
               <div className="flex items-start flex-col">
                 <label htmlFor="sowingDate" className="font-bold">
                   Sowing Date:
@@ -344,7 +346,7 @@ function page() {
               </div>
             )}
 
-            {farm.floweringDate && (
+            {(farm.floweringDate || edit) && (
               <div className="flex items-start flex-col">
                 <label htmlFor="floweringDate" className="font-bold">
                   Flowering Date:
@@ -365,7 +367,7 @@ function page() {
               </div>
             )}
 
-            {farm.pheromoneTrapDate && (
+            {(farm.pheromoneTrapDate || edit) && (
               <div className="flex items-start flex-col">
                 <label htmlFor="pheromoneTrapDate" className="font-bold">
                   Pheromone Trap Date:
@@ -388,7 +390,7 @@ function page() {
               </div>
             )}
 
-            {farm.lureChangeDate && (
+            {(farm.lureChangeDate || edit) && (
               <div className="flex items-start flex-col">
                 <label htmlFor="lureChangeDate" className="font-bold">
                   Lure Change Date:
@@ -412,7 +414,7 @@ function page() {
             )}
 
             {(farm.irrigationDates.artificial.length > 0 ||
-              farm.irrigationDates.natural.length > 0) && (
+              farm.irrigationDates.natural.length > 0 || edit) && (
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Irrigation Dates:</div>
                 {edit && (
@@ -442,7 +444,7 @@ function page() {
               </div>
             )}
 
-            {farm.fertilizerApplications.length > 0 && (
+            {(farm.fertilizerApplications.length > 0 || edit) && (
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Fertilizer Application:</div>
                 {edit && (
@@ -482,7 +484,7 @@ function page() {
               </div>
             )}
 
-            {farm.pesticideApplications.length > 0 && (
+            {(farm.pesticideApplications.length > 0 || edit) && (
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Pesticide Application:</div>
                 {edit && (
@@ -522,7 +524,7 @@ function page() {
               </div>
             )}
 
-            {farm.bagging.length > 0 && (
+            {(farm.bagging.length > 0 || edit) && (
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Bagging:</div>
                 {edit && (
@@ -562,7 +564,7 @@ function page() {
               </div>
             )}
 
-            {farm.specialCare.length > 0 && (
+            {(farm.specialCare.length > 0 || edit) && (
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Special care:</div>
                 {edit && (
@@ -602,10 +604,10 @@ function page() {
               </div>
             )}
 
-            {farm.harvest && (
+            {(farm.harvest || edit) && (
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Harvest Date:</div>
-                {edit && (
+                {edit ? (
                   <>
                     <label htmlFor="harvestDate">Date:</label>
                     <input
@@ -638,6 +640,25 @@ function page() {
                       }
                     />
                   </>
+                ) : (
+                  <div>
+                    {farm.harvest.date && (
+                      <div className="flex space-x-5">
+                        <div>Date:</div>
+                        <div>
+                          {
+                            new Date(farm.harvest.date)
+                              .toISOString()
+                              .split("T")[0]
+                          }
+                        </div>
+                      </div>
+                    )}
+                    <div className="flex space-x-5">
+                      <div>Yield:</div>
+                      <div>{farm.harvest.yield}</div>
+                    </div>
+                  </div>
                 )}
               </div>
             )}
