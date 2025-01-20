@@ -47,6 +47,9 @@ function Home() {
 
       if (res.status !== 201 && res.status !== 500) {
         router.push(LOGIN);
+        if (loadingBarRef.current) {
+          loadingBarRef.current.complete();
+        }
         return;
       }
 

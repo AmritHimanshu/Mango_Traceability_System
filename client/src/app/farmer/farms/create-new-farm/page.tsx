@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { LoadingBarRef } from "react-top-loading-bar";
+import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import { FARMER_NEW_FARM } from "@/utils/Apis/api";
-import { FARMS } from "@/utils/Paths/paths";
+import { FARMS, LOGIN } from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
 const Map = dynamic(() => import("@/app/components/farmer/components/Map"), {
   ssr: false,
@@ -11,6 +13,8 @@ const Map = dynamic(() => import("@/app/components/farmer/components/Map"), {
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const loadingBarRef = useRef<LoadingBarRef>(null);
 
   const router = useRouter();
 
@@ -24,6 +28,11 @@ function page() {
     if (coordinates.length < 3) {
       return alert("Select minimum three coordinate");
     }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
     try {
       const res = await fetch(`${BASE_URL}/${FARMER_NEW_FARM}`, {
         method: "POST",
@@ -39,14 +48,24 @@ function page() {
       });
 
       const data = await res.json();
-      console.log(data);
 
-      if (res.status !== 201) {
+      if (res.status === 400) {
         alert(data.error);
+        if (loadingBarRef.current) {
+          loadingBarRef.current.complete();
+        }
         return;
       }
 
-      if (res.status === 500 || res.status === 400) {
+      if (res.status !== 201 && res.status !== 500) {
+        router.push(LOGIN);
+        if (loadingBarRef.current) {
+          loadingBarRef.current.complete();
+        }
+        return;
+      }
+
+      if (res.status === 500) {
         const error = new Error(data.error);
         throw error;
       }
@@ -57,10 +76,16 @@ function page() {
       console.log("Error: ", error);
       alert(error);
     }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
   };
 
   return (
     <div className="px-3 py-3 min-h-[calc(100vh-56px)]">
+      <CustomLoadingBar ref={loadingBarRef} />
+
       <div className="bg-cardBackground bg-opacity-90 rounded-md shadow-md p-5 space-y-3">
         <div className="text-center font-medium">Enter data of farm</div>
         <div className="space-y-10">

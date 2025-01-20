@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { LoadingBarRef } from "react-top-loading-bar";
+import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import {
   FARMER_FETCH_FARM_DATA,
   FARMER_SAVE_FARM_DATA,
@@ -18,6 +20,8 @@ import CloseIcon from "@mui/icons-material/Close";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const loadingBarRef = useRef<LoadingBarRef>(null);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -73,6 +77,10 @@ function page() {
   });
 
   const fetchFarmData = async () => {
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
     try {
       const res = await fetch(`${BASE_URL}/${FARMER_FETCH_FARM_DATA}/${id}`, {
         method: "GET",
@@ -86,7 +94,15 @@ function page() {
 
       if (res.status !== 201 && res.status !== 500) {
         router.push(LOGIN);
+        if (loadingBarRef.current) {
+          loadingBarRef.current.complete();
+        }
         return;
+      }
+
+      if (res.status === 500) {
+        const error = new Error(data.error);
+        throw error;
       }
 
       setFarm({
@@ -112,6 +128,10 @@ function page() {
     } catch (error) {
       console.log("Error: ", error);
       alert(error);
+    }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
     }
   };
 
@@ -165,6 +185,10 @@ function page() {
         return;
       }
 
+      if (loadingBarRef.current) {
+        loadingBarRef.current.continuousStart();
+      }
+
       const res = await fetch(`${BASE_URL}/${FARMER_SAVE_FARM_DATA}/${id}`, {
         method: "PUT",
         headers: {
@@ -176,8 +200,20 @@ function page() {
 
       const data = await res.json();
 
-      if (res.status !== 201) {
-        return router.push(LOGIN);
+      if (res.status === 400) {
+        alert(data.error);
+        if (loadingBarRef.current) {
+          loadingBarRef.current.complete();
+        }
+        return;
+      }
+
+      if (res.status !== 201 && res.status !== 500) {
+        router.push(LOGIN);
+        if (loadingBarRef.current) {
+          loadingBarRef.current.complete();
+        }
+        return;
       }
 
       alert(data.message);
@@ -186,10 +222,16 @@ function page() {
       console.log("Error: ", error);
       alert("Error while saving changes.");
     }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
   };
 
   return (
     <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)]">
+      <CustomLoadingBar ref={loadingBarRef} />
+
       {farm && (
         <>
           {edit && (
@@ -202,7 +244,9 @@ function page() {
 
             {farm.farm && (
               <div className="flex items-start flex-col">
-                <label htmlFor="farm" className="font-bold">Farm Name:</label>
+                <label htmlFor="farm" className="font-bold">
+                  Farm Name:
+                </label>
                 <input
                   type="text"
                   id="farm"
@@ -217,7 +261,9 @@ function page() {
 
             {farm.crop && (
               <div className="flex items-start flex-col">
-                <label htmlFor="crop" className="font-bold">Crop Name:</label>
+                <label htmlFor="crop" className="font-bold">
+                  Crop Name:
+                </label>
                 <input
                   type="text"
                   id="crop"
@@ -232,7 +278,9 @@ function page() {
 
             {farm.ploughingDate && (
               <div className="flex items-start flex-col">
-                <label htmlFor="ploughingDate" className="font-bold">Ploughing Date:</label>
+                <label htmlFor="ploughingDate" className="font-bold">
+                  Ploughing Date:
+                </label>
                 <input
                   type="date"
                   id="ploughingDate"
@@ -251,7 +299,9 @@ function page() {
 
             {farm.weedingDate && (
               <div className="flex items-start flex-col">
-                <label htmlFor="weedingDate" className="font-bold">Weeding Date:</label>
+                <label htmlFor="weedingDate" className="font-bold">
+                  Weeding Date:
+                </label>
                 <input
                   type="date"
                   id="weedingDate"
@@ -270,7 +320,9 @@ function page() {
 
             {farm.sowingDate && (
               <div className="flex items-start flex-col">
-                <label htmlFor="sowingDate" className="font-bold">Sowing Date:</label>
+                <label htmlFor="sowingDate" className="font-bold">
+                  Sowing Date:
+                </label>
                 <input
                   type="date"
                   id="sowingDate"
@@ -289,7 +341,9 @@ function page() {
 
             {farm.floweringDate && (
               <div className="flex items-start flex-col">
-                <label htmlFor="floweringDate" className="font-bold">Flowering Date:</label>
+                <label htmlFor="floweringDate" className="font-bold">
+                  Flowering Date:
+                </label>
                 <input
                   type="date"
                   id="floweringDate"
@@ -308,7 +362,9 @@ function page() {
 
             {farm.pheromoneTrapDate && (
               <div className="flex items-start flex-col">
-                <label htmlFor="pheromoneTrapDate" className="font-bold">Pheromone Trap Date:</label>
+                <label htmlFor="pheromoneTrapDate" className="font-bold">
+                  Pheromone Trap Date:
+                </label>
                 <input
                   type="date"
                   id="pheromoneTrapDate"
@@ -329,7 +385,9 @@ function page() {
 
             {farm.lureChangeDate && (
               <div className="flex items-start flex-col">
-                <label htmlFor="lureChangeDate" className="font-bold">Lure Change Date:</label>
+                <label htmlFor="lureChangeDate" className="font-bold">
+                  Lure Change Date:
+                </label>
                 <input
                   type="date"
                   id="lureChangeDate"

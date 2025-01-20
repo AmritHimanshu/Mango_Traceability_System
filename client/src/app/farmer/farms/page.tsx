@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { LoadingBarRef } from "react-top-loading-bar";
+import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import { CREATE_FARM, FARMS, LOGIN } from "@/utils/Paths/paths";
 import { FARMER_FETCH_FARMS_LIST } from "@/utils/Apis/api";
 import { FarmList } from "@/utils/Types/interfaces";
@@ -9,6 +11,8 @@ import ListFarmCard from "@/app/components/farmer/components/ListFarmCard";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const loadingBarRef = useRef<LoadingBarRef>(null);
 
   const router = useRouter();
 
@@ -18,6 +22,10 @@ function page() {
   let skip = 0;
 
   const fetchFarms = async () => {
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
     try {
       const res = await fetch(
         `${BASE_URL}/${FARMER_FETCH_FARMS_LIST}?limit=${limit}&skip=${skip}`,
@@ -34,6 +42,9 @@ function page() {
 
       if (res.status !== 201 && res.status !== 500) {
         router.push(LOGIN);
+        if (loadingBarRef.current) {
+          loadingBarRef.current.complete();
+        }
         return;
       }
 
@@ -51,6 +62,10 @@ function page() {
     } catch (error) {
       console.log("Error: ", error);
       alert(error);
+    }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
     }
   };
 
@@ -80,6 +95,8 @@ function page() {
 
   return (
     <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)] relative">
+      <CustomLoadingBar ref={loadingBarRef} />
+
       <div className="my-2">
         <button
           className="btn bg-black text-white"
