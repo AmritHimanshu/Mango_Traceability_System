@@ -21,7 +21,6 @@ function page() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
 
   const logOut = async () => {
     try {
@@ -55,7 +54,7 @@ function page() {
   const handleFormData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!email || !password || !role) {
+    if (!email || !password ) {
       alert("Fill all the fields");
       return;
     }
@@ -70,7 +69,6 @@ function page() {
         body: JSON.stringify({
           email,
           password,
-          role,
         }),
       });
 
@@ -141,19 +139,6 @@ function page() {
               )}
             </div>
           </div>
-
-          <select
-            name="role"
-            id="role"
-            className="p-2 outline-none border-[1px] border-black rounded-md"
-            required
-            onChange={(e) => setRole(e.target.value)}
-          >
-            <option value="">Select your role</option>
-            <option value="Admin">Admin</option>
-            <option value="Manager">Manager</option>
-            <option value="Farmer">Farmer</option>
-          </select>
 
           <button type="submit" className="btn bg-black text-white">
             Login
