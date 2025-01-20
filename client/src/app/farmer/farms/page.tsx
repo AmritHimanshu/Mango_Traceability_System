@@ -102,7 +102,7 @@ function page() {
           className="btn bg-black text-white"
           onClick={() => router.push(CREATE_FARM)}
         >
-          Add farm
+          Click here to Add farm
         </button>
       </div>
 
