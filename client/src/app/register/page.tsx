@@ -8,7 +8,7 @@ import { useAppDispatch } from "@/store/store";
 import { setUserState } from "@/store/features/userSlice";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
-import { LOGOUT_USER, REGISTER_USER } from "@/utils/Apis/api";
+import { LOGOUT_USER, REGISTER_USER, SEND_OTP_EMAIL } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
 
 // Material UI Icons
@@ -35,6 +35,11 @@ function page() {
     confirm_password: "",
     role: "",
   });
+
+  const [isEmailOtpSent, setIsEmailOtpSent] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [isPhoneOtpSent, setIsPhoneOtpSent] = useState(false);
+  const [isPhoneVerified, setIsPhoneVerified] = useState(false);
 
   const handleFormState = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -76,6 +81,41 @@ function page() {
   const validatePhoneNumber = (phoneNumber: string) => {
     const phoneNumberObj = parsePhoneNumberFromString(phoneNumber, "IN");
     return phoneNumberObj?.isValid();
+  };
+
+  const sendOtpEmail = async () => {
+    if (!formData.email) {
+      alert("Email field is empty");
+      return;
+    }
+
+    try {
+      const res = await fetch(`${BASE_URL}/${SEND_OTP_EMAIL}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData.email),
+      });
+
+      const data = await res.json();
+
+      if (res.status === 400) {
+        alert(data.error);
+        return;
+      }
+
+      if (res.status === 500) {
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      setIsEmailOtpSent(true);
+      alert(data.message);
+    } catch (error) {
+      console.log("Error: ", error);
+      alert(error);
+    }
   };
 
   const handleFormData = async (e: React.FormEvent<HTMLFormElement>) => {
