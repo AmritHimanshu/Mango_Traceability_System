@@ -170,6 +170,11 @@ function page() {
       return;
     }
 
+    if (!validatePhoneNumber(formData.phone)) {
+      alert("Invalid phone number");
+      return;
+    }
+
     setFlagPhone(true);
 
     try {
