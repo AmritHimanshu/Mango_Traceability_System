@@ -258,6 +258,16 @@ function page() {
       return;
     }
 
+    if(!isEmailVerified){
+      alert("Verify your email");
+      return;
+    }
+
+    if(!isPhoneVerified){
+      alert("Verify your phone");
+      return;
+    }
+
     if (loadingBarRef.current) {
       loadingBarRef.current.continuousStart();
     }
