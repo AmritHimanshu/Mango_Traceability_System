@@ -12,6 +12,7 @@ import {
   LOGOUT_USER,
   REGISTER_USER,
   SEND_OTP_EMAIL,
+  SEND_OTP_PHONE,
   VERIFY_OTP_EMAIL,
 } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
@@ -163,19 +164,73 @@ function page() {
   };
 
   const sendOtpPhone = async () => {
+    if (!formData.phone) {
+      alert("Phone number field is empty");
+      return;
+    }
+
+    setFlagPhone(true);
+
     try {
+      const res = await fetch(`${BASE_URL}/${SEND_OTP_PHONE}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ phone: formData.phone }),
+      });
+
+      const data = await res.json();
+
+      if (res.status !== 201) {
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      setIsPhoneOtpSent(true);
+      alert(data.message);
     } catch (error) {
       console.log("Error: ", error);
       alert(error);
     }
+
+    setFlagPhone(false);
   };
 
   const verifyPhoneOtp = async () => {
+    if (!phoneOtp) {
+      alert("Enter your OTP");
+      return;
+    }
+
+    setFlagPhone(true);
+
     try {
+      const res = await fetch(`${BASE_URL}/${VERIFY_OTP_EMAIL}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ phone: formData.phone, otp: phoneOtp }),
+      });
+
+      const data = await res.json();
+
+      if (res.status !== 201) {
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      setIsPhoneVerified(true);
+      alert(data.message);
     } catch (error) {
       console.log("Error: ", error);
       alert(error);
     }
+
+    setPhoneOtp("");
+    setIsPhoneOtpSent(false);
+    setFlagPhone(false);
   };
 
   const handleFormData = async (e: React.FormEvent<HTMLFormElement>) => {

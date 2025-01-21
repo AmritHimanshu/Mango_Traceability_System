@@ -1,5 +1,7 @@
 const nodemailer = require("nodemailer");
+const twilio = require('twilio');
 
+// Send OTP for Email verification
 const transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: {
@@ -8,7 +10,6 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-// Send OTP for Email verification
 const sendEmail = async (email, otp) => {
     try {
         const mailOptions = {
@@ -25,5 +26,19 @@ const sendEmail = async (email, otp) => {
     }
 };
 
+// Send OTP for Phone verification
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = twilio(accountSid, authToken);
 
-module.exports = { sendEmail };
+const sendPhone = async (phone, otp) => {
+    await client.messages.create({
+        body: `Your OTP is: ${otp}`,
+        from: process.env.PHONE_NUMBER,
+        to: phone,
+    });
+    console.log(`OTP sent to ${phone}: ${otp}`);
+};
+
+
+module.exports = { sendEmail, sendPhone };
