@@ -120,6 +120,7 @@ function page() {
             <select
               name="cropName"
               id="cropName"
+              value={cropName}
               className="border-2 border-black px-2 py-1 outline-0"
               onChange={(e) => setCropName(e.target.value)}
             >
