@@ -104,11 +104,11 @@ function page() {
             />
           </div>
 
-          <div className="flex items-start flex-col">
+          <div className="flex items-start justify-between">
             <label htmlFor="cropName">
               Name of the crop <span className="text-red-600">*</span>
             </label>
-            <input
+            {/* <input
               type="text"
               id="cropName"
               name="cropName"
@@ -116,7 +116,17 @@ function page() {
               className="input-tag"
               required
               onChange={(e) => setCropName(e.target.value)}
-            />
+            /> */}
+            <select
+              name="cropName"
+              id="cropName"
+              className="border-2 border-black px-2 py-1 outline-0"
+              onChange={(e) => setCropName(e.target.value)}
+            >
+              <option value="">Select crop</option>
+              <option value="Mango">Mango</option>
+              <option value="Lichi">Lichi</option>
+            </select>
           </div>
 
           <Map submitForm={handlesubmitForm} />
