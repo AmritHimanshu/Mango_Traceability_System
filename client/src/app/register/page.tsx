@@ -14,6 +14,7 @@ import {
   SEND_OTP_EMAIL,
   SEND_OTP_PHONE,
   VERIFY_OTP_EMAIL,
+  VERIFY_OTP_PHONE,
 } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
 
@@ -206,7 +207,7 @@ function page() {
     setFlagPhone(true);
 
     try {
-      const res = await fetch(`${BASE_URL}/${VERIFY_OTP_EMAIL}`, {
+      const res = await fetch(`${BASE_URL}/${VERIFY_OTP_PHONE}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

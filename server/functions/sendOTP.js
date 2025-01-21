@@ -32,12 +32,16 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = twilio(accountSid, authToken);
 
 const sendPhone = async (phone, otp) => {
-    await client.messages.create({
-        body: `Your OTP is: ${otp}`,
-        from: process.env.PHONE_NUMBER,
-        to: phone,
-    });
-    console.log(`OTP sent to ${phone}: ${otp}`);
+    try {
+        const message = await client.messages.create({
+            body: `Your OTP is: ${otp}`,
+            from: process.env.PHONE_NUMBER,
+            to: phone,
+        });
+        console.log(`Message sent: ${message.sid}`);
+    } catch (error) {
+        console.error("Error sending SMS:", error);
+    }
 };
 
 
