@@ -99,6 +99,13 @@ export type FarmList = {
   _id: string;
 };
 
+export type FewFarmList = {
+  crop: string;
+  farm: string;
+  geoFenceData: { lat: number; lng: number }[];
+  _id: string;
+};
+
 export type ListFarmCardProps = {
   idx: number;
   farm: FarmList;
