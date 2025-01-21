@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 const parsePhoneNumberFromString = require('libphonenumber-js');
 
 const { notifyAdmins } = require('../../functions/sendMail');
+const { sendOtpToEmail, verifyOtpForEmail, sendOtpToPhone, verifyOtpForPhone } = require('../../functions/otpService');
+
 const User = require('../../model/userSchema');
 
 
@@ -81,13 +83,73 @@ router.post('/api/signin-user', async (req, res) => {
     }
 });
 
+router.post("/api/send-otp-email", async (req, res) => {
+    const { email } = req.body;
+
+    if (!email) {
+        return res.status(400).json({ error: "Email is required." });
+    }
+
+    try {
+        await sendOtpToEmail(email);
+        res.status(201).json({ message: "OTP sent successfully." });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to send OTP." });
+    }
+});
+
+router.post("/api/verify-otp-email", (req, res) => {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
+        return res.status(400).json({ error: "Email and OTP are required." });
+    }
+
+    const isValid = verifyOtpForEmail(email, otp);
+    if (isValid) {
+        res.status(201).json({ message: "OTP verified successfully." });
+    } else {
+        res.status(400).json({ error: "Invalid or expired OTP." });
+    }
+});
+
+router.post("/api/send-otp-phone", async (req, res) => {
+    const { phone } = req.body;
+
+    if (!phone) {
+        return res.status(400).json({ error: "Phone is required." });
+    }
+
+    try {
+        await sendOtpToPhone(phone);
+        res.status(201).json({ message: "OTP sent successfully." });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to send OTP." });
+    }
+});
+
+router.post("/api/verify-otp-phone", (req, res) => {
+    const { phone, otp } = req.body;
+
+    if (!phone || !otp) {
+        return res.status(400).json({ error: "Email and OTP are required." });
+    }
+
+    const isValid = verifyOtpForPhone(phone, otp);
+    if (isValid) {
+        res.status(201).json({ message: "OTP verified successfully." });
+    } else {
+        res.status(400).json({ error: "Invalid or expired OTP." });
+    }
+});
+
 router.get('/api/logout', (req, res) => {
     res.clearCookie('jwtoken', { path: '/' });
     res.status(201).json({ message: 'User Logout' });
 })
 
 router.get('/', (req, res) => {
-    return res.status(200).json({ message: "I am Singh Sahab" });
+    return res.status(201).json({ message: "I am Singh Sahab" });
 })
 
 

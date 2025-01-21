@@ -9,6 +9,7 @@ import {
   MANAGER_MANAGEMENT,
   OVERVIEW,
   PENDING_REQUESTS,
+  PROFILE,
 } from "@/utils/Paths/paths";
 
 function Admin_Header({ handleOnClick }: HandleOnClickProps) {
@@ -47,6 +48,14 @@ function Admin_Header({ handleOnClick }: HandleOnClickProps) {
         onClick={() => handleOnClick(PENDING_REQUESTS)}
       >
         Pending requests
+      </div>
+      <div
+        className={`py-3 w-full border-b-[1px] border-black font-bold ${
+          pathname === PROFILE ? "text-green-800" : "text-black"
+        }`}
+        onClick={() => handleOnClick(PROFILE)}
+      >
+        Profile
       </div>
       <div
         className={`py-3 w-full border-b-[1px] border-black font-bold ${
