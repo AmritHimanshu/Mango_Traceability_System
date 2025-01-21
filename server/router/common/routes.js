@@ -102,7 +102,7 @@ router.post("/api/verify-otp-email", (req, res) => {
     const { email, otp } = req.body;
 
     if (!email || !otp) {
-        return res.status(400).json({ message: "Email and OTP are required." });
+        return res.status(400).json({ error: "Email and OTP are required." });
     }
 
     const isValid = verifyOtpForEmail(email, otp);

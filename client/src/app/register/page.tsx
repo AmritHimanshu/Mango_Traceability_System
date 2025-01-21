@@ -8,7 +8,12 @@ import { useAppDispatch } from "@/store/store";
 import { setUserState } from "@/store/features/userSlice";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
-import { LOGOUT_USER, REGISTER_USER, SEND_OTP_EMAIL } from "@/utils/Apis/api";
+import {
+  LOGOUT_USER,
+  REGISTER_USER,
+  SEND_OTP_EMAIL,
+  VERIFY_OTP_EMAIL,
+} from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
 
 // Material UI Icons
@@ -40,6 +45,10 @@ function page() {
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isPhoneOtpSent, setIsPhoneOtpSent] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+  const [emailOtp, setEmailOtp] = useState("");
+  const [phoneOtp, setPhoneOtp] = useState("");
+  const [flagEmail, setFlagEmail] = useState(false);
+  const [flagPhone, setFlagPhone] = useState(false);
 
   const handleFormState = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -89,29 +98,80 @@ function page() {
       return;
     }
 
+    setFlagEmail(true);
+
     try {
       const res = await fetch(`${BASE_URL}/${SEND_OTP_EMAIL}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData.email),
+        body: JSON.stringify({ email: formData.email }),
       });
 
       const data = await res.json();
 
-      if (res.status === 400) {
-        alert(data.error);
-        return;
-      }
-
-      if (res.status === 500) {
+      if (res.status !== 201) {
         const error = new Error(data.error);
         throw error;
       }
 
       setIsEmailOtpSent(true);
       alert(data.message);
+    } catch (error) {
+      console.log("Error: ", error);
+      alert(error);
+    }
+
+    setFlagEmail(false);
+  };
+
+  const verifyEmailOtp = async () => {
+    if (!emailOtp) {
+      alert("Enter your OTP");
+      return;
+    }
+
+    setFlagEmail(true);
+
+    try {
+      const res = await fetch(`${BASE_URL}/${VERIFY_OTP_EMAIL}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: formData.email, otp: emailOtp }),
+      });
+
+      const data = await res.json();
+
+      if (res.status !== 201) {
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      setIsEmailVerified(true);
+      alert(data.message);
+    } catch (error) {
+      console.log("Error: ", error);
+      alert(error);
+    }
+
+    setEmailOtp("");
+    setIsEmailOtpSent(false);
+    setFlagEmail(false);
+  };
+
+  const sendOtpPhone = async () => {
+    try {
+    } catch (error) {
+      console.log("Error: ", error);
+      alert(error);
+    }
+  };
+
+  const verifyPhoneOtp = async () => {
+    try {
     } catch (error) {
       console.log("Error: ", error);
       alert(error);
@@ -196,6 +256,7 @@ function page() {
               name="name"
               className="input-tag"
               placeholder="John Doe"
+              value={formData.name}
               required
               onChange={(e) => handleFormState(e)}
             />
@@ -205,30 +266,102 @@ function page() {
             <label htmlFor="email">
               Email <span className="text-red-600">*</span>
             </label>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              className="input-tag"
-              placeholder="John@xyz.com"
-              required
-              onChange={(e) => handleFormState(e)}
-            />
+            <div className="flex justify-between border-b-2 border-black">
+              {!isEmailOtpSent ? (
+                <>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="outline-none pt-2 w-[73%]"
+                    placeholder="John@xyz.com"
+                    value={formData.email}
+                    required
+                    onChange={(e) => handleFormState(e)}
+                  />
+                  {!isEmailVerified ? (
+                    <button
+                      onClick={() => sendOtpEmail()}
+                      className="px-[5px] bg-blue-200 text-[12px] rounded-md"
+                    >
+                      {!flagEmail ? "Send Otp" : "sending..."}
+                    </button>
+                  ) : (
+                    <div>Verified</div>
+                  )}
+                </>
+              ) : (
+                <>
+                  <input
+                    type="number"
+                    id="otpEmail"
+                    name="otpEmail"
+                    className="outline-none pt-2 w-[73%]"
+                    placeholder="Enter your otp"
+                    value={emailOtp}
+                    required
+                    onChange={(e) => setEmailOtp(e.target.value)}
+                  />
+                  <button
+                    onClick={() => verifyEmailOtp()}
+                    className="px-[5px] bg-blue-200 text-[12px] rounded-md"
+                  >
+                    {!flagEmail ? "Verify Otp" : "verifying..."}
+                  </button>
+                </>
+              )}
+            </div>
           </div>
 
           <div>
             <label htmlFor="phone">
               Phone Number <span className="text-red-600">*</span>
             </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              className="input-tag"
-              placeholder="+91 9876543210"
-              required
-              onChange={(e) => handleFormState(e)}
-            />
+            <div className="flex justify-between border-b-2 border-black">
+              {!isPhoneOtpSent ? (
+                <>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    className="outline-none pt-2 w-[73%]"
+                    placeholder="+91 9876543210"
+                    value={formData.phone}
+                    required
+                    onChange={(e) => handleFormState(e)}
+                  />
+                  {!isPhoneVerified ? (
+                    <button
+                      onClick={() => sendOtpPhone()}
+                      className="px-[5px] bg-blue-200 text-[12px] rounded-md"
+                    >
+                      {!flagPhone ? "Send Otp" : "sending..."}
+                    </button>
+                  ) : (
+                    <div>Verified</div>
+                  )}
+                </>
+              ) : (
+                <>
+                  <input
+                    type="number"
+                    id="otpPhone"
+                    name="otpPhone"
+                    className="outline-none pt-2 w-[73%]"
+                    placeholder="Enter your otp"
+                    value={phoneOtp}
+                    required
+                    onChange={(e) => setPhoneOtp(e.target.value)}
+                  />
+                  <button
+                    onClick={() => verifyPhoneOtp()}
+                    className="px-[5px] bg-blue-200 text-[12px] rounded-md"
+                  >
+                    {!flagPhone ? "Verify Otp" : "verifying..."}
+                  </button>
+                </>
+              )}
+            </div>
           </div>
 
           <div className="flex items-start flex-col">
@@ -242,6 +375,7 @@ function page() {
                 name="password"
                 className="outline-none w-full bg-transparent"
                 placeholder="Enter your password"
+                value={formData.password}
                 required
                 onChange={(e) => handleFormState(e)}
               />
@@ -268,6 +402,7 @@ function page() {
                 name="confirm_password"
                 className="outline-none w-full bg-transparent"
                 placeholder="Confirm your password"
+                value={formData.confirm_password}
                 required
                 onChange={(e) => handleFormState(e)}
               />
