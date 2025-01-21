@@ -8,7 +8,7 @@ import {
   FARMER_FETCH_FARM_DATA,
   FARMER_SAVE_FARM_DATA,
 } from "@/utils/Apis/api";
-import { FARMS, LOGIN } from "@/utils/Paths/paths";
+import { FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
 const Map = dynamic(
   () => import("@/app/components/farmer/components/MapCoordinates"),
@@ -93,6 +93,14 @@ function page() {
 
       const data = await res.json();
 
+      if(res.status === 404){
+        router.push(NOT_FOUND);
+        if (loadingBarRef.current) {
+          loadingBarRef.current.complete();
+        }
+        return;
+      }
+
       if (res.status !== 201 && res.status !== 500) {
         router.push(LOGIN);
         if (loadingBarRef.current) {
@@ -102,6 +110,7 @@ function page() {
       }
 
       if (res.status === 500) {
+        router.push(FARMS);
         const error = new Error(data.error);
         throw error;
       }

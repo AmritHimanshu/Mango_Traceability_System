@@ -26,7 +26,11 @@ router.get('/api/fetch-farm-data/:id', async (req, res) => {
         const { id } = req.params;
         const _id = new mongoose.Types.ObjectId(id);
 
-        const farmData = await Farmer.findOne({userId: req.rootUser._id, _id: _id});
+        const farmData = await Farmer.findOne({ userId: req.rootUser._id, _id: _id });
+
+        if (!farmData) {
+            return res.status(404).json({ error: "Page not found" });
+        }
 
         return res.status(201).json(farmData);
     } catch (error) {
