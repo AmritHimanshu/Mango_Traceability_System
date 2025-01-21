@@ -8,6 +8,7 @@ import { FARMER_FETCH_FEW_FARMS_LIST } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
 import { FewFarmList } from "@/utils/Types/interfaces";
 import HomeCard from "./components/HomeCard";
+import MapCoordinates from "./components/MapCoordinates";
 
 function Home() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -44,7 +45,7 @@ function Home() {
         return;
       }
 
-      if(res.status === 500){
+      if (res.status === 500) {
         const error = new Error(data.error);
         throw error;
       }
@@ -68,13 +69,14 @@ function Home() {
     <div className="py-5">
       <CustomLoadingBar ref={loadingBarRef} />
 
-
-      <div>
-      {farmList.map((farm,index)=>{
-        <div>
-          {farm.farm}
-        </div>
-      })}
+      <div className="space-y-5">
+        {farmList.map((farm, index) => (
+          <div key={index} className="px-5 h-[200px] border-2 border-red-500">
+            <div className="w-full border-2 border-green-500">
+              <MapCoordinates coordinates={farm.geoFenceData} />
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
