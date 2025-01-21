@@ -6,11 +6,11 @@ export const PENDING_REQUESTS = "/admin/pending-requests";
 // Farmers
 export const FARMS = "/farmer/farms";
 export const CREATE_FARM = "/farmer/farms/create-new-farm";
-export const NOTIFICATIONS = "/farmer/notifications";
-export const PROFILE = "/farmer/profile";
 
 // Common
 export const OVERVIEW = "/";
 export const LOGIN = "/login";
 export const REGISTER = "/register";
+export const NOTIFICATIONS = "/farmer/notifications";
+export const PROFILE = "/farmer/profile";
 export const LOGOUT = "/logout";
