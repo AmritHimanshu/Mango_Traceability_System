@@ -108,15 +108,6 @@ function page() {
             <label htmlFor="cropName">
               Name of the crop <span className="text-red-600">*</span>
             </label>
-            {/* <input
-              type="text"
-              id="cropName"
-              name="cropName"
-              value={cropName}
-              className="input-tag"
-              required
-              onChange={(e) => setCropName(e.target.value)}
-            /> */}
             <select
               name="cropName"
               id="cropName"
