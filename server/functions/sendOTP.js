@@ -36,7 +36,7 @@ const sendPhone = async (phone, otp) => {
         const message = await client.messages.create({
             body: `Your OTP is: ${otp}`,
             from: process.env.PHONE_NUMBER,
-            to: phone,
+            to: `+91${phone}`,
         });
         console.log(`Message sent: ${message.sid}`);
     } catch (error) {
