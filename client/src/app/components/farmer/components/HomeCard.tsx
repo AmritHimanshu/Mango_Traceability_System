@@ -16,7 +16,7 @@ function HomeCard({ data }: farmerHomeCardProps) {
       <div className="flex justify-between">
         <div>
           <div className="font-bold">{data.farm}</div>
-          <div>{data.crop}</div>
+          <div className="text-[13px]">{data.crop}</div>
         </div>
         <button
           className="px-3 bg-black text-white text-center"
