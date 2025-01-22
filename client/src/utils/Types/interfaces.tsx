@@ -130,3 +130,7 @@ export type ListFarmApplicationsDataProps = {
   data: Array<Record<string, any>>;
   columns: TableColumn[];
 };
+
+export type farmerHomeCardProps = {
+  data: FewFarmList;
+};

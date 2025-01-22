@@ -1,13 +1,32 @@
 "use client";
 
-import React from 'react';
+import React from "react";
+import { useRouter } from "next/navigation";
+import MapCoordinates from "./MapCoordinates";
+import { farmerHomeCardProps } from "@/utils/Types/interfaces";
+import { FARMS } from "@/utils/Paths/paths";
 
-function HomeCard() {
+function HomeCard({ data }: farmerHomeCardProps) {
+  const router = useRouter();
+
   return (
-    <div>
-      
+    <div className="w-full rounded-md overflow-hidden space-y-2">
+      <MapCoordinates coordinates={data.geoFenceData} height="200px" />
+
+      <div className="flex justify-between">
+        <div>
+          <div className="font-bold">{data.farm}</div>
+          <div>{data.crop}</div>
+        </div>
+        <button
+          className="px-3 bg-black text-white text-center"
+          onClick={() => router.push(`${FARMS}/${data._id}`)}
+        >
+          view
+        </button>
+      </div>
     </div>
-  )
+  );
 }
 
-export default HomeCard
+export default HomeCard;
