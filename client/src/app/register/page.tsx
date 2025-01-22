@@ -40,7 +40,6 @@ function page() {
     phone: "",
     password: "",
     confirm_password: "",
-    role: "",
   });
 
   const [isEmailOtpSent, setIsEmailOtpSent] = useState(false);
@@ -242,8 +241,8 @@ function page() {
   const handleFormData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { name, email, phone, password, confirm_password, role } = formData;
-    if (!name || !email || !phone || !password || !confirm_password || !role) {
+    const { name, email, phone, password, confirm_password } = formData;
+    if (!name || !email || !phone || !password || !confirm_password) {
       alert("Fill all the fields");
       return;
     }
@@ -284,7 +283,6 @@ function page() {
           phone,
           password,
           confirm_password,
-          role,
         }),
       });
 
@@ -492,18 +490,6 @@ function page() {
               )}
             </div>
           </div>
-
-          <select
-            name="role"
-            id="role"
-            className="p-2 outline-none border-[1px] border-black rounded-md"
-            required
-            onChange={(e) => handleFormState(e)}
-          >
-            <option value="">Select your role</option>
-            <option value="Manager">Manager</option>
-            <option value="Farmer">Farmer</option>
-          </select>
 
           <button type="submit" className="btn bg-black text-white">
             Register

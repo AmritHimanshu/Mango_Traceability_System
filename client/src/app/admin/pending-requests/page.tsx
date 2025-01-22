@@ -29,7 +29,7 @@ function page() {
     if (loadingBarRef.current) {
       loadingBarRef.current.continuousStart();
     }
-    
+
     try {
       const res = await fetch(
         `${BASE_URL}/${ADMIN_PENDING_REQUESTS}?limit=${limit}&skip=${skip}`,
@@ -92,7 +92,12 @@ function page() {
     };
   }, []);
 
-  const authenticateReq = async (id: string, status: boolean) => {
+  const authenticateReq = async (id: string, role: string, status: boolean) => {
+    if (!role && status === true) {
+      alert("Please assign role to the user!");
+      return;
+    }
+
     if (loadingBarRef.current) {
       loadingBarRef.current.continuousStart();
     }
@@ -104,10 +109,18 @@ function page() {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ isAuthenticated: status }),
+        body: JSON.stringify({ role: role, isAuthenticated: status }),
       });
 
       const data = await res.json();
+      if (res.status === 400) {
+        alert(data.error);
+        if (loadingBarRef.current) {
+          loadingBarRef.current.complete();
+        }
+        return;
+      }
+
       if (res.status !== 201 && res.status !== 500) {
         router.push(LOGIN);
         if (loadingBarRef.current) {
@@ -141,7 +154,7 @@ function page() {
       <CustomLoadingBar ref={loadingBarRef} />
 
       <div className="py-3 text-lg font-bold sticky top-[56px] z-30 bg-white text-center">
-        Recent Requests
+        Pending Requests
       </div>
       {pendingRequests.length !== 0 ? (
         <div className="space-y-7 bg-gray-50">

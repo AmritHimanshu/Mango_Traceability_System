@@ -3,16 +3,29 @@
 import React, { useState } from "react";
 import { PendingUserCardProps } from "@/utils/Types/interfaces";
 
-function PendingUserCard({ index, request, authenticateReq }: PendingUserCardProps) {
+function PendingUserCard({
+  index,
+  request,
+  authenticateReq,
+}: PendingUserCardProps) {
   const [selectedButton, setSelectedButton] = useState("");
 
-  const handleOnClick = async (id: string, status: boolean, buttonText: string) => {
+  const [selectRole, setSelectRole] = useState("");
+
+  const handleOnClick = async (
+    id: string,
+    role: string,
+    status: boolean,
+    buttonText: string
+  ) => {
     try {
       setSelectedButton(buttonText);
-      await authenticateReq(id, status);
+      await authenticateReq(id, role, status);
       setSelectedButton("");
+      setSelectRole("");
     } catch (error) {
       setSelectedButton("");
+      setSelectRole("");
     }
   };
 
@@ -24,7 +37,7 @@ function PendingUserCard({ index, request, authenticateReq }: PendingUserCardPro
           <div>Name: {request.name}</div>
           <div>Email: {request.email}</div>
           <div>Ph no.: {request.phone}</div>
-          <div className="font-semibold">Role: {request.role}</div>
+          {/* <div className="font-semibold">Role: {request.role}</div> */}
           <div>
             Date:{" "}
             {new Date(request.createdAt).toLocaleString("en-IN", {
@@ -36,19 +49,36 @@ function PendingUserCard({ index, request, authenticateReq }: PendingUserCardPro
               hour12: true,
             })}
           </div>
+          <div className="flex items-center my-2 space-x-5">
+            <div>Assign role: </div>
+            <select
+              name="role"
+              id="role"
+              value={selectRole}
+              className="p-[2px] border-[1px] border-black outline-0"
+              onChange={(e) => setSelectRole(e.target.value)}
+            >
+              <option value="">Select role</option>
+              <option value="Admin">Admin</option>
+              <option value="Manager">Manager</option>
+              <option value="Farmer">Farmer</option>
+            </select>
+          </div>
         </div>
       </div>
       <div className="flex space-x-3">
         <button
           className="btn bg-green-400"
-          onClick={() => handleOnClick(request._id, true, "Accept")}
+          onClick={() => handleOnClick(request._id, selectRole, true, "Accept")}
           disabled={selectedButton === "Reject"}
         >
           {selectedButton === "Accept" ? "Accepting" : "Accept"}
         </button>
         <button
           className="btn bg-red-500 text-white"
-          onClick={() => handleOnClick(request._id, false, "Reject")}
+          onClick={() =>
+            handleOnClick(request._id, selectRole, false, "Reject")
+          }
           disabled={selectedButton === "Accept"}
         >
           {selectedButton === "Reject" ? "Rejecting" : "Reject"}

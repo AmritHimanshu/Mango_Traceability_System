@@ -10,8 +10,8 @@ const User = require('../../model/userSchema');
 
 
 router.post('/api/register-user', async (req, res) => {
-    const { name, email, phone, password, confirm_password, role } = req.body;
-    if (!name || !email || !phone || !password || !confirm_password || !role) {
+    const { name, email, phone, password, confirm_password } = req.body;
+    if (!name || !email || !phone || !password || !confirm_password) {
         return res.status(400).json({ error: "Fill all the fields" });
     }
 
@@ -30,7 +30,7 @@ router.post('/api/register-user', async (req, res) => {
             return res.status(400).json({ error: "Email ID already registered" });
         }
 
-        const user = new User({ name, email, phone, password, role, isAuthenticated: false });
+        const user = new User({ name, email, phone, password, isAuthenticated: false });
         const userRegister = await user.save();
         if (userRegister) {
 

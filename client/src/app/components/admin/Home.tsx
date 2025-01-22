@@ -88,7 +88,7 @@ function Home() {
         return;
       }
 
-      if(res.status === 500){
+      if (res.status === 500) {
         const error = new Error(data.error);
         throw error;
       }
@@ -105,7 +105,12 @@ function Home() {
     fetchPendingRequests();
   }, []);
 
-  const authenticateReq = async (id: string, status: boolean) => {
+  const authenticateReq = async (id: string, role: string, status: boolean) => {
+    if (!role && status === true) {
+      alert("Please assign role to the user!");
+      return;
+    }
+
     try {
       const res = await fetch(`${BASE_URL}/${ADMIN_AUTHENTICATE_USER}/${id}`, {
         method: "PUT",
@@ -113,16 +118,21 @@ function Home() {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ isAuthenticated: status }),
+        body: JSON.stringify({ role: role, isAuthenticated: status }),
       });
 
       const data = await res.json();
+      if (res.status === 400) {
+        alert(data.error);
+        return;
+      }
+
       if (res.status !== 201 && res.status !== 500) {
         router.push(LOGIN);
         return;
       }
 
-      if(res.status === 500){
+      if (res.status === 500) {
         const error = new Error(data.error);
         throw error;
       }
@@ -140,7 +150,7 @@ function Home() {
   return (
     <div className="py-5">
       <CustomLoadingBar ref={loadingBarRef} />
-      
+
       <Image
         src={Mango_tree}
         alt="Mango Tree"

@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema(
         {
             type: String,
             enum: ["Admin", "Manager", "Farmer"],
-            required: true
+            // required: true
 
         },
         isAuthenticated:

@@ -10,7 +10,7 @@ router.get('/api/few-pending-requests', async (req, res) => {
             return res.status(401).json({ error: "You don't have permission." });
         }
 
-        const pendingRequests = await User.find({ role: { $in: ["Manager", "Farmer"] }, isAuthenticated: false, isRejected: false }).select("-password -tokens -updatedAt").sort("-createdAt").limit(3);
+        const pendingRequests = await User.find({ isAuthenticated: false, isRejected: false }).select("-password -tokens -updatedAt").sort("-createdAt").limit(3);
 
         return res.status(201).json(pendingRequests);
     } catch (error) {
@@ -23,7 +23,7 @@ router.get('/api/pending-requests', async (req, res) => {
     const limit = req.query.limit;
     const skip = req.query.skip;
     try {
-        const pendingRequests = await User.find({ role: { $in: ["Manager", "Farmer"] }, isAuthenticated: false, isRejected: false }).select("-password -tokens -updatedAt").sort("-createdAt").skip(parseInt(skip)).limit(parseInt(limit));
+        const pendingRequests = await User.find({ isAuthenticated: false, isRejected: false }).select("-password -tokens -updatedAt").sort("-createdAt").skip(parseInt(skip)).limit(parseInt(limit));
 
         return res.status(201).json(pendingRequests);
     } catch (error) {

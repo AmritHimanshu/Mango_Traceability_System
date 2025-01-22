@@ -8,15 +8,15 @@ const User = require('../../model/userSchema');
 
 router.put('/api/authenticate-user/:id', async (req, res) => {
     const { id } = req.params;
-    const { isAuthenticated } = req.body;
+    const { role, isAuthenticated } = req.body;
 
     try {
-        if (req.rootUser.role !== 'Admin') {
-            return res.status(401).json({error: "You don't have permission."});
+        if (isAuthenticated === undefined) {
+            return res.status(400).json({ error: "Bad request" });
         }
 
-        if(isAuthenticated === undefined){
-            return res.status(400).json({error: "Bad request"});
+        if (!role && isAuthenticated === true) {
+            return res.status(400).json({ error: "Bad request" });
         }
 
         const user = await User.findById(id);
@@ -24,13 +24,10 @@ router.put('/api/authenticate-user/:id', async (req, res) => {
             return res.status(404).json({ error: "User not found" });
         }
 
-        if (user.role === "Admin") {
-            return res.status(400).json({ error: "Admin doesn't require authentication" });
-        }
-
+        if(role) user.role = role;
         user.isAuthenticated = isAuthenticated;
-        
-        if(isAuthenticated === false) user.isRejected = true; 
+
+        if (isAuthenticated === false) user.isRejected = true;
         await user.save();
 
         await notifyUser(user, isAuthenticated);
