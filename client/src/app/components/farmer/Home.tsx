@@ -71,9 +71,9 @@ function Home() {
 
       <div className="space-y-5">
         {farmList.map((farm, index) => (
-          <div key={index} className="px-5 h-[200px] border-2 border-red-500">
-            <div className="w-full border-2 border-green-500">
-              <MapCoordinates coordinates={farm.geoFenceData} />
+          <div key={index} className="px-5 h-[200px] overflow-scroll">
+            <div className="w-full h-[200px]">
+              <MapCoordinates coordinates={farm.geoFenceData} height="200px" />
             </div>
           </div>
         ))}

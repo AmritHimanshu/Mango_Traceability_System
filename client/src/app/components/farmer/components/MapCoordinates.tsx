@@ -41,14 +41,14 @@ function FitBounds({ coordinates }: { coordinates: { lat: number; lng: number }[
   return null;
 }
 
-function MapCoordinates({ coordinates }: MapCoordinatesProps) {
+function MapCoordinates({ coordinates, height }: MapCoordinatesProps) {
   return (
     <div>
       <MapContainer
         center={[51.505, -0.09]}
         zoom={13}
         style={{
-          height: "500px",
+          height: `${height}`,
           width: "100%",
           border: "2px solid black",
           overflow: "hidden",

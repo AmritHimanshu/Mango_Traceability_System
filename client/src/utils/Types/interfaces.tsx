@@ -118,6 +118,7 @@ export type MapProps = {
 
 export type MapCoordinatesProps = {
   coordinates: { lat: number; lng: number }[];
+  height: string;
 };
 
 export type TableColumn = {
