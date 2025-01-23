@@ -7,6 +7,7 @@ import { LoadingBarRef } from "react-top-loading-bar";
 import { LOGIN } from "@/utils/Paths/paths";
 import { ADMIN_FETCH_FARMER_FARM_LIST } from "@/utils/Apis/api";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
+import ListFarmCard from "@/app/components/farmer/components/ListFarmCard";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -73,6 +74,8 @@ function page() {
     }
   };
 
+  const handleSelectedFarm = async () => {};
+
   const handleScroll = () => {
     if (
       document.documentElement.clientHeight + window.scrollY >=
@@ -94,10 +97,30 @@ function page() {
   }, []);
 
   return (
-    <div>
+    <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)] relative">
       <CustomLoadingBar ref={loadingBarRef} />
       
-      
+      <div className="my-5">
+        <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center z-30">
+          Your farms
+        </div>
+        {farms.length !== 0 ? (
+          <div className="space-y-3 mt-2">
+            {farms.map((farm, index) => (
+              <ListFarmCard
+                key={index}
+                idx={index}
+                farm={farm}
+                handleClick={handleSelectedFarm}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center text-gray-500 my-2">
+            No records found!
+          </div>
+        )}
+      </div>
     </div>
   );
 }
