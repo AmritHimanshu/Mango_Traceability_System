@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
+var mongoose = require('mongoose');
 
 const User = require('../../model/userSchema');
+const Farmer = require('../../model/farmerSchema');
 
 
 router.get('/api/few-pending-requests', async (req, res) => {
@@ -68,6 +70,23 @@ router.get('/api/farmer-management', async (req, res) => {
         return res.status(201).json(farmers);
     } catch (error) {
         console.log("/api/farmer-management: ", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+router.get('/api/fetch-farmer-farms-list/:id', async (req, res) => {
+    const limit = req.query.limit;
+    const skip = req.query.skip;
+
+    const { id } = req.params;
+    const _id = new mongoose.Types.ObjectId(id);
+
+    try {
+        const farmList = await Farmer.find({ userId: _id }).skip(parseInt(skip)).limit(parseInt(limit));
+
+        return res.status(201).json(farmList);
+    } catch (error) {
+        console.log("/api/fetch-farmer-farms-list: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 });

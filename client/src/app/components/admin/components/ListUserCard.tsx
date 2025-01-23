@@ -8,8 +8,10 @@ import { FARMER } from "@/utils/Paths/paths";
 function ListUserCard({ index, user }: ListUserCardProps) {
   const router = useRouter();
 
+  console.log(user)
+
   const handleOnView = async () => {
-    router.push(FARMER);
+    router.push(`${FARMER}/${user._id}`);
   };
 
   return (
