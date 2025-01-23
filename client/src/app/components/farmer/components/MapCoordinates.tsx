@@ -45,7 +45,7 @@ function MapCoordinates({ coordinates, height }: MapCoordinatesProps) {
   return (
     <div>
       <MapContainer
-        center={[51.505, -0.09]}
+        center={[25.5941, 85.1376]}
         zoom={13}
         style={{
           height: `${height}`,

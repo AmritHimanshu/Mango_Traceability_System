@@ -5,6 +5,7 @@ import {
   MapContainer,
   TileLayer,
   Polygon,
+  Polyline,
   useMapEvents,
   useMap,
 } from "react-leaflet";
@@ -14,6 +15,42 @@ import "leaflet/dist/leaflet.css";
 
 function Map({ submitForm }: MapProps) {
   const [coordinates, setCoordinates] = useState<[number, number][]>([]);
+  const [userPath, setUserPath] = useState<[number, number][]>([]);
+  const [tracking, setTracking] = useState(false);
+
+  // Function to start tracking the user
+  const handleStartTracking = () => {
+    setTracking(true);
+  };
+
+  // Function to stop tracking the user
+  const handleStopTracking = () => {
+    setTracking(false);
+  };
+
+  // Add path tracking functionality
+  useEffect(() => {
+    if (!tracking) return;
+
+    const geolocation = navigator.geolocation;
+
+    if (geolocation) {
+      const watchId = geolocation.watchPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const newUserPosition: [number, number] = [latitude, longitude];
+
+          setUserPath((prevPath) => [...prevPath, newUserPosition]); // Update user path
+        },
+        (error) => console.error(error),
+        { enableHighAccuracy: true }
+      );
+
+      return () => {
+        geolocation.clearWatch(watchId);
+      };
+    }
+  }, [tracking]);
 
   const handleReset = () => setCoordinates([]);
 
@@ -47,7 +84,7 @@ function Map({ submitForm }: MapProps) {
   return (
     <div>
       <MapContainer
-        center={[51.505, -0.09]}
+        center={[25.5941, 85.1376]}
         zoom={13}
         style={{
           height: "500px",
@@ -65,6 +102,8 @@ function Map({ submitForm }: MapProps) {
 
         <ResizeHandler />
 
+        <Polyline positions={userPath} color="blue" />
+
         <Polygon positions={coordinates} color="blue" />
       </MapContainer>
 
@@ -80,6 +119,23 @@ function Map({ submitForm }: MapProps) {
         <button className="btn bg-black text-white" onClick={handleSubmit}>
           Create farm
         </button>
+
+        {/* Buttons to control path tracking */}
+        {!tracking ? (
+          <button
+            onClick={handleStartTracking}
+            className="bg-green-500 text-white p-2 rounded-md"
+          >
+            Start Tracking
+          </button>
+        ) : (
+          <button
+            onClick={handleStopTracking}
+            className="bg-red-500 text-white p-2 rounded-md"
+          >
+            Stop Tracking
+          </button>
+        )}
       </div>
     </div>
   );
