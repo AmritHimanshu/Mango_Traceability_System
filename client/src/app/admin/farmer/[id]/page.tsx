@@ -102,7 +102,7 @@ function page() {
       
       <div className="my-5">
         <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center z-30">
-          Your farms
+          All farms
         </div>
         {farms.length !== 0 ? (
           <div className="space-y-3 mt-2">
