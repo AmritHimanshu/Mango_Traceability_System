@@ -105,33 +105,35 @@ function Map({ submitForm }: MapProps) {
       </MapContainer>
 
       <div className="mt-5 space-y-5">
-        <button
-          onClick={handleReset}
-          className="bg-black text-white p-2 rounded-md"
-          style={{ marginRight: "10px" }}
-        >
-          Reset
-        </button>
+        <div className="flex justify-between">
+          <button
+            onClick={handleReset}
+            className="bg-black text-white p-2 rounded-md"
+            style={{ marginRight: "10px" }}
+          >
+            Reset
+          </button>
+
+          {!tracking ? (
+            <button
+              onClick={handleStartTracking}
+              className="bg-green-700 text-white p-2 rounded-md"
+            >
+              Start Tracking
+            </button>
+          ) : (
+            <button
+              onClick={handleStopTracking}
+              className="bg-red-500 text-white p-2 rounded-md"
+            >
+              Stop Tracking
+            </button>
+          )}
+        </div>
 
         <button className="btn bg-black text-white" onClick={handleSubmit}>
           Create farm
         </button>
-
-        {!tracking ? (
-          <button
-            onClick={handleStartTracking}
-            className="bg-green-500 text-white p-2 rounded-md"
-          >
-            Start Tracking
-          </button>
-        ) : (
-          <button
-            onClick={handleStopTracking}
-            className="bg-red-500 text-white p-2 rounded-md"
-          >
-            Stop Tracking
-          </button>
-        )}
       </div>
     </div>
   );
