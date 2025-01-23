@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { FarmList } from "@/utils/Types/interfaces";
 import { LoadingBarRef } from "react-top-loading-bar";
-import { LOGIN } from "@/utils/Paths/paths";
+import { FARMER, LOGIN } from "@/utils/Paths/paths";
 import { ADMIN_FETCH_FARMER_FARM_LIST } from "@/utils/Apis/api";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import ListFarmCard from "@/app/components/farmer/components/ListFarmCard";
@@ -17,11 +17,9 @@ function page() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const id = pathname.split("/").pop();
+  const user_id = pathname.split("/").pop();
 
   const [farms, setFarms] = useState<FarmList[]>([]);
-
-  console.log(farms);
 
   const limit = 10;
   let skip = 0;
@@ -33,7 +31,7 @@ function page() {
 
     try {
       const res = await fetch(
-        `${BASE_URL}/${ADMIN_FETCH_FARMER_FARM_LIST}/${id}?limit=${limit}&skip=${skip}`,
+        `${BASE_URL}/${ADMIN_FETCH_FARMER_FARM_LIST}/${user_id}?limit=${limit}&skip=${skip}`,
         {
           method: "GET",
           headers: {
@@ -74,7 +72,9 @@ function page() {
     }
   };
 
-  const handleSelectedFarm = async () => {};
+  const handleSelectedFarm = async (id: string) => {
+    router.push(`${FARMER}/${user_id}/farm?farm_id=${id}`);
+  };
 
   const handleScroll = () => {
     if (
@@ -99,7 +99,7 @@ function page() {
   return (
     <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)] relative">
       <CustomLoadingBar ref={loadingBarRef} />
-      
+
       <div className="my-5">
         <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center z-30">
           All farms

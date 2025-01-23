@@ -14,6 +14,7 @@ export const ADMIN_FETCH_NO_OF_USERS = "admin/api/fetch-no-of-users";
 export const ADMIN_MANAGER_MANAGEMENT = "admin/api/manager-management";
 export const ADMIN_FARMER_MANAGEMENT = "admin/api/farmer-management";
 export const ADMIN_FETCH_FARMER_FARM_LIST = "admin/api/fetch-farmer-farms-list";
+export const ADMIN_FETCH_FARMER_FARM_DATA = "admin/api/fetch-farmer-farm-data";
 
 // Admin PUT APIs
 export const ADMIN_AUTHENTICATE_USER = "admin/api/authenticate-user";
