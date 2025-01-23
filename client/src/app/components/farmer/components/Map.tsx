@@ -18,17 +18,14 @@ function Map({ submitForm }: MapProps) {
   const [userPath, setUserPath] = useState<[number, number][]>([]);
   const [tracking, setTracking] = useState(false);
 
-  // Function to start tracking the user
   const handleStartTracking = () => {
     setTracking(true);
   };
 
-  // Function to stop tracking the user
   const handleStopTracking = () => {
     setTracking(false);
   };
 
-  // Add path tracking functionality
   useEffect(() => {
     if (!tracking) return;
 
@@ -40,7 +37,7 @@ function Map({ submitForm }: MapProps) {
           const { latitude, longitude } = position.coords;
           const newUserPosition: [number, number] = [latitude, longitude];
 
-          setUserPath((prevPath) => [...prevPath, newUserPosition]); // Update user path
+          setUserPath((prevPath) => [...prevPath, newUserPosition]);
         },
         (error) => console.error(error),
         { enableHighAccuracy: true }
@@ -120,7 +117,6 @@ function Map({ submitForm }: MapProps) {
           Create farm
         </button>
 
-        {/* Buttons to control path tracking */}
         {!tracking ? (
           <button
             onClick={handleStartTracking}
