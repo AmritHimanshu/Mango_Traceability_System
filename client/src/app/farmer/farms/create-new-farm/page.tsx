@@ -1,18 +1,25 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import { FARMER_NEW_FARM } from "@/utils/Apis/api";
-import { FARMS, LOGIN } from "@/utils/Paths/paths";
+import { FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
+import { useAppSelector } from "@/store/store";
 const Map = dynamic(() => import("@/app/components/farmer/components/Map"), {
   ssr: false,
 });
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const userState = useAppSelector((state) => state.user.userState);
+
+  useEffect(() => {
+    if (userState === null) router.push(NOT_FOUND);
+  }, []);
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
 
