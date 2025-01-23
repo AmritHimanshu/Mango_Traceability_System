@@ -6,6 +6,7 @@ import { FarmList } from "@/utils/Types/interfaces";
 import { LoadingBarRef } from "react-top-loading-bar";
 import { LOGIN } from "@/utils/Paths/paths";
 import { ADMIN_FETCH_FARMER_FARM_LIST } from "@/utils/Apis/api";
+import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -94,7 +95,9 @@ function page() {
 
   return (
     <div>
-      <div>This is farmer page</div>
+      <CustomLoadingBar ref={loadingBarRef} />
+      
+      
     </div>
   );
 }
