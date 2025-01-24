@@ -73,7 +73,7 @@ function page() {
   };
 
   const handleSelectedFarm = async (id: string) => {
-    router.push(`${FARMER}/${user_id}/farm?farm_id=${id}`);
+    router.push(`${FARMER}/farm?farm_id=${id}`);
   };
 
   const handleScroll = () => {

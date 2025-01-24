@@ -59,7 +59,6 @@ function PendingUserCard({
               onChange={(e) => setSelectRole(e.target.value)}
             >
               <option value="">Select role</option>
-              <option value="Admin">Admin</option>
               <option value="Manager">Manager</option>
               <option value="Farmer">Farmer</option>
             </select>
