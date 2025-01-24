@@ -54,7 +54,7 @@ export type ListUserCardProps = {
 
 // Farmer
 export type Farm = {
-  userId: string;
+  userId: { name: string; email: string; phone: string };
   farm: string;
   geoFenceData: { lat: number; lng: number }[];
   crop: string;

@@ -1,11 +1,20 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ADMIN_FETCH_FARMER_FARM_DATA } from "@/utils/Apis/api";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import { FARMER, LOGIN } from "@/utils/Paths/paths";
+import dynamic from "next/dynamic";
+import { Farm } from "@/utils/Types/interfaces";
+import ListFarmApplicationsData from "@/app/components/farmer/components/ListFarmApplicationsData";
+const Map = dynamic(
+  () => import("@/app/components/farmer/components/MapCoordinates"),
+  {
+    ssr: false,
+  }
+);
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -15,6 +24,9 @@ function page() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const farm_id = searchParams.get("farm_id");
+
+  const [farmData, setFarmData] = useState<Farm>();
+  console.log(farmData);
 
   const fetchFarmData = async () => {
     if (loadingBarRef.current) {
@@ -49,7 +61,8 @@ function page() {
         throw error;
       }
 
-      console.log(data);
+      // console.log(data);
+      setFarmData(data);
     } catch (error) {
       console.log("Error: ", error);
       alert(error);
@@ -68,7 +81,166 @@ function page() {
     <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)] relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
-      <div>This is farm page</div>
+      {farmData && (
+        <div className="space-y-3 my-5">
+          <Map coordinates={farmData.geoFenceData} height="300px" />
+
+          <div className="bg-cardBackground p-3 rounded-md">
+            <div className="flex items-center space-x-3">
+              <div className="font-bold">Farmer Name: </div>
+              <div>{farmData.userId.name}</div>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="font-bold">Farmer Email: </div>
+              <div>{farmData.userId.email}</div>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="font-bold">Farmer Phone: </div>
+              <div>{farmData.userId.phone}</div>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-3">
+            <div className="font-bold">Farm name:</div>
+            <div>{farmData.farm}</div>
+          </div>
+
+          <div className="flex items-center space-x-3">
+            <div className="font-bold">Crop name:</div>
+            <div>{farmData.crop}</div>
+          </div>
+
+          {farmData.ploughingDate && (
+            <div className="flex items-center space-x-3">
+              <div className="font-bold">Ploughing Date:</div>
+              <div>
+                {new Date(farmData.ploughingDate).toISOString().split("T")[0]}
+              </div>
+            </div>
+          )}
+
+          {farmData.weedingDate && (
+            <div className="flex items-center space-x-3">
+              <div className="font-bold">Weeding Date:</div>
+              <div>
+                {new Date(farmData.weedingDate).toISOString().split("T")[0]}
+              </div>
+            </div>
+          )}
+
+          {farmData.sowingDate && (
+            <div className="flex items-center space-x-3">
+              <div className="font-bold">Sowing Date:</div>
+              <div>
+                {new Date(farmData.sowingDate).toISOString().split("T")[0]}
+              </div>
+            </div>
+          )}
+
+          {farmData.floweringDate && (
+            <div className="flex items-center space-x-3">
+              <div className="font-bold">Flowering Date:</div>
+              <div>
+                {new Date(farmData.floweringDate).toISOString().split("T")[0]}
+              </div>
+            </div>
+          )}
+
+          {farmData.pheromoneTrapDate && (
+            <div className="flex items-center space-x-3">
+              <div className="font-bold">Pheromone Trap Date:</div>
+              <div>
+                {
+                  new Date(farmData.pheromoneTrapDate)
+                    .toISOString()
+                    .split("T")[0]
+                }
+              </div>
+            </div>
+          )}
+
+          {farmData.lureChangeDate && (
+            <div className="flex items-center space-x-3">
+              <div className="font-bold">Lure Change Date:</div>
+              <div>
+                {new Date(farmData.lureChangeDate).toISOString().split("T")[0]}
+              </div>
+            </div>
+          )}
+
+          {/* {(farmData.irrigationDates.artificial.length > 0 || farmData.irrigationDates.natural.length > 0) && (
+            <div></div>
+          )} */}
+
+          {farmData.fertilizerApplications.length > 0 && (
+            <>
+              <div className="font-bold">Fertilizer Application:</div>
+              <ListFarmApplicationsData
+                data={farmData.fertilizerApplications}
+                columns={[
+                  { header: "Date", key: "date" },
+                  { header: "Volume (L)", key: "volume" },
+                ]}
+              />
+            </>
+          )}
+
+          {farmData.pesticideApplications.length > 0 && (
+            <>
+              <div className="font-bold">Pesticide Application:</div>
+              <ListFarmApplicationsData
+                data={farmData.pesticideApplications}
+                columns={[
+                  { header: "Date", key: "date" },
+                  { header: "Volume (L)", key: "volume" },
+                ]}
+              />
+            </>
+          )}
+
+          {farmData.bagging.length > 0 && (
+            <>
+              <div className="font-bold">Bagging:</div>
+              <ListFarmApplicationsData
+                data={farmData.bagging}
+                columns={[
+                  { header: "Date", key: "date" },
+                  { header: "Quantity", key: "quantity" },
+                ]}
+              />
+            </>
+          )}
+
+          {farmData.specialCare.length > 0 && (
+            <>
+              <div className="font-bold">Special care:</div>
+              <ListFarmApplicationsData
+                data={farmData.specialCare}
+                columns={[
+                  { header: "Date", key: "date" },
+                  { header: "Name", key: "name" },
+                ]}
+              />
+            </>
+          )}
+
+          {farmData.harvest && (
+            <>
+              <div className="font-bold">Harvest:</div>
+              <div className="flex space-x-5">
+                <div>Date:</div>
+                <div>
+                  {new Date(farmData.harvest.date).toISOString().split("T")[0]}
+                </div>
+              </div>
+              <div className="flex space-x-5">
+                <div>Yield:</div>
+                <div>{farmData.harvest.yield}</div>
+              </div>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 }
