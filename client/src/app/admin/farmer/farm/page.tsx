@@ -60,7 +60,6 @@ function page() {
         throw error;
       }
 
-      // console.log(data);
       setFarmData(data);
     } catch (error) {
       console.log("Error: ", error);
