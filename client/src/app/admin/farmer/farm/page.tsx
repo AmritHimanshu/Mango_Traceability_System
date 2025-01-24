@@ -5,8 +5,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ADMIN_FETCH_FARMER_FARM_DATA } from "@/utils/Apis/api";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
-import { FARMER, LOGIN } from "@/utils/Paths/paths";
+import { CERTIFICATE, FARMER, LOGIN } from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
+import QRCode from "react-qr-code";
 import { Farm } from "@/utils/Types/interfaces";
 import ListFarmApplicationsData from "@/app/components/farmer/components/ListFarmApplicationsData";
 const Map = dynamic(
@@ -15,9 +16,11 @@ const Map = dynamic(
     ssr: false,
   }
 );
+import CloseIcon from "@mui/icons-material/Close";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+  const FRONTEND_BASE_URL = "http://192.168.0.103:3000";
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
 
@@ -26,6 +29,7 @@ function page() {
   const farm_id = searchParams.get("farm_id");
 
   const [farmData, setFarmData] = useState<Farm>();
+  const [isQRCode, setIsQRCode] = useState(false);
 
   const fetchFarmData = async () => {
     if (loadingBarRef.current) {
@@ -79,7 +83,7 @@ function page() {
     <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)] relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
-      {farmData && (
+      {farmData && !isQRCode ? (
         <div className="space-y-3 my-5">
           <Map coordinates={farmData.geoFenceData} height="300px" />
 
@@ -294,7 +298,31 @@ function page() {
               </div>
             </>
           )}
+
+          <button
+            className="btn bg-blue-500 text-white]"
+            onClick={() => setIsQRCode(true)}
+          >
+            Generate QR code
+          </button>
         </div>
+      ) : (
+        <>
+          {isQRCode && (
+            <div className="mt-4">
+              <div className="flex items-center justify-between">
+                <h2 className="font-bold text-lg">QR Code for Certificate</h2>
+                <CloseIcon onClick={() => setIsQRCode(false)} />
+              </div>
+              <div className="flex justify-center items-center bg-white p-4 rounded-md shadow-md">
+                <QRCode
+                  value={`${FRONTEND_BASE_URL}/${CERTIFICATE}?farm_id=${farm_id}`}
+                  size={200}
+                />
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
