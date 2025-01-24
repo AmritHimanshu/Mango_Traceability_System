@@ -20,7 +20,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-  const FRONTEND_BASE_URL = "http://192.168.0.103:3000";
+  const FRONTEND_BASE_URL = process.env.NEXT_PUBLIC_FRONTEND_BASE_URL;
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
 
