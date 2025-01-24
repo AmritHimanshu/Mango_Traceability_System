@@ -26,7 +26,6 @@ function page() {
   const farm_id = searchParams.get("farm_id");
 
   const [farmData, setFarmData] = useState<Farm>();
-  console.log(farmData);
 
   const fetchFarmData = async () => {
     if (loadingBarRef.current) {
@@ -168,9 +167,66 @@ function page() {
             </div>
           )}
 
-          {/* {(farmData.irrigationDates.artificial.length > 0 || farmData.irrigationDates.natural.length > 0) && (
-            <div></div>
-          )} */}
+          {(farmData.irrigationDates.artificial.length > 0 ||
+            farmData.irrigationDates.natural.length > 0) && (
+            <div className="mt-4">
+              <div className="font-bold mb-2">Irrigation Dates:</div>
+              <table className="w-full border-collapse border border-gray-300">
+                <thead>
+                  <tr className="bg-gray-100">
+                    {farmData.irrigationDates.artificial.length > 0 && (
+                      <th className="border border-gray-300 px-4 py-2">
+                        Artificial
+                      </th>
+                    )}
+                    {farmData.irrigationDates.natural.length > 0 && (
+                      <th className="border border-gray-300 px-4 py-2">
+                        Natural
+                      </th>
+                    )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {(() => {
+                    const maxLength = Math.max(
+                      farmData.irrigationDates.artificial.length,
+                      farmData.irrigationDates.natural.length
+                    );
+
+                    return Array.from({ length: maxLength }).map((_, index) => (
+                      <tr
+                        key={index}
+                        className="hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
+                      >
+                        {farmData.irrigationDates.artificial.length > 0 && (
+                          <td className="border border-gray-300 px-4 py-2">
+                            {farmData.irrigationDates.artificial[index]
+                              ? new Date(
+                                  farmData.irrigationDates.artificial[index]
+                                )
+                                  .toISOString()
+                                  .split("T")[0]
+                              : ""}
+                          </td>
+                        )}
+                        {farmData.irrigationDates.natural.length > 0 && (
+                          <td className="border border-gray-300 px-4 py-2">
+                            {farmData.irrigationDates.natural[index]
+                              ? new Date(
+                                  farmData.irrigationDates.natural[index]
+                                )
+                                  .toISOString()
+                                  .split("T")[0]
+                              : ""}
+                          </td>
+                        )}
+                      </tr>
+                    ));
+                  })()}
+                </tbody>
+              </table>
+            </div>
+          )}
 
           {farmData.fertilizerApplications.length > 0 && (
             <>

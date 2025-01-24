@@ -233,6 +233,8 @@ function page() {
 
       alert(data.message);
       router.push(`${FARMS}/${id}`);
+      setArtificial("");
+      setNatural("");
     } catch (error) {
       console.log("Error: ", error);
       alert("Error while saving changes.");
@@ -450,7 +452,62 @@ function page() {
                     />
                   </>
                 ) : (
-                  <></>
+                  <>
+                    <table className="w-full border-collapse border border-gray-300">
+                <thead>
+                  <tr className="bg-gray-100">
+                    {farm.irrigationDates.artificial.length > 0 && (
+                      <th className="border border-gray-300 px-4 py-2">
+                        Artificial
+                      </th>
+                    )}
+                    {farm.irrigationDates.natural.length > 0 && (
+                      <th className="border border-gray-300 px-4 py-2">
+                        Natural
+                      </th>
+                    )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {(() => {
+                    const maxLength = Math.max(
+                      farm.irrigationDates.artificial.length,
+                      farm.irrigationDates.natural.length
+                    );
+
+                    return Array.from({ length: maxLength }).map((_, index) => (
+                      <tr
+                        key={index}
+                        className="hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
+                      >
+                        {farm.irrigationDates.artificial.length > 0 && (
+                          <td className="border border-gray-300 px-4 py-2">
+                            {farm.irrigationDates.artificial[index]
+                              ? new Date(
+                                  farm.irrigationDates.artificial[index]
+                                )
+                                  .toISOString()
+                                  .split("T")[0]
+                              : ""}
+                          </td>
+                        )}
+                        {farm.irrigationDates.natural.length > 0 && (
+                          <td className="border border-gray-300 px-4 py-2">
+                            {farm.irrigationDates.natural[index]
+                              ? new Date(
+                                  farm.irrigationDates.natural[index]
+                                )
+                                  .toISOString()
+                                  .split("T")[0]
+                              : ""}
+                          </td>
+                        )}
+                      </tr>
+                    ));
+                  })()}
+                </tbody>
+              </table>
+                  </>
                 )}
               </div>
             )}
