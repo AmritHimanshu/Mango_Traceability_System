@@ -7,6 +7,7 @@ const { notifyAdmins } = require('../../functions/sendMail');
 const { sendOtpToEmail, verifyOtpForEmail, sendOtpToPhone, verifyOtpForPhone } = require('../../functions/otpService');
 
 const User = require('../../model/userSchema');
+const Farmer = require('../../model/farmerSchema');
 
 
 router.post('/api/register-user', async (req, res) => {
@@ -140,6 +141,18 @@ router.post("/api/verify-otp-phone", (req, res) => {
         res.status(201).json({ message: "OTP verified successfully." });
     } else {
         res.status(400).json({ error: "Invalid or expired OTP." });
+    }
+});
+
+router.get('/api/certificate-farm-detail/:farm_id', async (req, res) => {
+    const { farm_id } = req.params;
+
+    try {
+        const farm = await Farmer.findOne({ _id: farm_id }).populate("userId", "name email");
+        return res.status(201).json(farm);
+    } catch (error) {
+        console.log("/api/certificate-farm-detail: ", error);
+        return res.status(500).json({ error: "Internal Server Error" });
     }
 });
 

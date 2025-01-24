@@ -6,6 +6,7 @@ export const SEND_OTP_EMAIL = "api/send-otp-email";
 export const SEND_OTP_PHONE = "api/send-otp-phone";
 export const VERIFY_OTP_EMAIL = "api/verify-otp-email";
 export const VERIFY_OTP_PHONE = "api/verify-otp-phone";
+export const CERTIFICATE_FARM_DETAIL = "api/certificate-farm-detail";
 
 // Admin GET APIs
 export const ADMIN_FEW_PENDING_REQUESTS = "admin/api/few-pending-requests";

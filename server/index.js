@@ -29,12 +29,12 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(routes);
 app.use('/admin', authenticateAdmin, adminGetRoutes);
 app.use('/admin', authenticateAdmin, adminPutRoutes);
 app.use('/farmer', authenticateFarmer, farmerGetRoutes);
 app.use('/farmer', authenticateFarmer, farmerPostRoutes);
 app.use('/farmer', authenticateFarmer, farmerPutRoutes);
+app.use(routes);
 
 app.listen(PORT, () => {
     console.log(`The server is running at port ${PORT}`);
