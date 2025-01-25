@@ -300,7 +300,7 @@ function page() {
           )}
 
           <button
-            className="btn bg-blue-500 text-white]"
+            className="btn bg-blue-500 text-white"
             onClick={() => setIsQRCode(true)}
           >
             Generate QR code
