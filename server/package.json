@@ -18,6 +18,8 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.4",
     "libphonenumber-js": "^1.11.17",
     "mongoose": "^8.9.3",
     "nodemailer": "^6.9.16",

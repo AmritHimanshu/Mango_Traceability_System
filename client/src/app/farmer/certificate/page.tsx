@@ -5,8 +5,6 @@ import { LoadingBarRef } from "react-top-loading-bar";
 import { useSearchParams } from "next/navigation";
 import { Farm } from "@/utils/Types/interfaces";
 import dynamic from "next/dynamic";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
 import { CERTIFICATE_FARM_DETAIL } from "@/utils/Apis/api";
 import ListFarmApplicationsData from "@/app/components/farmer/components/ListFarmApplicationsData";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
@@ -17,12 +15,6 @@ const Map = dynamic(
   }
 );
 
-class PDFWithAutoTable extends jsPDF {
-  autoTable(options: any) {
-    // @ts-ignore
-    super.autoTable(options);
-  }
-}
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -69,121 +61,38 @@ function page() {
     }
   };
 
-  const handleDownloadPDF = (farmData: Farm) => {
-    const doc = new PDFWithAutoTable();
+  const handleDownloadPDF = async (farmData: Farm) => {
+    try {
+      const res = await fetch(`${BASE_URL}/api/generate-pdf/${farm_id}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/pdf",
+        },
+      });
 
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "normal");
+      if (!res.ok) {
+        throw new Error("Failed to fetch PDF");
+      }
 
-    const tableData = [
-      ["Farm id", farm_id ? `${farm_id}` : " - "],
-      ["Farmer Name", farmData.userId.name ? `${farmData.userId.name}` : " - "],
-      [
-        "Farmer Email",
-        farmData.userId.email ? `${farmData.userId.email}` : " - ",
-      ],
-      ["Farm name", farmData.farm ? `${farmData.farm}` : " - "],
-      ["Crop name", farmData.crop ? `${farmData.crop}` : " - "],
-      [
-        "Ploughing date",
-        farmData.ploughingDate
-          ? `${new Date(farmData.ploughingDate).toISOString().split("T")[0]}`
-          : " - ",
-      ],
-      [
-        "Weeding date",
-        farmData.weedingDate
-          ? `${new Date(farmData.weedingDate).toISOString().split("T")[0]}`
-          : " - ",
-      ],
-      [
-        "Sowing date",
-        farmData.sowingDate
-          ? `${new Date(farmData.sowingDate).toISOString().split("T")[0]}`
-          : " - ",
-      ],
-      [
-        "Flowering date",
-        farmData.floweringDate
-          ? `${new Date(farmData.floweringDate).toISOString().split("T")[0]}`
-          : " - ",
-      ],
-      [
-        "Pheromone Trap date",
-        farmData.pheromoneTrapDate
-          ? `${
-              new Date(farmData.pheromoneTrapDate).toISOString().split("T")[0]
-            }`
-          : " - ",
-      ],
-      [
-        "Lure change date",
-        farmData.lureChangeDate
-          ? `${new Date(farmData.lureChangeDate).toISOString().split("T")[0]}`
-          : " - ",
-      ],
-      [
-        "Irrigation date",
-        <table className="w-full border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            {farmData.irrigationDates.artificial.length > 0 && (
-              <th className="border border-gray-300 px-4 py-2">Artificial</th>
-            )}
-            {farmData.irrigationDates.natural.length > 0 && (
-              <th className="border border-gray-300 px-4 py-2">Natural</th>
-            )}
-          </tr>
-        </thead>
-        <tbody>
-          {(() => {
-            const maxLength = Math.max(
-              farmData.irrigationDates.artificial.length,
-              farmData.irrigationDates.natural.length
-            );
+      const arrayBuffer = await res.arrayBuffer();
 
-            return Array.from({ length: maxLength }).map((_, index) => (
-              <tr
-                key={index}
-                className="hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
-              >
-                {farmData.irrigationDates.artificial.length > 0 && (
-                  <td className="border border-gray-300 px-4 py-2">
-                    {farmData.irrigationDates.artificial[index]
-                      ? new Date(
-                          farmData.irrigationDates.artificial[index]
-                        )
-                          .toISOString()
-                          .split("T")[0]
-                      : ""}
-                  </td>
-                )}
-                {farmData.irrigationDates.natural.length > 0 && (
-                  <td className="border border-gray-300 px-4 py-2">
-                    {farmData.irrigationDates.natural[index]
-                      ? new Date(farmData.irrigationDates.natural[index])
-                          .toISOString()
-                          .split("T")[0]
-                      : ""}
-                  </td>
-                )}
-              </tr>
-            ));
-          })()}
-        </tbody>
-      </table>,
-      ],
-    ];
+      const blob = new Blob([arrayBuffer], { type: "application/pdf" });
 
-    doc.autoTable({
-      startY: 40,
-      head: [["Farm", "Details"]],
-      body: tableData,
-      headStyles: { fontSize: 18, fontStyle: "bold" },
-      styles: { fontSize: 15, fontStyle: "semibold" },
-    });
+      const url = window.URL.createObjectURL(blob);
 
-    doc.save(`Invoice_${farm_id}.pdf`);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = "farmer-details.pdf";
+      document.body.appendChild(a);
+      a.click();
+
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.log("Error: ", error);
+      alert(error);
+    }
   };
 
   useEffect(() => {

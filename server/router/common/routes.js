@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const parsePhoneNumberFromString = require('libphonenumber-js');
+const { jsPDF } = require('jspdf');
+require('jspdf-autotable');
 
 const { notifyAdmins } = require('../../functions/sendMail');
 const { sendOtpToEmail, verifyOtpForEmail, sendOtpToPhone, verifyOtpForPhone } = require('../../functions/otpService');
@@ -152,6 +154,67 @@ router.get('/api/certificate-farm-detail/:farm_id', async (req, res) => {
         return res.status(201).json(farm);
     } catch (error) {
         console.log("/api/certificate-farm-detail: ", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+router.get('/api/generate-pdf/:farm_id', async (req, res) => {
+    const { farm_id } = req.params;
+
+    try {
+        const farm = await Farmer.findOne({ _id: farm_id }).populate("userId", "name email");
+
+        if (!farm) {
+            return res.status(404).send('Farmer not found');
+        }
+
+        const doc = new jsPDF();
+
+        // Title
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(18);
+        doc.setTextColor(0, 0, 255);
+        doc.text(`Farm Details - ${farm.farm}`, 14, 20);
+
+        // Farm Information
+        doc.setFontSize(14);
+        doc.setTextColor(0, 0, 0);
+        doc.text(`Farm: ${farm.farm}`, 14, 40);
+        doc.text(`Crop: ${farm.crop}`, 14, 50);
+
+        // GeoFence Data
+        let yPosition = 60;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(12);
+        doc.text('GeoFence Data:', 14, yPosition);
+        farm.geoFenceData.forEach((data, index) => {
+            yPosition += 10;
+            doc.text(`Point ${index + 1}: ${data.lat}, ${data.lng}`, 14, yPosition);
+        });
+
+        // Fertilizer Applications Table
+        const tableData = farm.fertilizerApplications.map((item) => [
+            item.date.toLocaleDateString(),
+            item.volume,
+        ]);
+
+        doc.autoTable({
+            head: [['Date', 'Volume (L)']],
+            body: tableData,
+            startY: yPosition + 20,
+            theme: 'grid',
+            headStyles: { fillColor: [0, 0, 255] },
+            styles: { fontSize: 12 },
+        });
+
+        const pdfOutput = doc.output('arraybuffer');
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="farmer-details.pdf"');
+        return res.status(200).send(Buffer.from(pdfOutput));
+
+    } catch (error) {
+        console.log("/api/generate-pdf: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 });
