@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { Farm } from "@/utils/Types/interfaces";
 import dynamic from "next/dynamic";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+import "jspdf-autotable";
 import { CERTIFICATE_FARM_DETAIL } from "@/utils/Apis/api";
 import ListFarmApplicationsData from "@/app/components/farmer/components/ListFarmApplicationsData";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
@@ -17,11 +17,17 @@ const Map = dynamic(
   }
 );
 
+class PDFWithAutoTable extends jsPDF {
+  autoTable(options: any) {
+    // @ts-ignore
+    super.autoTable(options);
+  }
+}
+
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
 
   const searchParams = useSearchParams();
   const farm_id = searchParams.get("farm_id");
@@ -63,24 +69,121 @@ function page() {
     }
   };
 
-  const downloadPDF = async () => {
-    if (!contentRef.current) return;
+  const handleDownloadPDF = (farmData: Farm) => {
+    const doc = new PDFWithAutoTable();
 
-    const element = contentRef.current;
-    const canvas = await html2canvas(element, { scale: 2 });
-    const imgData = canvas.toDataURL("image/png");
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
 
-    const pdf = new jsPDF({
-      orientation: "portrait",
-      unit: "mm",
-      format: "a4",
+    const tableData = [
+      ["Farm id", farm_id ? `${farm_id}` : " - "],
+      ["Farmer Name", farmData.userId.name ? `${farmData.userId.name}` : " - "],
+      [
+        "Farmer Email",
+        farmData.userId.email ? `${farmData.userId.email}` : " - ",
+      ],
+      ["Farm name", farmData.farm ? `${farmData.farm}` : " - "],
+      ["Crop name", farmData.crop ? `${farmData.crop}` : " - "],
+      [
+        "Ploughing date",
+        farmData.ploughingDate
+          ? `${new Date(farmData.ploughingDate).toISOString().split("T")[0]}`
+          : " - ",
+      ],
+      [
+        "Weeding date",
+        farmData.weedingDate
+          ? `${new Date(farmData.weedingDate).toISOString().split("T")[0]}`
+          : " - ",
+      ],
+      [
+        "Sowing date",
+        farmData.sowingDate
+          ? `${new Date(farmData.sowingDate).toISOString().split("T")[0]}`
+          : " - ",
+      ],
+      [
+        "Flowering date",
+        farmData.floweringDate
+          ? `${new Date(farmData.floweringDate).toISOString().split("T")[0]}`
+          : " - ",
+      ],
+      [
+        "Pheromone Trap date",
+        farmData.pheromoneTrapDate
+          ? `${
+              new Date(farmData.pheromoneTrapDate).toISOString().split("T")[0]
+            }`
+          : " - ",
+      ],
+      [
+        "Lure change date",
+        farmData.lureChangeDate
+          ? `${new Date(farmData.lureChangeDate).toISOString().split("T")[0]}`
+          : " - ",
+      ],
+      [
+        "Irrigation date",
+        <table className="w-full border-collapse border border-gray-300">
+        <thead>
+          <tr className="bg-gray-100">
+            {farmData.irrigationDates.artificial.length > 0 && (
+              <th className="border border-gray-300 px-4 py-2">Artificial</th>
+            )}
+            {farmData.irrigationDates.natural.length > 0 && (
+              <th className="border border-gray-300 px-4 py-2">Natural</th>
+            )}
+          </tr>
+        </thead>
+        <tbody>
+          {(() => {
+            const maxLength = Math.max(
+              farmData.irrigationDates.artificial.length,
+              farmData.irrigationDates.natural.length
+            );
+
+            return Array.from({ length: maxLength }).map((_, index) => (
+              <tr
+                key={index}
+                className="hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
+              >
+                {farmData.irrigationDates.artificial.length > 0 && (
+                  <td className="border border-gray-300 px-4 py-2">
+                    {farmData.irrigationDates.artificial[index]
+                      ? new Date(
+                          farmData.irrigationDates.artificial[index]
+                        )
+                          .toISOString()
+                          .split("T")[0]
+                      : ""}
+                  </td>
+                )}
+                {farmData.irrigationDates.natural.length > 0 && (
+                  <td className="border border-gray-300 px-4 py-2">
+                    {farmData.irrigationDates.natural[index]
+                      ? new Date(farmData.irrigationDates.natural[index])
+                          .toISOString()
+                          .split("T")[0]
+                      : ""}
+                  </td>
+                )}
+              </tr>
+            ));
+          })()}
+        </tbody>
+      </table>,
+      ],
+    ];
+
+    doc.autoTable({
+      startY: 40,
+      head: [["Farm", "Details"]],
+      body: tableData,
+      headStyles: { fontSize: 18, fontStyle: "bold" },
+      styles: { fontSize: 15, fontStyle: "semibold" },
     });
 
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-    pdf.save("Farm_Details.pdf");
+    doc.save(`Invoice_${farm_id}.pdf`);
   };
 
   useEffect(() => {
@@ -93,7 +196,7 @@ function page() {
 
       {farmData && (
         <>
-          <div ref={contentRef} className="space-y-3 my-5">
+          <div className="space-y-3 my-5">
             <Map coordinates={farmData.geoFenceData} height="300px" />
 
             <div className="bg-cardBackground p-3 rounded-md">
@@ -314,12 +417,12 @@ function page() {
               </>
             )}
           </div>
-          {/* <button
-            onClick={downloadPDF}
+          <button
+            onClick={() => handleDownloadPDF(farmData)}
             className="mt-5 px-4 py-2 bg-blue-500 text-white rounded-md shadow-md"
           >
             Download PDF
-          </button> */}
+          </button>
         </>
       )}
     </div>
