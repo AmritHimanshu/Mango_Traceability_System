@@ -27,6 +27,7 @@
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
+    "@ag-media/react-pdf-table": "^2.0.1",
     "@types/leaflet": "^1.9.16",
     "@types/node": "^20",
     "@types/react": "^19",

@@ -1,11 +1,9 @@
-"use client";
-
 import React from "react";
 import { Document, Page, Text, View } from "@react-pdf/renderer";
 import { PDFViewer } from "@react-pdf/renderer";
-import mango_logo from "../../../../public/assets/Mango_logo.png";
 import { styles } from "./style";
 import { Farm } from "@/utils/Types/interfaces";
+import { Table, TD, TH, TR } from "@ag-media/react-pdf-table";
 
 function Certificate({
   farmData,
@@ -129,6 +127,78 @@ function Certificate({
                   </Text>
                 </Text>
               </View>
+            </View>
+
+            <View>
+              {((farmData?.irrigationDates.artificial &&
+                farmData.irrigationDates.artificial.length > 0) ||
+                (farmData?.irrigationDates.natural &&
+                  farmData.irrigationDates.natural.length > 0)) && (
+                <View style={{ marginTop: 10 }}>
+                  <Text style={{ fontWeight: "bold", marginBottom: 5 }}>
+                    Irrigation Dates:
+                  </Text>
+                  <Table style={{ width: "100%", border: "1px solid #ccc" }}>
+                    <TR>
+                      {farmData?.irrigationDates.artificial.length > 0 && (
+                        <TH style={{ border: "1px solid #ccc", padding: 5 }}>
+                          Artificial
+                        </TH>
+                      )}
+                      {farmData?.irrigationDates.natural.length > 0 && (
+                        <TH style={{ border: "1px solid #ccc", padding: 5 }}>
+                          Natural
+                        </TH>
+                      )}
+                    </TR>
+                    {(() => {
+                      const maxLength = Math.max(
+                        farmData?.irrigationDates.artificial.length || 0,
+                        farmData?.irrigationDates.natural.length || 0
+                      );
+
+                      return Array.from({ length: maxLength }).map(
+                        (_, index) => (
+                          <TR key={index}>
+                            {farmData?.irrigationDates.artificial.length > 0 && (
+                              <TD
+                                style={{
+                                  border: "1px solid #ccc",
+                                  padding: 5,
+                                }}
+                              >
+                                {farmData.irrigationDates.artificial[index]
+                                  ? new Date(
+                                      farmData.irrigationDates.artificial[index]
+                                    )
+                                      .toISOString()
+                                      .split("T")[0]
+                                  : ""}
+                              </TD>
+                            )}
+                            {farmData?.irrigationDates.natural.length > 0 && (
+                              <TD
+                                style={{
+                                  border: "1px solid #ccc",
+                                  padding: 5,
+                                }}
+                              >
+                                {farmData.irrigationDates.natural[index]
+                                  ? new Date(
+                                      farmData.irrigationDates.natural[index]
+                                    )
+                                      .toISOString()
+                                      .split("T")[0]
+                                  : ""}
+                              </TD>
+                            )}
+                          </TR>
+                        )
+                      );
+                    })()}
+                  </Table>
+                </View>
+              )}
             </View>
           </Page>
         </Document>
