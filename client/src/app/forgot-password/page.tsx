@@ -1,17 +1,25 @@
 "use client";
 
 import React, { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
-import { FORGOT_SEND_OTP_EMAIL, VERIFY_OTP_EMAIL } from "@/utils/Apis/api";
+import {
+  FORGOT_SEND_OTP_EMAIL,
+  UPDATE_PASSWORD,
+  VERIFY_OTP_EMAIL,
+} from "@/utils/Apis/api";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { LOGIN } from "@/utils/Paths/paths";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
+
+  const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -66,6 +74,10 @@ function page() {
       return;
     }
 
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
     try {
       const res = await fetch(`${BASE_URL}/${VERIFY_OTP_EMAIL}`, {
         method: "POST",
@@ -87,6 +99,51 @@ function page() {
     } catch (error) {
       console.log("Error: ", error);
       alert(error);
+    }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
+  };
+
+  const changePassword = async () => {
+    if (!password || !confirm_password) {
+      return alert("Fill all the fields");
+    }
+
+    if (password !== confirm_password) {
+      return alert("Passwords not matched");
+    }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
+    try {
+      const res = await fetch(`${BASE_URL}/${UPDATE_PASSWORD}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password, confirm_password }),
+      });
+
+      const data = await res.json();
+
+      if (res.status !== 201) {
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      alert(data.message);
+      router.push(LOGIN);
+    } catch (error) {
+      console.log("Error: ", error);
+      alert(error);
+    }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
     }
   };
 
@@ -205,7 +262,7 @@ function page() {
 
             <button
               className="btn bg-green-600 text-white"
-              onClick={() => verifyOtpToEmail()}
+              onClick={() => changePassword()}
             >
               Change password
             </button>

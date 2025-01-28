@@ -164,6 +164,33 @@ router.post("/api/verify-otp-phone", (req, res) => {
     }
 });
 
+router.post("/api/update-password", async (req, res) => {
+    const { email, password, confirm_password } = req.body;
+
+    if (!password || !confirm_password) {
+        return res.status(400).json({ error: "Empty fields" });
+    }
+
+    if (password !== confirm_password) {
+        return res.status(401).json({ error: "Passwords not matched" });
+    }
+
+    try {
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        const user = await User.findOneAndUpdate({ email: email }, { password: hashedPassword }, { new: true });
+
+        if (!user) {
+            return res.status(400).json({ error: "Email not found" });
+        }
+
+        return res.status(201).json({ message: "Password successfully updated" });
+    } catch (error) {
+        console.log("/api/update-password: ", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 router.get('/api/certificate-farm-detail/:farm_id', async (req, res) => {
     const { farm_id } = req.params;
 
