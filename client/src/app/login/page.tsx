@@ -8,6 +8,7 @@ import { useAppDispatch } from "@/store/store";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
 import { LOGOUT_USER, SIGNIN_USER } from "@/utils/Apis/api";
+import { FORGOT_PASSWORD, REGISTER } from "@/utils/Paths/paths";
 
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -160,8 +161,15 @@ function page() {
         </form>
 
         <div className="w-[100%] mt-5">
+          Forgot password?{" "}
+          <Link href={FORGOT_PASSWORD}>
+              <span className="text-blue-600 font-bold">click here</span>
+          </Link>
+        </div>
+
+        <div className="w-[100%] mt-5">
           Don't have an account?{" "}
-          <Link href="/register">
+          <Link href={REGISTER}>
             <span className="text-green-600 font-bold">Sign up.</span>
           </Link>
         </div>

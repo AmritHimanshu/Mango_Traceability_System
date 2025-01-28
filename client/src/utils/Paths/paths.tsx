@@ -12,6 +12,7 @@ export const CREATE_FARM = "/farmer/farms/create-new-farm";
 export const OVERVIEW = "/";
 export const LOGIN = "/login";
 export const REGISTER = "/register";
+export const FORGOT_PASSWORD = "/forgot-password";
 export const NOTIFICATIONS = "/notifications";
 export const PROFILE = "/profile";
 export const LOGOUT = "/logout";
