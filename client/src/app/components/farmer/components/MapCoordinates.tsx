@@ -9,6 +9,7 @@ import {
   TileLayer,
   useMap,
   Polyline,
+  Tooltip,
 } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -26,7 +27,11 @@ const customIcon = new L.Icon({
   shadowSize: [41, 41], // Shadow size
 });
 
-function FitBounds({ coordinates }: { coordinates: { lat: number; lng: number }[] }) {
+function FitBounds({
+  coordinates,
+}: {
+  coordinates: { lat: number; lng: number }[];
+}) {
   const map = useMap();
 
   useEffect(() => {
@@ -73,6 +78,10 @@ function MapCoordinates({ coordinates, height }: MapCoordinatesProps) {
             <Popup>
               Coordinates: {coord.lat}, {coord.lng}
             </Popup>
+
+            <Tooltip direction="top" offset={[0, -20]} permanent={false}>
+              Lat: {coord.lat.toFixed(6)}, Lng: {coord.lng.toFixed(6)}
+            </Tooltip>
           </Marker>
         ))}
 
