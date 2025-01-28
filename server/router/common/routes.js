@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const parsePhoneNumberFromString = require('libphonenumber-js');
-const { jsPDF } = require('jspdf');
-require('jspdf-autotable');
 
 const { notifyAdmins } = require('../../functions/sendMail');
 const { sendOtpToEmail, verifyOtpForEmail, sendOtpToPhone, verifyOtpForPhone } = require('../../functions/otpService');
