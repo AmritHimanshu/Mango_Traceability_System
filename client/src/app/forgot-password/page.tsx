@@ -23,6 +23,10 @@ function page() {
       return;
     }
 
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
     try {
       const res = await fetch(`${BASE_URL}/${FORGOT_SEND_OTP_EMAIL}`, {
         method: "POST",
@@ -45,6 +49,10 @@ function page() {
       console.log("Error: ", error);
       alert(error);
       setIsEmailOtpSent(false);
+    }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
     }
   };
 
@@ -82,16 +90,20 @@ function page() {
     <div className="flex flex-col items-center justify-center h-[calc(100vh-56px)]">
       <CustomLoadingBar ref={loadingBarRef} />
 
-      {!isEmailOtpSent && (
+      {!isEmailOtpSent && !isOtpVerified && (
         <div className="mb-10 text-[18px]">Reset your Password</div>
       )}
 
-      {isEmailOtpSent && (
+      {isEmailOtpSent && !isOtpVerified && (
         <div className="mb-10 text-[18px]">OTP Verification</div>
       )}
 
+      {isEmailOtpSent && isOtpVerified && (
+        <div className="mb-10 text-[18px]">Enter new password</div>
+      )}
+
       <div className="p-5 w-[300px] bg-cardBackground bg-opacity-90 rounded-md shadow-md">
-        {!isEmailOtpSent && (
+        {!isEmailOtpSent && !isOtpVerified && (
           <div className="flex items-start flex-col space-y-5">
             <label htmlFor="email">Enter your email:</label>
             <div className="flex justify-between input-tag">
@@ -116,7 +128,7 @@ function page() {
           </div>
         )}
 
-        {isEmailOtpSent && (
+        {isEmailOtpSent && !isOtpVerified && (
           <div className="flex items-start flex-col space-y-5">
             <label htmlFor="otp">Enter otp:</label>
             <div className="flex justify-between input-tag">
@@ -125,7 +137,6 @@ function page() {
                 id="otp"
                 name="otp"
                 className="outline-none w-full bg-transparent"
-                placeholder="John@xyz.com"
                 value={otp}
                 required
                 onChange={(e) => setOtp(e.target.value)}
@@ -136,7 +147,7 @@ function page() {
               className="btn bg-green-600 text-white"
               onClick={() => verifyOtpToEmail()}
             >
-              Verify email
+              Submit
             </button>
           </div>
         )}
