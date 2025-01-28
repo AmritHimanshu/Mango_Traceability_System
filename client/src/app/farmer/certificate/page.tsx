@@ -31,7 +31,7 @@ function page() {
   const farm_id = searchParams.get("farm_id");
 
   const [farmData, setFarmData] = useState<Farm>();
-  const [isPDF, setIsPDF] = useState(true);
+  const [isPDF, setIsPDF] = useState(false);
 
   const fetchFarmData = async () => {
     if (loadingBarRef.current) {
