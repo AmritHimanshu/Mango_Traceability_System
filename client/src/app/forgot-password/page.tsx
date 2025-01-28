@@ -5,6 +5,9 @@ import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
 import { FORGOT_SEND_OTP_EMAIL, VERIFY_OTP_EMAIL } from "@/utils/Apis/api";
 
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -13,9 +16,10 @@ function page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm_password, setConfirmPassword] = useState("");
+  const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   const [otp, setOtp] = useState("");
-  const [isEmailOtpSent, setIsEmailOtpSent] = useState(false);
-  const [isOtpVerified, setIsOtpVerified] = useState(false);
+  const [isEmailOtpSent, setIsEmailOtpSent] = useState(true);
+  const [isOtpVerified, setIsOtpVerified] = useState(true);
 
   const sendOtpToEmail = async () => {
     if (!email) {
@@ -150,6 +154,62 @@ function page() {
               Submit
             </button>
           </div>
+        )}
+
+        {isEmailOtpSent && isOtpVerified && (
+          <>
+            <div className="flex items-start flex-col mb-5">
+              <label htmlFor="password">
+                Password <span className="text-red-600">*</span>
+              </label>
+              <div className="flex justify-between input-tag">
+                <input
+                  type={`${isVisiblePassword ? "text" : "password"}`}
+                  id="password"
+                  name="password"
+                  className="outline-none w-full bg-transparent"
+                  placeholder="Enter your password"
+                  value={password}
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {isVisiblePassword ? (
+                  <VisibilityIcon
+                    onClick={() => setIsVisiblePassword(!isVisiblePassword)}
+                  />
+                ) : (
+                  <VisibilityOffIcon
+                    onClick={() => setIsVisiblePassword(!isVisiblePassword)}
+                  />
+                )}
+              </div>
+            </div>
+
+            <div className="flex items-start flex-col mb-5">
+              <label htmlFor="cpassword">
+                Confirm Password <span className="text-red-600">*</span>
+              </label>
+              <div className="flex justify-between input-tag">
+                <input
+                  type="password"
+                  id="cpassword"
+                  name="confirm_password"
+                  className="outline-none w-full bg-transparent"
+                  placeholder="Confirm your password"
+                  value={confirm_password}
+                  required
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <button
+              className="btn bg-green-600 text-white"
+              onClick={() => verifyOtpToEmail()}
+            >
+              Change password
+            </button>
+          </>
         )}
       </div>
     </div>
