@@ -341,7 +341,7 @@ function page() {
           </button>
         </>
       ) : (
-        <Certificate />
+        <Certificate farmData={farmData} farm_id={farm_id}/>
       )}
     </div>
   );
