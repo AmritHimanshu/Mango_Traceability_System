@@ -21,6 +21,7 @@ const Map = dynamic(
     ssr: false,
   }
 );
+import CloseIcon from "@mui/icons-material/Close";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -68,40 +69,6 @@ function page() {
     }
   };
 
-  /*const handleDownloadPDF = async (farmData: Farm) => {
-    try {
-      const res = await fetch(`${BASE_URL}/api/generate-pdf/${farm_id}`, {
-        method: "GET",
-        headers: {
-          Accept: "application/pdf",
-        },
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to fetch PDF");
-      }
-
-      const arrayBuffer = await res.arrayBuffer();
-
-      const blob = new Blob([arrayBuffer], { type: "application/pdf" });
-
-      const url = window.URL.createObjectURL(blob);
-
-      const a = document.createElement("a");
-      a.style.display = "none";
-      a.href = url;
-      a.download = "farmer-details.pdf";
-      document.body.appendChild(a);
-      a.click();
-
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-    } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
-    }
-  };*/
-
   useEffect(() => {
     fetchFarmData();
   }, []);
@@ -112,7 +79,7 @@ function page() {
 
       {farmData && !isPDF ? (
         <>
-          <div className="space-y-3 my-5">
+          <div className="space-y-3 my-5 w-[600px] m-auto">
             <Map coordinates={farmData.geoFenceData} height="300px" />
 
             <div className="bg-cardBackground p-3 rounded-md">
@@ -332,16 +299,22 @@ function page() {
                 </div>
               </>
             )}
+
+            <button
+              onClick={() => setIsPDF(true)}
+              className="mt-5 px-4 py-2 bg-blue-500 text-white rounded-md shadow-md"
+            >
+              Download PDF
+            </button>
           </div>
-          <button
-            onClick={() => setIsPDF(true)}
-            className="mt-5 px-4 py-2 bg-blue-500 text-white rounded-md shadow-md"
-          >
-            Download PDF
-          </button>
         </>
       ) : (
-        <Certificate farmData={farmData} farm_id={farm_id}/>
+        <>
+          <div className="text-right">
+            <CloseIcon onClick={() => setIsPDF(false)} />
+          </div>
+          <Certificate farmData={farmData} farm_id={farm_id} />
+        </>
       )}
     </div>
   );

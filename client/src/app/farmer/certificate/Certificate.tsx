@@ -13,7 +13,6 @@ function Certificate({
   farmData: Farm | undefined;
   farm_id: string | null;
 }) {
-  console.log(farmData);
 
   return (
     <div className="w-full h-[750px]">
