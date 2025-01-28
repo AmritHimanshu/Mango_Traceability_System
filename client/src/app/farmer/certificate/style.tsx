@@ -33,4 +33,11 @@ export const styles = StyleSheet.create({
     fontSize: 13,
     textAlign: 'center',
   },
+  table: {
+    textAlign: 'center',
+  },
+  tableHeader: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  }
 });

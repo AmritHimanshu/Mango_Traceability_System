@@ -4,6 +4,7 @@ import { PDFViewer } from "@react-pdf/renderer";
 import { styles } from "./style";
 import { Farm } from "@/utils/Types/interfaces";
 import { Table, TD, TH, TR } from "@ag-media/react-pdf-table";
+import ListFarmCertificate from "@/app/components/farmer/components/ListFarmCertificate";
 
 function Certificate({
   farmData,
@@ -12,6 +13,8 @@ function Certificate({
   farmData: Farm | undefined;
   farm_id: string | null;
 }) {
+  console.log(farmData);
+
   return (
     <div className="w-full h-[750px]">
       <PDFViewer
@@ -138,17 +141,17 @@ function Certificate({
                   <Text style={{ fontWeight: "bold", marginBottom: 5 }}>
                     Irrigation Dates:
                   </Text>
-                  <Table style={{ width: "100%", border: "1px solid #ccc" }}>
-                    <TR>
+                  <Table style={styles.table}>
+                    <TR style={styles.textBold}>
                       {farmData?.irrigationDates.artificial.length > 0 && (
-                        <TH style={{ border: "1px solid #ccc", padding: 5 }}>
-                          Artificial
-                        </TH>
+                        <TD style={{ border: "1px solid #ccc", padding: 5 }}>
+                          <Text>Artificial</Text>
+                        </TD>
                       )}
                       {farmData?.irrigationDates.natural.length > 0 && (
-                        <TH style={{ border: "1px solid #ccc", padding: 5 }}>
-                          Natural
-                        </TH>
+                        <TD style={{ border: "1px solid #ccc", padding: 5 }}>
+                          <Text>Natural</Text>
+                        </TD>
                       )}
                     </TR>
                     {(() => {
@@ -160,7 +163,8 @@ function Certificate({
                       return Array.from({ length: maxLength }).map(
                         (_, index) => (
                           <TR key={index}>
-                            {farmData?.irrigationDates.artificial.length > 0 && (
+                            {farmData?.irrigationDates.artificial.length >
+                              0 && (
                               <TD
                                 style={{
                                   border: "1px solid #ccc",
@@ -173,7 +177,7 @@ function Certificate({
                                     )
                                       .toISOString()
                                       .split("T")[0]
-                                  : ""}
+                                  : "-"}
                               </TD>
                             )}
                             {farmData?.irrigationDates.natural.length > 0 && (
@@ -189,7 +193,7 @@ function Certificate({
                                     )
                                       .toISOString()
                                       .split("T")[0]
-                                  : ""}
+                                  : "-"}
                               </TD>
                             )}
                           </TR>
@@ -198,6 +202,98 @@ function Certificate({
                     })()}
                   </Table>
                 </View>
+              )}
+            </View>
+
+            <View>
+              {farmData?.fertilizerApplications &&
+                farmData.fertilizerApplications.length > 0 && (
+                  <View style={{ marginTop: 20 }}>
+                    <Text style={{ fontWeight: "bold", marginBottom: 5 }}>
+                      Fertilizer Application:
+                    </Text>
+                    <ListFarmCertificate
+                      data={farmData.fertilizerApplications}
+                      columns={[
+                        { header: "Date", key: "date" },
+                        { header: "Volume (L)", key: "volume" },
+                      ]}
+                    />
+                  </View>
+                )}
+            </View>
+
+            <View>
+              {farmData?.pesticideApplications &&
+                farmData.pesticideApplications.length > 0 && (
+                  <View style={{ marginTop: 20 }}>
+                    <Text style={{ fontWeight: "bold", marginBottom: 5 }}>
+                      Pesticide Application:
+                    </Text>
+                    <ListFarmCertificate
+                      data={farmData.pesticideApplications}
+                      columns={[
+                        { header: "Date", key: "date" },
+                        { header: "Volume (L)", key: "volume" },
+                      ]}
+                    />
+                  </View>
+                )}
+            </View>
+
+            <View>
+              {farmData?.bagging && farmData.bagging.length > 0 && (
+                <View style={{ marginTop: 20 }}>
+                  <Text style={{ fontWeight: "bold", marginBottom: 5 }}>
+                    Bagging:
+                  </Text>
+                  <ListFarmCertificate
+                    data={farmData.bagging}
+                    columns={[
+                      { header: "Date", key: "date" },
+                      { header: "Quantity", key: "quantity" },
+                    ]}
+                  />
+                </View>
+              )}
+            </View>
+
+            <View>
+              {farmData?.specialCare && farmData.specialCare.length > 0 && (
+                <View style={{ marginTop: 20 }}>
+                  <Text style={{ fontWeight: "bold", marginBottom: 5 }}>
+                    Special care:
+                  </Text>
+                  <ListFarmCertificate
+                    data={farmData.specialCare}
+                    columns={[
+                      { header: "Date", key: "date" },
+                      { header: "Name", key: "name" },
+                    ]}
+                  />
+                </View>
+              )}
+            </View>
+
+            <View>
+              {farmData?.harvest && (
+                <Text>
+                  Harvest:{" "}
+                  <Text>
+                    <Text>Date: </Text>
+                    <Text>
+                      {farmData?.harvest
+                        ? new Date(farmData.harvest.date)
+                            .toISOString()
+                            .split("T")[0]
+                        : " - "}
+                    </Text>
+                  </Text>
+                  <Text>
+                    <Text>Yield: </Text>
+                    <Text>{farmData?.harvest.yield}</Text>
+                  </Text>
+                </Text>
               )}
             </View>
           </Page>
