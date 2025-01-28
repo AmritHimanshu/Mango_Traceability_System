@@ -9,13 +9,18 @@ import dynamic from "next/dynamic";
 import { CERTIFICATE_FARM_DETAIL } from "@/utils/Apis/api";
 import ListFarmApplicationsData from "@/app/components/farmer/components/ListFarmApplicationsData";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
+const Certificate = dynamic(
+  () => import("@/app/farmer/certificate/Certificate"),
+  {
+    ssr: false,
+  }
+);
 const Map = dynamic(
   () => import("@/app/components/farmer/components/MapCoordinates"),
   {
     ssr: false,
   }
 );
-
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -26,6 +31,7 @@ function page() {
   const farm_id = searchParams.get("farm_id");
 
   const [farmData, setFarmData] = useState<Farm>();
+  const [isPDF, setIsPDF] = useState(true);
 
   const fetchFarmData = async () => {
     if (loadingBarRef.current) {
@@ -62,7 +68,7 @@ function page() {
     }
   };
 
-  const handleDownloadPDF = async (farmData: Farm) => {
+  /*const handleDownloadPDF = async (farmData: Farm) => {
     try {
       const res = await fetch(`${BASE_URL}/api/generate-pdf/${farm_id}`, {
         method: "GET",
@@ -94,7 +100,7 @@ function page() {
       console.log("Error: ", error);
       alert(error);
     }
-  };
+  };*/
 
   useEffect(() => {
     fetchFarmData();
@@ -104,7 +110,7 @@ function page() {
     <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)] relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
-      {farmData && (
+      {farmData && !isPDF ? (
         <>
           <div className="space-y-3 my-5">
             <Map coordinates={farmData.geoFenceData} height="300px" />
@@ -328,12 +334,14 @@ function page() {
             )}
           </div>
           <button
-            onClick={() => handleDownloadPDF(farmData)}
+            onClick={() => setIsPDF(true)}
             className="mt-5 px-4 py-2 bg-blue-500 text-white rounded-md shadow-md"
           >
             Download PDF
           </button>
         </>
+      ) : (
+        <Certificate />
       )}
     </div>
   );
