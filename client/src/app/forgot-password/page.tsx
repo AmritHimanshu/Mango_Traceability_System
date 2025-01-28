@@ -15,15 +15,13 @@ function page() {
   const [confirm_password, setConfirmPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [isEmailOtpSent, setIsEmailOtpSent] = useState(false);
-  const [flagEmail, setFlagEmail] = useState(false);
+  const [isOtpVerified, setIsOtpVerified] = useState(false);
 
   const sendOtpToEmail = async () => {
     if (!email) {
       alert("Enter your email");
       return;
     }
-
-    setFlagEmail(true);
 
     try {
       const res = await fetch(`${BASE_URL}/${FORGOT_SEND_OTP_EMAIL}`, {
@@ -48,8 +46,6 @@ function page() {
       alert(error);
       setIsEmailOtpSent(false);
     }
-
-    setFlagEmail(false);
   };
 
   const verifyOtpToEmail = async () => {
@@ -75,6 +71,7 @@ function page() {
       }
 
       alert(data.message);
+      setIsOtpVerified(true);
     } catch (error) {
       console.log("Error: ", error);
       alert(error);
