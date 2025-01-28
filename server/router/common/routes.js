@@ -99,6 +99,26 @@ router.post("/api/send-otp-email", async (req, res) => {
     }
 });
 
+router.post("/api/forgot-password/send-otp-email", async (req, res) => {
+    const { email } = req.body;
+
+    if (!email) {
+        return res.status(400).json({ error: "Email is required." });
+    }
+
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ error: "Email not found" });
+        }
+
+        await sendOtpToEmail(email);
+        res.status(201).json({ message: "OTP sent successfully." });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to send OTP." });
+    }
+});
+
 router.post("/api/verify-otp-email", (req, res) => {
     const { email, otp } = req.body;
 
