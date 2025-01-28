@@ -18,8 +18,8 @@ function page() {
   const [confirm_password, setConfirmPassword] = useState("");
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   const [otp, setOtp] = useState("");
-  const [isEmailOtpSent, setIsEmailOtpSent] = useState(true);
-  const [isOtpVerified, setIsOtpVerified] = useState(true);
+  const [isEmailOtpSent, setIsEmailOtpSent] = useState(false);
+  const [isOtpVerified, setIsOtpVerified] = useState(false);
 
   const sendOtpToEmail = async () => {
     if (!email) {
