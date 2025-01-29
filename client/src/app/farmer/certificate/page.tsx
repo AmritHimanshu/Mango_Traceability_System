@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { Farm } from "@/utils/Types/interfaces";
 import dynamic from "next/dynamic";
 import { CERTIFICATE_FARM_DETAIL } from "@/utils/Apis/api";
+import { isMobile } from "@/utils/IsMobile/isMobile";
 import ListFarmApplicationsData from "@/app/components/farmer/components/ListFarmApplicationsData";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 const Certificate = dynamic(
@@ -71,6 +72,14 @@ function page() {
   useEffect(() => {
     fetchFarmData();
   }, []);
+
+  const handleDownload = () => {
+    if (isMobile()) {
+      setIsPDF(true);
+    } else {
+      setIsPDF(true);
+    }
+  };
 
   return (
     <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)] relative">
@@ -305,7 +314,7 @@ function page() {
             )}
 
             <button
-              onClick={() => setIsPDF(true)}
+              onClick={handleDownload}
               className="mt-5 px-4 py-2 bg-blue-500 text-white rounded-md shadow-md"
             >
               Download PDF
