@@ -336,26 +336,44 @@ function page() {
               </div>
             )}
 
-            {/* {(farm.weedingDate || edit) && (
+            {(farm.weedingDate.length > 0 || edit) && (
               <div className="flex items-start flex-col">
-                <label htmlFor="weedingDate" className="font-bold">
-                  Weeding Date:
-                </label>
-                <input
-                  type="date"
-                  id="weedingDate"
-                  name="weedingDate"
-                  value={
-                    farm.weedingDate
-                      ? new Date(farm.weedingDate).toISOString().split("T")[0]
-                      : ""
-                  }
-                  className="input-tag"
-                  disabled={!(edit === "true")}
-                  onChange={(e) => handleOnChange(e)}
-                />
+                <div className="font-bold">Weeding Date:</div>
+                {edit ? (
+                  <>
+                    <label htmlFor="weedingDate" className="font-bold">
+                      Date:
+                    </label>
+                    <input
+                      type="date"
+                      id="weedingDate"
+                      name="weedingDate"
+                      value={weedingDate}
+                      className="input-tag"
+                      disabled={!(edit === "true")}
+                      onChange={(e) => setWeedingDate(e.target.value)}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <table>
+                      <thead>
+                        <tr>
+                          <td>Date</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          {farm.weedingDate.map(weedingDate, index)=>(
+                            <></>
+                          )}
+                        </tr>
+                      </tbody>
+                    </table>
+                  </>
+                )}
               </div>
-            )} */}
+            )}
 
             {(farm.sowingDate || edit) && (
               <div className="flex items-start flex-col">
