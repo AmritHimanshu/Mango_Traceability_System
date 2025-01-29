@@ -87,6 +87,11 @@ function page() {
         <div className="space-y-3 my-5">
           <Map coordinates={farmData.geoFenceData} height="300px" />
 
+          <div className="flex items-center space-x-3">
+            <div className="font-bold">Farm Area: </div>
+            <div>{farmData.area.toFixed(2)} sq. m</div>
+          </div>
+
           <div className="bg-cardBackground p-3 rounded-md">
             <div className="flex items-center space-x-3">
               <div className="font-bold">Farmer Name: </div>

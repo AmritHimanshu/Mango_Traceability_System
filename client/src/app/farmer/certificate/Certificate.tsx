@@ -43,10 +43,13 @@ function Certificate({
                   Farm Name: <Text>{farmData?.farm}</Text>
                 </Text>
                 <Text style={[styles.farmId, styles.spaceY, styles.textBold]}>
-                  {farm_id}
+                  Farm ID: <Text>{farm_id}</Text>
                 </Text>
               </View>
               <View>
+                <Text>
+                  Farm Area: <Text>{farmData?.area.toFixed(2)} sq. m</Text>
+                </Text>
                 <Text>
                   Crop Name: <Text>{farmData?.crop}</Text>
                 </Text>
