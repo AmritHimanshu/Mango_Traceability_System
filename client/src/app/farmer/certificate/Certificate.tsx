@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
-import { Document, Page, pdf, Text, View } from "@react-pdf/renderer";
+import { Document, pdf } from "@react-pdf/renderer";
 import { PDFViewer } from "@react-pdf/renderer";
-import { styles } from "./style";
 import { Farm } from "@/utils/Types/interfaces";
-import { Table, TD, TH, TR } from "@ag-media/react-pdf-table";
 import { saveAs } from "file-saver";
 import { isMobile } from "@/utils/IsMobile/isMobile";
-import ListFarmCertificate from "@/app/components/farmer/components/ListFarmCertificate";
 import PDFContent from "./PDFContent";
 
 function Certificate({
