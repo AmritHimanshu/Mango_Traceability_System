@@ -36,7 +36,7 @@ function page() {
     crop: "",
     geoFenceData: [{ lat: 0, lng: 0 }],
     ploughingDate: "",
-    weedingDate: "",
+    weedingDate: [],
     sowingDate: "",
     floweringDate: "",
     pheromoneTrapDate: "",
@@ -56,6 +56,8 @@ function page() {
 
   const [artificial, setArtificial] = useState("");
   const [natural, setNatural] = useState("");
+
+  const [weedingDate, setWeedingDate] = useState("");
   const [fertilizerApplications, setFertilizerApplications] = useState({
     date: "",
     volume: "0",
@@ -120,7 +122,7 @@ function page() {
         crop: data.crop || "",
         geoFenceData: data.geoFenceData || [{ lat: 0, lng: 0 }],
         ploughingDate: data.ploughingDate || "",
-        weedingDate: data.weedingDate || "",
+        weedingDate: data.weedingDate || [],
         sowingDate: data.sowingDate || "",
         floweringDate: data.floweringDate || "",
         pheromoneTrapDate: data.pheromoneTrapDate || "",
@@ -334,7 +336,7 @@ function page() {
               </div>
             )}
 
-            {(farm.weedingDate || edit) && (
+            {/* {(farm.weedingDate || edit) && (
               <div className="flex items-start flex-col">
                 <label htmlFor="weedingDate" className="font-bold">
                   Weeding Date:
@@ -353,7 +355,7 @@ function page() {
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
-            )}
+            )} */}
 
             {(farm.sowingDate || edit) && (
               <div className="flex items-start flex-col">

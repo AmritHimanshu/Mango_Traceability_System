@@ -39,9 +39,11 @@ const farmerSchema = new mongoose.Schema(
         ploughingDate: {
             type: Date
         },
-        weedingDate: {
-            type: Date
-        },
+        weedingDate: [
+            {
+                type: Date
+            },
+        ],
         sowingDate: {
             type: Date
         },

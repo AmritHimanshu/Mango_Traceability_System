@@ -60,7 +60,7 @@ export type Farm = {
   area: number;
   crop: string;
   ploughingDate: string;
-  weedingDate: string;
+  weedingDate: string[];
   sowingDate: string;
   floweringDate: string;
   pheromoneTrapDate: string;
