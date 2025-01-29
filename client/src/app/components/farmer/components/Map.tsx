@@ -52,6 +52,7 @@ function Map({ submitForm }: MapProps) {
   const handleReset = () => setCoordinates([]);
 
   const handleSubmit = () => {
+    coordinates.push(coordinates[0]);
     submitForm(coordinates);
   };
 

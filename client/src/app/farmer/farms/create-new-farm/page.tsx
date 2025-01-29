@@ -11,6 +11,7 @@ import { useAppSelector } from "@/store/store";
 const Map = dynamic(() => import("@/app/components/farmer/components/Map"), {
   ssr: false,
 });
+import { polygon, area } from '@turf/turf';
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -28,6 +29,19 @@ function page() {
   const [farmName, setFarmName] = useState("");
   const [cropName, setCropName] = useState("");
 
+  const calculateAreaOfLand = (coordinates: [number, number][]) => {
+    if (coordinates.length < 3) {
+      alert("Select atlead three coordinates");
+      return null;
+    }
+
+    const poly = polygon([coordinates]);
+
+    const areaInSquareMeters = area(poly);
+
+    return areaInSquareMeters;
+  };
+
   const handlesubmitForm = async (coordinates: [number, number][]) => {
     if (!farmName || !cropName) {
       return alert("Fill all the form");
@@ -38,6 +52,13 @@ function page() {
 
     if (loadingBarRef.current) {
       loadingBarRef.current.continuousStart();
+    }
+
+    const area = calculateAreaOfLand(coordinates);
+
+    if (!area) {
+      alert("Select atlead three coordinates");
+      return;
     }
 
     try {
@@ -51,6 +72,7 @@ function page() {
           farmName,
           cropName,
           coordinates,
+          area,
         }),
       });
 

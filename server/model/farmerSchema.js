@@ -28,6 +28,10 @@ const farmerSchema = new mongoose.Schema(
                 }
             }
         ],
+        area: {
+            type: Number,
+            required: true
+        },
         crop: {
             type: String,
             required: true
