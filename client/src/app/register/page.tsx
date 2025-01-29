@@ -86,6 +86,12 @@ function page() {
 
   useEffect(() => {
     logOut();
+
+    const welcomeShown = localStorage.getItem("welcomeShown");
+
+    if (welcomeShown) {
+      localStorage.clear();
+    }
   }, []);
 
   const validatePhoneNumber = (phoneNumber: string) => {

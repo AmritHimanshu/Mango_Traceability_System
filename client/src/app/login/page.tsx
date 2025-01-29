@@ -54,6 +54,12 @@ function page() {
 
   useEffect(() => {
     logOut();
+
+    const welcomeShown = localStorage.getItem("welcomeShown");
+
+    if (welcomeShown) {
+      localStorage.clear();
+    }
   }, []);
 
   const handleFormData = async (e: React.FormEvent<HTMLFormElement>) => {
