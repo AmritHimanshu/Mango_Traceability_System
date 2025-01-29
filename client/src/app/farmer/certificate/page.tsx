@@ -1,5 +1,4 @@
 "use client";
-// https://www.youtube.com/watch?v=nD5SAX7EJAc
 
 import React, { useEffect, useRef, useState } from "react";
 import { LoadingBarRef } from "react-top-loading-bar";
