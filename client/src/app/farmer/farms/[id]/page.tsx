@@ -655,7 +655,7 @@ function page() {
                 <div className="font-bold">Bagging:</div>
                 {edit ? (
                   <>
-                    <label htmlFor="bagginDate">Date:</label>
+                    <label htmlFor="baggingDate">Date:</label>
                     <input
                       type="date"
                       id="baggingDate"
@@ -670,7 +670,7 @@ function page() {
                         }))
                       }
                     />
-                    <label htmlFor="bagginQuantity">Quantity:</label>
+                    <label htmlFor="baggingQuantity">Quantity:</label>
                     <input
                       type="number"
                       id="baggingQuantity"
