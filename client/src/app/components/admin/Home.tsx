@@ -15,14 +15,18 @@ import {
 import Mango_tree from "../../../../public/assets/Mango_tree.png";
 import HomeCard from "./components/HomeCard";
 import PendingUserCard from "./components/PendingUserCard";
+import { useAppSelector } from "@/store/store";
 
 function Home() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const userState = useAppSelector((state) => state.user.userState);
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
 
   const router = useRouter();
 
+  const [showWelcome, setShowWelcome] = useState(false);
   const [noOfVerifiedManagers, setNoOfVerifiedManagers] = useState(0);
   const [noOfVerifiedFarmers, setNoOfVerifiedFarmers] = useState(0);
   const [noOfPendingRequests, setNoOfPendingRequests] = useState(0);
@@ -100,11 +104,6 @@ function Home() {
     }
   };
 
-  useEffect(() => {
-    fetchNoOfUsers();
-    fetchPendingRequests();
-  }, []);
-
   const authenticateReq = async (id: string, role: string, status: boolean) => {
     if (!role && status === true) {
       alert("Please assign role to the user!");
@@ -147,9 +146,40 @@ function Home() {
     }
   };
 
+  useEffect(() => {
+    const welcomeShown = localStorage.getItem("welcomeShown");
+
+    if (!welcomeShown) {
+      setShowWelcome(true);
+      localStorage.setItem("welcomeShown", "true");
+
+      const timerId = setTimeout(() => {
+        setShowWelcome(false);
+        console.log("Inside timer");
+      }, 3000);
+
+      console.log("Outside timer");
+
+      return () => {
+        console.log("Component unmounted, clearing timeout");
+        clearTimeout(timerId);
+      };
+    }
+
+    fetchNoOfUsers();
+    fetchPendingRequests();
+  }, [userState]);
+
+
   return (
     <div className="py-5">
       <CustomLoadingBar ref={loadingBarRef} />
+
+      {userState && showWelcome && (
+        <div className="text-center p-2 bg-yellow-300 text-black font-bold shadow-md">
+          Welcome {userState.name}!
+        </div>
+      )}
 
       <Image
         src={Mango_tree}
