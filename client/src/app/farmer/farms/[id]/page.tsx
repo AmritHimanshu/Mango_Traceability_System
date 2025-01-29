@@ -93,7 +93,7 @@ function page() {
 
       const data = await res.json();
 
-      if(res.status === 404){
+      if (res.status === 404) {
         router.push(NOT_FOUND);
         if (loadingBarRef.current) {
           loadingBarRef.current.complete();
@@ -235,6 +235,26 @@ function page() {
       router.push(`${FARMS}/${id}`);
       setArtificial("");
       setNatural("");
+      setFertilizerApplications({
+        date: "",
+        volume: "0",
+      });
+      setPesticideApplications({
+        date: "",
+        volume: "0",
+      });
+      setBagging({
+        date: "",
+        quantity: "0",
+      });
+      setSpecialCare({
+        date: "",
+        name: "",
+      });
+      setHarvest({
+        date: "",
+        yield: "0",
+      });
     } catch (error) {
       console.log("Error: ", error);
       alert("Error while saving changes.");
@@ -454,59 +474,61 @@ function page() {
                 ) : (
                   <>
                     <table className="w-full border-collapse border border-gray-300">
-                <thead>
-                  <tr className="bg-gray-100">
-                    {farm.irrigationDates.artificial.length > 0 && (
-                      <th className="border border-gray-300 px-4 py-2">
-                        Artificial
-                      </th>
-                    )}
-                    {farm.irrigationDates.natural.length > 0 && (
-                      <th className="border border-gray-300 px-4 py-2">
-                        Natural
-                      </th>
-                    )}
-                  </tr>
-                </thead>
-                <tbody>
-                  {(() => {
-                    const maxLength = Math.max(
-                      farm.irrigationDates.artificial.length,
-                      farm.irrigationDates.natural.length
-                    );
+                      <thead>
+                        <tr className="bg-gray-100">
+                          {farm.irrigationDates.artificial.length > 0 && (
+                            <th className="border border-gray-300 px-4 py-2">
+                              Artificial
+                            </th>
+                          )}
+                          {farm.irrigationDates.natural.length > 0 && (
+                            <th className="border border-gray-300 px-4 py-2">
+                              Natural
+                            </th>
+                          )}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {(() => {
+                          const maxLength = Math.max(
+                            farm.irrigationDates.artificial.length,
+                            farm.irrigationDates.natural.length
+                          );
 
-                    return Array.from({ length: maxLength }).map((_, index) => (
-                      <tr
-                        key={index}
-                        className="hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
-                      >
-                        {farm.irrigationDates.artificial.length > 0 && (
-                          <td className="border border-gray-300 px-4 py-2">
-                            {farm.irrigationDates.artificial[index]
-                              ? new Date(
-                                  farm.irrigationDates.artificial[index]
-                                )
-                                  .toISOString()
-                                  .split("T")[0]
-                              : ""}
-                          </td>
-                        )}
-                        {farm.irrigationDates.natural.length > 0 && (
-                          <td className="border border-gray-300 px-4 py-2">
-                            {farm.irrigationDates.natural[index]
-                              ? new Date(
-                                  farm.irrigationDates.natural[index]
-                                )
-                                  .toISOString()
-                                  .split("T")[0]
-                              : ""}
-                          </td>
-                        )}
-                      </tr>
-                    ));
-                  })()}
-                </tbody>
-              </table>
+                          return Array.from({ length: maxLength }).map(
+                            (_, index) => (
+                              <tr
+                                key={index}
+                                className="hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
+                              >
+                                {farm.irrigationDates.artificial.length > 0 && (
+                                  <td className="border border-gray-300 px-4 py-2">
+                                    {farm.irrigationDates.artificial[index]
+                                      ? new Date(
+                                          farm.irrigationDates.artificial[index]
+                                        )
+                                          .toISOString()
+                                          .split("T")[0]
+                                      : ""}
+                                  </td>
+                                )}
+                                {farm.irrigationDates.natural.length > 0 && (
+                                  <td className="border border-gray-300 px-4 py-2">
+                                    {farm.irrigationDates.natural[index]
+                                      ? new Date(
+                                          farm.irrigationDates.natural[index]
+                                        )
+                                          .toISOString()
+                                          .split("T")[0]
+                                      : ""}
+                                  </td>
+                                )}
+                              </tr>
+                            )
+                          );
+                        })()}
+                      </tbody>
+                    </table>
                   </>
                 )}
               </div>
