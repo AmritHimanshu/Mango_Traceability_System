@@ -78,7 +78,7 @@ function page() {
 
       {farmData && !isPDF ? (
         <>
-          <div className="space-y-3 my-5 w-[600px] m-auto">
+          <div className="space-y-3 my-5">
             <Map coordinates={farmData.geoFenceData} height="300px" />
 
             <div className="flex items-center space-x-3">
