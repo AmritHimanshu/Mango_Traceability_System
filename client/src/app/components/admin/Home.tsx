@@ -12,10 +12,10 @@ import {
   ADMIN_FETCH_NO_OF_USERS,
   ADMIN_FEW_PENDING_REQUESTS,
 } from "@/utils/Apis/api";
+import { useAppSelector } from "@/store/store";
 import Mango_tree from "../../../../public/assets/Mango_tree.png";
 import HomeCard from "./components/HomeCard";
 import PendingUserCard from "./components/PendingUserCard";
-import { useAppSelector } from "@/store/store";
 
 function Home() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -147,6 +147,10 @@ function Home() {
   };
 
   useEffect(() => {
+
+    fetchNoOfUsers();
+    fetchPendingRequests();
+
     const welcomeShown = localStorage.getItem("welcomeShown");
 
     if (!welcomeShown) {
@@ -155,20 +159,14 @@ function Home() {
 
       const timerId = setTimeout(() => {
         setShowWelcome(false);
-        console.log("Inside timer");
       }, 3000);
 
-      console.log("Outside timer");
-
       return () => {
-        console.log("Component unmounted, clearing timeout");
         clearTimeout(timerId);
       };
     }
 
-    fetchNoOfUsers();
-    fetchPendingRequests();
-  }, [userState]);
+  }, []);
 
 
   return (

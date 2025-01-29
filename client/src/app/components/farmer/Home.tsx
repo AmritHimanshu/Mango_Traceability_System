@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
+import { useAppSelector } from "@/store/store";
 import CustomLoadingBar from "../loadingBar/CustomLoadingBar";
 import { FARMER_FETCH_FEW_FARMS_LIST } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
@@ -12,10 +13,13 @@ import HomeCard from "./components/HomeCard";
 function Home() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+  const userState = useAppSelector((state) => state.user.userState);
+
   const loadingBarRef = useRef<LoadingBarRef>(null);
 
   const router = useRouter();
 
+  const [showWelcome, setShowWelcome] = useState(false);
   const [farmList, setFarmList] = useState<FewFarmList[]>([]);
 
   const fetchFewFarm = async () => {
@@ -61,11 +65,33 @@ function Home() {
 
   useEffect(() => {
     fetchFewFarm();
+
+    const welcomeShown = localStorage.getItem("welcomeShown");
+
+    if (!welcomeShown) {
+      setShowWelcome(true);
+      localStorage.setItem("welcomeShown", "true");
+
+      const timerId = setTimeout(() => {
+        setShowWelcome(false);
+      }, 3000);
+
+      return () => {
+        clearTimeout(timerId);
+      };
+    }
+    
   }, []);
 
   return (
     <div className="py-5">
       <CustomLoadingBar ref={loadingBarRef} />
+
+      {userState && showWelcome && (
+        <div className="text-center p-2 bg-yellow-300 text-black font-bold shadow-md">
+          Welcome {userState.name}!
+        </div>
+      )}
 
       <div className="space-y-5">
         {farmList.map((farm, index) => (
