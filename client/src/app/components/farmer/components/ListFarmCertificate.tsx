@@ -1,7 +1,7 @@
 import React from "react";
 import { ListFarmApplicationsDataProps } from "@/utils/Types/interfaces";
 import { Table, TD, TH, TR } from "@ag-media/react-pdf-table";
-import { styles } from "@/app/farmer/certificate/style";
+import { styles } from "@/app/certificate/style";
 import { Text } from "@react-pdf/renderer";
 
 function ListFarmCertificate({ data, columns }: ListFarmApplicationsDataProps) {

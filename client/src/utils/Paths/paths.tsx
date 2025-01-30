@@ -17,4 +17,4 @@ export const NOTIFICATIONS = "/notifications";
 export const PROFILE = "/profile";
 export const LOGOUT = "/logout";
 export const NOT_FOUND = "/404"
-export const CERTIFICATE = "/farmer/certificate"
+export const CERTIFICATE = "/certificate"

@@ -10,7 +10,7 @@ import { isMobile } from "@/utils/IsMobile/isMobile";
 import ListFarmApplicationsData from "@/app/components/farmer/components/ListFarmApplicationsData";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 const Certificate = dynamic(
-  () => import("@/app/farmer/certificate/Certificate"),
+  () => import("@/app/certificate/Certificate"),
   {
     ssr: false,
   }
