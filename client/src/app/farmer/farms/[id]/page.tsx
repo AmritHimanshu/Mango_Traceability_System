@@ -284,7 +284,7 @@ function page() {
             </div>
           )}
           <div className="space-y-10 my-5">
-            <Map coordinates={farm.geoFenceData} height="500px" />
+            <Map coordinates={farm.geoFenceData} height="300px" />
 
             {farm.farm && (
               <div className="flex items-start flex-col">
