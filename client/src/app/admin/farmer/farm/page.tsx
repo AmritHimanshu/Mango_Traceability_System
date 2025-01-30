@@ -87,10 +87,12 @@ function page() {
         <div className="space-y-3 my-5">
           <Map coordinates={farmData.geoFenceData} height="300px" />
 
-          {farmData.area && <div className="flex items-center space-x-3">
-            <div className="font-bold">Farm Area: </div>
-            <div>{farmData.area.toFixed(2)} sq. m</div>
-          </div>}
+          {farmData.area && (
+            <div className="flex items-center space-x-3">
+              <div className="font-bold">Farm Area: </div>
+              <div>{farmData.area.toFixed(2)} sq. m</div>
+            </div>
+          )}
 
           <div className="bg-cardBackground p-3 rounded-md">
             <div className="flex items-center space-x-3">
@@ -126,14 +128,37 @@ function page() {
             </div>
           )}
 
-          {/* {farmData.weedingDate && (
-            <div className="flex items-center space-x-3">
-              <div className="font-bold">Weeding Date:</div>
-              <div>
-                {new Date(farmData.weedingDate).toISOString().split("T")[0]}
-              </div>
+          {farmData.weedingDate && (
+            <div className="flex flex-col space-y-3">
+              <div className="font-bold">Weeding Dates:</div>
+              <table className="w-full border-collapse border border-gray-300">
+                <thead></thead>
+                <tbody>
+                  {farmData.weedingDate
+                    .reduce<string[][]>((acc, date, index) => {
+                      if (index % 3 === 0) acc.push([]);
+                      acc[acc.length - 1].push(date);
+                      return acc;
+                    }, [])
+                    .map((row, rowIndex) => (
+                      <tr
+                        key={rowIndex}
+                        className="text-center hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
+                      >
+                        {row.map((date, index) => (
+                          <td
+                            key={index}
+                            className="border border-gray-300 p-2"
+                          >
+                            {new Date(date).toISOString().split("T")[0]}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
             </div>
-          )} */}
+          )}
 
           {farmData.sowingDate && (
             <div className="flex items-center space-x-3">

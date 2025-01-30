@@ -62,15 +62,6 @@ function PDFContent({
           </Text>
 
           <Text>
-            Weeding Date:{" "}
-            <Text>
-              {farmData?.weedingDate
-                ? new Date(farmData.weedingDate).toISOString().split("T")[0]
-                : " - "}
-            </Text>
-          </Text>
-
-          <Text>
             Sowing Date:{" "}
             <Text>
               {farmData?.sowingDate
@@ -109,6 +100,32 @@ function PDFContent({
                 : " - "}
             </Text>
           </Text>
+        </View>
+      </View>
+
+      <View>
+        <Text style={{ fontWeight: "bold", marginBottom: 5 }}>Weeding Dates: </Text>
+        <View>
+          <Table style={styles.table}>
+              {farmData?.weedingDate
+                .reduce<string[][]>((acc, date, index) => {
+                  if (index % 3 === 0) acc.push([]);
+                  acc[acc.length - 1].push(date);
+                  return acc;
+                }, [])
+                .map((row, rowIndex) => (
+                  <TR
+                    key={rowIndex}
+                    className="hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
+                  >
+                    {row.map((date, index) => (
+                      <TD key={index} style={{ border: "1px solid #ccc", padding: 5 }}>
+                        {new Date(date).toISOString().split("T")[0]}
+                      </TD>
+                    ))}
+                  </TR>
+                ))}
+          </Table>
         </View>
       </View>
 
