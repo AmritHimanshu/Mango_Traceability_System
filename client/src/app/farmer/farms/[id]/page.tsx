@@ -189,6 +189,7 @@ function page() {
         ...(bagging.date && bagging.quantity !== "0" ? { bagging } : {}),
         ...(specialCare.date && specialCare.name ? { specialCare } : {}),
         ...(harvest.date && harvest.yield !== "0" ? { harvest } : {}),
+        ...(weedingDate ? { weedingDate } : {}),
       };
 
       if (Object.keys(payload).length === 0) {
@@ -235,8 +236,10 @@ function page() {
 
       alert(data.message);
       router.push(`${FARMS}/${id}`);
+      setChangedFarmData({});
       setArtificial("");
       setNatural("");
+      setWeedingDate("");
       setFertilizerApplications({
         date: "",
         volume: "0",
@@ -257,6 +260,8 @@ function page() {
         date: "",
         yield: "0",
       });
+
+      fetchFarmData();
     } catch (error) {
       console.log("Error: ", error);
       alert("Error while saving changes.");
@@ -337,13 +342,10 @@ function page() {
             )}
 
             {(farm.weedingDate.length > 0 || edit) && (
-              <div className="flex items-start flex-col">
+              <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Weeding Date:</div>
                 {edit ? (
                   <>
-                    <label htmlFor="weedingDate" className="font-bold">
-                      Date:
-                    </label>
                     <input
                       type="date"
                       id="weedingDate"
@@ -356,18 +358,30 @@ function page() {
                   </>
                 ) : (
                   <>
-                    <table>
-                      <thead>
-                        <tr>
-                          <td>Date</td>
-                        </tr>
-                      </thead>
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead></thead>
                       <tbody>
-                        <tr>
-                          {farm.weedingDate.map(weedingDate, index)=>(
-                            <></>
-                          )}
-                        </tr>
+                        {farm.weedingDate
+                          .reduce<string[][]>((acc, date, index) => {
+                            if (index % 3 === 0) acc.push([]);
+                            acc[acc.length - 1].push(date);
+                            return acc;
+                          }, [])
+                          .map((row, rowIndex) => (
+                            <tr
+                              key={rowIndex}
+                              className="text-center hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
+                            >
+                              {row.map((date, index) => (
+                                <td
+                                  key={index}
+                                  className="border border-gray-300 p-2"
+                                >
+                                  {new Date(date).toISOString().split("T")[0]}
+                                </td>
+                              ))}
+                            </tr>
+                          ))}
                       </tbody>
                     </table>
                   </>
