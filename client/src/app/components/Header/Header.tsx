@@ -9,6 +9,7 @@ import Header_Menu from "./Header_Menu";
 // Material UI Icon
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function Header() {
   const [isMenu, setIsMenu] = useState(false);
@@ -32,7 +33,8 @@ function Header() {
   return (
     <div className="sticky top-0 z-[9999]">
       <div className="py-2 px-4 bg-sky-100 flex items-center justify-between">
-        <Link href="/">
+        {!isMenu ? (
+          <Link href="/">
           <div className="flex items-center justify-start">
             <Image
               src={mango_logo}
@@ -49,6 +51,12 @@ function Header() {
             </div>
           </div>
         </Link>
+        ) : (
+          <div className="py-2 flex space-x-2" onClick={()=>setIsMenu(false)}>
+          <ArrowBackIcon />
+          <div>Back</div>
+          </div>
+        )}
 
         {!isMenu ? (
           <MenuIcon onClick={() => setIsMenu(!isMenu)} />
