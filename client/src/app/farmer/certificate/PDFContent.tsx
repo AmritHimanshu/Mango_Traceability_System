@@ -103,7 +103,7 @@ function PDFContent({
         </View>
       </View>
 
-      <View>
+      <View style={{ marginTop: 20 }}>
         <Text style={{ fontWeight: "bold", marginBottom: 5 }}>Weeding Dates: </Text>
         <View>
           <Table style={styles.table}>
@@ -134,7 +134,7 @@ function PDFContent({
           farmData.irrigationDates.artificial.length > 0) ||
           (farmData?.irrigationDates.natural &&
             farmData.irrigationDates.natural.length > 0)) && (
-          <View style={{ marginTop: 10 }}>
+          <View style={{ marginTop: 20 }}>
             <Text style={{ fontWeight: "bold", marginBottom: 5 }}>
               Irrigation Dates:
             </Text>
