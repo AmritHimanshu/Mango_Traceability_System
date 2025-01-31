@@ -32,6 +32,7 @@ function page() {
   const edit = searchParams.get("edit");
 
   const [farm, setFarm] = useState({
+    area: "",
     farm: "",
     crop: "",
     geoFenceData: [{ lat: 0, lng: 0 }],
@@ -118,6 +119,7 @@ function page() {
       }
 
       setFarm({
+        area: data.area || "",
         farm: data.farm || "",
         crop: data.crop || "",
         geoFenceData: data.geoFenceData || [{ lat: 0, lng: 0 }],
@@ -285,6 +287,13 @@ function page() {
           )}
           <div className="space-y-10 my-5">
             <Map coordinates={farm.geoFenceData} height="300px" />
+
+            {farm.area && (
+              <div className="flex items-start space-x-3">
+                <div className="font-bold">Area:</div>
+                <div>{farm.area}</div>
+              </div>
+            )}
 
             {farm.farm && (
               <div className="flex items-start flex-col">
