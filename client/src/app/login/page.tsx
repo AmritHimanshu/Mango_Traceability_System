@@ -99,7 +99,7 @@ function page() {
 
       alert("Successfully signed in");
     } catch (error) {
-      console.log("Error: ", error);
+      // console.log("Error: ", error);
       alert(error);
     }
 
