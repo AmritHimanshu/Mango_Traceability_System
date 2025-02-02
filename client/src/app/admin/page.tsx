@@ -177,7 +177,10 @@ function page() {
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-5">
+      <div className="pb-2 md:pb-4 lg:pb-3 font-bold md:text-[16px] lg:text-[20px] xl:text-[25px]">OVERVIEW</div>
+      <hr className="border-[1px] border-gray-200"/>
+
+      <div className="pt-5 grid grid-cols-2 gap-5">
         <HomeCard
           title="Total number of verified managers"
           description=""
