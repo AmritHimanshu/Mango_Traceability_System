@@ -89,23 +89,27 @@ function page() {
   }, []);
 
   return (
-    <div className="px-3 py-3 relative">
+    <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
-      
-      <div className="py-3 text-lg font-bold sticky top-[56px] z-30 bg-white text-center">
-        Managers
+
+      <div className="pb-2 md:pb-4 lg:pb-3 font-bold md:text-[16px] lg:text-[20px] xl:text-[25px]">
+        Manager Management
       </div>
-      {managers.length !== 0 ? (
-        <div className="space-y-2">
-          {managers.map((manager, index) => (
-            <div key={index} className="border-b-[1px] py-3">
-              <ListUserCard index={index} user={manager} />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="text-center text-gray-500">No records found!</div>
-      )}
+      <hr className="border-[1px] border-gray-200" />
+
+      <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-5">
+        {managers.length !== 0 ? (
+          <>
+            {managers.map((manager, index) => (
+              <div key={index} className="p-3 bg-gray-50 shadow-md">
+                <ListUserCard index={index} user={manager} />
+              </div>
+            ))}
+          </>
+        ) : (
+          <div className="text-center text-gray-500">No records found!</div>
+        )}
+      </div>
     </div>
   );
 }
