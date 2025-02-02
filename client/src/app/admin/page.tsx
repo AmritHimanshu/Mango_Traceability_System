@@ -17,7 +17,7 @@ import Mango_tree from "../../../public/assets/Mango_tree.png";
 import HomeCard from "../components/admin/HomeCard";
 import PendingUserCard from "../components/admin/PendingUserCard";
 
-function AdminHome() {
+function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const userState = useAppSelector((state) => state.user.userState);
@@ -244,4 +244,4 @@ function AdminHome() {
   );
 }
 
-export default AdminHome;
+export default page;
