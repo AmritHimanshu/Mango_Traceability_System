@@ -150,27 +150,31 @@ function page() {
   };
 
   return (
-    <div className="px-3 py-3 relative">
+    <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
-      <div className="py-3 text-lg font-bold sticky top-[56px] z-30 bg-white text-center">
+      <div className="pb-2 md:pb-4 lg:pb-3 font-bold md:text-[16px] lg:text-[20px] xl:text-[25px]">
         Pending Requests
       </div>
-      {pendingRequests.length !== 0 ? (
-        <div className="space-y-7 bg-gray-50">
-          {pendingRequests.map((request, index) => (
-            <div key={index} className="space-y-2">
-              <PendingUserCard
-                index={index}
-                request={request}
-                authenticateReq={authenticateReq}
-              />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="text-center text-gray-500">No records found!</div>
-      )}
+      <hr className="border-[1px] border-gray-200" />
+
+      <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-5">
+        {pendingRequests.length !== 0 ? (
+          <>
+            {pendingRequests.map((request, index) => (
+              <div key={index} className="space-y-2 p-3">
+                <PendingUserCard
+                  index={index}
+                  request={request}
+                  authenticateReq={authenticateReq}
+                />
+              </div>
+            ))}
+          </>
+        ) : (
+          <div className="text-center text-gray-500">No records found!</div>
+        )}
+      </div>
     </div>
   );
 }
