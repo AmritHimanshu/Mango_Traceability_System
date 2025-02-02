@@ -315,7 +315,7 @@ function page() {
     <div className="flex items-center justify-center h-[calc(100vh-56px)]">
       <CustomLoadingBar ref={loadingBarRef} />
 
-      <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] bg-gray-50 rounded-sm shadow-md">
+      <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] bg-cardBackground rounded-sm shadow-md">
         <form
           action="POST"
           onSubmit={(e) => handleFormData(e)}
