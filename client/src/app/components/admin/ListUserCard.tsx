@@ -13,7 +13,7 @@ function ListUserCard({ index, user }: ListUserCardProps) {
   };
 
   return (
-    <div className="text-[16px] lg:text-[18px] space-y-3">
+    <div className="text-[13px] md:text-[16px] space-y-3">
       <div className="flex items-start space-x-2">
         <div>{index + 1}.</div>
         <div>
