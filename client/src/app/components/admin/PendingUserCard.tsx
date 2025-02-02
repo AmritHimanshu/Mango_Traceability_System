@@ -31,13 +31,12 @@ function PendingUserCard({
 
   return (
     <>
-      <div className="flex space-x-2 text-[16px] text-">
+      <div className="flex space-x-2 text-[13px] md:text-[16px]">
         <div>{index + 1}.</div>
-        <div className="font-medium text-gray-600">
+        <div className="font-medium">
           <div>Name: {request.name}</div>
           <div>Email: {request.email}</div>
           <div>Ph no.: {request.phone}</div>
-          {/* <div className="font-semibold">Role: {request.role}</div> */}
           <div>
             Date:{" "}
             {new Date(request.createdAt).toLocaleString("en-IN", {
@@ -67,14 +66,14 @@ function PendingUserCard({
       </div>
       <div className="flex space-x-3">
         <button
-          className="btn bg-green-400"
+          className="btn bg-green-400 bg-opacity-90 hover:bg-opacity-100 duration-200"
           onClick={() => handleOnClick(request._id, selectRole, true, "Accept")}
           disabled={selectedButton === "Reject"}
         >
           {selectedButton === "Accept" ? "Accepting" : "Accept"}
         </button>
         <button
-          className="btn bg-red-500 text-white"
+          className="btn bg-red-500 text-white bg-opacity-90 hover:bg-opacity-100 duration-200"
           onClick={() =>
             handleOnClick(request._id, selectRole, false, "Reject")
           }

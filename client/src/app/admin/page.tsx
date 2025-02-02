@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
@@ -13,7 +12,6 @@ import {
   ADMIN_FEW_PENDING_REQUESTS,
 } from "@/utils/Apis/api";
 import { useAppSelector } from "@/store/store";
-import Mango_tree from "../../../public/assets/Mango_tree.png";
 import HomeCard from "../components/admin/HomeCard";
 import PendingUserCard from "../components/admin/PendingUserCard";
 
@@ -170,7 +168,7 @@ function page() {
 
 
   return (
-    <div className="p-5 w-[calc(100vw-350px)] h-[calc(100vh-72px)] overflow-y-auto">
+    <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto">
       <CustomLoadingBar ref={loadingBarRef} />
 
       {userState && showWelcome && (
@@ -179,16 +177,7 @@ function page() {
         </div>
       )}
 
-      <Image
-        src={Mango_tree}
-        alt="Mango Tree"
-        height={300}
-        width={300}
-        priority={true}
-        className="m-auto"
-      />
-
-      <div className="space-y-5 px-3">
+      <div className="grid grid-cols-2 gap-5">
         <HomeCard
           title="Total number of verified managers"
           description=""
@@ -216,13 +205,13 @@ function page() {
       </div>
 
       {pendingRequests && (
-        <div className="bg-gray-50 p-3 mt-10">
-          <div className="pb-2 text-lg font-bold text-center underline">
+        <div className="bg-gray-50 p-3 my-5">
+          <div className="pb-2 text-[16px] md:text-[18px] font-bold text-center underline">
             Recent Requests
           </div>
-          <div className="space-y-7">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-5">
             {pendingRequests.map((request, index) => (
-              <div key={index} className="space-y-2">
+              <div key={index} className="space-y-2 p-3 bg-white">
                 <PendingUserCard
                   index={index}
                   request={request}
@@ -233,7 +222,7 @@ function page() {
           </div>
 
           <div
-            className="mt-5 underline text-end"
+            className="mt-5 underline text-end cursor-pointer hover:text-blue-500"
             onClick={() => router.push("/admin/pending-requests")}
           >
             view all

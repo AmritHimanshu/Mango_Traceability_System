@@ -32,7 +32,7 @@ function Header() {
 
   return (
     <div className="sticky top-0 z-[9999]">
-      <div className="py-4 px-4 bg-gray-100 flex items-center justify-between">
+      <div className="p-2 sm:py-4 sm:px-4 bg-gray-100 flex items-center justify-between">
         {!isMenu ? (
           <Link href="/">
           <div className="flex items-center justify-start">
@@ -52,16 +52,16 @@ function Header() {
           </div>
         </Link>
         ) : (
-          <div className="py-2 flex space-x-2" onClick={()=>setIsMenu(false)}>
+          <div className="py-2 flex space-x-2 cursor-pointer" onClick={()=>setIsMenu(false)}>
           <ArrowBackIcon />
           <div>Back</div>
           </div>
         )}
 
         {!isMenu ? (
-          <MenuIcon onClick={() => setIsMenu(!isMenu)} />
+          <MenuIcon className="cursor-pointer" onClick={() => setIsMenu(!isMenu)} />
         ) : (
-          <CloseIcon onClick={() => setIsMenu(!isMenu)} />
+          <CloseIcon className="cursor-pointer" onClick={() => setIsMenu(!isMenu)} />
         )}
       </div>
 
