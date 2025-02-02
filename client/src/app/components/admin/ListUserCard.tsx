@@ -13,24 +13,41 @@ function ListUserCard({ index, user }: ListUserCardProps) {
   };
 
   return (
-    <>
-      <div className="flex items-center justify-between text-[16px]">
-        <div className="flex items-center space-x-3 w-[70%]">
-          <div>{index + 1}.</div>
+    <div className="text-[16px] lg:text-[18px] space-y-3">
+      <div className="flex items-start space-x-2">
+        <div>{index + 1}.</div>
+        <div>
           <div className="truncate overflow-hidden whitespace-nowrap">
-            {user.name}
+            Name: {user.name}
+          </div>
+          <div className="truncate overflow-hidden whitespace-nowrap">
+            Email: {user.email}
+          </div>
+          <div className="truncate overflow-hidden whitespace-nowrap">
+            Phone: {user.phone}
+          </div>
+          <div className="truncate overflow-hidden whitespace-nowrap">
+            Joined on:{" "}
+            {new Date(user.createdAt).toLocaleString("en-IN", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+              hour12: true,
+            })}
+          </div>
+          <div className="w-[50%] my-2">
+            <button
+              className="w-full bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white py-2 rounded-md duration-200"
+              onClick={handleOnView}
+            >
+              view
+            </button>
           </div>
         </div>
-        <div className="w-[25%]">
-          <button
-            className="w-full bg-black text-white px- py-[3px] rounded-md"
-            onClick={handleOnView}
-          >
-            view
-          </button>
-        </div>
       </div>
-    </>
+    </div>
   );
 }
 

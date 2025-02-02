@@ -97,11 +97,11 @@ function page() {
       </div>
       <hr className="border-[1px] border-gray-200" />
 
-      <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-5">
+      <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-5">
         {farmers.length !== 0 ? (
           <>
             {farmers.map((farmer, index) => (
-              <div key={index} className="border-b-[1px] py-3">
+              <div key={index} className="p-3 bg-gray-50 shadow-md">
                 <ListUserCard index={index} user={farmer} />
               </div>
             ))}

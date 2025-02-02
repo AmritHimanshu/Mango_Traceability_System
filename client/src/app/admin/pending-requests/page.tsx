@@ -162,7 +162,7 @@ function page() {
         {pendingRequests.length !== 0 ? (
           <>
             {pendingRequests.map((request, index) => (
-              <div key={index} className="space-y-2 p-3">
+              <div key={index} className="space-y-2 p-3 bg-gray-50 shadow-md">
                 <PendingUserCard
                   index={index}
                   request={request}
