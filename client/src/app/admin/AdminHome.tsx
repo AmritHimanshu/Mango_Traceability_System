@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
-import CustomLoadingBar from "../loadingBar/CustomLoadingBar";
+import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
 import { User } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
 import {
@@ -13,11 +13,11 @@ import {
   ADMIN_FEW_PENDING_REQUESTS,
 } from "@/utils/Apis/api";
 import { useAppSelector } from "@/store/store";
-import Mango_tree from "../../../../public/assets/Mango_tree.png";
-import HomeCard from "./components/HomeCard";
-import PendingUserCard from "./components/PendingUserCard";
+import Mango_tree from "../../../public/assets/Mango_tree.png";
+import HomeCard from "../components/admin/HomeCard";
+import PendingUserCard from "../components/admin/PendingUserCard";
 
-function Home() {
+function AdminHome() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const userState = useAppSelector((state) => state.user.userState);
@@ -244,4 +244,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default AdminHome;

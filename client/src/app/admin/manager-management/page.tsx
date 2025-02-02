@@ -7,7 +7,7 @@ import CustomLoadingBar from "../../components/loadingBar/CustomLoadingBar";
 import { User } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
 import { ADMIN_MANAGER_MANAGEMENT } from "@/utils/Apis/api";
-import ListUserCard from "@/app/components/admin/components/ListUserCard";
+import ListUserCard from "@/app/components/admin/ListUserCard";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;

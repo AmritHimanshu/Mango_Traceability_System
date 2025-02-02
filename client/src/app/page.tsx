@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "@/store/store";
 import { useRouter } from "next/navigation";
 import { LOGIN } from "@/utils/Paths/paths";
-import AdminHome from "./components/admin/Home";
-import FarmerHome from "./components/farmer/Home";
+import AdminHome from "./admin/AdminHome";
+import FarmerHome from "./farmer/FarmerHome";
 import "../styles/style.css";
 import "leaflet/dist/leaflet.css";
 

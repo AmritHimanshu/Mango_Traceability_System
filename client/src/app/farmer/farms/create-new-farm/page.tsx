@@ -8,7 +8,7 @@ import { FARMER_NEW_FARM } from "@/utils/Apis/api";
 import { FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
 import { useAppSelector } from "@/store/store";
-const Map = dynamic(() => import("@/app/components/farmer/components/Map"), {
+const Map = dynamic(() => import("@/app/components/farmer/Map"), {
   ssr: false,
 });
 import { polygon, area } from '@turf/turf';

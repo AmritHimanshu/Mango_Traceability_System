@@ -10,7 +10,7 @@ import {
   ADMIN_AUTHENTICATE_USER,
   ADMIN_PENDING_REQUESTS,
 } from "@/utils/Apis/api";
-import PendingUserCard from "@/app/components/admin/components/PendingUserCard";
+import PendingUserCard from "@/app/components/admin/PendingUserCard";
 import "../../../styles/style.css";
 
 function page() {

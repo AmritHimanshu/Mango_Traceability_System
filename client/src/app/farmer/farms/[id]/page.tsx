@@ -11,12 +11,12 @@ import {
 import { FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
 const Map = dynamic(
-  () => import("@/app/components/farmer/components/MapCoordinates"),
+  () => import("@/app/components/farmer/MapCoordinates"),
   {
     ssr: false,
   }
 );
-import ListFarmApplicationsData from "@/app/components/farmer/components/ListFarmApplicationsData";
+import ListFarmApplicationsData from "@/app/components/farmer/ListFarmApplicationsData";
 import CloseIcon from "@mui/icons-material/Close";
 
 function page() {

@@ -4,13 +4,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
 import { useAppSelector } from "@/store/store";
-import CustomLoadingBar from "../loadingBar/CustomLoadingBar";
+import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
 import { FARMER_FETCH_FEW_FARMS_LIST } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
 import { FewFarmList } from "@/utils/Types/interfaces";
-import HomeCard from "./components/HomeCard";
+import HomeCard from "../components/farmer/HomeCard";
 
-function Home() {
+function FarmerHome() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const userState = useAppSelector((state) => state.user.userState);
@@ -104,4 +104,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default FarmerHome;

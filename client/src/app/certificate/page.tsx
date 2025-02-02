@@ -7,7 +7,7 @@ import { Farm } from "@/utils/Types/interfaces";
 import dynamic from "next/dynamic";
 import { CERTIFICATE_FARM_DETAIL } from "@/utils/Apis/api";
 import { isMobile } from "@/utils/IsMobile/isMobile";
-import ListFarmApplicationsData from "@/app/components/farmer/components/ListFarmApplicationsData";
+import ListFarmApplicationsData from "@/app/components/farmer/ListFarmApplicationsData";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 const Certificate = dynamic(
   () => import("@/app/certificate/Certificate"),
@@ -16,7 +16,7 @@ const Certificate = dynamic(
   }
 );
 const Map = dynamic(
-  () => import("@/app/components/farmer/components/MapCoordinates"),
+  () => import("@/app/components/farmer/MapCoordinates"),
   {
     ssr: false,
   }

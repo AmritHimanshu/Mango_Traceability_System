@@ -3,7 +3,7 @@ import { styles } from "./style";
 import { Farm } from "@/utils/Types/interfaces";
 import { Page, Text, View } from "@react-pdf/renderer";
 import { Table, TD, TR } from "@ag-media/react-pdf-table";
-import ListFarmCertificate from "@/app/components/farmer/components/ListFarmCertificate";
+import ListFarmCertificate from "@/app/components/farmer/ListFarmCertificate";
 
 function PDFContent({
   farmData,

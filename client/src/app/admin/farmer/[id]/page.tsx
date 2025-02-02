@@ -7,7 +7,7 @@ import { LoadingBarRef } from "react-top-loading-bar";
 import { FARMER, LOGIN } from "@/utils/Paths/paths";
 import { ADMIN_FETCH_FARMER_FARM_LIST } from "@/utils/Apis/api";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
-import ListFarmCard from "@/app/components/farmer/components/ListFarmCard";
+import ListFarmCard from "@/app/components/farmer/ListFarmCard";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;

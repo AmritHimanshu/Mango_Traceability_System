@@ -7,7 +7,7 @@ import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import { CREATE_FARM, FARMS, LOGIN } from "@/utils/Paths/paths";
 import { FARMER_FETCH_FARMS_LIST } from "@/utils/Apis/api";
 import { FarmList } from "@/utils/Types/interfaces";
-import ListFarmCard from "@/app/components/farmer/components/ListFarmCard";
+import ListFarmCard from "@/app/components/farmer/ListFarmCard";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
