@@ -10,7 +10,7 @@ import { LOGIN } from "@/utils/Paths/paths";
 import { FewFarmList } from "@/utils/Types/interfaces";
 import HomeCard from "../components/farmer/HomeCard";
 
-function FarmerHome() {
+function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const userState = useAppSelector((state) => state.user.userState);
@@ -104,4 +104,4 @@ function FarmerHome() {
   );
 }
 
-export default FarmerHome;
+export default page;

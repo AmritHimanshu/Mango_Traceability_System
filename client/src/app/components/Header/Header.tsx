@@ -32,7 +32,7 @@ function Header() {
 
   return (
     <div className="sticky top-0 z-[9999]">
-      <div className="py-2 px-4 bg-sky-100 flex items-center justify-between">
+      <div className="py-4 px-4 bg-gray-100 flex items-center justify-between">
         {!isMenu ? (
           <Link href="/">
           <div className="flex items-center justify-start">

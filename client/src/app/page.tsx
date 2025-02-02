@@ -3,9 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAppSelector } from "@/store/store";
 import { useRouter } from "next/navigation";
-import { LOGIN } from "@/utils/Paths/paths";
-import AdminHome from "./admin/page";
-import FarmerHome from "./farmer/FarmerHome";
+import { ADMIN_OVERVIEW, FARMER_OVERVIEW, LOGIN } from "@/utils/Paths/paths";
 import "../styles/style.css";
 import "leaflet/dist/leaflet.css";
 
@@ -19,14 +17,17 @@ export default function Home() {
   useEffect(() => {
     setIsClient(true);
     if (!userState) return router.push(LOGIN);
+
+    if (userState.role === "Admin") {
+      return router.push(ADMIN_OVERVIEW);
+    }
+
+    if (userState.role === "Farmer") {
+      return router.push(FARMER_OVERVIEW);
+    }
   }, []);
 
   if (!isClient) return null;
 
-  return (
-    <div>
-      {userState?.role === "Admin" && <AdminHome />}
-      {userState?.role === "Farmer" && <FarmerHome />}
-    </div>
-  );
+  return <div></div>;
 }

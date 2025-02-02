@@ -7,7 +7,7 @@ import {
   FARMS,
   LOGIN,
   NOTIFICATIONS,
-  OVERVIEW,
+  FARMER_OVERVIEW,
   PROFILE,
 } from "@/utils/Paths/paths";
 
@@ -18,9 +18,9 @@ function Farmer_Header({ handleOnClick }: HandleOnClickProps) {
     <div className="space-y-3">
       <div
         className={`py-3 w-full border-b-[1px] border-black font-bold ${
-          pathname === OVERVIEW ? "text-green-800" : "text-black"
+          pathname === FARMER_OVERVIEW ? "text-green-800" : "text-black"
         }`}
-        onClick={() => handleOnClick(OVERVIEW)}
+        onClick={() => handleOnClick(FARMER_OVERVIEW)}
       >
         Overview
       </div>

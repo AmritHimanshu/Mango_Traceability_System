@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import ReduxProvider from "@/store/redux-provider";
-import { Funnel_Display } from "next/font/google";
+import { Roboto } from 'next/font/google'
 import Header from "./components/Header/Header";
 import "./globals.css";
 import "../styles/style.css";
 
-const funnel = Funnel_Display({
-  variable: "--font-funnel-display",
-});
+const roboto = Roboto({
+  weight: '400',
+  subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
   title: "Mango Traceability System",
@@ -22,7 +23,7 @@ export default function RootLayout({
   return (
     <ReduxProvider>
       <html lang="en">
-        <body className={`${funnel.className} antialiased`}>
+        <body className={`${roboto.className} antialiased`}>
           <Header />
           {children}
         </body>

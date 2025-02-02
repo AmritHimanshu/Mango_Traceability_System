@@ -170,7 +170,7 @@ function page() {
 
 
   return (
-    <div className="py-5">
+    <div className="p-5 w-[calc(100vw-350px)] h-[calc(100vh-72px)] overflow-y-auto">
       <CustomLoadingBar ref={loadingBarRef} />
 
       {userState && showWelcome && (
