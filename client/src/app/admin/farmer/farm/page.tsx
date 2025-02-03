@@ -9,13 +9,11 @@ import { CERTIFICATE, FARMER, LOGIN } from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
 import QRCode from "react-qr-code";
 import { Farm } from "@/utils/Types/interfaces";
+import Heading from "@/app/components/admin/Heading";
 import ListFarmApplicationsData from "@/app/components/farmer/ListFarmApplicationsData";
-const Map = dynamic(
-  () => import("@/app/components/farmer/MapCoordinates"),
-  {
-    ssr: false,
-  }
-);
+const Map = dynamic(() => import("@/app/components/farmer/MapCoordinates"), {
+  ssr: false,
+});
 import CloseIcon from "@mui/icons-material/Close";
 
 function page() {
@@ -80,8 +78,10 @@ function page() {
   }, []);
 
   return (
-    <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)] relative">
+    <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
+
+      {farmData && <Heading text={farmData.farm} />}
 
       {farmData && !isQRCode ? (
         <div className="space-y-3 my-5">
@@ -330,7 +330,7 @@ function page() {
           )}
 
           <button
-            className="btn bg-blue-500 text-white"
+            className="btn bg-blue-500 text-white hover:bg-blue-600 duration-200"
             onClick={() => setIsQRCode(true)}
           >
             Generate QR code
@@ -342,9 +342,9 @@ function page() {
             <div className="mt-4">
               <div className="flex items-center justify-between">
                 <h2 className="font-bold text-lg">QR Code for Certificate</h2>
-                <CloseIcon onClick={() => setIsQRCode(false)} />
+                <CloseIcon className="cursor-pointer" onClick={() => setIsQRCode(false)} />
               </div>
-              <div className="flex justify-center items-center bg-white p-4 rounded-md shadow-md">
+              <div className="flex justify-center items-center bg-white p-4">
                 <QRCode
                   value={`${FRONTEND_BASE_URL}/${CERTIFICATE}?farm_id=${farm_id}`}
                   size={200}
