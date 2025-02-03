@@ -29,9 +29,9 @@ function ListFarmCard({ idx, farm, handleClick }: ListFarmCardProps) {
             </div>
           </div>
         </div>
-        <div className="relative w-[30%]">
+        <div className="relative w-[30%] md:w-[25%] xl:w-[15%]">
           <button
-            className="btn bg-black text-white text-[10px] absolute bottom-0"
+            className="btn bg-black text-white absolute bottom-0"
             onClick={() => handleClick(farm._id)}
           >
             view details
