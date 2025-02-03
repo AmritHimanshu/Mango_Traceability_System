@@ -9,6 +9,7 @@ import { FARMER_FETCH_FEW_FARMS_LIST } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
 import { FewFarmList } from "@/utils/Types/interfaces";
 import HomeCard from "../components/farmer/HomeCard";
+import Heading from "../components/admin/Heading";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -80,11 +81,10 @@ function page() {
         clearTimeout(timerId);
       };
     }
-    
   }, []);
 
   return (
-    <div className="py-5">
+    <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto">
       <CustomLoadingBar ref={loadingBarRef} />
 
       {userState && showWelcome && (
@@ -93,7 +93,9 @@ function page() {
         </div>
       )}
 
-      <div className="space-y-5">
+      <Heading text="OVERVIEW" />
+
+      <div className="pt-5 grid grid-cols-2 gap-5">
         {farmList.map((farm, index) => (
           <div key={index} className="p-5 bg-cardBackground">
             <HomeCard data={farm} />
