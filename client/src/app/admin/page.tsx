@@ -13,6 +13,7 @@ import {
 } from "@/utils/Apis/api";
 import { useAppSelector } from "@/store/store";
 import HomeCard from "../components/admin/HomeCard";
+import Heading from "../components/admin/Heading";
 import PendingUserCard from "../components/admin/PendingUserCard";
 
 function page() {
@@ -145,7 +146,6 @@ function page() {
   };
 
   useEffect(() => {
-
     fetchNoOfUsers();
     fetchPendingRequests();
 
@@ -163,9 +163,7 @@ function page() {
         clearTimeout(timerId);
       };
     }
-
   }, []);
-
 
   return (
     <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto">
@@ -177,8 +175,7 @@ function page() {
         </div>
       )}
 
-      <div className="pb-2 md:pb-4 lg:pb-3 font-bold md:text-[16px] lg:text-[20px] xl:text-[25px]">OVERVIEW</div>
-      <hr className="border-[1px] border-gray-200"/>
+      <Heading text="OVERVIEW" />
 
       <div className="pt-5 grid grid-cols-2 gap-5">
         <HomeCard
