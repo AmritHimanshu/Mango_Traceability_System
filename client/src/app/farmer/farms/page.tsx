@@ -102,7 +102,7 @@ function page() {
 
       <div className="my-2">
         <button
-          className="btn bg-black text-white bg-opacity-80 hover:bg-opacity-100 duration-200"
+          className="btn bg-black text-white hover:bg-opacity-85 duration-200"
           onClick={() => router.push(CREATE_FARM)}
         >
           Click here to Add farm
