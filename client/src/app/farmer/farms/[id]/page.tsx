@@ -285,7 +285,7 @@ function page() {
         <>
           {edit && (
             <div className="text-end">
-              <CloseIcon onClick={handleOnClose} />
+              <CloseIcon className="cursor-pointer" onClick={handleOnClose} />
             </div>
           )}
           <div className="space-y-10 my-5">
