@@ -10,6 +10,7 @@ import {
 } from "@/utils/Apis/api";
 import { FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
+import Heading from "@/app/components/admin/Heading";
 const Map = dynamic(
   () => import("@/app/components/farmer/MapCoordinates"),
   {
@@ -275,8 +276,10 @@ function page() {
   };
 
   return (
-    <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)]">
+    <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
+
+      <Heading text={farm.farm} /> 
 
       {farm && (
         <>
@@ -291,7 +294,7 @@ function page() {
             {farm.area && (
               <div className="flex items-start space-x-3">
                 <div className="font-bold">Area:</div>
-                <div>{farm.area}</div>
+                <div>{farm.area} sq. m</div>
               </div>
             )}
 
