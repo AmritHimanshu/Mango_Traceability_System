@@ -82,7 +82,7 @@ router.get('/api/fetch-farmer-farms-list/:id', async (req, res) => {
     const _id = new mongoose.Types.ObjectId(id);
 
     try {
-        const farmList = await Farmer.find({ userId: _id }).skip(parseInt(skip)).limit(parseInt(limit));
+        const farmList = await Farmer.find({ userId: _id }).skip(parseInt(skip)).limit(parseInt(limit)).populate("userId", "_id name email");
 
         return res.status(201).json(farmList);
     } catch (error) {

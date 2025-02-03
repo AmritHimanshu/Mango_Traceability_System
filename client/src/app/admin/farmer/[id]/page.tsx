@@ -21,6 +21,7 @@ function page() {
   const user_id = pathname.split("/").pop();
 
   const [farms, setFarms] = useState<FarmList[]>([]);
+  const [farmerName, setFarmerName] = useState("");
 
   const limit = 10;
   let skip = 0;
@@ -56,6 +57,8 @@ function page() {
         const error = new Error(data.error);
         throw error;
       }
+
+      setFarmerName(data[0].userId.name);
 
       setFarms((prev) => {
         if (prev.length === 0) return data;
@@ -101,12 +104,9 @@ function page() {
     <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
-      <Heading text="All farms" />
+      <Heading text={farmerName} />
 
-      <div className="my-5">
-        {/* <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center z-30">
-          All farms
-        </div> */}
+      <div className="my-3">
         {farms.length !== 0 ? (
           <div className="space-y-3 mt-2">
             {farms.map((farm, index) => (
