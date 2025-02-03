@@ -8,6 +8,7 @@ import { CREATE_FARM, FARMS, LOGIN } from "@/utils/Paths/paths";
 import { FARMER_FETCH_FARMS_LIST } from "@/utils/Apis/api";
 import { FarmList } from "@/utils/Types/interfaces";
 import ListFarmCard from "@/app/components/farmer/ListFarmCard";
+import Heading from "@/app/components/admin/Heading";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -94,12 +95,14 @@ function page() {
   };
 
   return (
-    <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)] relative">
+    <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
+
+      <Heading text="Farms" />
 
       <div className="my-2">
         <button
-          className="btn bg-black text-white"
+          className="btn bg-black text-white bg-opacity-80 hover:bg-opacity-100 duration-200"
           onClick={() => router.push(CREATE_FARM)}
         >
           Click here to Add farm
@@ -107,9 +110,6 @@ function page() {
       </div>
 
       <div className="my-5">
-        <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center z-30">
-          Your farms
-        </div>
         {farms.length !== 0 ? (
           <div className="space-y-3 mt-2">
             {farms.map((farm, index) => (
