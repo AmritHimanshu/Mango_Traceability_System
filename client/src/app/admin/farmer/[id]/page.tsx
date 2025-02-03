@@ -7,6 +7,7 @@ import { LoadingBarRef } from "react-top-loading-bar";
 import { FARMER, LOGIN } from "@/utils/Paths/paths";
 import { ADMIN_FETCH_FARMER_FARM_LIST } from "@/utils/Apis/api";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
+import Heading from "@/app/components/admin/Heading";
 import ListFarmCard from "@/app/components/farmer/ListFarmCard";
 
 function page() {
@@ -97,13 +98,15 @@ function page() {
   }, []);
 
   return (
-    <div className="px-3 py-3 bg-gray-50 min-h-[calc(100vh-56px)] relative">
+    <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
+      <Heading text="All farms" />
+
       <div className="my-5">
-        <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center z-30">
+        {/* <div className="py-3 text-lg font-bold sticky top-[56px] bg-white text-center z-30">
           All farms
-        </div>
+        </div> */}
         {farms.length !== 0 ? (
           <div className="space-y-3 mt-2">
             {farms.map((farm, index) => (

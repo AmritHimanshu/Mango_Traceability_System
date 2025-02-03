@@ -4,7 +4,7 @@ import React from "react";
 import { ListFarmCardProps } from "@/utils/Types/interfaces";
 
 function ListFarmCard({ idx, farm, handleClick }: ListFarmCardProps) {
-  
+
   return (
     <>
       <div className="flex justify-between">
