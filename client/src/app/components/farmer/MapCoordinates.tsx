@@ -55,7 +55,7 @@ function MapCoordinates({ coordinates, height }: MapCoordinatesProps) {
         style={{
           height: `${height}`,
           width: "100%",
-          border: "2px solid black",
+          border: "1px solid black",
           overflow: "hidden",
         }}
       >

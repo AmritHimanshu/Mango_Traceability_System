@@ -95,9 +95,9 @@ function page() {
 
       <Heading text="OVERVIEW" />
 
-      <div className="pt-5 grid grid-cols-2 gap-5">
+      <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-5">
         {farmList.map((farm, index) => (
-          <div key={index} className="p-5 bg-cardBackground">
+          <div key={index} className="p-3 bg-gray-50 shadow-md">
             <HomeCard data={farm} />
           </div>
         ))}
