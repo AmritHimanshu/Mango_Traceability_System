@@ -150,18 +150,18 @@ function page() {
                 onChange={(e) => setPassword(e.target.value)}
               />
               {isVisiblePassword ? (
-                <VisibilityIcon
+                <VisibilityIcon className="cursor-pointer"
                   onClick={() => setIsVisiblePassword(!isVisiblePassword)}
                 />
               ) : (
-                <VisibilityOffIcon
+                <VisibilityOffIcon className="cursor-pointer"
                   onClick={() => setIsVisiblePassword(!isVisiblePassword)}
                 />
               )}
             </div>
           </div>
 
-          <button type="submit" className="btn bg-black text-white">
+          <button type="submit" className="btn bg-black bg-opacity-90 text-white hover:bg-opacity-100 duration-200">
             Login
           </button>
         </form>
@@ -169,14 +169,14 @@ function page() {
         <div className="w-[100%] mt-5">
           Forgot password?{" "}
           <Link href={FORGOT_PASSWORD}>
-              <span className="text-blue-600 font-bold">click here</span>
+              <span className="text-blue-600 font-bold hover:underline">click here</span>
           </Link>
         </div>
 
         <div className="w-[100%] mt-5">
           Don't have an account?{" "}
           <Link href={REGISTER}>
-            <span className="text-green-600 font-bold">Sign up.</span>
+            <span className="text-green-600 font-bold hover:underline">Sign up.</span>
           </Link>
         </div>
       </div>

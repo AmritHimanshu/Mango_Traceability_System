@@ -340,15 +340,15 @@ function page() {
           <div className="flex items-start flex-col">
             <label htmlFor="email">
               Email <span className="text-red-600">*</span>
-            </label>
-            <div className="flex justify-between border-b-2 border-black">
+            </label> 
+            <div className="flex justify-between border-b-2 border-black w-full">
               {!isEmailOtpSent ? (
                 <>
                   <input
                     type="email"
                     id="email"
                     name="email"
-                    className="outline-none pt-2 w-[73%]"
+                    className="outline-none pt-2 w-[73%] bg-transparent"
                     placeholder="John@xyz.com"
                     value={formData.email}
                     required
@@ -357,7 +357,7 @@ function page() {
                   {!isEmailVerified ? (
                     <button
                       onClick={() => sendOtpEmail()}
-                      className="px-[5px] bg-blue-200 text-[12px] rounded-md"
+                      className="px-[5px] bg-blue-200 text-[12px]"
                     >
                       {!flagEmail ? "Send Otp" : "sending..."}
                     </button>
@@ -371,7 +371,7 @@ function page() {
                     type="number"
                     id="otpEmail"
                     name="otpEmail"
-                    className="outline-none pt-2 w-[73%]"
+                    className="outline-none pt-2 w-[73%] bg-transparent"
                     placeholder="Enter your otp"
                     value={emailOtp}
                     required
@@ -379,7 +379,7 @@ function page() {
                   />
                   <button
                     onClick={() => verifyEmailOtp()}
-                    className="px-[5px] bg-blue-200 text-[12px] rounded-md"
+                    className="px-[5px] bg-blue-200 text-[12px]"
                   >
                     {!flagEmail ? "Verify Otp" : "verifying..."}
                   </button>
@@ -399,7 +399,7 @@ function page() {
                     type="tel"
                     id="phone"
                     name="phone"
-                    className="outline-none pt-2 w-[73%]"
+                    className="outline-none pt-2 w-[73%] bg-transparent"
                     placeholder="+91 9876543210"
                     value={formData.phone}
                     required
@@ -408,7 +408,7 @@ function page() {
                   {!isPhoneVerified ? (
                     <button
                       onClick={() => sendOtpPhone()}
-                      className="px-[5px] bg-blue-200 text-[12px] rounded-md"
+                      className="px-[5px] bg-blue-200 text-[12px]"
                     >
                       {!flagPhone ? "Send Otp" : "sending..."}
                     </button>
@@ -422,7 +422,7 @@ function page() {
                     type="number"
                     id="otpPhone"
                     name="otpPhone"
-                    className="outline-none pt-2 w-[73%]"
+                    className="outline-none pt-2 w-[73%] bg-transparent"
                     placeholder="Enter your otp"
                     value={phoneOtp}
                     required
@@ -430,7 +430,7 @@ function page() {
                   />
                   <button
                     onClick={() => verifyPhoneOtp()}
-                    className="px-[5px] bg-blue-200 text-[12px] rounded-md"
+                    className="px-[5px] bg-blue-200 text-[12px]"
                   >
                     {!flagPhone ? "Verify Otp" : "verifying..."}
                   </button>
@@ -455,11 +455,11 @@ function page() {
                 onChange={(e) => handleFormState(e)}
               />
               {isVisiblePassword ? (
-                <VisibilityIcon
+                <VisibilityIcon className="cursor-pointer"
                   onClick={() => setIsVisiblePassword(!isVisiblePassword)}
                 />
               ) : (
-                <VisibilityOffIcon
+                <VisibilityOffIcon className="cursor-pointer"
                   onClick={() => setIsVisiblePassword(!isVisiblePassword)}
                 />
               )}
@@ -482,13 +482,13 @@ function page() {
                 onChange={(e) => handleFormState(e)}
               />
               {isVisibleConfirmPassword ? (
-                <VisibilityIcon
+                <VisibilityIcon className="cursor-pointer"
                   onClick={() =>
                     setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
                   }
                 />
               ) : (
-                <VisibilityOffIcon
+                <VisibilityOffIcon className="cursor-pointer"
                   onClick={() =>
                     setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
                   }
@@ -497,7 +497,7 @@ function page() {
             </div>
           </div>
 
-          <button type="submit" className="btn bg-black text-white">
+          <button type="submit" className="btn bg-black bg-opacity-90 text-white hover:bg-opacity-100 duration-200">
             Register
           </button>
         </form>
@@ -505,7 +505,7 @@ function page() {
         <div className="w-[100%] mt-5">
           Already have an account?{" "}
           <Link href="/login">
-            <span className="text-green-600 font-bold">Sign in.</span>
+            <span className="text-green-600 font-bold hover:underline">Sign in.</span>
           </Link>
         </div>
       </div>
