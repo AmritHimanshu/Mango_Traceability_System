@@ -33,7 +33,7 @@ function page() {
   const edit = searchParams.get("edit");
 
   const [farm, setFarm] = useState({
-    area: "",
+    area: 0,
     farm: "",
     crop: "",
     geoFenceData: [{ lat: 0, lng: 0 }],
@@ -120,7 +120,7 @@ function page() {
       }
 
       setFarm({
-        area: data.area || "",
+        area: data.area || 0,
         farm: data.farm || "",
         crop: data.crop || "",
         geoFenceData: data.geoFenceData || [{ lat: 0, lng: 0 }],
@@ -294,7 +294,7 @@ function page() {
             {farm.area && (
               <div className="flex items-start space-x-3">
                 <div className="font-bold">Area:</div>
-                <div>{farm.area} sq. m</div>
+                <div>{farm.area.toFixed(2)} sq. m</div>
               </div>
             )}
 
