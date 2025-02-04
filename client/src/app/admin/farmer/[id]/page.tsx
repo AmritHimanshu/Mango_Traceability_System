@@ -77,7 +77,15 @@ function page() {
   };
 
   const handleSelectedFarm = async (id: string) => {
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
     router.push(`${FARMER}/farm?farm_id=${id}`);
+    
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
   };
 
   const handleScroll = () => {

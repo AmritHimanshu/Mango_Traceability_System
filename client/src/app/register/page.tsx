@@ -497,7 +497,7 @@ function page() {
             </div>
           </div>
 
-          <button type="submit" className="btn bg-black bg-opacity-90 text-white hover:bg-opacity-100 duration-200">
+          <button type="submit" className="btn bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white duration-200">
             Register
           </button>
         </form>
