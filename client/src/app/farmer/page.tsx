@@ -88,7 +88,7 @@ function page() {
       <CustomLoadingBar ref={loadingBarRef} />
 
       {userState && showWelcome && (
-        <div className="text-center p-2 bg-yellow-300 text-black font-bold shadow-md">
+        <div className="text-center p-2 bg-yellow-300 text-black font-bold shadow-md mb-5">
           Welcome {userState.name}!
         </div>
       )}
