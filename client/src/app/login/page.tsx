@@ -127,7 +127,7 @@ function page() {
               id="id"
               name="id"
               value={email}
-              className="input-tag"
+              className="input-tag bg-transparent"
               placeholder="example@gmail.com"
               required
               onChange={(e) => setEmail(e.target.value)}
