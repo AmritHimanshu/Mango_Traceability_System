@@ -840,7 +840,7 @@ function page() {
               </button>
             ) : (
               <button
-                className="btn bg-black bg-opacity-90 text-white hover:bg-opacity-100 duration-200"
+                className="btn bg-blue-500 text-white hover:bg-blue-600 duration-200"
                 onClick={handleOnEdit}
               >
                 Edit / Add

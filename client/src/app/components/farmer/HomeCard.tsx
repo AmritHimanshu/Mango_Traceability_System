@@ -19,7 +19,7 @@ function HomeCard({ data }: farmerHomeCardProps) {
           <div className="text-[13px]">{data.crop}</div>
         </div>
         <button
-          className="px-3 bg-black text-white text-center"
+          className="px-3 text-center bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white duration-200"
           onClick={() => router.push(`${FARMS}/${data._id}`)}
         >
           view
