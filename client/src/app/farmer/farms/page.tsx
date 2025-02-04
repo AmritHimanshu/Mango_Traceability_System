@@ -91,7 +91,15 @@ function page() {
   }, []);
 
   const handleSelectedFarm = async (id: string) => {
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
     router.push(`${FARMS}/${id}`);
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
   };
 
   return (
