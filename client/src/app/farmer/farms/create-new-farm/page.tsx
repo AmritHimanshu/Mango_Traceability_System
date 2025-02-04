@@ -8,6 +8,7 @@ import { FARMER_NEW_FARM } from "@/utils/Apis/api";
 import { FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
 import { useAppSelector } from "@/store/store";
+import Heading from "@/app/components/admin/Heading";
 const Map = dynamic(() => import("@/app/components/farmer/Map"), {
   ssr: false,
 });
@@ -112,11 +113,12 @@ function page() {
   };
 
   return (
-    <div className="px-3 py-3 min-h-[calc(100vh-56px)]">
+    <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
-      <div className="bg-cardBackground bg-opacity-90 rounded-md shadow-md p-5 space-y-3">
-        <div className="text-center font-medium">Enter data of farm</div>
+      <Heading text="Create New Farm" />
+
+      <div className="p-5 space-y-3">
         <div className="space-y-10">
           <div className="flex items-start flex-col">
             <label htmlFor="farmName">

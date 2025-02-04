@@ -109,7 +109,7 @@ function Map({ submitForm }: MapProps) {
         <div className="flex justify-between">
           <button
             onClick={handleReset}
-            className="bg-black text-white p-2 rounded-md"
+            className="bg-black bg-opacity-90 text-white hover:bg-opacity-100 duration-200 p-2 rounded-md "
             style={{ marginRight: "10px" }}
           >
             Reset
@@ -132,7 +132,7 @@ function Map({ submitForm }: MapProps) {
           )}
         </div>
 
-        <button className="btn bg-black text-white" onClick={handleSubmit}>
+        <button className="btn bg-black bg-opacity-90 text-white hover:bg-opacity-100 duration-200" onClick={handleSubmit}>
           Create farm
         </button>
       </div>

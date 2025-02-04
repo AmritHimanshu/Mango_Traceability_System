@@ -279,7 +279,7 @@ function page() {
     <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
-      <Heading text={farm.farm} /> 
+      {!edit ? <Heading text={farm.farm} /> : <Heading text={`${farm.farm} (edit)`} />} 
 
       {farm && (
         <>
@@ -833,14 +833,14 @@ function page() {
 
             {edit ? (
               <button
-                className="btn bg-green-600 text-white"
+                className="btn bg-green-600 bg-opacity-90 text-white hover:bg-opacity-100 duration-200"
                 onClick={handleOnSave}
               >
                 Save
               </button>
             ) : (
               <button
-                className="btn bg-black text-white"
+                className="btn bg-black bg-opacity-90 text-white hover:bg-opacity-100 duration-200"
                 onClick={handleOnEdit}
               >
                 Edit / Add
