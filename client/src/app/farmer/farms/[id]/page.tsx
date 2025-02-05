@@ -169,6 +169,11 @@ function page() {
   };
 
   const handleOnDelete = async () => {
+
+    if(!confirm("Do you want to delete this farm?")){
+      return;
+    }
+
     if (loadingBarRef.current) {
       loadingBarRef.current.continuousStart();
     }
