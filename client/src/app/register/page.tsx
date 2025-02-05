@@ -314,6 +314,8 @@ function page() {
       return;
     }
 
+    setIsOtp(true);
+
     if (loadingBarRef.current) {
       loadingBarRef.current.continuousStart();
     }
