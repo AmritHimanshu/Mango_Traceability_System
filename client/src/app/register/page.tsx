@@ -46,10 +46,12 @@ function page() {
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isPhoneOtpSent, setIsPhoneOtpSent] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+  const [isPasswordVerified, setIsPasswordVerified] = useState(false);
   const [emailOtp, setEmailOtp] = useState("");
   const [phoneOtp, setPhoneOtp] = useState("");
   const [flagEmail, setFlagEmail] = useState(false);
   const [flagPhone, setFlagPhone] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleFormState = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -57,6 +59,41 @@ function page() {
     let name = e.target.name;
     let value = e.target.value;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handlePasswordCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let new_pass = e.target.value;
+
+    let lowerCase = /[a-z]/g;
+    let upperCase = /[A-Z]/g;
+    let numbers = /[0-9]/g;
+    let specialCharacter = /[-'/`~!@#$%^&*]/g;
+
+    if(!new_pass){
+      setErrorMessage("");
+      setIsPasswordVerified(false);
+      return;
+    }
+
+    if(!new_pass.match(lowerCase)){
+      setErrorMessage("Password must contains lowercase");
+      setIsPasswordVerified(false);
+      return;
+    }
+    else if(!new_pass.match(upperCase)){
+      setErrorMessage("Password must contains uppercase");
+      setIsPasswordVerified(false);
+      return;
+    }
+    else if(!new_pass.match(numbers)){
+      setErrorMessage("Password must contains numbers");
+      setIsPasswordVerified(false);
+      return;
+    }
+    else{
+      setIsPasswordVerified(true);
+      setErrorMessage("");
+    }
   };
 
   const logOut = async () => {
@@ -253,6 +290,11 @@ function page() {
       return;
     }
 
+    if(!isPasswordVerified){
+      alert("Password is weak");
+      return;
+    }
+
     if (password !== confirm_password) {
       alert("Passwords not matched");
       return;
@@ -263,12 +305,12 @@ function page() {
       return;
     }
 
-    if(!isEmailVerified){
+    if (!isEmailVerified) {
       alert("Verify your email");
       return;
     }
 
-    if(!isPhoneVerified){
+    if (!isPhoneVerified) {
       alert("Verify your phone");
       return;
     }
@@ -340,7 +382,7 @@ function page() {
           <div className="flex items-start flex-col">
             <label htmlFor="email">
               Email <span className="text-red-600">*</span>
-            </label> 
+            </label>
             <div className="flex justify-between border-b-2 border-black w-full">
               {!isEmailOtpSent ? (
                 <>
@@ -452,18 +494,23 @@ function page() {
                 placeholder="Enter your password"
                 value={formData.password}
                 required
-                onChange={(e) => handleFormState(e)}
+                onChange={(e) => {handleFormState(e); handlePasswordCheck(e);}}
               />
               {isVisiblePassword ? (
-                <VisibilityIcon className="cursor-pointer"
+                <VisibilityIcon
+                  className="cursor-pointer"
                   onClick={() => setIsVisiblePassword(!isVisiblePassword)}
                 />
               ) : (
-                <VisibilityOffIcon className="cursor-pointer"
+                <VisibilityOffIcon
+                  className="cursor-pointer"
                   onClick={() => setIsVisiblePassword(!isVisiblePassword)}
                 />
               )}
             </div>
+            {errorMessage && (
+              <div className="text-red-500 text-[12px]">{errorMessage}</div>
+            )}
           </div>
 
           <div className="flex items-start flex-col">
@@ -482,13 +529,15 @@ function page() {
                 onChange={(e) => handleFormState(e)}
               />
               {isVisibleConfirmPassword ? (
-                <VisibilityIcon className="cursor-pointer"
+                <VisibilityIcon
+                  className="cursor-pointer"
                   onClick={() =>
                     setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
                   }
                 />
               ) : (
-                <VisibilityOffIcon className="cursor-pointer"
+                <VisibilityOffIcon
+                  className="cursor-pointer"
                   onClick={() =>
                     setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
                   }
@@ -497,7 +546,10 @@ function page() {
             </div>
           </div>
 
-          <button type="submit" className="btn bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white duration-200">
+          <button
+            type="submit"
+            className="btn bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white duration-200"
+          >
             Register
           </button>
         </form>
@@ -505,7 +557,9 @@ function page() {
         <div className="w-[100%] mt-5">
           Already have an account?{" "}
           <Link href="/login">
-            <span className="text-green-600 font-bold hover:underline">Sign in.</span>
+            <span className="text-green-600 font-bold hover:underline">
+              Sign in.
+            </span>
           </Link>
         </div>
       </div>
