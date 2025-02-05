@@ -30,7 +30,6 @@ function page() {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   const [isVisibleConfirmPassword, setIsVisibleConfirmPassword] =
     useState(false);
 
@@ -432,7 +431,7 @@ function page() {
             </label>
             <div className="flex justify-between input-tag">
               <input
-                type={`${isVisiblePassword ? "text" : "password"}`}
+                type="password"
                 id="password"
                 name="password"
                 className="outline-none w-full bg-transparent"
@@ -444,17 +443,6 @@ function page() {
                   handlePasswordCheck(e);
                 }}
               />
-              {isVisiblePassword ? (
-                <VisibilityIcon
-                  className="cursor-pointer"
-                  onClick={() => setIsVisiblePassword(!isVisiblePassword)}
-                />
-              ) : (
-                <VisibilityOffIcon
-                  className="cursor-pointer"
-                  onClick={() => setIsVisiblePassword(!isVisiblePassword)}
-                />
-              )}
             </div>
             {errorMessage && (
               <div className="text-red-500 text-[12px]">{errorMessage}</div>
