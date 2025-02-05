@@ -39,7 +39,7 @@ function ListUserCard({ index, user }: ListUserCardProps) {
           </div>
           <div className="w-[50%] my-2">
             <button
-              className="w-full bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white py-2 rounded-md duration-200"
+              className="w-full bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white py-2 rounded-sm duration-200"
               onClick={handleOnView}
             >
               view
