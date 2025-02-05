@@ -69,38 +69,33 @@ function page() {
     let numbers = /[0-9]/g;
     let specialCharacter = /[-'/`~!@#$%^&*(){}[\]|;:",.<>?\\]/g;
 
-    if(!new_pass){
+    if (!new_pass) {
       setErrorMessage("");
       setIsPasswordVerified(false);
       return;
     }
 
-    if(!new_pass.match(lowerCase)){
+    if (!new_pass.match(lowerCase)) {
       setErrorMessage("Password must contains lowercase");
       setIsPasswordVerified(false);
       return;
-    }
-    else if(!new_pass.match(upperCase)){
+    } else if (!new_pass.match(upperCase)) {
       setErrorMessage("Password must contains uppercase");
       setIsPasswordVerified(false);
       return;
-    }
-    else if(!new_pass.match(numbers)){
+    } else if (!new_pass.match(numbers)) {
       setErrorMessage("Password must contains numbers");
       setIsPasswordVerified(false);
       return;
-    }
-    else if(!new_pass.match(specialCharacter)){
+    } else if (!new_pass.match(specialCharacter)) {
       setErrorMessage("Password must contains special character");
       setIsPasswordVerified(false);
       return;
-    }
-    else if(new_pass.length < 8){
+    } else if (new_pass.length < 8) {
       setErrorMessage("Password must be at least 8 character long");
       setIsPasswordVerified(false);
       return;
-    }
-    else{
+    } else {
       setIsPasswordVerified(true);
       setErrorMessage("");
     }
@@ -300,7 +295,7 @@ function page() {
       return;
     }
 
-    if(!isPasswordVerified){
+    if (!isPasswordVerified) {
       alert("Password is weak");
       return;
     }
@@ -368,6 +363,8 @@ function page() {
       <CustomLoadingBar ref={loadingBarRef} />
 
       <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] bg-cardBackground rounded-sm shadow-md">
+        <div className="mb-3 text-center">Registration</div>
+
         <form
           action="POST"
           onSubmit={(e) => handleFormData(e)}
@@ -504,7 +501,10 @@ function page() {
                 placeholder="Enter your password"
                 value={formData.password}
                 required
-                onChange={(e) => {handleFormState(e); handlePasswordCheck(e);}}
+                onChange={(e) => {
+                  handleFormState(e);
+                  handlePasswordCheck(e);
+                }}
               />
               {isVisiblePassword ? (
                 <VisibilityIcon
@@ -567,7 +567,7 @@ function page() {
         <div className="w-[100%] mt-5">
           Already have an account?{" "}
           <Link href="/login">
-            <span className="text-green-600 font-bold hover:underline">
+            <span className="text-blue-600 hover:underline">
               Sign in.
             </span>
           </Link>

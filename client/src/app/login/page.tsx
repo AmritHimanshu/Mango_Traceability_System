@@ -65,7 +65,7 @@ function page() {
   const handleFormData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!email || !password ) {
+    if (!email || !password) {
       alert("Fill all the fields");
       return;
     }
@@ -113,6 +113,8 @@ function page() {
       <CustomLoadingBar ref={loadingBarRef} />
 
       <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] bg-cardBackground rounded-sm shadow-md">
+        <div className="mb-3 text-center">Login</div>
+        
         <form
           action="POST"
           className="space-y-10"
@@ -150,34 +152,41 @@ function page() {
                 onChange={(e) => setPassword(e.target.value)}
               />
               {isVisiblePassword ? (
-                <VisibilityIcon className="cursor-pointer"
+                <VisibilityIcon
+                  className="cursor-pointer"
                   onClick={() => setIsVisiblePassword(!isVisiblePassword)}
                 />
               ) : (
-                <VisibilityOffIcon className="cursor-pointer"
+                <VisibilityOffIcon
+                  className="cursor-pointer"
                   onClick={() => setIsVisiblePassword(!isVisiblePassword)}
                 />
               )}
             </div>
           </div>
 
-          <button type="submit" className="btn bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white duration-200">
+          <button
+            type="submit"
+            className="btn bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white duration-200"
+          >
             Login
           </button>
         </form>
 
-        <div className="w-[100%] mt-5">
-          Forgot password?{" "}
-          <Link href={FORGOT_PASSWORD}>
-              <span className="text-blue-600 font-bold hover:underline">click here</span>
-          </Link>
-        </div>
+        <div className="flex">
+          <div className="w-[100%] mt-5">
+            Forgot password?{" "}
+            <Link href={FORGOT_PASSWORD}>
+              <span className="text-blue-600 hover:underline">click here</span>
+            </Link>
+          </div>
 
-        <div className="w-[100%] mt-5">
-          Don't have an account?{" "}
-          <Link href={REGISTER}>
-            <span className="text-green-600 font-bold hover:underline">Sign up.</span>
-          </Link>
+          <div className="w-[100%] mt-5">
+            Don't have an account?{" "}
+            <Link href={REGISTER}>
+              <span className="text-blue-600 hover:underline">Sign up.</span>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
