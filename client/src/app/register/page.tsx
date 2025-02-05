@@ -141,6 +141,7 @@ function page() {
     return phoneNumberObj?.isValid();
   };
 
+  /*
   const sendOtpEmail = async () => {
     if (!formData.email) {
       alert("Email field is empty");
@@ -174,7 +175,9 @@ function page() {
 
     setFlagEmail(false);
   };
+  */
 
+  /* 
   const verifyEmailOtp = async () => {
     if (!emailOtp) {
       alert("Enter your OTP");
@@ -210,6 +213,7 @@ function page() {
     setIsEmailOtpSent(false);
     setFlagEmail(false);
   };
+  */
 
   const sendOtpPhone = async () => {
     if (!formData.phone) {
@@ -391,49 +395,16 @@ function page() {
               Email <span className="text-red-600">*</span>
             </label>
             <div className="flex justify-between border-b-2 border-black w-full">
-              {!isEmailOtpSent ? (
-                <>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="outline-none pt-2 w-[73%] bg-transparent"
-                    placeholder="John@xyz.com"
-                    value={formData.email}
-                    required
-                    onChange={(e) => handleFormState(e)}
-                  />
-                  {!isEmailVerified ? (
-                    <button
-                      onClick={() => sendOtpEmail()}
-                      className="px-[5px] bg-blue-200 text-[12px]"
-                    >
-                      {!flagEmail ? "Send Otp" : "sending..."}
-                    </button>
-                  ) : (
-                    <div>Verified</div>
-                  )}
-                </>
-              ) : (
-                <>
-                  <input
-                    type="number"
-                    id="otpEmail"
-                    name="otpEmail"
-                    className="outline-none pt-2 w-[73%] bg-transparent"
-                    placeholder="Enter your otp"
-                    value={emailOtp}
-                    required
-                    onChange={(e) => setEmailOtp(e.target.value)}
-                  />
-                  <button
-                    onClick={() => verifyEmailOtp()}
-                    className="px-[5px] bg-blue-200 text-[12px]"
-                  >
-                    {!flagEmail ? "Verify Otp" : "verifying..."}
-                  </button>
-                </>
-              )}
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className="outline-none pt-2 w-[73%] bg-transparent"
+                placeholder="John@xyz.com"
+                value={formData.email}
+                required
+                onChange={(e) => handleFormState(e)}
+              />
             </div>
           </div>
 
@@ -442,49 +413,16 @@ function page() {
               Phone Number <span className="text-red-600">*</span>
             </label>
             <div className="flex justify-between border-b-2 border-black">
-              {!isPhoneOtpSent ? (
-                <>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    className="outline-none pt-2 w-[73%] bg-transparent"
-                    placeholder="+91 9876543210"
-                    value={formData.phone}
-                    required
-                    onChange={(e) => handleFormState(e)}
-                  />
-                  {!isPhoneVerified ? (
-                    <button
-                      onClick={() => sendOtpPhone()}
-                      className="px-[5px] bg-blue-200 text-[12px]"
-                    >
-                      {!flagPhone ? "Send Otp" : "sending..."}
-                    </button>
-                  ) : (
-                    <div>Verified</div>
-                  )}
-                </>
-              ) : (
-                <>
-                  <input
-                    type="number"
-                    id="otpPhone"
-                    name="otpPhone"
-                    className="outline-none pt-2 w-[73%] bg-transparent"
-                    placeholder="Enter your otp"
-                    value={phoneOtp}
-                    required
-                    onChange={(e) => setPhoneOtp(e.target.value)}
-                  />
-                  <button
-                    onClick={() => verifyPhoneOtp()}
-                    className="px-[5px] bg-blue-200 text-[12px]"
-                  >
-                    {!flagPhone ? "Verify Otp" : "verifying..."}
-                  </button>
-                </>
-              )}
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                className="outline-none pt-2 w-[73%] bg-transparent"
+                placeholder="+91 9876543210"
+                value={formData.phone}
+                required
+                onChange={(e) => handleFormState(e)}
+              />
             </div>
           </div>
 
@@ -567,9 +505,7 @@ function page() {
         <div className="w-[100%] mt-5">
           Already have an account?{" "}
           <Link href="/login">
-            <span className="text-blue-600 hover:underline">
-              Sign in.
-            </span>
+            <span className="text-blue-600 hover:underline">Sign in.</span>
           </Link>
         </div>
       </div>
