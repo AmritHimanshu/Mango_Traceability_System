@@ -153,7 +153,7 @@ router.post("/api/verify-otp-phone", (req, res) => {
     const { phone, otp } = req.body;
 
     if (!phone || !otp) {
-        return res.status(400).json({ error: "Email and OTP are required." });
+        return res.status(400).json({ error: "OTP is required." });
     }
 
     const isValid = verifyOtpForPhone(phone, otp);

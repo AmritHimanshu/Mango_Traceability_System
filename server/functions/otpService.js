@@ -34,6 +34,7 @@ const sendOtpToPhone = async (phone) => {
     const otp = randomInt(100000, 999999).toString();
     const expiry = Date.now() + 5 * 60 * 1000;
     otpPhoneStore.set(phone, { otp, expiry });
+
     await sendPhone(phone, otp);
 };
 
@@ -42,6 +43,7 @@ const verifyOtpForPhone = (phone, inputOtp) => {
     if (!record) return false;
 
     const { otp, expiry } = record;
+
     if (Date.now() > expiry) {
         otpPhoneStore.delete(phone);
         return false;

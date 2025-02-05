@@ -42,14 +42,10 @@ function page() {
   });
 
   const [isOtp, setIsOtp] = useState(false);
-  const [isEmailOtpSent, setIsEmailOtpSent] = useState(false);
-  const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isPhoneOtpSent, setIsPhoneOtpSent] = useState(false);
-  const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+  const [isOTPVerified, setIsOTPVerified] = useState(false);
   const [isPasswordVerified, setIsPasswordVerified] = useState(false);
-  const [emailOtp, setEmailOtp] = useState("");
   const [phoneOtp, setPhoneOtp] = useState("");
-  const [flagEmail, setFlagEmail] = useState(false);
   const [flagPhone, setFlagPhone] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -141,100 +137,51 @@ function page() {
     return phoneNumberObj?.isValid();
   };
 
-  /*
-  const sendOtpEmail = async () => {
-    if (!formData.email) {
-      alert("Email field is empty");
+
+  const handleFormData = async () => {
+    const { name, email, phone, password, confirm_password } = formData;
+    if (!name || !email || !phone || !password || !confirm_password) {
+      alert("Fill all the fields");
       return;
     }
 
-    setFlagEmail(true);
-
-    try {
-      const res = await fetch(`${BASE_URL}/${SEND_OTP_EMAIL}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: formData.email }),
-      });
-
-      const data = await res.json();
-
-      if (res.status !== 201) {
-        const error = new Error(data.error);
-        throw error;
-      }
-
-      setIsEmailOtpSent(true);
-      alert(data.message);
-    } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
-    }
-
-    setFlagEmail(false);
-  };
-  */
-
-  /* 
-  const verifyEmailOtp = async () => {
-    if (!emailOtp) {
-      alert("Enter your OTP");
+    if (!isPasswordVerified) {
+      alert("Password is weak");
       return;
     }
 
-    setFlagEmail(true);
-
-    try {
-      const res = await fetch(`${BASE_URL}/${VERIFY_OTP_EMAIL}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: formData.email, otp: emailOtp }),
-      });
-
-      const data = await res.json();
-
-      if (res.status !== 201) {
-        const error = new Error(data.error);
-        throw error;
-      }
-
-      setIsEmailVerified(true);
-      alert(data.message);
-    } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
-    }
-
-    setEmailOtp("");
-    setIsEmailOtpSent(false);
-    setFlagEmail(false);
-  };
-  */
-
-  const sendOtpPhone = async () => {
-    if (!formData.phone) {
-      alert("Phone number field is empty");
+    if (password !== confirm_password) {
+      alert("Passwords not matched");
       return;
     }
 
-    if (!validatePhoneNumber(formData.phone)) {
+    if (!validatePhoneNumber(phone)) {
       alert("Invalid phone number");
       return;
     }
 
-    setFlagPhone(true);
+    if (!isOTPVerified) {
+      alert("OTP is not verified!");
+      return;
+    }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
 
     try {
-      const res = await fetch(`${BASE_URL}/${SEND_OTP_PHONE}`, {
+      const res = await fetch(`${BASE_URL}/${REGISTER_USER}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ phone: formData.phone }),
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          password,
+          confirm_password,
+        }),
       });
 
       const data = await res.json();
@@ -244,23 +191,29 @@ function page() {
         throw error;
       }
 
-      setIsPhoneOtpSent(true);
       alert(data.message);
+      router.push(LOGIN);
     } catch (error) {
       console.log("Error: ", error);
       alert(error);
     }
 
-    setFlagPhone(false);
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
   };
 
-  const verifyPhoneOtp = async () => {
+  const verifyOtp = async () => {
     if (!phoneOtp) {
       alert("Enter your OTP");
       return;
     }
 
     setFlagPhone(true);
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
 
     try {
       const res = await fetch(`${BASE_URL}/${VERIFY_OTP_PHONE}`, {
@@ -278,19 +231,46 @@ function page() {
         throw error;
       }
 
-      setIsPhoneVerified(true);
+      setIsOTPVerified(true);
       alert(data.message);
+      handleFormData();
     } catch (error) {
       console.log("Error: ", error);
       alert(error);
     }
 
     setPhoneOtp("");
-    setIsPhoneOtpSent(false);
     setFlagPhone(false);
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
   };
 
-  const sendOTP = async () => {
+  const sendOTP = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const { name, email, phone, password, confirm_password } = formData;
+    if (!name || !email || !phone || !password || !confirm_password) {
+      alert("Fill all the fields");
+      return;
+    }
+
+    if (!isPasswordVerified) {
+      alert("Password is weak");
+      return;
+    }
+
+    if (password !== confirm_password) {
+      alert("Passwords not matched");
+      return;
+    }
+
+    if (!validatePhoneNumber(phone)) {
+      alert("Invalid phone number");
+      return;
+    }
+
     if (!formData.phone) {
       alert("Phone number field is empty");
       return;
@@ -333,78 +313,21 @@ function page() {
     }
   };
 
-  const handleFormData = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const { name, email, phone, password, confirm_password } = formData;
-    if (!name || !email || !phone || !password || !confirm_password) {
-      alert("Fill all the fields");
-      return;
-    }
-
-    if (!isPasswordVerified) {
-      alert("Password is weak");
-      return;
-    }
-
-    if (password !== confirm_password) {
-      alert("Passwords not matched");
-      return;
-    }
-
-    if (!validatePhoneNumber(phone)) {
-      alert("Invalid phone number");
-      return;
-    }
-
-    if (loadingBarRef.current) {
-      loadingBarRef.current.continuousStart();
-    }
-
-    try {
-      const res = await fetch(`${BASE_URL}/${REGISTER_USER}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          phone,
-          password,
-          confirm_password,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (res.status !== 201) {
-        const error = new Error(data.error);
-        throw error;
-      }
-
-      alert(data.message);
-      router.push(LOGIN);
-    } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
-    }
-
-    if (loadingBarRef.current) {
-      loadingBarRef.current.complete();
-    }
-  };
 
   return (
     <div className="flex items-center justify-center h-[calc(100vh-56px)]">
       <CustomLoadingBar ref={loadingBarRef} />
 
       <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] bg-cardBackground rounded-sm shadow-md">
-        {isOtp ? (
+        {!isOtp ? (
           <>
             <div className="mb-3 text-center">Registration</div>
 
-            <form action="POST" onSubmit={sendOTP} className="space-y-5">
+            <form
+              action="POST"
+              onSubmit={(e) => sendOTP(e)}
+              className="space-y-5"
+            >
               <div className="flex items-start flex-col">
                 <label htmlFor="name">
                   Name <span className="text-red-600">*</span>
@@ -553,12 +476,25 @@ function page() {
                 onChange={(e) => setPhoneOtp(e.target.value)}
               />
               <div className="space-x-3 text-end text-[14px]">
-                <button className="py-1 px-2 bg-gray-500 text-white rounded-sm hover:bg-gray-600 duration-200">
+                <button
+                  className="py-1 px-2 bg-gray-500 text-white rounded-sm hover:bg-gray-600 duration-200"
+                  // onClick={(e) => sendOTP}
+                >
                   RESEND OTP
                 </button>
-                <button className="py-1 px-2 bg-green-600 text-white rounded-sm hover:bg-green-700 duration-200">
-                  VERIFY
-                </button>
+
+                {flagPhone ? (
+                  <button className="py-1 px-2 bg-green-600 bg-opacity-70 text-white rounded-sm">
+                    Verifying
+                  </button>
+                ) : (
+                  <button
+                    className="py-1 px-2 bg-green-600 text-white rounded-sm hover:bg-green-700 duration-200"
+                    onClick={verifyOtp}
+                  >
+                    VERIFY
+                  </button>
+                ) }
               </div>
             </div>
           </>
