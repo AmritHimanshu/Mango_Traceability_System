@@ -290,6 +290,49 @@ function page() {
     setFlagPhone(false);
   };
 
+  const sendOTP = async () => {
+    if (!formData.phone) {
+      alert("Phone number field is empty");
+      return;
+    }
+
+    if (!validatePhoneNumber(formData.phone)) {
+      alert("Invalid phone number");
+      return;
+    }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
+    try {
+      const res = await fetch(`${BASE_URL}/${SEND_OTP_PHONE}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ phone: formData.phone }),
+      });
+
+      const data = await res.json();
+
+      if (res.status !== 201) {
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      alert(data.message);
+      setIsOtp(true);
+    } catch (error) {
+      console.log("Error: ", error);
+      alert(error);
+    }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
+  };
+
   const handleFormData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -313,8 +356,6 @@ function page() {
       alert("Invalid phone number");
       return;
     }
-
-    setIsOtp(true);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.continuousStart();
@@ -363,11 +404,7 @@ function page() {
           <>
             <div className="mb-3 text-center">Registration</div>
 
-            <form
-              action="POST"
-              onSubmit={(e) => handleFormData(e)}
-              className="space-y-5"
-            >
+            <form action="POST" onSubmit={sendOTP} className="space-y-5">
               <div className="flex items-start flex-col">
                 <label htmlFor="name">
                   Name <span className="text-red-600">*</span>
@@ -495,7 +532,10 @@ function page() {
         ) : (
           <>
             <div className="space-y-3">
-              <div className="text-end cursor-pointer" onClick={()=>setIsOtp(false)}>
+              <div
+                className="text-end cursor-pointer"
+                onClick={() => setIsOtp(false)}
+              >
                 X
               </div>
 
@@ -509,10 +549,16 @@ function page() {
                 type="text"
                 className="border-[1px] border-black w-full p-2 outline-0"
                 placeholder="Enter OTP"
+                value={phoneOtp}
+                onChange={(e) => setPhoneOtp(e.target.value)}
               />
               <div className="space-x-3 text-end text-[14px]">
-                <button className="py-1 px-2 bg-gray-500 text-white rounded-sm hover:bg-gray-600 duration-200">RESEND OTP</button>
-                <button className="py-1 px-2 bg-green-600 text-white rounded-sm hover:bg-green-700 duration-200">VERIFY</button>
+                <button className="py-1 px-2 bg-gray-500 text-white rounded-sm hover:bg-gray-600 duration-200">
+                  RESEND OTP
+                </button>
+                <button className="py-1 px-2 bg-green-600 text-white rounded-sm hover:bg-green-700 duration-200">
+                  VERIFY
+                </button>
               </div>
             </div>
           </>
