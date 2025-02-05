@@ -5,18 +5,16 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import {
+  FARMER_DELETE_FARM_DATA,
   FARMER_FETCH_FARM_DATA,
   FARMER_SAVE_FARM_DATA,
 } from "@/utils/Apis/api";
 import { FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
 import Heading from "@/app/components/admin/Heading";
-const Map = dynamic(
-  () => import("@/app/components/farmer/MapCoordinates"),
-  {
-    ssr: false,
-  }
-);
+const Map = dynamic(() => import("@/app/components/farmer/MapCoordinates"), {
+  ssr: false,
+});
 import ListFarmApplicationsData from "@/app/components/farmer/ListFarmApplicationsData";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -99,6 +97,7 @@ function page() {
 
       if (res.status === 404) {
         router.push(NOT_FOUND);
+        alert(data.error);
         if (loadingBarRef.current) {
           loadingBarRef.current.complete();
         }
@@ -169,6 +168,65 @@ function page() {
     router.push(`${FARMS}/${id}`);
   };
 
+  const handleOnDelete = async () => {
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
+    try {
+      const res = await fetch(`${BASE_URL}/${FARMER_DELETE_FARM_DATA}/${id}`,{
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
+
+      const data = await res.json();
+
+      if(res.status === 403){
+        alert(data.error);
+        router.push(LOGIN);
+        if (loadingBarRef.current) {
+          loadingBarRef.current.complete();
+        }
+        return;
+      }
+
+      else if(res.status === 404){
+        alert(data.error);
+        if (loadingBarRef.current) {
+          loadingBarRef.current.complete();
+        }
+        return;
+      }
+
+      else if (res.status !== 201 && res.status !== 500) {
+        router.push(LOGIN);
+        if (loadingBarRef.current) {
+          loadingBarRef.current.complete();
+        }
+        return;
+      }
+
+      else if (res.status === 500) {
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      alert(data.message);
+      router.push(FARMS)
+      
+    } catch (error) {
+      console.log("Error: ", error);
+      alert(error);
+    }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
+  };
+
   const handleOnSave = async () => {
     try {
       const payload = {
@@ -216,8 +274,9 @@ function page() {
 
       const data = await res.json();
 
-      if (res.status === 400) {
+      if (res.status === 404) {
         alert(data.error);
+        router.push(NOT_FOUND);
         if (loadingBarRef.current) {
           loadingBarRef.current.complete();
         }
@@ -279,15 +338,24 @@ function page() {
     <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
-      {!edit ? <Heading text={farm.farm} /> : <Heading text={`${farm.farm} (edit)`} />} 
+      {!edit ? (
+        <Heading text={farm.farm} />
+      ) : (
+        <Heading text={`${farm.farm} (edit)`} />
+      )}
 
       {farm && (
         <>
-          {edit && (
-            <div className="text-end">
+          {edit ? (
+            <div className="text-end mt-2">
               <CloseIcon className="cursor-pointer" onClick={handleOnClose} />
             </div>
+          ) : (
+            <button onClick={handleOnDelete} className="my-2 bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2">
+              Delete
+            </button>
           )}
+
           <div className="space-y-10 my-5">
             <Map coordinates={farm.geoFenceData} height="300px" />
 

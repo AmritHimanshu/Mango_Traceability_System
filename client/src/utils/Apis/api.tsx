@@ -32,3 +32,6 @@ export const FARMER_NEW_FARM = "farmer/api/new-farm";
 
 // Farmer PUT APIs
 export const FARMER_SAVE_FARM_DATA = "farmer/api/save-farm-data";
+
+// Farmer DELETE APIs
+export const FARMER_DELETE_FARM_DATA = "farmer/api/delete-farm";
