@@ -67,7 +67,7 @@ function page() {
     let lowerCase = /[a-z]/g;
     let upperCase = /[A-Z]/g;
     let numbers = /[0-9]/g;
-    let specialCharacter = /[-'/`~!@#$%^&*]/g;
+    let specialCharacter = /[-'/`~!@#$%^&*(){}[\]|;:",.<>?\\]/g;
 
     if(!new_pass){
       setErrorMessage("");
@@ -87,6 +87,16 @@ function page() {
     }
     else if(!new_pass.match(numbers)){
       setErrorMessage("Password must contains numbers");
+      setIsPasswordVerified(false);
+      return;
+    }
+    else if(!new_pass.match(specialCharacter)){
+      setErrorMessage("Password must contains special character");
+      setIsPasswordVerified(false);
+      return;
+    }
+    else if(new_pass.length < 8){
+      setErrorMessage("Password must be at least 8 character long");
       setIsPasswordVerified(false);
       return;
     }
