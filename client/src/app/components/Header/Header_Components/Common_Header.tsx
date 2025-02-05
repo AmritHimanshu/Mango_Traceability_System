@@ -11,7 +11,7 @@ function Common_Header({ handleOnClick }: HandleOnClickProps) {
   return (
     <div className="space-y-3">
       <div
-        className={`py-3 w-full border-b-[1px] border-black font-bold ${
+        className={`py-3 w-full border-b-[1px] border-black font-bold hover:text-gray-700 cursor-pointer ${
           pathname === LOGIN ? "text-green-800" : "text-black"
         }`}
         onClick={() => handleOnClick(LOGIN)}
@@ -19,7 +19,7 @@ function Common_Header({ handleOnClick }: HandleOnClickProps) {
         Login
       </div>
       <div
-        className={`py-3 w-full border-b-[1px] border-black font-bold ${
+        className={`py-3 w-full border-b-[1px] border-black font-bold hover:text-gray-700 cursor-pointer ${
           pathname === REGISTER ? "text-green-800" : "text-black"
         }`}
         onClick={() => handleOnClick(REGISTER)}

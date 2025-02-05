@@ -13,7 +13,7 @@ function Admin_Header({ handleOnClick }: HandleOnClickProps) {
       {admin.map((list, index) => (
         <div
           key={index}
-          className={`py-3 w-full border-b-[1px] border-black font-bold cursor-pointer ${
+          className={`py-3 w-full border-b-[1px] border-black font-bold cursor-pointer hover:text-gray-700 ${
             pathname === list.path ? "text-green-800" : "text-black"
           }`}
           onClick={() => handleOnClick(list.path)}
