@@ -21,6 +21,7 @@ import { LOGIN } from "@/utils/Paths/paths";
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import Message from "../components/message/Message";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -42,12 +43,12 @@ function page() {
   });
 
   const [isOtp, setIsOtp] = useState(false);
-  const [isPhoneOtpSent, setIsPhoneOtpSent] = useState(false);
   const [isOTPVerified, setIsOTPVerified] = useState(false);
   const [isPasswordVerified, setIsPasswordVerified] = useState(false);
   const [phoneOtp, setPhoneOtp] = useState("");
   const [flagPhone, setFlagPhone] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState({ text: "", type: "" });
 
   const handleFormState = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -136,7 +137,6 @@ function page() {
     const phoneNumberObj = parsePhoneNumberFromString(phoneNumber, "IN");
     return phoneNumberObj?.isValid();
   };
-
 
   const handleFormData = async () => {
     const { name, email, phone, password, confirm_password } = formData;
@@ -247,6 +247,39 @@ function page() {
     }
   };
 
+  const reSendOTP = async () => {
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
+    try {
+      const res = await fetch(`${BASE_URL}/${SEND_OTP_PHONE}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ phone: formData.phone }),
+      });
+
+      const data = await res.json();
+
+      if (res.status !== 201) {
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      alert(data.message);
+      setIsOtp(true);
+    } catch (error) {
+      console.log("Error: ", error);
+      alert(error);
+    }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
+  };
+
   const sendOTP = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -313,13 +346,16 @@ function page() {
     }
   };
 
-
   return (
-    <div className="flex items-center justify-center h-[calc(100vh-56px)]">
+    <div className="flex items-center justify-center h-[calc(100vh-56px)] relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
+      {message.text && message.type && (
+        <Message text={message.text} type={message.type} />
+      )}
+
       <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] bg-cardBackground rounded-sm shadow-md">
-        {!isOtp ? (
+        {isOtp ? (
           <>
             <div className="mb-3 text-center">Registration</div>
 
@@ -478,13 +514,16 @@ function page() {
               <div className="space-x-3 text-end text-[14px]">
                 <button
                   className="py-1 px-2 bg-gray-500 text-white rounded-sm hover:bg-gray-600 duration-200"
-                  // onClick={(e) => sendOTP}
+                  onClick={() => reSendOTP()}
                 >
                   RESEND OTP
                 </button>
 
                 {flagPhone ? (
-                  <button className="py-1 px-2 bg-green-600 bg-opacity-70 text-white rounded-sm">
+                  <button
+                    className="py-1 px-2 bg-green-600 bg-opacity-70 text-white rounded-sm"
+                    disabled
+                  >
                     Verifying
                   </button>
                 ) : (
@@ -494,7 +533,7 @@ function page() {
                   >
                     VERIFY
                   </button>
-                ) }
+                )}
               </div>
             </div>
           </>
