@@ -15,11 +15,11 @@ import {
   VERIFY_OTP_PHONE,
 } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
+import Message from "../components/message/Message";
 
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import Message from "../components/message/Message";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
