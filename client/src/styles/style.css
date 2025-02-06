@@ -1,3 +1,7 @@
+.page-main-div{
+    @apply flex items-center justify-center h-[calc(100vh-72px)] relative
+}
+
 .btn{
     @apply py-2 px-4 text-[13px] md:text-[15px] rounded-sm font-bold w-full m-auto
 }

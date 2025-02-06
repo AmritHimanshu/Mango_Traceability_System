@@ -11,9 +11,7 @@ import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
 import {
   LOGOUT_USER,
   REGISTER_USER,
-  SEND_OTP_EMAIL,
   SEND_OTP_PHONE,
-  VERIFY_OTP_EMAIL,
   VERIFY_OTP_PHONE,
 } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
@@ -118,9 +116,12 @@ function page() {
 
       dispatch(setUserState(null));
     } catch (error) {
-      console.log("Error: ", error);
-      alert("Error");
+      setMessage({ text: `${error}`, type: "error" });
     }
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
   };
 
   useEffect(() => {
@@ -141,27 +142,42 @@ function page() {
   const handleFormData = async () => {
     const { name, email, phone, password, confirm_password } = formData;
     if (!name || !email || !phone || !password || !confirm_password) {
-      alert("Fill all the fields");
+      setMessage({ text: "Fill all the fields", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
     if (!isPasswordVerified) {
-      alert("Password is weak");
+      setMessage({ text: "Password is weak", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
     if (password !== confirm_password) {
-      alert("Passwords not matched");
+      setMessage({ text: "Passwords not matched", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
     if (!validatePhoneNumber(phone)) {
-      alert("Invalid phone number");
+      setMessage({ text: "Invalid phone number", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
     if (!isOTPVerified) {
-      alert("OTP is not verified!");
+      setMessage({ text: "OTP is not verified!", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
@@ -191,12 +207,17 @@ function page() {
         throw error;
       }
 
-      alert(data.message);
+      setMessage({ text: data.message, type: "success" });
       router.push(LOGIN);
     } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
+      setMessage({ text: String(error), type: "error" });
     }
+
+    setIsOtp(false);
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -205,7 +226,10 @@ function page() {
 
   const verifyOtp = async () => {
     if (!phoneOtp) {
-      alert("Enter your OTP");
+      setMessage({ text: "Enter your OTP", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
@@ -226,21 +250,27 @@ function page() {
 
       const data = await res.json();
 
+      console.log(data, res.status);
+
       if (res.status !== 201) {
         const error = new Error(data.error);
         throw error;
       }
-
+      console.log("HI")
       setIsOTPVerified(true);
-      alert(data.message);
+      setMessage({ text: data.message, type: "success" });
       handleFormData();
     } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
+      console.log("Hkkl")
+      setMessage({ text: `${error}`, type: "error" });
     }
 
     setPhoneOtp("");
     setFlagPhone(false);
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -268,12 +298,15 @@ function page() {
         throw error;
       }
 
-      alert(data.message);
+      setMessage({ text: data.message, type: "success" });
       setIsOtp(true);
     } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
+      setMessage({ text: `${error}`, type: "error" });
     }
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -285,32 +318,50 @@ function page() {
 
     const { name, email, phone, password, confirm_password } = formData;
     if (!name || !email || !phone || !password || !confirm_password) {
-      alert("Fill all the fields");
+      setMessage({ text: "Fill all the fields", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
     if (!isPasswordVerified) {
-      alert("Password is weak");
+      setMessage({ text: "password is weak!", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
     if (password !== confirm_password) {
-      alert("Passwords not matched");
+      setMessage({ text: "Passwords not matched!", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
     if (!validatePhoneNumber(phone)) {
-      alert("Invalid phone number");
+      setMessage({ text: "Invalid phone number", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
     if (!formData.phone) {
-      alert("Phone number field is empty");
+      setMessage({ text: "Phone number field is empty", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
     if (!validatePhoneNumber(formData.phone)) {
-      alert("Invalid phone number");
+      setMessage({ text: "Invalide phone number", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
@@ -334,12 +385,15 @@ function page() {
         throw error;
       }
 
-      alert(data.message);
+      setMessage({ text: data.message, type: "success" });
       setIsOtp(true);
     } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
+      setMessage({ text: `${error}`, type: "error" });
     }
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -347,7 +401,7 @@ function page() {
   };
 
   return (
-    <div className="flex items-center justify-center h-[calc(100vh-56px)] relative">
+    <div className="page-main-div">
       <CustomLoadingBar ref={loadingBarRef} />
 
       {message.text && message.type && (
@@ -355,7 +409,7 @@ function page() {
       )}
 
       <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] bg-cardBackground rounded-sm shadow-md">
-        {isOtp ? (
+        {!isOtp ? (
           <>
             <div className="mb-3 text-center">Registration</div>
 
@@ -529,7 +583,7 @@ function page() {
                 ) : (
                   <button
                     className="py-1 px-2 bg-green-600 text-white rounded-sm hover:bg-green-700 duration-200"
-                    onClick={verifyOtp}
+                    onClick={()=>verifyOtp()}
                   >
                     VERIFY
                   </button>

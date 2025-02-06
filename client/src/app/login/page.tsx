@@ -109,7 +109,7 @@ function page() {
   };
 
   return (
-    <div className="flex items-center justify-center h-[calc(100vh-56px)]">
+    <div className="page-main-div">
       <CustomLoadingBar ref={loadingBarRef} />
 
       <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] bg-cardBackground rounded-sm shadow-md">
