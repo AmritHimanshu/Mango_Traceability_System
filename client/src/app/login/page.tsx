@@ -95,6 +95,7 @@ function page() {
       const data = await res.json();
 
       if (res.status !== 201) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
@@ -103,9 +104,7 @@ function page() {
       router.push("/");
 
       setMessage({ text: "Successfully signed in", type: "success" });
-    } catch (error) {
-      setMessage({ text: `${error}`, type: "error" });
-    }
+    } catch (error) {}
 
     setTimeout(() => {
       setMessage({ text: "", type: "" });
@@ -126,7 +125,7 @@ function page() {
 
       <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] bg-cardBackground rounded-sm shadow-md">
         <div className="mb-3 text-center">Login</div>
-        
+
         <form
           action="POST"
           className="space-y-10"

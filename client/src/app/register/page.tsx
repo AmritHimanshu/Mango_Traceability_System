@@ -172,6 +172,7 @@ function page() {
       const data = await res.json();
 
       if (res.status !== 201) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
@@ -179,7 +180,6 @@ function page() {
       setMessage({ text: data.message, type: "success" });
       router.push(LOGIN);
     } catch (error) {
-      setMessage({ text: String(error), type: "error" });
     }
 
     setIsOtp(false);
@@ -220,6 +220,7 @@ function page() {
       const data = await res.json();
 
       if (res.status !== 201) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
@@ -227,7 +228,6 @@ function page() {
       setIsOTPVerified(true);
       setMessage({ text: data.message, type: "success" });
     } catch (error) {
-      setMessage({ text: `${error}`, type: "error" });
     }
 
     setPhoneOtp("");
@@ -263,6 +263,7 @@ function page() {
       const data = await res.json();
 
       if (res.status !== 201) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
@@ -270,7 +271,6 @@ function page() {
       setMessage({ text: data.message, type: "success" });
       setIsOtp(true);
     } catch (error) {
-      setMessage({ text: `${error}`, type: "error" });
     }
 
     setTimeout(() => {
@@ -350,6 +350,7 @@ function page() {
       const data = await res.json();
 
       if (res.status !== 201) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
@@ -357,7 +358,6 @@ function page() {
       setMessage({ text: data.message, type: "success" });
       setIsOtp(true);
     } catch (error) {
-      setMessage({ text: `${error}`, type: "error" });
     }
 
     setTimeout(() => {
