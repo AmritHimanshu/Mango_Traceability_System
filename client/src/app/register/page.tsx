@@ -141,37 +141,6 @@ function page() {
 
   const handleFormData = async () => {
     const { name, email, phone, password, confirm_password } = formData;
-    if (!name || !email || !phone || !password || !confirm_password) {
-      setMessage({ text: "Fill all the fields", type: "error" });
-      setTimeout(() => {
-        setMessage({ text: "", type: "" });
-      }, 2000);
-      return;
-    }
-
-    if (!isPasswordVerified) {
-      setMessage({ text: "Password is weak", type: "error" });
-      setTimeout(() => {
-        setMessage({ text: "", type: "" });
-      }, 2000);
-      return;
-    }
-
-    if (password !== confirm_password) {
-      setMessage({ text: "Passwords not matched", type: "error" });
-      setTimeout(() => {
-        setMessage({ text: "", type: "" });
-      }, 2000);
-      return;
-    }
-
-    if (!validatePhoneNumber(phone)) {
-      setMessage({ text: "Invalid phone number", type: "error" });
-      setTimeout(() => {
-        setMessage({ text: "", type: "" });
-      }, 2000);
-      return;
-    }
 
     if (!isOTPVerified) {
       setMessage({ text: "OTP is not verified!", type: "error" });
@@ -250,18 +219,14 @@ function page() {
 
       const data = await res.json();
 
-      console.log(data, res.status);
-
       if (res.status !== 201) {
         const error = new Error(data.error);
         throw error;
       }
-      console.log("HI")
+
       setIsOTPVerified(true);
       setMessage({ text: data.message, type: "success" });
-      handleFormData();
     } catch (error) {
-      console.log("Hkkl")
       setMessage({ text: `${error}`, type: "error" });
     }
 
@@ -276,6 +241,10 @@ function page() {
       loadingBarRef.current.complete();
     }
   };
+
+  useEffect(() => {
+    if (isOTPVerified) handleFormData();
+  }, [isOTPVerified]);
 
   const reSendOTP = async () => {
     if (loadingBarRef.current) {
@@ -583,7 +552,7 @@ function page() {
                 ) : (
                   <button
                     className="py-1 px-2 bg-green-600 text-white rounded-sm hover:bg-green-700 duration-200"
-                    onClick={()=>verifyOtp()}
+                    onClick={() => verifyOtp()}
                   >
                     VERIFY
                   </button>
