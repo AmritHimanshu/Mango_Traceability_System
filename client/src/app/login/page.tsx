@@ -13,6 +13,7 @@ import { FORGOT_PASSWORD, REGISTER } from "@/utils/Paths/paths";
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import Message from "../components/message/Message";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -26,6 +27,7 @@ function page() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState({ text: "", type: "" });
 
   const logOut = async () => {
     try {
@@ -47,9 +49,12 @@ function page() {
 
       dispatch(setUserState(null));
     } catch (error) {
-      console.log("Error: ", error);
-      alert("Error");
+      setMessage({ text: `${error}`, type: "error" });
     }
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
   };
 
   useEffect(() => {
@@ -66,7 +71,7 @@ function page() {
     e.preventDefault();
 
     if (!email || !password) {
-      alert("Fill all the fields");
+      setMessage({ text: "Fill all the fields", type: "error" });
       return;
     }
 
@@ -97,11 +102,14 @@ function page() {
       dispatch(setUserState(data));
       router.push("/");
 
-      alert("Successfully signed in");
+      setMessage({ text: "Successfully signed in", type: "success" });
     } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
+      setMessage({ text: `${error}`, type: "error" });
     }
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -111,6 +119,10 @@ function page() {
   return (
     <div className="page-main-div">
       <CustomLoadingBar ref={loadingBarRef} />
+
+      {message.text && message.type && (
+        <Message text={message.text} type={message.type} />
+      )}
 
       <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] bg-cardBackground rounded-sm shadow-md">
         <div className="mb-3 text-center">Login</div>
