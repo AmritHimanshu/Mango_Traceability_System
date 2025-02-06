@@ -58,6 +58,7 @@ function page() {
       }
 
       if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
@@ -89,26 +90,37 @@ function page() {
 
       const data = await res.json();
       if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
         router.push(LOGIN);
-        return;
+        const error = new Error(data.error);
+        throw error;
       }
 
       if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
 
       setPendingRequests(data);
-    } catch (error) {
-      console.log(error);
-      alert(error);
-    }
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
   };
 
   const authenticateReq = async (id: string, role: string, status: boolean) => {
     if (!role && status === true) {
-      alert("Please assign role to the user!");
+      setMessage({ text: "Please assign role to the user!", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
+    }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
     }
 
     try {
@@ -122,28 +134,37 @@ function page() {
       });
 
       const data = await res.json();
-      if (res.status === 400) {
-        alert(data.error);
-        return;
-      }
-
-      if (res.status !== 201 && res.status !== 500) {
-        router.push(LOGIN);
-        return;
-      }
-
-      if (res.status === 500) {
+      if (res.status === 400 || res.status === 404) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
 
-      alert(data.message);
+      if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
+        router.push(LOGIN);
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      setMessage({ text: data.message, type: "error" });
 
       fetchNoOfUsers();
       fetchPendingRequests();
-    } catch (error) {
-      console.log(error);
-      alert(error);
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
     }
   };
 
