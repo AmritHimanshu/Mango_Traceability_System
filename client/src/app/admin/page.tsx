@@ -12,6 +12,7 @@ import {
   ADMIN_FEW_PENDING_REQUESTS,
 } from "@/utils/Apis/api";
 import { useAppSelector } from "@/store/store";
+import Message from "../components/message/Message";
 import HomeCard from "../components/admin/HomeCard";
 import Heading from "../components/admin/Heading";
 import PendingUserCard from "../components/admin/PendingUserCard";
@@ -25,6 +26,7 @@ function page() {
 
   const router = useRouter();
 
+  const [message, setMessage] = useState({ text: "", type: "" });
   const [showWelcome, setShowWelcome] = useState(false);
   const [noOfVerifiedManagers, setNoOfVerifiedManagers] = useState(0);
   const [noOfVerifiedFarmers, setNoOfVerifiedFarmers] = useState(0);
@@ -49,11 +51,10 @@ function page() {
       const data = await res.json();
 
       if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
         router.push(LOGIN);
-        if (loadingBarRef.current) {
-          loadingBarRef.current.complete();
-        }
-        return;
+        const error = new Error(data.error);
+        throw error;
       }
 
       if (res.status === 500) {
@@ -65,10 +66,11 @@ function page() {
       setNoOfVerifiedFarmers(data.noOfVerifiedFarmers);
       setNoOfPendingRequests(data.noOfPendingRequests);
       sestNoOfRejectedRequests(data.noOfRejectedRequests);
-    } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
-    }
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -168,6 +170,10 @@ function page() {
   return (
     <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto">
       <CustomLoadingBar ref={loadingBarRef} />
+
+      {message.text && message.type && (
+        <Message text={message.text} type={message.type} />
+      )}
 
       {userState && showWelcome && (
         <div className="text-center p-2 bg-yellow-300 text-black font-bold shadow-md mb-5">
