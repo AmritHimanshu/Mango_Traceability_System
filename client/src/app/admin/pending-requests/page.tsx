@@ -10,8 +10,9 @@ import {
   ADMIN_AUTHENTICATE_USER,
   ADMIN_PENDING_REQUESTS,
 } from "@/utils/Apis/api";
+import Message from "@/app/components/message/Message";
 import Heading from "@/app/components/admin/Heading";
-import PendingUserCard from "@/app/components/admin/PendingUserCard";
+import PendingUserTable from "@/app/components/admin/PendingUserTable";
 import "../../../styles/style.css";
 
 function page() {
@@ -22,6 +23,7 @@ function page() {
   const router = useRouter();
 
   const [pendingRequests, setPendingRequests] = useState<User[]>([]);
+  const [message, setMessage] = useState({ text: "", type: "" });
 
   const limit = 7;
   let skip = 0;
@@ -45,14 +47,14 @@ function page() {
 
       const data = await res.json();
       if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
         router.push(LOGIN);
-        if (loadingBarRef.current) {
-          loadingBarRef.current.complete();
-        }
-        return;
+        const error = new Error(data.error);
+        throw error;
       }
 
       if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
@@ -63,10 +65,11 @@ function page() {
           return [...prev, ...data];
         }
       });
-    } catch (error) {
-      console.log(error);
-      alert("Error fetchPendingRequests");
-    }
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -95,7 +98,10 @@ function page() {
 
   const authenticateReq = async (id: string, role: string, status: boolean) => {
     if (!role && status === true) {
-      alert("Please assign role to the user!");
+      setMessage({ text: "Please assign role to the user!", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
@@ -115,35 +121,34 @@ function page() {
 
       const data = await res.json();
       if (res.status === 400) {
-        alert(data.error);
-        if (loadingBarRef.current) {
-          loadingBarRef.current.complete();
-        }
-        return;
-      }
-
-      if (res.status !== 201 && res.status !== 500) {
-        router.push(LOGIN);
-        if (loadingBarRef.current) {
-          loadingBarRef.current.complete();
-        }
-        return;
-      }
-
-      if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
 
-      alert(data.message);
+      if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
+        router.push(LOGIN);
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      setMessage({ text: data.message, type: "success" });
 
       setPendingRequests((prev) => {
         return prev.filter((request) => request._id !== id);
       });
-    } catch (error) {
-      console.log(error);
-      alert("Error acceptRequest");
-    }
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -154,6 +159,10 @@ function page() {
     <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
+      {message.text && message.type && (
+        <Message text={message.text} type={message.type} />
+      )}
+
       <Heading text="Pending Requests" />
 
       <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-5">
@@ -161,7 +170,7 @@ function page() {
           <>
             {pendingRequests.map((request, index) => (
               <div key={index} className="space-y-2 p-3 bg-gray-50 shadow-md">
-                <PendingUserCard
+                <PendingUserTable
                   index={index}
                   request={request}
                   authenticateReq={authenticateReq}

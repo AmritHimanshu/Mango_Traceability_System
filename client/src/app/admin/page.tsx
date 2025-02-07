@@ -15,7 +15,7 @@ import { useAppSelector } from "@/store/store";
 import Message from "../components/message/Message";
 import HomeCard from "../components/admin/HomeCard";
 import Heading from "../components/admin/Heading";
-import PendingUserCard from "../components/admin/PendingUserCard";
+import PendingUserCard from "../components/admin/PendingUserTable";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;

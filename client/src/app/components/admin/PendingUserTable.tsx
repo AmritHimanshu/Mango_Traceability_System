@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { PendingUserCardProps } from "@/utils/Types/interfaces";
 
-function PendingUserCard({
+function PendingUserTable({
   index,
   request,
   authenticateReq,
@@ -86,4 +86,4 @@ function PendingUserCard({
   );
 }
 
-export default PendingUserCard;
+export default PendingUserTable;

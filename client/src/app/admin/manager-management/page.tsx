@@ -9,7 +9,7 @@ import { LOGIN, MANAGER } from "@/utils/Paths/paths";
 import { ADMIN_MANAGER_MANAGEMENT } from "@/utils/Apis/api";
 import Message from "@/app/components/message/Message";
 import Heading from "@/app/components/admin/Heading";
-import Table_List from "@/app/components/common/Table_List";
+import Table_List from "@/app/components/admin/Table_List";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
