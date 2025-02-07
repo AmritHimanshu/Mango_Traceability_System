@@ -5,10 +5,11 @@ import { useRouter } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../../components/loadingBar/CustomLoadingBar";
 import { User } from "@/utils/Types/interfaces";
-import { LOGIN } from "@/utils/Paths/paths";
+import { LOGIN, MANAGER } from "@/utils/Paths/paths";
 import { ADMIN_MANAGER_MANAGEMENT } from "@/utils/Apis/api";
+import Message from "@/app/components/message/Message";
 import Heading from "@/app/components/admin/Heading";
-import ListUserCard from "@/app/components/admin/ListUserCard";
+import Table_List from "@/app/components/common/Table_List";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -18,6 +19,7 @@ function page() {
   const router = useRouter();
 
   const [managers, setManagers] = useState<User[]>([]);
+  const [message, setMessage] = useState({ text: "", type: "" });
 
   const limit = 7;
   let skip = 0;
@@ -41,14 +43,14 @@ function page() {
 
       const data = await res.json();
       if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
         router.push(LOGIN);
-        if (loadingBarRef.current) {
-          loadingBarRef.current.complete();
-        }
-        return;
+        const error = new Error(data.error);
+        throw error;
       }
 
       if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
@@ -59,10 +61,11 @@ function page() {
           return [...prev, ...data];
         }
       });
-    } catch (error) {
-      console.log(error);
-      alert("Error fetchManagers");
-    }
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -93,17 +96,15 @@ function page() {
     <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
-      <Heading text="Manager Management" />      
+      {message.text && message.type && (
+        <Message text={message.text} type={message.type} />
+      )}
 
-      <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-5">
-        {managers.length !== 0 ? (
-          <>
-            {managers.map((manager, index) => (
-              <div key={index} className="p-3 bg-gray-50 shadow-md">
-                <ListUserCard index={index} user={manager} />
-              </div>
-            ))}
-          </>
+      <Heading text="Manager Management" />
+
+      <div className="mt-5">
+        {managers.length > 0 ? (
+          <Table_List users={managers} url={MANAGER} />
         ) : (
           <div className="text-center text-gray-500">No records found!</div>
         )}
