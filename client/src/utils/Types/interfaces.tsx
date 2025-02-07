@@ -108,8 +108,7 @@ export type FewFarmList = {
 };
 
 export type ListFarmCardProps = {
-  idx: number;
-  farm: FarmList;
+  farms: FarmList[];
   handleClick: (id: string) => Promise<void>;
 };
 

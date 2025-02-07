@@ -7,8 +7,9 @@ import { LoadingBarRef } from "react-top-loading-bar";
 import { FARMER, LOGIN } from "@/utils/Paths/paths";
 import { ADMIN_FETCH_FARMER_FARM_LIST } from "@/utils/Apis/api";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
+import Message from "@/app/components/message/Message";
 import Heading from "@/app/components/admin/Heading";
-import ListFarmCard from "@/app/components/farmer/ListFarmCard";
+import ListFarmList from "@/app/components/farmer/ListFarmList";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -22,6 +23,7 @@ function page() {
 
   const [farms, setFarms] = useState<FarmList[]>([]);
   const [farmerName, setFarmerName] = useState("");
+  const [message, setMessage] = useState({ text: "", type: "" });
 
   const limit = 10;
   let skip = 0;
@@ -46,14 +48,14 @@ function page() {
       const data = await res.json();
 
       if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
         router.push(LOGIN);
-        if (loadingBarRef.current) {
-          loadingBarRef.current.complete();
-        }
-        return;
+        const error = new Error(data.error);
+        throw error;
       }
 
       if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
@@ -66,10 +68,11 @@ function page() {
           return [...prev, ...data];
         }
       });
-    } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
-    }
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -82,7 +85,7 @@ function page() {
     }
 
     router.push(`${FARMER}/farm?farm_id=${id}`);
-    
+
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
     }
@@ -112,20 +115,16 @@ function page() {
     <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
+      {message.text && message.type && (
+        <Message text={message.text} type={message.type} />
+      )}
+
       <Heading text={farmerName} />
 
       <div className="my-3">
-        {farms.length !== 0 ? (
-          <div className="space-y-3 mt-2">
-            {farms.map((farm, index) => (
-              <ListFarmCard
-                key={index}
-                idx={index}
-                farm={farm}
-                handleClick={handleSelectedFarm}
-              />
-            ))}
-          </div>
+        {farms.length > 0 ? (
+          <ListFarmList farms={farms} handleClick={handleSelectedFarm}
+          />
         ) : (
           <div className="text-center text-gray-500 my-2">
             No records found!
