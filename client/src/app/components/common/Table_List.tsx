@@ -53,7 +53,7 @@ function Table_List({ users, url }: { users: User[]; url: string }) {
                   hour12: true,
                 })}
               </td>
-              <td className="px-2 border-y-2 text-center">
+              <td className="px-2 border-y-2 text-end">
                 <button
                   className="w-[30px] md:w-[50px] lg:w-[100px] bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white py-2 rounded-sm duration-200"
                   onClick={() => handleOnView(user._id)}

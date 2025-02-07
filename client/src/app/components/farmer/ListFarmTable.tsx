@@ -3,7 +3,7 @@
 import React from "react";
 import { ListFarmCardProps } from "@/utils/Types/interfaces";
 
-function ListFarmList({ farms, handleClick }: ListFarmCardProps) {
+function ListFarmTable({ farms, handleClick }: ListFarmCardProps) {
   return (
     <div className="w-full overflow-x-auto">
       <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] border-2 table-fixed">
@@ -41,7 +41,7 @@ function ListFarmList({ farms, handleClick }: ListFarmCardProps) {
                   hour12: true,
                 })}
               </td>
-              <td className="px-2 border-y-2 text-center">
+              <td className="px-2 border-y-2 text-end">
                 <button
                   className="w-[30px] md:w-[50px] lg:w-[100px] bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white py-2 rounded-sm duration-200"
                   onClick={() => handleClick(farm._id)}
@@ -57,4 +57,4 @@ function ListFarmList({ farms, handleClick }: ListFarmCardProps) {
   );
 }
 
-export default ListFarmList;
+export default ListFarmTable;

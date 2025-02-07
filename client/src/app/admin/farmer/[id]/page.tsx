@@ -9,7 +9,7 @@ import { ADMIN_FETCH_FARMER_FARM_LIST } from "@/utils/Apis/api";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import Message from "@/app/components/message/Message";
 import Heading from "@/app/components/admin/Heading";
-import ListFarmList from "@/app/components/farmer/ListFarmList";
+import ListFarmTable from "@/app/components/farmer/ListFarmTable";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -123,8 +123,7 @@ function page() {
 
       <div className="my-3">
         {farms.length > 0 ? (
-          <ListFarmList farms={farms} handleClick={handleSelectedFarm}
-          />
+          <ListFarmTable farms={farms} handleClick={handleSelectedFarm} />
         ) : (
           <div className="text-center text-gray-500 my-2">
             No records found!
