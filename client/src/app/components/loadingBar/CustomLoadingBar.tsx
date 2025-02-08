@@ -7,7 +7,7 @@ const CustomLoadingBar = forwardRef<LoadingBarRef>((props, ref) => {
   return (
     <LoadingBar
       color="#0098d1"
-      height={4}     
+      height={8}     
       ref={ref}      
       {...props}      
     />
