@@ -42,7 +42,7 @@ export type HomeCardProps = {
 };
 
 export type PendingUserTableProps = {
-  users: User[];
+  user: User;
   authenticateReq: (id: string, role: string, status: boolean) => Promise<void>;
 };
 

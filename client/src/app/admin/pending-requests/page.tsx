@@ -167,7 +167,30 @@ function page() {
 
       <div className="mt-5">
         {pendingRequests.length > 0 ? (
-          <PendingUserTable users={pendingRequests} authenticateReq={authenticateReq}/>
+          <div className="w-full overflow-x-auto">
+            <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] border-2 table-fixed">
+              <thead>
+                <tr className="text-start font-bold bg-gray-200">
+                  <td className="px-2 py-4 border-y-2">Name</td>
+                  <td className="px-2 py-4 border-y-2">Email</td>
+                  <td className="px-2 py-4 border-y-2">Phone</td>
+                  <td className="px-2 py-4 border-y-2">Date</td>
+                  <td className="px-2 py-4 border-y-2">Assign role</td>
+                  <td className="px-2 py-4 border-y-2"></td>
+                </tr>
+              </thead>
+
+              <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
+                {pendingRequests.map((user, index) => (
+                  <PendingUserTable
+                    key={index}
+                    user={user}
+                    authenticateReq={authenticateReq}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
         ) : (
           <div className="text-center text-gray-500">No records found!</div>
         )}
