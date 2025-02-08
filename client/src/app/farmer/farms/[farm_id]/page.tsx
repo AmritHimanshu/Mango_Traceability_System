@@ -347,7 +347,7 @@ function page() {
           ) : (
             <button
               onClick={handleOnDelete}
-              className="my-2 bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2"
+              className="my-2 bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2 py-2"
             >
               Delete
             </button>
