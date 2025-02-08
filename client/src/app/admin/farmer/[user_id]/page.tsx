@@ -9,7 +9,7 @@ import { ADMIN_FETCH_FARMER_FARM_LIST } from "@/utils/Apis/api";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import Message from "@/app/components/message/Message";
 import Heading from "@/app/components/admin/Heading";
-import ListFarmTable from "@/app/components/farmer/ListFarmTable";
+import ListFarmTable from "@/app/components/admin/ListFarmTable";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;

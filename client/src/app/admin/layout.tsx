@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Sidebar from "../components/admin/Sidebar";
+import Sidebar from "../components/common/Sidebar";
 
 export const metadata: Metadata = {
   title: "Mango Traceability System",
