@@ -9,7 +9,7 @@ import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
 import { LOGOUT_USER, SIGNIN_USER } from "@/utils/Apis/api";
 import { FORGOT_PASSWORD, REGISTER } from "@/utils/Paths/paths";
-import Message from "../components/message/Message";
+import Message from "../components/common/Message";
 
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";

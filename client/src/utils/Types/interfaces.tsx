@@ -42,14 +42,8 @@ export type HomeCardProps = {
 };
 
 export type PendingUserCardProps = {
-  index: number;
-  request: User;
+  users: User[];
   authenticateReq: (id: string, role: string, status: boolean) => Promise<void>;
-};
-
-export type ListUserCardProps = {
-  index: number;
-  user: User;
 };
 
 // Farmer

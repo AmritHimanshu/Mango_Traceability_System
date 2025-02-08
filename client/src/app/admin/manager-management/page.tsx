@@ -7,7 +7,7 @@ import CustomLoadingBar from "../../components/loadingBar/CustomLoadingBar";
 import { User } from "@/utils/Types/interfaces";
 import { LOGIN, MANAGER } from "@/utils/Paths/paths";
 import { ADMIN_MANAGER_MANAGEMENT } from "@/utils/Apis/api";
-import Message from "@/app/components/message/Message";
+import Message from "@/app/components/common/Message";
 import Heading from "@/app/components/admin/Heading";
 import Table_List from "@/app/components/admin/Table_List";
 

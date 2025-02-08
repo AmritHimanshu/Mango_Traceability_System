@@ -10,7 +10,7 @@ import {
   ADMIN_AUTHENTICATE_USER,
   ADMIN_PENDING_REQUESTS,
 } from "@/utils/Apis/api";
-import Message from "@/app/components/message/Message";
+import Message from "@/app/components/common/Message";
 import Heading from "@/app/components/admin/Heading";
 import PendingUserTable from "@/app/components/admin/PendingUserTable";
 import "../../../styles/style.css";
@@ -165,19 +165,9 @@ function page() {
 
       <Heading text="Pending Requests" />
 
-      <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-5">
-        {pendingRequests.length !== 0 ? (
-          <>
-            {pendingRequests.map((request, index) => (
-              <div key={index} className="space-y-2 p-3 bg-gray-50 shadow-md">
-                <PendingUserTable
-                  index={index}
-                  request={request}
-                  authenticateReq={authenticateReq}
-                />
-              </div>
-            ))}
-          </>
+      <div className="mt-5">
+        {pendingRequests.length > 0 ? (
+          <PendingUserTable users={pendingRequests} authenticateReq={authenticateReq}/>
         ) : (
           <div className="text-center text-gray-500">No records found!</div>
         )}

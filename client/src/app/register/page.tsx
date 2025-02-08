@@ -15,7 +15,7 @@ import {
   VERIFY_OTP_PHONE,
 } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
-import Message from "../components/message/Message";
+import Message from "../components/common/Message";
 
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";

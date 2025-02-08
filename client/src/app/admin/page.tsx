@@ -12,7 +12,7 @@ import {
   ADMIN_FEW_PENDING_REQUESTS,
 } from "@/utils/Apis/api";
 import { useAppSelector } from "@/store/store";
-import Message from "../components/message/Message";
+import Message from "../components/common/Message";
 import HomeCard from "../components/admin/HomeCard";
 import Heading from "../components/admin/Heading";
 import PendingUserCard from "../components/admin/PendingUserTable";
@@ -231,7 +231,7 @@ function page() {
         />
       </div>
 
-      {pendingRequests && (
+      {/* {pendingRequests && (
         <div className="bg-gray-50 p-3 my-5">
           <div className="pb-2 text-[16px] md:text-[18px] font-bold text-center underline">
             Recent Requests
@@ -255,7 +255,7 @@ function page() {
             view all
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
