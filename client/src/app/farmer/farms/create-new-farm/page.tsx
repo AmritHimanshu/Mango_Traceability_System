@@ -34,7 +34,10 @@ function page() {
 
   const calculateAreaOfLand = (coordinates: [number, number][]) => {
     if (coordinates.length < 3) {
-      alert("Select atlead three coordinates");
+      setMessage({ text: "Select minimum three coordinates", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return null;
     }
 
