@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { ListFarmCardProps } from "@/utils/Types/interfaces";
+import { ListFarmTableProps } from "@/utils/Types/interfaces";
 
-function ListFarmTable({ farms, handleClick }: ListFarmCardProps) {
+function ListFarmTable({ farms, handleClick }: ListFarmTableProps) {
   return (
     <div className="w-full overflow-x-auto">
       <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] border-2 table-fixed">

@@ -41,7 +41,7 @@ export type HomeCardProps = {
   textColor: string;
 };
 
-export type PendingUserCardProps = {
+export type PendingUserTableProps = {
   users: User[];
   authenticateReq: (id: string, role: string, status: boolean) => Promise<void>;
 };
@@ -101,7 +101,7 @@ export type FewFarmList = {
   _id: string;
 };
 
-export type ListFarmCardProps = {
+export type ListFarmTableProps = {
   farms: FarmList[];
   handleClick: (id: string) => Promise<void>;
 };

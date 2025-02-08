@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { PendingUserCardProps } from "@/utils/Types/interfaces";
+import { PendingUserTableProps } from "@/utils/Types/interfaces";
 
-function PendingUserTable({ users, authenticateReq }: PendingUserCardProps) {
+function PendingUserTable({ users, authenticateReq }: PendingUserTableProps) {
   const [selectedButton, setSelectedButton] = useState("");
 
   const [selectRole, setSelectRole] = useState("");
