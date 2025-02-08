@@ -163,8 +163,6 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <Message text="message is done" type="cancer" />
-
       <Heading text="Pending Requests" />
 
       <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-5">
