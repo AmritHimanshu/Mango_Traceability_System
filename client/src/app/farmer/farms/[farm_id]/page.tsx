@@ -285,7 +285,7 @@ function page() {
         throw error;
       }
 
-      setMessage({ text: data.message, type: "error" });
+      setMessage({ text: data.message, type: "success" });
       router.push(`${FARMS}/${id}`);
       setChangedFarmData({});
       setArtificial("");
