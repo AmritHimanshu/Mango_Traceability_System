@@ -7,7 +7,7 @@ import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import { CREATE_FARM, FARMS, LOGIN } from "@/utils/Paths/paths";
 import { FARMER_FETCH_FARMS_LIST } from "@/utils/Apis/api";
 import { FarmList } from "@/utils/Types/interfaces";
-import ListFarmCard from "@/app/components/admin/ListFarmTable";
+import ListFarmTable from "@/app/components/admin/ListFarmTable";
 import Heading from "@/app/components/admin/Heading";
 
 function page() {
@@ -106,7 +106,7 @@ function page() {
     <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
-      <Heading text="Farms" />
+      <Heading text="FARMS" />
 
       <div className="my-2">
         <button
@@ -117,18 +117,9 @@ function page() {
         </button>
       </div>
 
-      <div className="my-5">
-        {farms.length !== 0 ? (
-          <div className="space-y-3 mt-2">
-            {farms.map((farm, index) => (
-              <ListFarmCard
-                key={index}
-                idx={index}
-                farm={farm}
-                handleClick={handleSelectedFarm}
-              />
-            ))}
-          </div>
+      <div className="my-3">
+        {farms.length > 0 ? (
+          <ListFarmTable farms={farms} handleClick={handleSelectedFarm} />
         ) : (
           <div className="text-center text-gray-500 my-2">
             No records found!

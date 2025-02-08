@@ -100,7 +100,7 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <Heading text="Manager Management" />
+      <Heading text="MANAGER MANAGEMENT" />
 
       <div className="mt-5">
         {managers.length > 0 ? (

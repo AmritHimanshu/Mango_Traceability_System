@@ -163,7 +163,7 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <Heading text="Pending Requests" />
+      <Heading text="PENDING REQUESTS" />
 
       <div className="mt-5">
         {pendingRequests.length > 0 ? (
