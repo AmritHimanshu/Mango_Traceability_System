@@ -14,7 +14,7 @@ import {
 import { useAppSelector } from "@/store/store";
 import Message from "../components/common/Message";
 import HomeCard from "../components/admin/HomeCard";
-import Heading from "../components/admin/Heading";
+import Heading from "../components/common/Heading";
 import PendingUserTable from "../components/admin/PendingUserTable";
 
 function page() {

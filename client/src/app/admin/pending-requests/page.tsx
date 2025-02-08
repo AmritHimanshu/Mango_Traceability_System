@@ -11,7 +11,7 @@ import {
   ADMIN_PENDING_REQUESTS,
 } from "@/utils/Apis/api";
 import Message from "@/app/components/common/Message";
-import Heading from "@/app/components/admin/Heading";
+import Heading from "@/app/components/common/Heading";
 import PendingUserTable from "@/app/components/admin/PendingUserTable";
 import "../../../styles/style.css";
 

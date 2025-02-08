@@ -9,7 +9,8 @@ import { FARMER_FETCH_FEW_FARMS_LIST } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
 import { FewFarmList } from "@/utils/Types/interfaces";
 import HomeCard from "../components/farmer/HomeCard";
-import Heading from "../components/admin/Heading";
+import Heading from "../components/common/Heading";
+import Message from "../components/common/Message";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -20,6 +21,7 @@ function page() {
 
   const router = useRouter();
 
+  const [message, setMessage] = useState({ text: "", type: "" });
   const [showWelcome, setShowWelcome] = useState(false);
   const [farmList, setFarmList] = useState<FewFarmList[]>([]);
 
@@ -40,24 +42,24 @@ function page() {
       const data = await res.json();
 
       if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
         router.push(LOGIN);
-
-        if (loadingBarRef.current) {
-          loadingBarRef.current.complete();
-        }
-        return;
+        const error = new Error(data.error);
+        throw error;
       }
 
       if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
 
       setFarmList(data);
-    } catch (error) {
-      console.log(error);
-      alert(error);
-    }
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -86,6 +88,10 @@ function page() {
   return (
     <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto">
       <CustomLoadingBar ref={loadingBarRef} />
+
+      {message.text && message.type && (
+        <Message text={message.text} type={message.type} />
+      )}
 
       {userState && showWelcome && (
         <div className="text-center p-2 bg-yellow-300 text-black font-bold shadow-md mb-5">

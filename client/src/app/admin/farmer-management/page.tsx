@@ -8,7 +8,7 @@ import { User } from "@/utils/Types/interfaces";
 import { FARMER, LOGIN } from "@/utils/Paths/paths";
 import { ADMIN_FARMER_MANAGEMENT } from "@/utils/Apis/api";
 import Message from "@/app/components/common/Message";
-import Heading from "@/app/components/admin/Heading";
+import Heading from "@/app/components/common/Heading";
 import Table_List from "@/app/components/admin/Table_List";
 
 function page() {
@@ -95,7 +95,7 @@ function page() {
   return (
     <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
-
+ 
       {message.text && message.type && (
         <Message text={message.text} type={message.type} />
       )}

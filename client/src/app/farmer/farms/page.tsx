@@ -8,7 +8,8 @@ import { CREATE_FARM, FARMS, LOGIN } from "@/utils/Paths/paths";
 import { FARMER_FETCH_FARMS_LIST } from "@/utils/Apis/api";
 import { FarmList } from "@/utils/Types/interfaces";
 import ListFarmTable from "@/app/components/admin/ListFarmTable";
-import Heading from "@/app/components/admin/Heading";
+import Heading from "@/app/components/common/Heading";
+import Message from "@/app/components/common/Message";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -18,6 +19,7 @@ function page() {
   const router = useRouter();
 
   const [farms, setFarms] = useState<FarmList[]>([]);
+  const [message, setMessage] = useState({ text: "", type: "" });
 
   const limit = 10;
   let skip = 0;
@@ -42,14 +44,14 @@ function page() {
       const data = await res.json();
 
       if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
         router.push(LOGIN);
-        if (loadingBarRef.current) {
-          loadingBarRef.current.complete();
-        }
-        return;
+        const error = new Error(data.error);
+        throw error;
       }
 
       if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
@@ -60,10 +62,11 @@ function page() {
           return [...prev, ...data];
         }
       });
-    } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
-    }
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -105,6 +108,10 @@ function page() {
   return (
     <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
+
+      {message.text && message.type && (
+        <Message text={message.text} type={message.type} />
+      )}
 
       <Heading text="FARMS" />
 

@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
-import Heading from "@/app/components/admin/Heading";
+import Heading from "@/app/components/common/Heading";
 
 function page() {
 

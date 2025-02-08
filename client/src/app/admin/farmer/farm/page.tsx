@@ -9,7 +9,7 @@ import { CERTIFICATE, FARMER, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
 import QRCode from "react-qr-code";
 import { Farm } from "@/utils/Types/interfaces";
-import Heading from "@/app/components/admin/Heading";
+import Heading from "@/app/components/common/Heading";
 import ListFarmApplicationsData from "@/app/components/farmer/ListFarmApplicationsData";
 const Map = dynamic(() => import("@/app/components/farmer/MapCoordinates"), {
   ssr: false,

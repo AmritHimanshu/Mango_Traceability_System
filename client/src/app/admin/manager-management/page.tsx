@@ -8,7 +8,7 @@ import { User } from "@/utils/Types/interfaces";
 import { LOGIN, MANAGER } from "@/utils/Paths/paths";
 import { ADMIN_MANAGER_MANAGEMENT } from "@/utils/Apis/api";
 import Message from "@/app/components/common/Message";
-import Heading from "@/app/components/admin/Heading";
+import Heading from "@/app/components/common/Heading";
 import Table_List from "@/app/components/admin/Table_List";
 
 function page() {

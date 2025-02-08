@@ -8,7 +8,7 @@ import { FARMER, LOGIN } from "@/utils/Paths/paths";
 import { ADMIN_FETCH_FARMER_FARM_LIST } from "@/utils/Apis/api";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import Message from "@/app/components/common/Message";
-import Heading from "@/app/components/admin/Heading";
+import Heading from "@/app/components/common/Heading";
 import ListFarmTable from "@/app/components/admin/ListFarmTable";
 
 function page() {

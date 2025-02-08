@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
-import Heading from "@/app/components/admin/Heading";
+import Heading from "@/app/components/common/Heading";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;

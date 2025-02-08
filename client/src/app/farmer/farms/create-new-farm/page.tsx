@@ -8,7 +8,7 @@ import { FARMER_NEW_FARM } from "@/utils/Apis/api";
 import { FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
 import { useAppSelector } from "@/store/store";
-import Heading from "@/app/components/admin/Heading";
+import Heading from "@/app/components/common/Heading";
 const Map = dynamic(() => import("@/app/components/farmer/Map"), {
   ssr: false,
 });
