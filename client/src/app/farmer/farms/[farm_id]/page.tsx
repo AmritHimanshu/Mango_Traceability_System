@@ -17,6 +17,7 @@ const Map = dynamic(() => import("@/app/components/farmer/MapCoordinates"), {
 });
 import ListFarmApplicationsData from "@/app/components/farmer/ListFarmApplicationsData";
 import CloseIcon from "@mui/icons-material/Close";
+import Message from "@/app/components/common/Message";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -29,6 +30,8 @@ function page() {
 
   const searchParams = useSearchParams();
   const edit = searchParams.get("edit");
+
+  const [message, setMessage] = useState({ text: "", type: "" });
 
   const [farm, setFarm] = useState({
     area: 0,
@@ -96,24 +99,21 @@ function page() {
       const data = await res.json();
 
       if (res.status === 404) {
+        setMessage({ text: data.error, type: "error" });
         router.push(NOT_FOUND);
-        alert(data.error);
-        if (loadingBarRef.current) {
-          loadingBarRef.current.complete();
-        }
-        return;
+        const error = new Error(data.error);
+        throw error;
       }
 
       if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
         router.push(LOGIN);
-        if (loadingBarRef.current) {
-          loadingBarRef.current.complete();
-        }
-        return;
+        const error = new Error(data.error);
+        throw error;
       }
 
       if (res.status === 500) {
-        router.push(FARMS);
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
@@ -139,10 +139,11 @@ function page() {
         specialCare: data.specialCare || [],
         harvest: data.harvest || "",
       });
-    } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
-    }
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -169,8 +170,7 @@ function page() {
   };
 
   const handleOnDelete = async () => {
-
-    if(!confirm("Do you want to delete this farm?")){
+    if (!confirm("Do you want to delete this farm?")) {
       return;
     }
 
@@ -179,53 +179,39 @@ function page() {
     }
 
     try {
-      const res = await fetch(`${BASE_URL}/${FARMER_DELETE_FARM_DATA}/${id}`,{
-        method: 'DELETE',
+      const res = await fetch(`${BASE_URL}/${FARMER_DELETE_FARM_DATA}/${id}`, {
+        method: "DELETE",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        credentials: 'include',
+        credentials: "include",
       });
 
       const data = await res.json();
 
-      if(res.status === 403){
-        alert(data.error);
+      if (res.status === 403) {
+        setMessage({ text: data.error, type: "error" });
         router.push(LOGIN);
-        if (loadingBarRef.current) {
-          loadingBarRef.current.complete();
-        }
-        return;
-      }
-
-      else if(res.status === 404){
-        alert(data.error);
-        if (loadingBarRef.current) {
-          loadingBarRef.current.complete();
-        }
-        return;
-      }
-
-      else if (res.status !== 201 && res.status !== 500) {
+        const error = new Error(data.error);
+        throw error;
+      } else if (res.status === 404 || res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
+        const error = new Error(data.error);
+        throw error;
+      } else if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
         router.push(LOGIN);
-        if (loadingBarRef.current) {
-          loadingBarRef.current.complete();
-        }
-        return;
-      }
-
-      else if (res.status === 500) {
         const error = new Error(data.error);
         throw error;
       }
 
-      alert(data.message);
-      router.push(FARMS)
-      
-    } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
-    }
+      setMessage({ text: data.message, type: "error" });
+      router.push(FARMS);
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -280,28 +266,26 @@ function page() {
       const data = await res.json();
 
       if (res.status === 404) {
-        alert(data.error);
+        setMessage({ text: data.error, type: "error" });
         router.push(NOT_FOUND);
-        if (loadingBarRef.current) {
-          loadingBarRef.current.complete();
-        }
-        return;
-      }
-
-      if (res.status !== 201 && res.status !== 500) {
-        router.push(LOGIN);
-        if (loadingBarRef.current) {
-          loadingBarRef.current.complete();
-        }
-        return;
-      }
-
-      if (res.status === 500) {
         const error = new Error(data.error);
         throw error;
       }
 
-      alert(data.message);
+      if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
+        router.push(LOGIN);
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      setMessage({ text: data.message, type: "error" });
       router.push(`${FARMS}/${id}`);
       setChangedFarmData({});
       setArtificial("");
@@ -329,10 +313,11 @@ function page() {
       });
 
       fetchFarmData();
-    } catch (error) {
-      console.log("Error: ", error);
-      alert("Error while saving changes.");
-    }
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -342,6 +327,10 @@ function page() {
   return (
     <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
       <CustomLoadingBar ref={loadingBarRef} />
+
+      {message.text && message.type && (
+        <Message text={message.text} type={message.type} />
+      )}
 
       {!edit ? (
         <Heading text={farm.farm} />
@@ -356,7 +345,10 @@ function page() {
               <CloseIcon className="cursor-pointer" onClick={handleOnClose} />
             </div>
           ) : (
-            <button onClick={handleOnDelete} className="my-2 bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2">
+            <button
+              onClick={handleOnDelete}
+              className="my-2 bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2"
+            >
               Delete
             </button>
           )}
