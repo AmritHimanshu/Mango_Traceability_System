@@ -370,7 +370,7 @@ function page() {
   };
 
   return (
-    <div className="page-main-div">
+    <div className="log-reg-page-main-div">
       <CustomLoadingBar ref={loadingBarRef} />
 
       {message.text && message.type && (

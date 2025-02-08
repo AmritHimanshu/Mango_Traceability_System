@@ -82,7 +82,7 @@ function page() {
   }, []);
 
   return (
-    <div className="p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative">
+    <div className="page-main-div">
       <CustomLoadingBar ref={loadingBarRef} />
 
       {farmData && <Heading text={farmData.farm} />}

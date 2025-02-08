@@ -1,5 +1,9 @@
-.page-main-div{
+.log-reg-page-main-div{
     @apply flex items-center justify-center h-[calc(100vh-72px)] relative
+}
+
+.page-main-div{
+    @apply p-5 w-full md:w-[calc(100vw-250px)] lg:w-[calc(100vw-300px)] xl:w-[calc(100vw-350px)] h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative
 }
 
 .btn{
