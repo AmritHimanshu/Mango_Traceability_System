@@ -21,7 +21,7 @@ function page() {
   const [farmers, setFarmers] = useState<User[]>([]);
   const [message, setMessage] = useState({ text: "", type: "" });
 
-  const limit = 7;
+  const limit = 20;
   let skip = 0;
 
   const fetchFarmers = async () => {

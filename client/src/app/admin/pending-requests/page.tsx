@@ -25,7 +25,7 @@ function page() {
   const [pendingRequests, setPendingRequests] = useState<User[]>([]);
   const [message, setMessage] = useState({ text: "", type: "" });
 
-  const limit = 7;
+  const limit = 20;
   let skip = 0;
 
   const fetchPendingRequests = async () => {

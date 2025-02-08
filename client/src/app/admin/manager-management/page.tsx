@@ -21,7 +21,7 @@ function page() {
   const [managers, setManagers] = useState<User[]>([]);
   const [message, setMessage] = useState({ text: "", type: "" });
 
-  const limit = 7;
+  const limit = 20;
   let skip = 0;
 
   const fetchManagers = async () => {
