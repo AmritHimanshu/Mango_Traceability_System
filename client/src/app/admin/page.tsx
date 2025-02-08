@@ -15,7 +15,7 @@ import { useAppSelector } from "@/store/store";
 import Message from "../components/common/Message";
 import HomeCard from "../components/admin/HomeCard";
 import Heading from "../components/admin/Heading";
-import PendingUserCard from "../components/admin/PendingUserTable";
+import PendingUserTable from "../components/admin/PendingUserTable";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -231,31 +231,44 @@ function page() {
         />
       </div>
 
-      {/* {pendingRequests && (
-        <div className="bg-gray-50 p-3 my-5">
+      {pendingRequests.length > 0 && (
+        <div className="bg-gray-50 p-3 my-10">
           <div className="pb-2 text-[16px] md:text-[18px] font-bold text-center underline">
-            Recent Requests
+            Recent Pending Requests
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-5">
-            {pendingRequests.map((request, index) => (
-              <div key={index} className="space-y-2 p-3 bg-white">
-                <PendingUserCard
-                  index={index}
-                  request={request}
-                  authenticateReq={authenticateReq}
-                />
-              </div>
-            ))}
+          <div className="w-full overflow-x-auto">
+            <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] border-2 table-fixed">
+              <thead>
+                <tr className="text-start font-bold bg-gray-200">
+                  <td className="px-2 py-4 border-y-2">Name</td>
+                  <td className="px-2 py-4 border-y-2">Email</td>
+                  <td className="px-2 py-4 border-y-2">Phone</td>
+                  <td className="px-2 py-4 border-y-2">Date</td>
+                  <td className="px-2 py-4 border-y-2">Assign role</td>
+                  <td className="px-2 py-4 border-y-2"></td>
+                </tr>
+              </thead>
+
+              <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
+                {pendingRequests.map((user, index) => (
+                  <PendingUserTable
+                    key={index}
+                    user={user}
+                    authenticateReq={authenticateReq}
+                  />
+                ))}
+              </tbody>
+            </table>
           </div>
 
           <div
-            className="mt-5 underline text-end cursor-pointer hover:text-blue-500"
+            className="mt-5 underline text-end cursor-pointer hover:text-blue-500 duration-200"
             onClick={() => router.push("/admin/pending-requests")}
           >
             view all
           </div>
         </div>
-      )} */}
+      )}
     </div>
   );
 }
