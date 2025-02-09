@@ -13,7 +13,7 @@ import Message from "@/app/components/common/Message";
 const Map = dynamic(() => import("@/app/components/farmer/Map"), {
   ssr: false,
 });
-import { polygon, area } from '@turf/turf';
+import { polygon, area } from "@turf/turf";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -91,9 +91,9 @@ function page() {
 
       if (res.status !== 201 && res.status !== 500) {
         setMessage({ text: data.error, type: "error" });
-                router.push(LOGIN);
-                const error = new Error(data.error);
-                throw error;
+        router.push(LOGIN);
+        const error = new Error(data.error);
+        throw error;
       }
 
       if (res.status === 500) {
