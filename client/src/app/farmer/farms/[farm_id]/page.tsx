@@ -245,8 +245,11 @@ function page() {
       };
 
       if (Object.keys(payload).length === 0) {
-        alert("No changes to save!");
+        setMessage({ text: "No changes to save!", type: "error" });
         router.push(`${FARMS}/${id}`);
+        setTimeout(() => {
+          setMessage({ text: "", type: "" });
+        }, 2000);
         return;
       }
 
