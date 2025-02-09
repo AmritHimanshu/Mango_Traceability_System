@@ -377,7 +377,7 @@ function page() {
                   name="farm"
                   value={farm.farm}
                   className="input-tag"
-                  disabled={!(edit === "true")}
+                  disabled
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
@@ -394,7 +394,7 @@ function page() {
                   name="crop"
                   value={farm.crop}
                   className="input-tag"
-                  disabled={!(edit === "true")}
+                  disabled
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
