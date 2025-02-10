@@ -72,12 +72,17 @@ function Header() {
         {userState && (
           <>
             {!isMenu ? (
+              <>
               <div className="md:hidden">
                 <MenuIcon
                   className="cursor-pointer"
                   onClick={() => setIsMenu(!isMenu)}
                 />
               </div>
+              <div className="hidden md:block text-sm font-semibold text-gray-800">
+                <div>{userState.name.toUpperCase()}</div>
+              </div>
+              </>
             ) : (
               <div className="md:hidden">
                 <CloseIcon
