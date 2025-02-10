@@ -55,6 +55,8 @@ function page() {
     harvest: { date: "", yield: "" },
   });
 
+  console.log(farm)
+
   const [changedFarmData, setChangedFarmData] = useState({});
 
   const [artificial, setArtificial] = useState("");
@@ -415,7 +417,7 @@ function page() {
                       : ""
                   }
                   className="input-tag"
-                  disabled={!(edit === "true") && !farm.ploughingDate}
+                  disabled={!(edit === "true" && farm.ploughingDate === "")}
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
@@ -484,7 +486,7 @@ function page() {
                       : ""
                   }
                   className="input-tag"
-                  disabled={!(edit === "true")}
+                  disabled={!(edit === "true" && farm.sowingDate === "")}
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
@@ -505,7 +507,7 @@ function page() {
                       : ""
                   }
                   className="input-tag"
-                  disabled={!(edit === "true")}
+                  disabled={!(edit === "true" && farm.floweringDate === "")}
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
@@ -528,7 +530,7 @@ function page() {
                       : ""
                   }
                   className="input-tag"
-                  disabled={!(edit === "true")}
+                  disabled={!(edit === "true" && farm.pheromoneTrapDate === "")}
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
@@ -551,7 +553,7 @@ function page() {
                       : ""
                   }
                   className="input-tag"
-                  disabled={!(edit === "true")}
+                  disabled={!(edit === "true" && farm.lureChangeDate === "")}
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
