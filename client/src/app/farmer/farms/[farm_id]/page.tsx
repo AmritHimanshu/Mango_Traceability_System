@@ -415,7 +415,7 @@ function page() {
                       : ""
                   }
                   className="input-tag"
-                  disabled={!(edit === "true")}
+                  disabled={!(edit === "true") && !farm.ploughingDate}
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
