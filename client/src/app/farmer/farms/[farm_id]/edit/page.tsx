@@ -23,6 +23,7 @@ function page() {
   const id = pathname.split("/")[3];
 
   const [message, setMessage] = useState({ text: "", type: "" });
+  const [isSave, setIsSave] = useState(false);
 
   const [farm, setFarm] = useState<Farm>();
   const [farmData, setFarmData] = useState({
@@ -125,7 +126,7 @@ function page() {
     fetchFarmData();
   }, []);
 
-  const handleOnClose = () => {
+  const handleOnCancel = () => {
     router.push(`${FARMS}/${id}`);
   };
 
@@ -220,7 +221,7 @@ function page() {
   };
 
   return (
-    <div className="page-main-div">
+    <div className="page-main-div relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
       {message.text && message.type && (
@@ -231,7 +232,7 @@ function page() {
 
       <div className="text-end my-7">
         <button
-          onClick={handleOnClose}
+          onClick={handleOnCancel}
           className="bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2 py-2"
         >
           Cancel
@@ -581,11 +582,38 @@ function page() {
       <div className="mt-16">
         <button
           className="btn bg-green-600 bg-opacity-90 text-white hover:bg-opacity-100 duration-200"
-          onClick={handleOnSave}
+          onClick={() => setIsSave(true)}
         >
           Save
         </button>
       </div>
+
+      {isSave && (
+        <div className="absolute top-0 left-0 w-full h-full bg-neutral-900 bg-opacity-80 flex items-center ">
+          <div className="bg-white p-5 w-[450px] m-auto space-y-5">
+            <div>
+              <div className="text-xl">Are you sure, you want to save?</div>
+              <div className="text-[13px]">
+                You will not be able to edit/change after saving!
+              </div>
+            </div>
+            <div className="text-end space-x-2">
+              <button
+                className="py-1 px-2 bg-red-600 text-white rounded-sm hover:bg-red-700 duration-200"
+                onClick={() => setIsSave(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="py-1 px-2 bg-green-600 text-white rounded-sm hover:bg-green-700 duration-200"
+                onClick={() => handleOnSave()}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
