@@ -233,7 +233,7 @@ function page() {
       <div className="text-end my-7">
         <button
           onClick={handleOnCancel}
-          className="bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2 py-2"
+          className="bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2 py-1 text-[11px] md:text-lg"
         >
           Cancel
         </button>
@@ -581,7 +581,7 @@ function page() {
 
       <div className="mt-16">
         <button
-          className="btn bg-green-600 bg-opacity-90 text-white hover:bg-opacity-100 duration-200"
+          className="btn text-[11px] md:text-lg bg-green-600 bg-opacity-90 text-white hover:bg-opacity-100 duration-200"
           onClick={() => setIsSave(true)}
         >
           Save
@@ -589,15 +589,15 @@ function page() {
       </div>
 
       {isSave && (
-        <div className="absolute top-0 left-0 w-full h-full bg-neutral-900 bg-opacity-80 flex items-center ">
-          <div className="bg-white p-5 w-[450px] m-auto space-y-5">
+        <div className="fixed z-[999] top-0 left-0 w-full h-full bg-neutral-900 bg-opacity-80 flex items-center">
+          <div className="bg-white p-5 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5">
             <div>
-              <div className="text-xl">Are you sure, you want to save?</div>
-              <div className="text-[13px]">
+              <div className="text-sm md:text-xl">Are you sure, you want to save?</div>
+              <div className="text-[10px] md:text-[13px]">
                 You will not be able to edit/change after saving!
               </div>
             </div>
-            <div className="text-end space-x-2">
+            <div className="text-end text-[11px] md:text-lg space-x-2">
               <button
                 className="py-1 px-2 bg-red-600 text-white rounded-sm hover:bg-red-700 duration-200"
                 onClick={() => setIsSave(false)}
