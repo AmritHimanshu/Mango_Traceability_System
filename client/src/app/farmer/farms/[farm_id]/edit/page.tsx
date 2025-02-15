@@ -229,10 +229,10 @@ function page() {
 
       <Heading text={`${farm?.farm} (Edit)`} />
 
-      <div className="text-end mt-5">
+      <div className="text-end my-7">
         <button
           onClick={handleOnClose}
-          className="my-5 bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2 py-2"
+          className="bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2 py-2"
         >
           Cancel
         </button>
