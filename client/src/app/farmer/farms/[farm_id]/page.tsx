@@ -28,6 +28,7 @@ function page() {
   const id = pathname.split("/").pop();
 
   const [message, setMessage] = useState({ text: "", type: "" });
+  const [isDelete, setIsDelete] = useState(false);
 
   const [farm, setFarm] = useState<Farm>();
 
@@ -88,10 +89,6 @@ function page() {
   };
 
   const handleOnDelete = async () => {
-    if (!confirm("Do you want to delete this farm?")) {
-      return;
-    }
-
     if (loadingBarRef.current) {
       loadingBarRef.current.continuousStart();
     }
@@ -137,7 +134,7 @@ function page() {
   };
 
   return (
-    <div className="page-main-div">
+    <div className="page-main-div relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
       {message.text && message.type && (
@@ -149,8 +146,8 @@ function page() {
       {farm && (
         <>
           <button
-            onClick={handleOnDelete}
-            className="my-5 bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2 py-2"
+            onClick={() => setIsDelete(true)}
+            className="my-5 text-[11px] md:text-lg bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2 py-2"
           >
             Delete
           </button>
@@ -413,6 +410,32 @@ function page() {
             </button>
           </div>
         </>
+      )}
+
+      {isDelete && (
+        <div className="fixed z-[9999] top-0 left-0 w-full h-full bg-neutral-900 bg-opacity-80 flex items-center">
+          <div className="bg-white p-5 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5">
+            <div>
+              <div className="text-sm md:text-xl">
+                Are you sure, you want to delete?
+              </div>
+            </div>
+            <div className="text-end text-[11px] md:text-lg space-x-2">
+              <button
+                className="py-1 px-2 bg-red-600 text-white rounded-sm hover:bg-red-700 duration-200"
+                onClick={() => setIsDelete(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="py-1 px-2 bg-green-600 text-white rounded-sm hover:bg-green-700 duration-200"
+                onClick={() => handleOnDelete()}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
