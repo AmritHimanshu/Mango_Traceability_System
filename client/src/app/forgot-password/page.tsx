@@ -13,6 +13,7 @@ import {
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { LOGIN } from "@/utils/Paths/paths";
+import Message from "../components/common/Message";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -28,10 +29,14 @@ function page() {
   const [otp, setOtp] = useState("");
   const [isEmailOtpSent, setIsEmailOtpSent] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
+  const [message, setMessage] = useState({ text: "", type: "" });
 
   const sendOtpToEmail = async () => {
     if (!email) {
-      alert("Enter your email");
+      setMessage({ text: "Enter your email", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
@@ -151,19 +156,29 @@ function page() {
     <div className="flex flex-col items-center justify-center h-[calc(100vh-56px)]">
       <CustomLoadingBar ref={loadingBarRef} />
 
-      {!isEmailOtpSent && !isOtpVerified && (
-        <div className="mb-10 text-[18px]">Reset your Password</div>
+      {message.text && message.type && (
+        <Message text={message.text} type={message.type} />
       )}
 
-      {isEmailOtpSent && !isOtpVerified && (
-        <div className="mb-10 text-[18px]">OTP Verification</div>
-      )}
+      <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] border-[1px] rounded-sm shadow-md">
+        {!isEmailOtpSent && !isOtpVerified && (
+          <div className="mb-10 text-sm md:text-xl text-center">
+            Reset your Password
+          </div>
+        )}
 
-      {isEmailOtpSent && isOtpVerified && (
-        <div className="mb-10 text-[18px]">Enter new password</div>
-      )}
+        {isEmailOtpSent && !isOtpVerified && (
+          <div className="mb-10 text-sm md:text-xl text-center">
+            OTP Verification
+          </div>
+        )}
 
-      <div className="p-5 w-[300px] bg-cardBackground bg-opacity-90 rounded-md shadow-md">
+        {isEmailOtpSent && isOtpVerified && (
+          <div className="mb-10 text-sm md:text-xl text-center">
+            Enter new password
+          </div>
+        )}
+
         {!isEmailOtpSent && !isOtpVerified && (
           <div className="flex items-start flex-col space-y-5">
             <label htmlFor="email">Enter your email:</label>
@@ -181,7 +196,7 @@ function page() {
             </div>
 
             <button
-              className="btn bg-green-600 text-white"
+              className="btn bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white"
               onClick={() => sendOtpToEmail()}
             >
               Verify email
@@ -205,7 +220,7 @@ function page() {
             </div>
 
             <button
-              className="btn bg-green-600 text-white"
+              className="btn bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white"
               onClick={() => verifyOtpToEmail()}
             >
               Submit

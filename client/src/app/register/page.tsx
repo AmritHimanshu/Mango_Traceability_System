@@ -377,7 +377,7 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] bg-cardBackground rounded-sm shadow-md">
+      <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] border-[1px] rounded-sm shadow-md">
         {!isOtp ? (
           <>
             <div className="mb-3 text-center">Registration</div>
@@ -504,7 +504,7 @@ function page() {
               </button>
             </form>
 
-            <div className="w-[100%] mt-5">
+            <div className="w-[100%] mt-5 text-[12px] md:text-[18px]">
               Already have an account?{" "}
               <Link href="/login">
                 <span className="text-blue-600 hover:underline">Sign in.</span>
