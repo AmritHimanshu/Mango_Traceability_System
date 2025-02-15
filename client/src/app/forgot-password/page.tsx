@@ -56,17 +56,20 @@ function page() {
       const data = await res.json();
 
       if (res.status !== 201) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
 
       setIsEmailOtpSent(true);
-      alert(data.message);
+      setMessage({ text: data.message, type: "success" });
     } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
       setIsEmailOtpSent(false);
     }
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
