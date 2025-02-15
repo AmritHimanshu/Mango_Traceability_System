@@ -9,6 +9,7 @@ import {
   FARMER_FETCH_FARM_DATA,
 } from "@/utils/Apis/api";
 import { FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
+import { Farm } from "@/utils/Types/interfaces";
 import dynamic from "next/dynamic";
 import Heading from "@/app/components/common/Heading";
 const Map = dynamic(() => import("@/app/components/farmer/MapCoordinates"), {
@@ -33,28 +34,7 @@ function page() {
 
   const [message, setMessage] = useState({ text: "", type: "" });
 
-  const [farm, setFarm] = useState({
-    area: 0,
-    farm: "",
-    crop: "",
-    geoFenceData: [{ lat: 0, lng: 0 }],
-    ploughingDate: "",
-    weedingDate: [],
-    sowingDate: "",
-    floweringDate: "",
-    pheromoneTrapDate: "",
-    lureChangeDate: "",
-    irrigationDates: {
-      artificial: [],
-      natural: [],
-    },
-    fertilizerApplications: [{ date: "", volume: "" }],
-    pesticideApplications: [],
-    bagging: [],
-    specialCare: [],
-    harvest: { date: "", yield: "" },
-  });
-
+  const [farm, setFarm] = useState<Farm>();
 
   const fetchFarmData = async () => {
     if (loadingBarRef.current) {
@@ -92,27 +72,7 @@ function page() {
         throw error;
       }
 
-      setFarm({
-        area: data.area || 0,
-        farm: data.farm || "",
-        crop: data.crop || "",
-        geoFenceData: data.geoFenceData || [{ lat: 0, lng: 0 }],
-        ploughingDate: data.ploughingDate || "",
-        weedingDate: data.weedingDate || [],
-        sowingDate: data.sowingDate || "",
-        floweringDate: data.floweringDate || "",
-        pheromoneTrapDate: data.pheromoneTrapDate || "",
-        lureChangeDate: data.lureChangeDate || "",
-        irrigationDates: {
-          artificial: data.irrigationDates?.artificial || "",
-          natural: data.irrigationDates?.natural || "",
-        },
-        fertilizerApplications: data.fertilizerApplications || [],
-        pesticideApplications: data.pesticideApplications || [],
-        bagging: data.bagging || [],
-        specialCare: data.specialCare || [],
-        harvest: data.harvest || "",
-      });
+      setFarm(data);
     } catch (error) {}
 
     setTimeout(() => {
@@ -127,12 +87,6 @@ function page() {
   useEffect(() => {
     fetchFarmData();
   }, []);
-
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setFarm((prev) => ({ ...prev, [name]: value }));
-  };
 
   const handleOnEdit = () => {
     router.push(`${FARMS}/${id}?edit=true`);
@@ -191,7 +145,6 @@ function page() {
     }
   };
 
-
   return (
     <div className="page-main-div">
       <CustomLoadingBar ref={loadingBarRef} />
@@ -201,9 +154,9 @@ function page() {
       )}
 
       {!edit ? (
-        <Heading text={farm.farm} />
+        <>{farm?.farm && <Heading text={farm.farm} />}</>
       ) : (
-        <Heading text={`${farm.farm} (Edit)`} />
+        <>{farm?.farm && <Heading text={`${farm.farm} (Edit)`} />}</>
       )}
 
       {farm && (
@@ -222,7 +175,7 @@ function page() {
           )}
 
           {!edit ? (
-            <div className="space-y-10 my-5">
+            <div className="space-y-5 lg:space-y-10 my-5">
               <Map coordinates={farm.geoFenceData} height="300px" />
 
               {farm.area && (
@@ -232,62 +185,98 @@ function page() {
                 </div>
               )}
 
-              {farm.farm && (
-                <div className="flex items-start flex-col">
-                  <label htmlFor="farm" className="font-bold">
-                    Farm Name:
-                  </label>
-                  <input
-                    type="text"
-                    id="farm"
-                    name="farm"
-                    value={farm.farm}
-                    className="input-tag"
-                    disabled
-                    onChange={(e) => handleOnChange(e)}
-                  />
-                </div>
-              )}
+              <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
+                {farm.farm && (
+                  <div className="flex items-start space-x-3">
+                    <div className="font-bold">Farm Name:</div>
+                    <div>{farm.farm}</div>
+                  </div>
+                )}
 
-              {farm.crop && (
-                <div className="flex items-start flex-col">
-                  <label htmlFor="crop" className="font-bold">
-                    Crop Name:
-                  </label>
-                  <input
-                    type="text"
-                    id="crop"
-                    name="crop"
-                    value={farm.crop}
-                    className="input-tag"
-                    disabled
-                    onChange={(e) => handleOnChange(e)}
-                  />
-                </div>
-              )}
+                {farm.crop && (
+                  <div className="flex items-start space-x-3">
+                    <div className="font-bold">Crop Name:</div>
+                    <div>{farm.crop}</div>
+                  </div>
+                )}
 
-              {farm.ploughingDate && (
-                <div className="flex items-start flex-col">
-                  <label htmlFor="ploughingDate" className="font-bold">
-                    Ploughing Date:
-                  </label>
-                  <input
-                    type="date"
-                    id="ploughingDate"
-                    name="ploughingDate"
-                    value={
-                      farm.ploughingDate
-                        ? new Date(farm.ploughingDate)
-                            .toISOString()
-                            .split("T")[0]
-                        : ""
-                    }
-                    className="input-tag"
-                    disabled={!(edit === "true" && farm.ploughingDate === "")}
-                    onChange={(e) => handleOnChange(e)}
-                  />
-                </div>
-              )}
+                {farm.ploughingDate && (
+                  <div className="flex items-start space-x-3">
+                    <div className="font-bold">Ploughing Date:</div>
+                    <div>
+                      {new Date(farm.ploughingDate).toISOString().split("T")[0]}
+                    </div>
+                  </div>
+                )}
+
+                {farm.sowingDate && (
+                  <div className="flex items-start space-x-3">
+                    <div className="font-bold">Sowing Date:</div>
+                    <div>
+                      {new Date(farm.sowingDate).toISOString().split("T")[0]}
+                    </div>
+                  </div>
+                )}
+
+                {farm.floweringDate && (
+                  <div className="flex items-start space-x-3">
+                    <div className="font-bold">Flowering Date:</div>
+                    <div>
+                      {new Date(farm.floweringDate).toISOString().split("T")[0]}
+                    </div>
+                  </div>
+                )}
+
+                {farm.pheromoneTrapDate && (
+                  <div className="flex items-start space-x-3">
+                    <div className="font-bold">Pheromone Trap Date:</div>
+                    <div>
+                      {
+                        new Date(farm.pheromoneTrapDate)
+                          .toISOString()
+                          .split("T")[0]
+                      }
+                    </div>
+                  </div>
+                )}
+
+                {farm.lureChangeDate && (
+                  <div className="flex items-start space-x-3">
+                    <div className="font-bold">Lure Change Date:</div>
+                    <div>
+                      {
+                        new Date(farm.lureChangeDate)
+                          .toISOString()
+                          .split("T")[0]
+                      }
+                    </div>
+                  </div>
+                )}
+
+                {farm.harvest && (
+                  <div className="flex items-start flex-col space-y-3">
+                    <div className="font-bold">Harvest Date:</div>
+                    <div>
+                      {farm.harvest.date && (
+                        <div className="flex space-x-5">
+                          <div>Date:</div>
+                          <div>
+                            {
+                              new Date(farm.harvest.date)
+                                .toISOString()
+                                .split("T")[0]
+                            }
+                          </div>
+                        </div>
+                      )}
+                      <div className="flex space-x-5">
+                        <div>Yield:</div>
+                        <div>{farm.harvest.yield}</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
 
               {farm.weedingDate.length > 0 && (
                 <div className="flex items-start flex-col space-y-3">
@@ -320,98 +309,6 @@ function page() {
                       </tbody>
                     </table>
                   </>
-                </div>
-              )}
-
-              {farm.sowingDate && (
-                <div className="flex items-start flex-col">
-                  <label htmlFor="sowingDate" className="font-bold">
-                    Sowing Date:
-                  </label>
-                  <input
-                    type="date"
-                    id="sowingDate"
-                    name="sowingDate"
-                    value={
-                      farm.sowingDate
-                        ? new Date(farm.sowingDate).toISOString().split("T")[0]
-                        : ""
-                    }
-                    className="input-tag"
-                    disabled={!(edit === "true" && farm.sowingDate === "")}
-                    onChange={(e) => handleOnChange(e)}
-                  />
-                </div>
-              )}
-
-              {farm.floweringDate && (
-                <div className="flex items-start flex-col">
-                  <label htmlFor="floweringDate" className="font-bold">
-                    Flowering Date:
-                  </label>
-                  <input
-                    type="date"
-                    id="floweringDate"
-                    name="floweringDate"
-                    value={
-                      farm.floweringDate
-                        ? new Date(farm.floweringDate)
-                            .toISOString()
-                            .split("T")[0]
-                        : ""
-                    }
-                    className="input-tag"
-                    disabled={!(edit === "true" && farm.floweringDate === "")}
-                    onChange={(e) => handleOnChange(e)}
-                  />
-                </div>
-              )}
-
-              {farm.pheromoneTrapDate && (
-                <div className="flex items-start flex-col">
-                  <label htmlFor="pheromoneTrapDate" className="font-bold">
-                    Pheromone Trap Date:
-                  </label>
-                  <input
-                    type="date"
-                    id="pheromoneTrapDate"
-                    name="pheromoneTrapDate"
-                    value={
-                      farm.pheromoneTrapDate
-                        ? new Date(farm.pheromoneTrapDate)
-                            .toISOString()
-                            .split("T")[0]
-                        : ""
-                    }
-                    className="input-tag"
-                    disabled={
-                      !(edit === "true" && farm.pheromoneTrapDate === "")
-                    }
-                    onChange={(e) => handleOnChange(e)}
-                  />
-                </div>
-              )}
-
-              {farm.lureChangeDate && (
-                <div className="flex items-start flex-col">
-                  <label htmlFor="lureChangeDate" className="font-bold">
-                    Lure Change Date:
-                  </label>
-                  <input
-                    type="date"
-                    id="lureChangeDate"
-                    name="lureChangeDate"
-                    value={
-                      farm.lureChangeDate
-                        ? new Date(farm.lureChangeDate)
-                            .toISOString()
-                            .split("T")[0]
-                        : ""
-                    }
-                    className="input-tag"
-                    disabled={!(edit === "true" && farm.lureChangeDate === "")}
-                    onChange={(e) => handleOnChange(e)}
-                  />
                 </div>
               )}
 
@@ -532,30 +429,6 @@ function page() {
                 </div>
               )}
 
-              {farm.harvest && (
-                <div className="flex items-start flex-col space-y-3">
-                  <div className="font-bold">Harvest Date:</div>
-                  <div>
-                    {farm.harvest.date && (
-                      <div className="flex space-x-5">
-                        <div>Date:</div>
-                        <div>
-                          {
-                            new Date(farm.harvest.date)
-                              .toISOString()
-                              .split("T")[0]
-                          }
-                        </div>
-                      </div>
-                    )}
-                    <div className="flex space-x-5">
-                      <div>Yield:</div>
-                      <div>{farm.harvest.yield}</div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
               <button
                 className="btn bg-blue-500 text-white hover:bg-blue-600 duration-200"
                 onClick={handleOnEdit}
@@ -564,7 +437,7 @@ function page() {
               </button>
             </div>
           ) : (
-            <EditFarmComponent />
+            <EditFarmComponent farm={farm} />
           )}
         </>
       )}

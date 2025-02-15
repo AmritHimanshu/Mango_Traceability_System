@@ -1,14 +1,15 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import { FARMER_SAVE_FARM_DATA } from "@/utils/Apis/api";
 import { FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
+import { Farm } from "@/utils/Types/interfaces";
 import Message from "@/app/components/common/Message";
 
-function EditFarmComponent() {
+function EditFarmComponent({ farm }: { farm: Farm }) {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
@@ -17,33 +18,9 @@ function EditFarmComponent() {
   const pathname = usePathname();
   const id = pathname.split("/").pop();
 
-  const searchParams = useSearchParams();
-  const edit = searchParams.get("edit");
-
   const [message, setMessage] = useState({ text: "", type: "" });
 
-  const [farm, setFarm] = useState({
-    area: 0,
-    farm: "",
-    crop: "",
-    geoFenceData: [{ lat: 0, lng: 0 }],
-    ploughingDate: "",
-    weedingDate: [],
-    sowingDate: "",
-    floweringDate: "",
-    pheromoneTrapDate: "",
-    lureChangeDate: "",
-    irrigationDates: {
-      artificial: [],
-      natural: [],
-    },
-    fertilizerApplications: [{ date: "", volume: "" }],
-    pesticideApplications: [],
-    bagging: [],
-    specialCare: [],
-    harvest: { date: "", yield: "" },
-  });
-
+  const [farmData, setFarmData] = useState(farm);
   const [changedFarmData, setChangedFarmData] = useState({});
 
   const [artificial, setArtificial] = useState("");
@@ -74,6 +51,7 @@ function EditFarmComponent() {
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
+    setFarmData((prev) => ({ ...prev, [name]: value }));
     setChangedFarmData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -192,27 +170,28 @@ function EditFarmComponent() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="space-y-10 my-5">
-        <div className="flex items-start flex-col">
-          <label htmlFor="ploughingDate" className="font-bold">
-            Ploughing Date:
-          </label>
-          <input
-            type="date"
-            id="ploughingDate"
-            name="ploughingDate"
-            value={
-              farm.ploughingDate
-                ? new Date(farm.ploughingDate).toISOString().split("T")[0]
-                : ""
-            }
-            className="input-tag"
-            disabled={!(edit === "true" && farm.ploughingDate === "")}
-            onChange={(e) => handleOnChange(e)}
-          />
-        </div>
+      <div className="my-5 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-10">
+        {!farm.ploughingDate && (
+          <div className="flex items-start flex-col">
+            <label htmlFor="ploughingDate" className="font-bold">
+              Ploughing Date:
+            </label>
+            <input
+              type="date"
+              id="ploughingDate"
+              name="ploughingDate"
+              value={
+                farmData.ploughingDate
+                  ? new Date(farmData.ploughingDate).toISOString().split("T")[0]
+                  : ""
+              }
+              className="input-tag"
+              onChange={(e) => handleOnChange(e)}
+            />
+          </div>
+        )}
 
-        <div className="flex items-start flex-col space-y-3">
+        <div className="flex items-start flex-col">
           <div className="font-bold">Weeding Date:</div>
           <input
             type="date"
@@ -220,287 +199,322 @@ function EditFarmComponent() {
             name="weedingDate"
             value={weedingDate}
             className="input-tag"
-            disabled={!(edit === "true")}
             onChange={(e) => setWeedingDate(e.target.value)}
           />
         </div>
 
-        <div className="flex items-start flex-col">
-          <label htmlFor="sowingDate" className="font-bold">
-            Sowing Date:
-          </label>
-          <input
-            type="date"
-            id="sowingDate"
-            name="sowingDate"
-            value={
-              farm.sowingDate
-                ? new Date(farm.sowingDate).toISOString().split("T")[0]
-                : ""
-            }
-            className="input-tag"
-            disabled={!(edit === "true" && farm.sowingDate === "")}
-            onChange={(e) => handleOnChange(e)}
-          />
-        </div>
+        {!farm.sowingDate && (
+          <div className="flex items-start flex-col">
+            <label htmlFor="sowingDate" className="font-bold">
+              Sowing Date:
+            </label>
+            <input
+              type="date"
+              id="sowingDate"
+              name="sowingDate"
+              value={
+                farmData.sowingDate
+                  ? new Date(farmData.sowingDate).toISOString().split("T")[0]
+                  : ""
+              }
+              className="input-tag"
+              onChange={(e) => handleOnChange(e)}
+            />
+          </div>
+        )}
 
-        <div className="flex items-start flex-col">
-          <label htmlFor="floweringDate" className="font-bold">
-            Flowering Date:
-          </label>
-          <input
-            type="date"
-            id="floweringDate"
-            name="floweringDate"
-            value={
-              farm.floweringDate
-                ? new Date(farm.floweringDate).toISOString().split("T")[0]
-                : ""
-            }
-            className="input-tag"
-            disabled={!(edit === "true" && farm.floweringDate === "")}
-            onChange={(e) => handleOnChange(e)}
-          />
-        </div>
+        {!farm.floweringDate && (
+          <div className="flex items-start flex-col">
+            <label htmlFor="floweringDate" className="font-bold">
+              Flowering Date:
+            </label>
+            <input
+              type="date"
+              id="floweringDate"
+              name="floweringDate"
+              value={
+                farmData.floweringDate
+                  ? new Date(farmData.floweringDate).toISOString().split("T")[0]
+                  : ""
+              }
+              className="input-tag"
+              onChange={(e) => handleOnChange(e)}
+            />
+          </div>
+        )}
 
-        <div className="flex items-start flex-col">
-          <label htmlFor="pheromoneTrapDate" className="font-bold">
-            Pheromone Trap Date:
-          </label>
-          <input
-            type="date"
-            id="pheromoneTrapDate"
-            name="pheromoneTrapDate"
-            value={
-              farm.pheromoneTrapDate
-                ? new Date(farm.pheromoneTrapDate).toISOString().split("T")[0]
-                : ""
-            }
-            className="input-tag"
-            disabled={!(edit === "true" && farm.pheromoneTrapDate === "")}
-            onChange={(e) => handleOnChange(e)}
-          />
-        </div>
+        {!farm.pheromoneTrapDate && (
+          <div className="flex items-start flex-col">
+            <label htmlFor="pheromoneTrapDate" className="font-bold">
+              Pheromone Trap Date:
+            </label>
+            <input
+              type="date"
+              id="pheromoneTrapDate"
+              name="pheromoneTrapDate"
+              value={
+                farmData.pheromoneTrapDate
+                  ? new Date(farmData.pheromoneTrapDate)
+                      .toISOString()
+                      .split("T")[0]
+                  : ""
+              }
+              className="input-tag"
+              onChange={(e) => handleOnChange(e)}
+            />
+          </div>
+        )}
 
-        <div className="flex items-start flex-col">
-          <label htmlFor="lureChangeDate" className="font-bold">
-            Lure Change Date:
-          </label>
-          <input
-            type="date"
-            id="lureChangeDate"
-            name="lureChangeDate"
-            value={
-              farm.lureChangeDate
-                ? new Date(farm.lureChangeDate).toISOString().split("T")[0]
-                : ""
-            }
-            className="input-tag"
-            disabled={!(edit === "true" && farm.lureChangeDate === "")}
-            onChange={(e) => handleOnChange(e)}
-          />
-        </div>
+        {!farm.lureChangeDate && (
+          <div className="flex items-start flex-col">
+            <label htmlFor="lureChangeDate" className="font-bold">
+              Lure Change Date:
+            </label>
+            <input
+              type="date"
+              id="lureChangeDate"
+              name="lureChangeDate"
+              value={
+                farmData.lureChangeDate
+                  ? new Date(farmData.lureChangeDate)
+                      .toISOString()
+                      .split("T")[0]
+                  : ""
+              }
+              className="input-tag"
+              onChange={(e) => handleOnChange(e)}
+            />
+          </div>
+        )}
 
         <div className="flex items-start flex-col space-y-3">
           <div className="font-bold">Irrigation Dates:</div>
-          <label htmlFor="artificial">Artificial</label>
-          <input
-            type="date"
-            id="artificial"
-            name="artificial"
-            value={artificial}
-            className="input-tag"
-            disabled={!(edit === "true")}
-            onChange={(e) => setArtificial(e.target.value)}
-          />
-          <label htmlFor="natural">Natural</label>
-          <input
-            type="date"
-            id="natural"
-            name="natural"
-            value={natural}
-            className="input-tag"
-            disabled={!(edit === "true")}
-            onChange={(e) => setNatural(e.target.value)}
-          />
+          <div className="w-full flex items-center justify-between">
+            <div className="w-[48%]">
+              <label htmlFor="artificial">Artificial</label>
+              <input
+                type="date"
+                id="artificial"
+                name="artificial"
+                value={artificial}
+                className="input-tag"
+                onChange={(e) => setArtificial(e.target.value)}
+              />
+            </div>
+            <div className="w-[48%]">
+              <label htmlFor="natural">Natural</label>
+              <input
+                type="date"
+                id="natural"
+                name="natural"
+                value={natural}
+                className="input-tag"
+                onChange={(e) => setNatural(e.target.value)}
+              />
+            </div>
+          </div>
         </div>
 
         <div className="flex items-start flex-col space-y-3">
           <div className="font-bold">Fertilizer Application:</div>
-          <label htmlFor="fertilizerDate">Date:</label>
-          <input
-            type="date"
-            id="fertilizerDate"
-            name="fertilizerDate"
-            value={fertilizerApplications.date}
-            className="input-tag"
-            disabled={!(edit === "true")}
-            onChange={(e) =>
-              setFertilizerApplications((prev) => ({
-                ...prev,
-                date: e.target.value,
-              }))
-            }
-          />
-          <label htmlFor="fertilizerVolume">Volume (L):</label>
-          <input
-            type="number"
-            id="fertilizerApplications fertilizerVolume"
-            name="fertilizerApplications"
-            value={fertilizerApplications.volume}
-            className="input-tag"
-            disabled={!(edit === "true")}
-            onChange={(e) =>
-              setFertilizerApplications((prev) => ({
-                ...prev,
-                volume: e.target.value,
-              }))
-            }
-          />
+          <div className="w-full flex items-center justify-between">
+            <div className="w-[48%]">
+              <label htmlFor="fertilizerDate">Date:</label>
+              <input
+                type="date"
+                id="fertilizerDate"
+                name="fertilizerDate"
+                value={fertilizerApplications.date}
+                className="input-tag"
+                onChange={(e) =>
+                  setFertilizerApplications((prev) => ({
+                    ...prev,
+                    date: e.target.value,
+                  }))
+                }
+              />
+            </div>
+            <div className="w-[48%]">
+              <label htmlFor="fertilizerVolume">Volume (L):</label>
+              <input
+                type="number"
+                id="fertilizerApplications fertilizerVolume"
+                name="fertilizerApplications"
+                value={fertilizerApplications.volume}
+                className="input-tag"
+                onChange={(e) =>
+                  setFertilizerApplications((prev) => ({
+                    ...prev,
+                    volume: e.target.value,
+                  }))
+                }
+              />
+            </div>
+          </div>
         </div>
 
         <div className="flex items-start flex-col space-y-3">
           <div className="font-bold">Pesticide Application:</div>
-          <label htmlFor="pesticideDate">Date:</label>
-          <input
-            type="date"
-            id="pesticideDate"
-            name="pesticideDate"
-            value={pesticideApplications.date}
-            className="input-tag"
-            disabled={!(edit === "true")}
-            onChange={(e) =>
-              setPesticideApplications((prev) => ({
-                ...prev,
-                date: e.target.value,
-              }))
-            }
-          />
-          <label htmlFor="pesticideVolume">Volume (in litre):</label>
-          <input
-            type="number"
-            id="pesticideVolume"
-            name="pesticideVolume"
-            value={pesticideApplications.volume}
-            className="input-tag"
-            disabled={!(edit === "true")}
-            onChange={(e) =>
-              setPesticideApplications((prev) => ({
-                ...prev,
-                volume: e.target.value,
-              }))
-            }
-          />
-
-          <div className="flex items-start flex-col space-y-3">
-            <div className="font-bold">Bagging:</div>
-            <label htmlFor="baggingDate">Date:</label>
-            <input
-              type="date"
-              id="baggingDate"
-              name="baggingDate"
-              value={bagging.date}
-              className="input-tag"
-              disabled={!(edit === "true")}
-              onChange={(e) =>
-                setBagging((prev) => ({
-                  ...prev,
-                  date: e.target.value,
-                }))
-              }
-            />
-            <label htmlFor="baggingQuantity">Quantity:</label>
-            <input
-              type="number"
-              id="baggingQuantity"
-              name="baggingQuantity"
-              value={bagging.quantity}
-              className="input-tag"
-              disabled={!(edit === "true")}
-              onChange={(e) =>
-                setBagging((prev) => ({
-                  ...prev,
-                  quantity: e.target.value,
-                }))
-              }
-            />
+          <div className="w-full flex items-center justify-between">
+            <div className="w-[48%]">
+              <label htmlFor="pesticideDate">Date:</label>
+              <input
+                type="date"
+                id="pesticideDate"
+                name="pesticideDate"
+                value={pesticideApplications.date}
+                className="input-tag"
+                onChange={(e) =>
+                  setPesticideApplications((prev) => ({
+                    ...prev,
+                    date: e.target.value,
+                  }))
+                }
+              />
+            </div>
+            <div className="w-[48%]">
+              <label htmlFor="pesticideVolume">Volume (in litre):</label>
+              <input
+                type="number"
+                id="pesticideVolume"
+                name="pesticideVolume"
+                value={pesticideApplications.volume}
+                className="input-tag"
+                onChange={(e) =>
+                  setPesticideApplications((prev) => ({
+                    ...prev,
+                    volume: e.target.value,
+                  }))
+                }
+              />
+            </div>
           </div>
+        </div>
 
-          <div className="flex items-start flex-col space-y-3">
-            <div className="font-bold">Special care:</div>
-            <label htmlFor="specialCareDate">Date:</label>
-            <input
-              type="date"
-              id="specialCareDate"
-              name="specialCareDate"
-              value={specialCare.date}
-              className="input-tag"
-              disabled={!(edit === "true")}
-              onChange={(e) =>
-                setSpecialCare((prev) => ({
-                  ...prev,
-                  date: e.target.value,
-                }))
-              }
-            />
-            <label htmlFor="specialCareName">Name:</label>
-            <input
-              type="text"
-              id="specialCareName"
-              name="specialCareName"
-              value={specialCare.name}
-              className="input-tag"
-              disabled={!(edit === "true")}
-              onChange={(e) =>
-                setSpecialCare((prev) => ({
-                  ...prev,
-                  name: e.target.value,
-                }))
-              }
-            />
+        <div className="flex items-start flex-col space-y-3">
+          <div className="font-bold">Bagging:</div>
+          <div className="w-full flex items-center justify-between">
+            <div className="w-[48%]">
+              <label htmlFor="baggingDate">Date:</label>
+              <input
+                type="date"
+                id="baggingDate"
+                name="baggingDate"
+                value={bagging.date}
+                className="input-tag"
+                onChange={(e) =>
+                  setBagging((prev) => ({
+                    ...prev,
+                    date: e.target.value,
+                  }))
+                }
+              />
+            </div>
+            <div className="w-[48%]">
+              <label htmlFor="baggingQuantity">Quantity:</label>
+              <input
+                type="number"
+                id="baggingQuantity"
+                name="baggingQuantity"
+                value={bagging.quantity}
+                className="input-tag"
+                onChange={(e) =>
+                  setBagging((prev) => ({
+                    ...prev,
+                    quantity: e.target.value,
+                  }))
+                }
+              />
+            </div>
           </div>
+        </div>
 
+        <div className="flex items-start flex-col space-y-3">
+          <div className="font-bold">Special care:</div>
+          <div className="w-full flex items-center justify-between">
+            <div className="w-[48%]">
+              <label htmlFor="specialCareDate">Date:</label>
+              <input
+                type="date"
+                id="specialCareDate"
+                name="specialCareDate"
+                value={specialCare.date}
+                className="input-tag"
+                onChange={(e) =>
+                  setSpecialCare((prev) => ({
+                    ...prev,
+                    date: e.target.value,
+                  }))
+                }
+              />
+            </div>
+            <div className="w-[48%]">
+              <label htmlFor="specialCareName">Name:</label>
+              <input
+                type="text"
+                id="specialCareName"
+                name="specialCareName"
+                value={specialCare.name}
+                className="input-tag"
+                onChange={(e) =>
+                  setSpecialCare((prev) => ({
+                    ...prev,
+                    name: e.target.value,
+                  }))
+                }
+              />
+            </div>
+          </div>
+        </div>
+
+        {!farm.harvest && (
           <div className="flex items-start flex-col space-y-3">
             <div className="font-bold">Harvest Date:</div>
-            <label htmlFor="harvestDate">Date:</label>
-            <input
-              type="date"
-              id="harvestDate"
-              name="harvestDate"
-              value={harvest.date}
-              className="input-tag"
-              disabled={!(edit === "true")}
-              onChange={(e) =>
-                setHarvest((prev) => ({
-                  ...prev,
-                  date: e.target.value,
-                }))
-              }
-            />
-            <label htmlFor="harvestYield">Yield:</label>
-            <input
-              type="number"
-              id="harvestYield"
-              name="harvestYield"
-              value={harvest.yield}
-              className="input-tag"
-              disabled={!(edit === "true")}
-              onChange={(e) =>
-                setHarvest((prev) => ({
-                  ...prev,
-                  yield: e.target.value,
-                }))
-              }
-            />
+            <div className="w-full flex items-center justify-between">
+              <div className="w-[48%]">
+                <label htmlFor="harvestDate">Date:</label>
+                <input
+                  type="date"
+                  id="harvestDate"
+                  name="harvestDate"
+                  value={harvest.date}
+                  className="input-tag"
+                  onChange={(e) =>
+                    setHarvest((prev) => ({
+                      ...prev,
+                      date: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+              <div className="w-[48%]">
+                <label htmlFor="harvestYield">Yield:</label>
+                <input
+                  type="number"
+                  id="harvestYield"
+                  name="harvestYield"
+                  value={harvest.yield}
+                  className="input-tag"
+                  onChange={(e) =>
+                    setHarvest((prev) => ({
+                      ...prev,
+                      yield: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+            </div>
           </div>
+        )}
+      </div>
 
-          <button
-            className="btn bg-green-600 bg-opacity-90 text-white hover:bg-opacity-100 duration-200"
-            onClick={handleOnSave}
-          >
-            Save
-          </button>
-        </div>
+      <div className="mt-16">
+        <button
+          className="btn bg-green-600 bg-opacity-90 text-white hover:bg-opacity-100 duration-200"
+          onClick={handleOnSave}
+        >
+          Save
+        </button>
       </div>
     </>
   );
