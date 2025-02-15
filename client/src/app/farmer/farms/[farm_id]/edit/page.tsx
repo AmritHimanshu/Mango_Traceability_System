@@ -1,26 +1,51 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
-import { FARMER_SAVE_FARM_DATA } from "@/utils/Apis/api";
+import {
+  FARMER_FETCH_FARM_DATA,
+  FARMER_SAVE_FARM_DATA,
+} from "@/utils/Apis/api";
 import { FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import { Farm } from "@/utils/Types/interfaces";
 import Message from "@/app/components/common/Message";
+import Heading from "@/app/components/common/Heading";
 
-function EditFarmComponent({ farm }: { farm: Farm }) {
+function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
 
   const router = useRouter();
   const pathname = usePathname();
-  const id = pathname.split("/").pop();
+  const id = pathname.split("/")[3];
 
   const [message, setMessage] = useState({ text: "", type: "" });
 
-  const [farmData, setFarmData] = useState(farm);
+  const [farm, setFarm] = useState<Farm>();
+  const [farmData, setFarmData] = useState({
+    area: 0,
+    farm: "",
+    crop: "",
+    geoFenceData: [{ lat: 0, lng: 0 }],
+    ploughingDate: "",
+    weedingDate: [],
+    sowingDate: "",
+    floweringDate: "",
+    pheromoneTrapDate: "",
+    lureChangeDate: "",
+    irrigationDates: {
+      artificial: [],
+      natural: [],
+    },
+    fertilizerApplications: [],
+    pesticideApplications: [],
+    bagging: [],
+    specialCare: [],
+    harvest: { date: "", yield: "" },
+  });
   const [changedFarmData, setChangedFarmData] = useState({});
 
   const [artificial, setArtificial] = useState("");
@@ -47,6 +72,62 @@ function EditFarmComponent({ farm }: { farm: Farm }) {
     date: "",
     yield: "0",
   });
+
+  const fetchFarmData = async () => {
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
+    try {
+      const res = await fetch(`${BASE_URL}/${FARMER_FETCH_FARM_DATA}/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      if (res.status === 404) {
+        setMessage({ text: data.error, type: "error" });
+        router.push(NOT_FOUND);
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
+        router.push(LOGIN);
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      setFarm(data);
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
+  };
+
+  useEffect(() => {
+    fetchFarmData();
+  }, []);
+
+  const handleOnClose = () => {
+    router.push(`${FARMS}/${id}`);
+  };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -127,30 +208,6 @@ function EditFarmComponent({ farm }: { farm: Farm }) {
 
       setMessage({ text: data.message, type: "success" });
       router.push(`${FARMS}/${id}`);
-      setChangedFarmData({});
-      setArtificial("");
-      setNatural("");
-      setWeedingDate("");
-      setFertilizerApplications({
-        date: "",
-        volume: "0",
-      });
-      setPesticideApplications({
-        date: "",
-        volume: "0",
-      });
-      setBagging({
-        date: "",
-        quantity: "0",
-      });
-      setSpecialCare({
-        date: "",
-        name: "",
-      });
-      setHarvest({
-        date: "",
-        yield: "0",
-      });
     } catch (error) {}
 
     setTimeout(() => {
@@ -163,15 +220,26 @@ function EditFarmComponent({ farm }: { farm: Farm }) {
   };
 
   return (
-    <>
+    <div className="page-main-div">
       <CustomLoadingBar ref={loadingBarRef} />
 
       {message.text && message.type && (
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="my-5 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-10">
-        {!farm.ploughingDate && (
+      <Heading text={`${farm?.farm} (Edit)`} />
+
+      <div className="text-end mt-5">
+        <button
+          onClick={handleOnClose}
+          className="my-5 bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2 py-2"
+        >
+          Cancel
+        </button>
+      </div>
+
+      <div className="mb-10 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-16">
+        {!farm?.ploughingDate && (
           <div className="flex items-start flex-col">
             <label htmlFor="ploughingDate" className="font-bold">
               Ploughing Date:
@@ -203,7 +271,7 @@ function EditFarmComponent({ farm }: { farm: Farm }) {
           />
         </div>
 
-        {!farm.sowingDate && (
+        {!farm?.sowingDate && (
           <div className="flex items-start flex-col">
             <label htmlFor="sowingDate" className="font-bold">
               Sowing Date:
@@ -223,7 +291,7 @@ function EditFarmComponent({ farm }: { farm: Farm }) {
           </div>
         )}
 
-        {!farm.floweringDate && (
+        {!farm?.floweringDate && (
           <div className="flex items-start flex-col">
             <label htmlFor="floweringDate" className="font-bold">
               Flowering Date:
@@ -243,7 +311,7 @@ function EditFarmComponent({ farm }: { farm: Farm }) {
           </div>
         )}
 
-        {!farm.pheromoneTrapDate && (
+        {!farm?.pheromoneTrapDate && (
           <div className="flex items-start flex-col">
             <label htmlFor="pheromoneTrapDate" className="font-bold">
               Pheromone Trap Date:
@@ -265,7 +333,7 @@ function EditFarmComponent({ farm }: { farm: Farm }) {
           </div>
         )}
 
-        {!farm.lureChangeDate && (
+        {!farm?.lureChangeDate && (
           <div className="flex items-start flex-col">
             <label htmlFor="lureChangeDate" className="font-bold">
               Lure Change Date:
@@ -286,7 +354,9 @@ function EditFarmComponent({ farm }: { farm: Farm }) {
             />
           </div>
         )}
+      </div>
 
+      <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-16">
         <div className="flex items-start flex-col space-y-3">
           <div className="font-bold">Irrigation Dates:</div>
           <div className="w-full flex items-center justify-between">
@@ -467,7 +537,7 @@ function EditFarmComponent({ farm }: { farm: Farm }) {
           </div>
         </div>
 
-        {!farm.harvest && (
+        {!farm?.harvest && (
           <div className="flex items-start flex-col space-y-3">
             <div className="font-bold">Harvest Date:</div>
             <div className="w-full flex items-center justify-between">
@@ -516,8 +586,8 @@ function EditFarmComponent({ farm }: { farm: Farm }) {
           Save
         </button>
       </div>
-    </>
+    </div>
   );
 }
 
-export default EditFarmComponent;
+export default page;

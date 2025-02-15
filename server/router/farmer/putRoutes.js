@@ -49,15 +49,15 @@ router.put('/api/save-farm-data/:id', async (req, res) => {
             updateQuery.$set = nonArrayFields;
         }
 
-        // const updatedFarmer = await Farmer.findByIdAndUpdate(
-        //     id,
-        //     updateQuery,
-        //     { new: true }
-        // );
+        const updatedFarmer = await Farmer.findByIdAndUpdate(
+            id,
+            updateQuery,
+            { new: true }
+        );
 
-        // if (!updatedFarmer) {
-        //     return res.status(404).json({ error: "Farm not found." });
-        // }
+        if (!updatedFarmer) {
+            return res.status(404).json({ error: "Farm not found." });
+        }
 
         return res.status(201).json({ message: "Farm data updated successfully!" });
     } catch (error) {
