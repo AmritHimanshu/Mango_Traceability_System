@@ -179,8 +179,7 @@ function page() {
 
       setMessage({ text: data.message, type: "success" });
       router.push(LOGIN);
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setIsOtp(false);
 
@@ -227,8 +226,7 @@ function page() {
 
       setIsOTPVerified(true);
       setMessage({ text: data.message, type: "success" });
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setPhoneOtp("");
     setFlagPhone(false);
@@ -270,8 +268,7 @@ function page() {
 
       setMessage({ text: data.message, type: "success" });
       setIsOtp(true);
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setTimeout(() => {
       setMessage({ text: "", type: "" });
@@ -357,8 +354,7 @@ function page() {
 
       setMessage({ text: data.message, type: "success" });
       setIsOtp(true);
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setTimeout(() => {
       setMessage({ text: "", type: "" });
