@@ -171,7 +171,7 @@ function page() {
     }
 
     if (!isPasswordVerified) {
-      setMessage({ text: "password is weak!", type: "error" });
+      setMessage({ text: "Password is weak!", type: "error" });
       setTimeout(() => {
         setMessage({ text: "", type: "" });
       }, 2000);
