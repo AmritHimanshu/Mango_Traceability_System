@@ -145,7 +145,7 @@ router.post("/api/send-otp-phone", async (req, res) => {
         await sendOtpToPhone(phone);
         res.status(201).json({ message: "OTP sent successfully." });
     } catch (error) {
-        res.status(500).json({ error: "Failed to send OTP." });
+        res.status(500).json({ error: "Failed to send OTP ( Internal Server Error )" });
     }
 });
 
