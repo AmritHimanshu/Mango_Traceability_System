@@ -30,6 +30,8 @@ function page() {
   const [isEmailOtpSent, setIsEmailOtpSent] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isPasswordVerified, setIsPasswordVerified] = useState(false);
 
   const sendOtpToEmail = async () => {
     if (!email) {
@@ -78,7 +80,10 @@ function page() {
 
   const verifyOtpToEmail = async () => {
     if (!otp) {
-      alert("Enter your email");
+      setMessage({ text: "Enter otp", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
@@ -98,29 +103,87 @@ function page() {
       const data = await res.json();
 
       if (res.status !== 201) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
 
-      alert(data.message);
+      setMessage({ text: data.message, type: "success" });
       setIsOtpVerified(true);
-    } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
-    }
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
     }
   };
 
+  const handlePasswordCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let new_pass = e.target.value;
+
+    let lowerCase = /[a-z]/g;
+    let upperCase = /[A-Z]/g;
+    let numbers = /[0-9]/g;
+    let specialCharacter = /[-'/`~!@#$%^&*(){}[\]|;:",.<>?\\]/g;
+
+    if (!new_pass) {
+      setErrorMessage("");
+      setIsPasswordVerified(false);
+      return;
+    }
+
+    if (!new_pass.match(lowerCase)) {
+      setErrorMessage("Password must contains lowercase");
+      setIsPasswordVerified(false);
+      return;
+    } else if (!new_pass.match(upperCase)) {
+      setErrorMessage("Password must contains uppercase");
+      setIsPasswordVerified(false);
+      return;
+    } else if (!new_pass.match(numbers)) {
+      setErrorMessage("Password must contains numbers");
+      setIsPasswordVerified(false);
+      return;
+    } else if (!new_pass.match(specialCharacter)) {
+      setErrorMessage("Password must contains special character");
+      setIsPasswordVerified(false);
+      return;
+    } else if (new_pass.length < 8) {
+      setErrorMessage("Password must be at least 8 character long");
+      setIsPasswordVerified(false);
+      return;
+    } else {
+      setIsPasswordVerified(true);
+      setErrorMessage("");
+    }
+  };
+
   const changePassword = async () => {
     if (!password || !confirm_password) {
-      return alert("Fill all the fields");
+      setMessage({ text: "Fill all the fields", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
+      return;
+    }
+
+    if (!isPasswordVerified) {
+      setMessage({ text: "password is weak!", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
+      return;
     }
 
     if (password !== confirm_password) {
-      return alert("Passwords not matched");
+      setMessage({ text: "Passwords not matched", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
+      return;
     }
 
     if (loadingBarRef.current) {
@@ -139,16 +202,18 @@ function page() {
       const data = await res.json();
 
       if (res.status !== 201) {
+        setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
 
-      alert(data.message);
+      setMessage({ text: data.message, type: "success" });
       router.push(LOGIN);
-    } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
-    }
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -216,6 +281,7 @@ function page() {
                 id="otp"
                 name="otp"
                 className="outline-none w-full bg-transparent"
+                placeholder="enter your otp"
                 value={otp}
                 required
                 onChange={(e) => setOtp(e.target.value)}
@@ -246,7 +312,10 @@ function page() {
                   placeholder="Enter your password"
                   value={password}
                   required
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    handlePasswordCheck(e);
+                  }}
                 />
                 {isVisiblePassword ? (
                   <VisibilityIcon
@@ -258,6 +327,9 @@ function page() {
                   />
                 )}
               </div>
+              {errorMessage && (
+                <div className="text-red-500 text-[12px]">{errorMessage}</div>
+              )}
             </div>
 
             <div className="flex items-start flex-col mb-5">
