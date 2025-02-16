@@ -115,7 +115,7 @@ router.post("/api/forgot-password/send-otp-email", async (req, res) => {
         await sendOtpToEmail(email);
         res.status(201).json({ message: "OTP sent successfully." });
     } catch (error) {
-        res.status(500).json({ error: "Failed to send OTP." });
+        res.status(500).json({ error: "Failed to send OTP ( Internal Server Error )" });
     }
 });
 

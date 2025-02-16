@@ -18,11 +18,13 @@ const sendEmail = async (email, otp) => {
             subject: "Your OTP for Verification",
             text: `Your OTP is ${otp}. It is valid for 5 minutes.`,
         };
-
+        console.log(mailOptions)
         const info = await transporter.sendMail(mailOptions);
+        console.log(info)
         console.log("Otp sent to your email:", info.response);
     } catch (error) {
-        console.error("Error sending email to user:", error.message);
+        // console.error("Error sending email to user:", error.message);
+        res.status(500).json({ error: "Internal server error" });
     }
 };
 
@@ -40,7 +42,8 @@ const sendPhone = async (phone, otp) => {
         });
         console.log(`Message sent: ${message.sid}`);
     } catch (error) {
-        console.error("Error sending SMS:", error);
+        // console.error("Error sending SMS:", error);
+        res.status(500).json({ error: "Internal server error" });
     }
 };
 
