@@ -9,6 +9,8 @@ function Sidebar() {
   const userState = useAppSelector((state) => state.user.userState);
 
   const pathname = usePathname();
+  const path = pathname.split("/")[2];
+
   const router = useRouter();
 
   const [isClient, setIsClient] = useState(false);
@@ -27,7 +29,7 @@ function Sidebar() {
             <div
               key={index}
               className={`px-4 py-5 w-full text-[16px] lg:text-[18px] cursor-pointer hover:bg-gray-50 duration-150 ${
-                pathname === list.path
+                (pathname === list.path || path === list.base_path)
                   ? "bg-white font-bold border-l-[5px] border-yellow-400"
                   : "bg-transparent"
               }`}
@@ -42,7 +44,7 @@ function Sidebar() {
             <div
               key={index}
               className={`px-4 py-5 w-full text-[16px] lg:text-[18px] cursor-pointer hover:bg-gray-50 duration-150 ${
-                pathname === list.path
+                (pathname === list.path || path === list.base_path)
                   ? "bg-white font-bold border-l-[5px] border-yellow-400"
                   : "bg-transparent"
               }`}
