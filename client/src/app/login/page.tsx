@@ -106,7 +106,7 @@ function page() {
       dispatch(setUserState(data));
       router.push("/");
 
-      setMessage({ text: "Successfully signed in", type: "success" });
+      // setMessage({ text: "Successfully signed in", type: "success" });
     } catch (error) {}
 
     setTimeout(() => {

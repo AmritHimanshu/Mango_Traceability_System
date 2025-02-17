@@ -16,7 +16,7 @@ function Message({ text, type }: { text: string; type: string }) {
         </div>
       ) : (
         <div
-          className={`px-3 py-3 text-[14px] lg:text-[17px] fixed z-[99999] left-0 top-[56px] sm:top-[72px] text-start font-bold w-full text-white ${
+          className={`px-3 py-3 text-[14px] lg:text-[17px] fixed z-[99999] left-0 top-0 top-[56px sm:top-[72px text-start font-bold w-full text-white ${
             type === "error" ? "bg-red-500" : "bg-green-600"
           }`}
         >
