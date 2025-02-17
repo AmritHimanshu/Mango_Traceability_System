@@ -366,14 +366,14 @@ function page() {
   };
 
   return (
-    <div className="log-reg-page-main-div">
+    <div className="log-reg-page-main-div bg-[url('/assets/mangoBg.jpg')] bg-cover">
       <CustomLoadingBar ref={loadingBarRef} />
 
       {message.text && message.type && (
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] border-[1px] rounded-sm shadow-md">
+      <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] rounded-sm shadow-md bg-zinc-900 bg-opacity-95 text-white">
         {!isOtp ? (
           <>
             <div className="mb-3 text-center">Registration</div>

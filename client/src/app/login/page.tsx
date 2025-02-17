@@ -10,7 +10,6 @@ import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
 import { LOGOUT_USER, SIGNIN_USER } from "@/utils/Apis/api";
 import { FORGOT_PASSWORD, REGISTER } from "@/utils/Paths/paths";
 import Message from "../components/common/Message";
-import MangoBg from "../../../public/assets/mangoBg.jpg";
 
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -118,16 +117,16 @@ function page() {
       loadingBarRef.current.complete();
     }
   };
-  // style={{ backgroundImage: `url(${MangoBg})` }}
+
   return (
-    <div className="log-reg-page-main-div bg-[url('/assets/mangoBg.jpg')]" >
+    <div className="log-reg-page-main-div bg-[url('/assets/mangoBg.jpg')] bg-cover" >
       <CustomLoadingBar ref={loadingBarRef} />
 
       {message.text && message.type && (
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] border-[1px] rounded-sm shadow-md">
+      <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] rounded-sm shadow-md bg-zinc-900 bg-opacity-95 text-white">
         <div className="mb-3 text-center">Login</div>
 
         <form

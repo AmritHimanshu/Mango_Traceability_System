@@ -221,14 +221,14 @@ function page() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-[calc(100vh-56px)]">
+    <div className="flex flex-col items-center justify-center h-[calc(100vh-0px)] bg-[url('/assets/mangoBg.jpg')] bg-cover">
       <CustomLoadingBar ref={loadingBarRef} />
 
       {message.text && message.type && (
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] border-[1px] rounded-sm shadow-md">
+      <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] rounded-sm shadow-md bg-zinc-900 bg-opacity-95 text-white">
         {!isEmailOtpSent && !isOtpVerified && (
           <div className="mb-10 text-sm md:text-xl text-center">
             Reset your Password
