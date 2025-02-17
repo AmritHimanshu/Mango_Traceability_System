@@ -232,7 +232,7 @@ function page() {
       </div>
 
       {pendingRequests.length > 0 && (
-        <div className="bg-gray-50 p-3 my-10">
+        <div className="bg-gray-50 py-3 my-10">
           <div className="pb-2 text-[16px] md:text-[18px] font-bold text-center underline">
             Recent Pending Requests
           </div>
