@@ -9,7 +9,7 @@ function Admin_Header({ handleOnClick }: HandleOnClickProps) {
   const pathname = usePathname();
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3 p-[20px] bg-white h-full">
       {admin.map((list, index) => (
         <div
           key={index}

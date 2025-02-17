@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Header from "../components/Header/Header";
 import Sidebar from "../components/common/Sidebar";
 
 export const metadata: Metadata = {
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
+      <Header />
       <div className="flex">
         <Sidebar />
         {children}

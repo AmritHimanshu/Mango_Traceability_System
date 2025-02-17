@@ -1,5 +1,5 @@
 .log-reg-page-main-div{
-    @apply flex items-center justify-center h-[calc(100vh-72px)] relative
+    @apply flex items-center justify-center h-[calc(100vh-0px)] relative
 }
 
 .page-main-div{

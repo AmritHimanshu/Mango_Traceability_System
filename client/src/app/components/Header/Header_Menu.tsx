@@ -18,7 +18,7 @@ function Header_Menu({ onNavigationComplete }: HeaderMenuProps) {
   };
 
   return (
-    <div className="h-[calc(100vh-56px)] p-[20px] absolute z-[9999] w-full">
+    <div className="h-[calc(100vh-56px)] p-[20px absolute z-[9999] w-full">
       {userState?.role === "Admin" && (
         <Admin_Header handleOnClick={handleOnClick} />
       )}

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import ReduxProvider from "@/store/redux-provider";
 import { Roboto } from 'next/font/google'
-import Header from "./components/Header/Header";
 import "./globals.css";
 import "../styles/style.css";
 
@@ -24,7 +23,6 @@ export default function RootLayout({
     <ReduxProvider>
       <html lang="en">
         <body className={`${roboto.className} antialiased`}>
-          <Header />
           {children}
         </body>
       </html>
