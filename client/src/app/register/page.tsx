@@ -525,7 +525,7 @@ function page() {
 
               <input
                 type="text"
-                className="border-[1px] border-black w-full p-2 outline-0"
+                className="border-[1px] border-white w-full p-2 outline-0 bg-transparent"
                 placeholder="Enter OTP"
                 value={phoneOtp}
                 onChange={(e) => setPhoneOtp(e.target.value)}
