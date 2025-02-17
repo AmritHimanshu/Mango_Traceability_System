@@ -39,8 +39,8 @@ function Header() {
   if (!isClient) return null;
 
   return (
-    <div className="sticky top-0 z-[9999]">
-      <div className="p-2 sm:py-4 sm:px-4 bg-gray-100 flex items-center justify-between">
+    <div className="sticky top-0 z-[9999] bg-slate-200">
+      <div className="p-2 sm:py-4 sm:px-4 flex items-center justify-between">
         {!isMenu ? (
           <Link href="/">
             <div className="flex items-center justify-start">

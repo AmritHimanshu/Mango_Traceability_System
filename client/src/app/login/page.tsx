@@ -10,6 +10,7 @@ import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
 import { LOGOUT_USER, SIGNIN_USER } from "@/utils/Apis/api";
 import { FORGOT_PASSWORD, REGISTER } from "@/utils/Paths/paths";
 import Message from "../components/common/Message";
+import MangoBg from "../../../public/assets/mangoBg.jpg";
 
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -117,9 +118,9 @@ function page() {
       loadingBarRef.current.complete();
     }
   };
-
+  // style={{ backgroundImage: `url(${MangoBg})` }}
   return (
-    <div className="log-reg-page-main-div">
+    <div className="log-reg-page-main-div bg-[url('/assets/mangoBg.jpg')]" >
       <CustomLoadingBar ref={loadingBarRef} />
 
       {message.text && message.type && (

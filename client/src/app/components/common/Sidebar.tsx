@@ -22,7 +22,7 @@ function Sidebar() {
   if (!isClient) return null;
 
   return (
-    <div className="bg-gray-100 pl-5 md:w-[250px] lg:w-[300px] xl:w-[350px] h-[calc(100vh-56px)] sm:h-[calc(100vh-72px)] hidden md:block">
+    <div className="bg-slate-200 pl-5 md:w-[250px] lg:w-[300px] xl:w-[350px] h-[calc(100vh-56px)] sm:h-[calc(100vh-72px)] hidden md:block">
       <div>
         {userState?.role === "Admin" &&
           admin.map((list, index) => (
