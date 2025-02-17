@@ -5,6 +5,7 @@ export const FARMER_MANAGEMENT = "/admin/farmer-management";
 export const PENDING_REQUESTS = "/admin/pending-requests";
 export const FARMER = "/admin/farmer";
 export const MANAGER = "/admin/manager";
+export const ADMIN_FARM = "/admin/farmer/farm";
 
 // Farmers
 export const FARMER_OVERVIEW = "/farmer";

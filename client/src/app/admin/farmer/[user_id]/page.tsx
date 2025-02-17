@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { FarmList } from "@/utils/Types/interfaces";
 import { LoadingBarRef } from "react-top-loading-bar";
-import { FARMER, LOGIN } from "@/utils/Paths/paths";
+import { ADMIN_FARM, LOGIN } from "@/utils/Paths/paths";
 import { ADMIN_FETCH_FARMER_FARM_LIST } from "@/utils/Apis/api";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import Message from "@/app/components/common/Message";
@@ -84,7 +84,7 @@ function page() {
       loadingBarRef.current.continuousStart();
     }
 
-    router.push(`${FARMER}/farm?farm_id=${id}`);
+    router.push(`${ADMIN_FARM}?farm_id=${id}`);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();

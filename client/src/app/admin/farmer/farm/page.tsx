@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ADMIN_FETCH_FARMER_FARM_DATA } from "@/utils/Apis/api";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
-import { CERTIFICATE, FARMER, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
+import { ADMIN_FARM, CERTIFICATE, FARMER, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
 import QRCode from "react-qr-code";
 import { Farm } from "@/utils/Types/interfaces";
@@ -89,20 +89,29 @@ function page() {
 
       {farmData && !isQRCode ? (
         <div className="space-y-5 lg:space-y-10 my-5">
+          <div className="text-end my-7">
+            <button
+              onClick={()=>router.push(`${ADMIN_FARM}/edit`)}
+              className="bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2 py-1 text-[11px] md:text-lg"
+            >
+              Edit
+            </button>
+          </div>
+
           <Map coordinates={farmData.geoFenceData} height="300px" />
 
           <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <div className="font-bold">ID:</div>
-                <div className="text-sm">{farmData.uniqueID}</div>
-              </div>
-              {farmData.area && (
+            <div className="flex items-center space-x-3">
+              <div className="font-bold">ID:</div>
+              <div className="text-sm">{farmData.uniqueID}</div>
+            </div>
+            {farmData.area && (
               <div className="flex items-center space-x-3">
                 <div className="font-bold">Area:</div>
                 <div>{farmData.area.toFixed(2)} sq. m</div>
               </div>
             )}
-            </div>
+          </div>
 
           <div className="bg-cardBackground p-3 rounded-md">
             <div className="flex items-center space-x-3">
