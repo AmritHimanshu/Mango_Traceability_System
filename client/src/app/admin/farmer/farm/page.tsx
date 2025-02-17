@@ -91,7 +91,7 @@ function page() {
         <div className="space-y-5 lg:space-y-10 my-5">
           <div className="text-end my-7">
             <button
-              onClick={()=>router.push(`${ADMIN_FARM}/edit`)}
+              onClick={()=>router.push(`${ADMIN_FARM}/edit?farm_id=${farm_id}`)}
               className="bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2 py-1 text-[11px] md:text-lg"
             >
               Edit
