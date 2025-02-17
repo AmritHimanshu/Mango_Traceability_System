@@ -84,7 +84,7 @@ userSchema.methods.generateAuthToken = async function () {
 }
 
 userSchema.methods.generateUniqueID = async function (role, date) {
-    const firstPart = role.slice(0, 3);
+    const firstPart = role.slice(0, 1);
     const secondPart = new Date(date).toISOString().split("T")[0].split("-").join("");
     const thirdPart = randomInt(1000, 9999).toString();
 
