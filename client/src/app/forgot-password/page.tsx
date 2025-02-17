@@ -221,7 +221,7 @@ function page() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-[calc(100vh-0px)] bg-[url('/assets/mangoBg.jpg')] bg-cover">
+    <div className="flex flex-col items-center justify-center h-[calc(100vh-0px)] bg-[url('/assets/mangoBg.jpg')] bg-cover relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
       {message.text && message.type && (
