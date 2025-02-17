@@ -155,12 +155,18 @@ function page() {
           <div className="space-y-5 lg:space-y-10 my-5">
             <Map coordinates={farm.geoFenceData} height="300px" />
 
-            {farm.area && (
-              <div className="flex items-start space-x-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="font-bold">ID:</div>
+                <div className="text-sm">{farm.uniqueID}</div>
+              </div>
+              {farm.area && (
+              <div className="flex items-center space-x-3">
                 <div className="font-bold">Area:</div>
                 <div>{farm.area.toFixed(2)} sq. m</div>
               </div>
             )}
+            </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
               {farm.farm && (

@@ -86,6 +86,7 @@ export type Farm = {
     yield: number;
   };
   createdAt: string;
+  uniqueID: string;
 };
 
 export type FarmList = {

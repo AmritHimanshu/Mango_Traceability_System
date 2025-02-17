@@ -91,12 +91,18 @@ function page() {
         <div className="space-y-5 lg:space-y-10 my-5">
           <Map coordinates={farmData.geoFenceData} height="300px" />
 
-          {farmData.area && (
-            <div className="flex items-center space-x-3">
-              <div className="font-bold">Farm Area: </div>
-              <div>{farmData.area.toFixed(2)} sq. m</div>
+          <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="font-bold">ID:</div>
+                <div className="text-sm">{farmData.uniqueID}</div>
+              </div>
+              {farmData.area && (
+              <div className="flex items-center space-x-3">
+                <div className="font-bold">Area:</div>
+                <div>{farmData.area.toFixed(2)} sq. m</div>
+              </div>
+            )}
             </div>
-          )}
 
           <div className="bg-cardBackground p-3 rounded-md">
             <div className="flex items-center space-x-3">

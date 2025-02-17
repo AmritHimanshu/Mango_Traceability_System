@@ -105,7 +105,7 @@ farmerSchema.methods.generateUniqueID = async function (cropName) {
     const secondPart = new Date().toISOString().split("T")[0].split("-").join("");
     const thirdPart = randomInt(1000, 9999).toString();
 
-    const uniqueID = "Farm" + firstPart + secondPart + thirdPart;
+    const uniqueID = "FARM" + firstPart + secondPart + thirdPart;
 
     return uniqueID;
 }
