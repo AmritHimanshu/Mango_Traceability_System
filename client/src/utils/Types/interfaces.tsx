@@ -33,6 +33,7 @@ export type User = {
   phone: number;
   role: string;
   _id: string;
+  uniqueID: string;
 };
 
 export type HomeCardProps = {

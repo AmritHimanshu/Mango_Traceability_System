@@ -14,10 +14,11 @@ function Table_List({ users, url }: { users: User[]; url: string }) {
       <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] border-2 table-fixed">
         <thead>
           <tr className="text-start font-bold bg-gray-200">
+            <td className="px-2 py-4 border-y-2">ID</td>
             <td className="px-2 py-4 border-y-2">Name</td>
             <td className="px-2 py-4 border-y-2">Email</td>
             <td className="px-2 py-4 border-y-2">Phone</td>
-            <td className="px-2 py-4 border-y-2">Joined on</td>
+            {/* <td className="px-2 py-4 border-y-2">Joined on</td> */}
             <td className="px-2 py-4 border-y-2"></td>
           </tr>
         </thead>
@@ -25,6 +26,12 @@ function Table_List({ users, url }: { users: User[]; url: string }) {
         <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
           {users.map((user, index) => (
             <tr key={index} className="text-start even:bg-gray-50">
+              <td
+                className="px-2 py-4 border-y-2 w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
+                title={user.uniqueID}
+              >
+                {user.uniqueID}
+              </td>
               <td
                 className="px-2 py-4 border-y-2 w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
                 title={user.name}
@@ -43,7 +50,7 @@ function Table_List({ users, url }: { users: User[]; url: string }) {
               >
                 {user.phone}
               </td>
-              <td className="px-2 py-4 border-y-2 w-[120px] min-w-[100px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
+              {/* <td className="px-2 py-4 border-y-2 w-[120px] min-w-[100px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
                 {new Date(user.createdAt).toLocaleString("en-IN", {
                   day: "2-digit",
                   month: "2-digit",
@@ -52,7 +59,7 @@ function Table_List({ users, url }: { users: User[]; url: string }) {
                   minute: "numeric",
                   hour12: true,
                 })}
-              </td>
+              </td> */}
               <td className="px-2 border-y-2 text-end">
                 <button
                   className="w-[30px] md:w-[50px] lg:w-[100px] bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white py-2 rounded-sm duration-200"
