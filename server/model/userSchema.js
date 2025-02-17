@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { randomInt } = require("crypto");
 
 const userSchema = new mongoose.Schema(
     {
@@ -45,6 +46,10 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             default: false
         },
+        uniqueID:
+        {
+            type: String,
+        },
         tokens: [
             {
                 token: {
@@ -76,6 +81,16 @@ userSchema.methods.generateAuthToken = async function () {
     } catch (error) {
         console.log(error);
     }
+}
+
+userSchema.methods.generateUniqueID = async function (role, date) {
+    const firstPart = role.slice(0, 3);
+    const secondPart = new Date(date).toISOString().split("T")[0].split("-").join("");
+    const thirdPart = randomInt(1000, 9999).toString();
+
+    const uniqueID = firstPart + secondPart + thirdPart;
+
+    return uniqueID;
 }
 
 

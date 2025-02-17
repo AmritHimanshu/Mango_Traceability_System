@@ -28,6 +28,11 @@ router.put('/api/authenticate-user/:id', async (req, res) => {
         user.isAuthenticated = isAuthenticated;
 
         if (isAuthenticated === false) user.isRejected = true;
+        if (isAuthenticated === true) {
+            const ID = await user.generateUniqueID(role, user.createdAt);
+            user.uniqueID = ID;
+        }
+
         await user.save();
 
         await notifyUser(user, isAuthenticated);
