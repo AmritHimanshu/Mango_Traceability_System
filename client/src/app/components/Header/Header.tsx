@@ -79,8 +79,9 @@ function Header() {
                   onClick={() => setIsMenu(!isMenu)}
                 />
               </div>
-              <div className="hidden md:block text-sm font-semibold text-gray-800">
+              <div className="hidden md:block text-center text-sm font-semibold text-gray-800">
                 <div>{userState.name.toUpperCase()}</div>
+                <div className="font-thin text-[11px]">{userState.uniqueID}</div>
               </div>
               </>
             ) : (

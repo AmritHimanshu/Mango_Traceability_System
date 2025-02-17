@@ -7,6 +7,7 @@ export type userSchema = {
   role: "Admin" | "Manager" | "Farmer";
   isAuthenticated: boolean;
   isRejected: boolean;
+  uniqueID: string;
 };
 
 export type IUserState = {
