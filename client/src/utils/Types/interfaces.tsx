@@ -94,6 +94,7 @@ export type FarmList = {
   crop: string;
   createdAt: string;
   _id: string;
+  uniqueID: string;
 };
 
 export type FewFarmList = {

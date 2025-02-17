@@ -4,11 +4,13 @@ import React from "react";
 import { ListFarmTableProps } from "@/utils/Types/interfaces";
 
 function ListFarmTable({ farms, handleClick }: ListFarmTableProps) {
+
   return (
     <div className="w-full overflow-x-auto">
       <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] border-2 table-fixed">
         <thead>
           <tr className="text-start font-bold bg-gray-200">
+            <td className="px-2 py-4 border-y-2">ID</td>
             <td className="px-2 py-4 border-y-2">Farm Name</td>
             <td className="px-2 py-4 border-y-2">Crop Name</td>
             <td className="px-2 py-4 border-y-2">Created on</td>
@@ -19,6 +21,12 @@ function ListFarmTable({ farms, handleClick }: ListFarmTableProps) {
         <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
           {farms.map((farm, index) => (
             <tr key={index} className="text-start even:bg-gray-50">
+              <td
+                className="px-2 py-4 border-y-2 w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
+                title={farm.uniqueID}
+              >
+                {farm.uniqueID}
+              </td>
               <td
                 className="px-2 py-4 border-y-2 w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
                 title={farm.farm}
