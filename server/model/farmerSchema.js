@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema.Types;
+const { randomInt } = require("crypto");
 
 const farmerSchema = new mongoose.Schema(
     {
@@ -88,12 +89,27 @@ const farmerSchema = new mongoose.Schema(
             date: Date,
             yield: Number,
         },
+        uniqueID:
+        {
+            type: String,
+        },
         qrCode: String,
     },
     {
         timestamps: true
     }
 );
+
+farmerSchema.methods.generateUniqueID = async function (cropName) {
+    const firstPart = cropName.slice(0, 1);
+    const secondPart = new Date().toISOString().split("T")[0].split("-").join("");
+    const thirdPart = randomInt(1000, 9999).toString();
+
+    const uniqueID = "Farm" + firstPart + secondPart + thirdPart;
+
+    return uniqueID;
+}
+
 
 const Farmer = mongoose.model('FARMER', farmerSchema);
 

@@ -26,6 +26,10 @@ router.post('/api/new-farm', async (req, res) => {
             area: area,
         });
 
+        const ID = await farm.generateUniqueID(cropName);
+
+        farm.uniqueID = ID;
+
         const farmRegister = await farm.save();
 
         return res.status(201).json({message: "Farm registered successfully!"});
