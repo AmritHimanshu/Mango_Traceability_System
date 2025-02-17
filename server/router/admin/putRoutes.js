@@ -24,12 +24,16 @@ router.put('/api/authenticate-user/:id', async (req, res) => {
             return res.status(404).json({ error: "User not found" });
         }
 
-        if(role) user.role = role;
+        if (role) user.role = role;
         user.isAuthenticated = isAuthenticated;
 
         if (isAuthenticated === false) user.isRejected = true;
         if (isAuthenticated === true) {
-            const ID = await user.generateUniqueID(role, user.createdAt);
+            const usersOfSameRole = await User.find({ role , isAuthenticated: true, isRejected: false});
+
+            const lengthOfUsers = usersOfSameRole.length;
+            
+            const ID = await user.generateUniqueID(role, user.createdAt, lengthOfUsers);
             user.uniqueID = ID;
         }
 
