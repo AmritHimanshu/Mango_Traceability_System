@@ -290,10 +290,15 @@ function page() {
     }
   };
 
-  const sendOTP = async (e: React.FormEvent<HTMLFormElement>) => {
+  const sendOTP = async (
+    e:
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+      | React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
     e.preventDefault();
 
     const { name, email, phone, password, confirm_password } = formData;
+    console.log(name, email, phone, password, confirm_password);
     if (!name || !email || !phone || !password || !confirm_password) {
       setMessage({ text: "Fill all the fields", type: "error" });
       setTimeout(() => {
@@ -428,6 +433,9 @@ function page() {
                 id="email"
                 name="email"
                 type="email"
+                value={formData.email}
+                required
+                onChange={(e) => handleFormState(e)}
               />
 
               <MDBInput
@@ -441,19 +449,26 @@ function page() {
                 onChange={(e) => handleFormState(e)}
               />
 
-              <MDBInput
-                wrapperClass="mb-4"
-                label="Password"
-                name="password"
-                id="password"
-                type="password"
-                value={formData.password}
-                required
-                onChange={(e) => {
-                  handleFormState(e);
-                  handlePasswordCheck(e);
-                }}
-              />
+              <div className=" mb-4">
+                <MDBInput
+                  wrapperClass="mb-0"
+                  label="Password"
+                  name="password"
+                  id="password"
+                  type="password"
+                  value={formData.password}
+                  required
+                  onChange={(e) => {
+                    handleFormState(e);
+                    handlePasswordCheck(e);
+                  }}
+                />
+                {errorMessage && (
+                  <div className="text-red-500 text-[12px] text-start">
+                    {errorMessage}
+                  </div>
+                )}
+              </div>
 
               <MDBInput
                 wrapperClass="mb-4"
@@ -466,7 +481,11 @@ function page() {
                 onChange={(e) => handleFormState(e)}
               />
 
-              <MDBBtn className="w-100 mb-4" size="sm">
+              <MDBBtn
+                className="w-100 mb-4"
+                size="sm"
+                onClick={(e) => sendOTP(e)}
+              >
                 sign up
               </MDBBtn>
 
