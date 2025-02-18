@@ -236,22 +236,44 @@ function page() {
             {farmData.harvest && (
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Harvest Date:</div>
-                <div>
-                  {farmData.harvest.date && (
-                    <div className="flex space-x-5">
-                      <div>Date:</div>
-                      <div>
-                        {
-                          new Date(farmData.harvest.date)
-                            .toISOString()
-                            .split("T")[0]
-                        }
-                      </div>
-                    </div>
-                  )}
-                  <div className="flex space-x-5">
-                    <div>Yield:</div>
-                    <div>{farmData.harvest.yield}</div>
+                <div className="w-full flex items-center justify-between">
+                  <div className="w-[48%]">
+                    <label htmlFor="harvestDate">Date:</label>
+                    <input
+                      type="date"
+                      id="harvestDate"
+                      name="harvestDate"
+                      value={
+                        new Date(farmData.harvest.date)
+                          .toISOString()
+                          .split("T")[0] || ""
+                      }
+                      className="input-tag"
+                      // onChange={(e) =>
+                      //   setHarvest((prev) => ({
+                      //     ...prev,
+                      //     date: e.target.value,
+                      //   }))
+                      // }
+                      onChange={() => {}}
+                    />
+                  </div>
+                  <div className="w-[48%]">
+                    <label htmlFor="harvestYield">Yield:</label>
+                    <input
+                      type="number"
+                      id="harvestYield"
+                      name="harvestYield"
+                      value={farmData.harvest.yield || ""}
+                      className="input-tag"
+                      // onChange={(e) =>
+                      //   setHarvest((prev) => ({
+                      //     ...prev,
+                      //     yield: e.target.value,
+                      //   }))
+                      // }
+                      onChange={() => {}}
+                    />
                   </div>
                 </div>
               </div>
@@ -329,26 +351,47 @@ function page() {
                               {farmData.irrigationDates.artificial.length >
                                 0 && (
                                 <td className="border border-gray-300 px-4 py-2">
-                                  {farmData.irrigationDates.artificial[index]
-                                    ? new Date(
-                                        farmData.irrigationDates.artificial[
-                                          index
-                                        ]
-                                      )
-                                        .toISOString()
-                                        .split("T")[0]
-                                    : ""}
+                                  {farmData.irrigationDates.artificial[index] ? (
+                                    <input
+                                      type="date"
+                                      id={index.toString()}
+                                      name=""
+                                      value={new Date(farmData.irrigationDates.artificial[index]).toISOString().split("T")[0]}
+                                      className="input-tag"
+                                      // onChange={(e) =>
+                                      //   setHarvest((prev) => ({
+                                      //     ...prev,
+                                      //     yield: e.target.value,
+                                      //   }))
+                                      // }
+                                      onChange={() => {}}
+                                    />
+                                  ) : (
+                                    ""
+                                  )}
                                 </td>
                               )}
                               {farmData.irrigationDates.natural.length > 0 && (
                                 <td className="border border-gray-300 px-4 py-2">
                                   {farmData.irrigationDates.natural[index]
-                                    ? new Date(
-                                        farmData.irrigationDates.natural[index]
-                                      )
-                                        .toISOString()
-                                        .split("T")[0]
-                                    : ""}
+                                    ? (
+                                      <input
+                                        type="date"
+                                        id={index.toString()}
+                                        name=""
+                                        value={new Date(farmData.irrigationDates.natural[index]).toISOString().split("T")[0]}
+                                        className="input-tag"
+                                        // onChange={(e) =>
+                                        //   setHarvest((prev) => ({
+                                        //     ...prev,
+                                        //     yield: e.target.value,
+                                        //   }))
+                                        // }
+                                        onChange={() => {}}
+                                      />
+                                    ) : (
+                                      ""
+                                    )}
                                 </td>
                               )}
                             </tr>
