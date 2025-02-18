@@ -172,6 +172,7 @@ function page() {
               required
               onChange={(e) => setEmail(e.target.value)}
             />
+            
             <div className="flex items-center mb-4 space-x-2">
               <MDBInput
                 // wrapperClass="mb-4"
