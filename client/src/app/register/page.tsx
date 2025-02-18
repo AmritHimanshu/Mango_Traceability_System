@@ -25,9 +25,8 @@ import {
   MDBRow,
   MDBInput,
   MDBCheckbox,
-  MDBIcon
-}
-from 'mdb-react-ui-kit';
+  MDBIcon,
+} from "mdb-react-ui-kit";
 
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -378,199 +377,294 @@ function page() {
   };
 
   return (
-    <div className="log-reg-page-main-div bg-[url('/assets/mangoBg.jpg')] bg-cover">
-      <CustomLoadingBar ref={loadingBarRef} />
+    <MDBContainer
+      fluid
+      className="d-flex flex-column justify-content-center align-items-center vh"
+    >
+      <div
+        className="p-5 bg-image"
+        style={{
+          backgroundImage:
+            "url(https://mdbootstrap.com/img/new/textures/full/171.jpg)",
+          height: "300px",
+          width: "100%",
+        }}
+      ></div>
 
-      {message.text && message.type && (
-        <Message text={message.text} type={message.type} />
-      )}
+      <MDBCard
+        className="mx-5 mb-5 p-5 shadow-5 w-100"
+        style={{
+          marginTop: "-200px",
+          maxWidth: "600px",
+          background: "hsla(0, 0%, 100%, 0.8)",
+          backdropFilter: "blur(30px)",
+        }}
+      >
+        <MDBCardBody className="p-5 text-center">
+          <h2 className="fw-bold mb-5">Sign up now</h2>
 
-      <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] rounded-sm shadow-md bg-zinc-900 bg-opacity-95 text-white">
-        {!isOtp ? (
-          <>
-            <div className="mb-3 text-center">Registration</div>
+          <MDBInput
+            wrapperClass="mb-4"
+            label="Name"
+            id="name"
+            name="name"
+            type="text"
+            value={formData.name}
+            required
+            onChange={(e) => handleFormState(e)}
+          />
 
-            <form
-              action="POST"
-              onSubmit={(e) => sendOTP(e)}
-              className="space-y-5"
-            >
-              <div className="flex items-start flex-col">
-                <label htmlFor="name">
-                  Name <span className="text-red-600">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  className="input-tag"
-                  placeholder="John Doe"
-                  value={formData.name}
-                  required
-                  onChange={(e) => handleFormState(e)}
-                />
-              </div>
+          <MDBInput
+            wrapperClass="mb-4"
+            label="Email"
+            id="email"
+            name="email"
+            type="email"
+          />
 
-              <div className="flex items-start flex-col">
-                <label htmlFor="email">
-                  Email <span className="text-red-600">*</span>
-                </label>
-                <div className="flex justify-between border-b-2 border-black w-full">
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="outline-none pt-2 w-[73%] bg-transparent"
-                    placeholder="John@xyz.com"
-                    value={formData.email}
-                    required
-                    onChange={(e) => handleFormState(e)}
-                  />
-                </div>
-              </div>
+          <MDBInput
+            wrapperClass="mb-4"
+            label="Phone number"
+            id="phone"
+            name="phone"
+            type="tel"
+            value={formData.phone}
+            required
+            onChange={(e) => handleFormState(e)}
+          />
 
-              <div>
-                <label htmlFor="phone">
-                  Phone Number <span className="text-red-600">*</span>
-                </label>
-                <div className="flex justify-between border-b-2 border-black">
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    className="outline-none pt-2 w-[73%] bg-transparent"
-                    placeholder="+91 9876543210"
-                    value={formData.phone}
-                    required
-                    onChange={(e) => handleFormState(e)}
-                  />
-                </div>
-              </div>
+          <MDBInput
+            wrapperClass="mb-4"
+            label="Password"
+            name="password"
+            id="password"
+            type="password"
+            value={formData.password}
+            required
+            onChange={(e) => {
+              handleFormState(e);
+              handlePasswordCheck(e);
+            }}
+          />
 
-              <div className="flex items-start flex-col">
-                <label htmlFor="password">
-                  Password <span className="text-red-600">*</span>
-                </label>
-                <div className="flex justify-between input-tag">
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    className="outline-none w-full bg-transparent"
-                    placeholder="Enter your password"
-                    value={formData.password}
-                    required
-                    onChange={(e) => {
-                      handleFormState(e);
-                      handlePasswordCheck(e);
-                    }}
-                  />
-                </div>
-                {errorMessage && (
-                  <div className="text-red-500 text-[12px]">{errorMessage}</div>
-                )}
-              </div>
+          <MDBInput
+            wrapperClass="mb-4"
+            label="Confirm Password"
+            name="confirm_password"
+            id="cpassword"
+            type="password"
+            value={formData.confirm_password}
+            required
+            onChange={(e) => handleFormState(e)}
+          />
 
-              <div className="flex items-start flex-col">
-                <label htmlFor="cpassword">
-                  Confirm Password <span className="text-red-600">*</span>
-                </label>
-                <div className="flex justify-between input-tag">
-                  <input
-                    type={`${isVisibleConfirmPassword ? "text" : "password"}`}
-                    id="cpassword"
-                    name="confirm_password"
-                    className="outline-none w-full bg-transparent"
-                    placeholder="Confirm your password"
-                    value={formData.confirm_password}
-                    required
-                    onChange={(e) => handleFormState(e)}
-                  />
-                  {isVisibleConfirmPassword ? (
-                    <VisibilityIcon
-                      className="cursor-pointer"
-                      onClick={() =>
-                        setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
-                      }
-                    />
-                  ) : (
-                    <VisibilityOffIcon
-                      className="cursor-pointer"
-                      onClick={() =>
-                        setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
-                      }
-                    />
-                  )}
-                </div>
-              </div>
+          <MDBBtn className="w-100 mb-4" size="sm">
+            sign up
+          </MDBBtn>
 
-              <button
-                type="submit"
-                className="btn bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white duration-200"
-              >
-                Register
-              </button>
-            </form>
+          <div className="w-[100%] mt-5 text-[9px] md:text-[13px]">
+            Already have an account?{" "}
+            <Link href="/login">
+              <span className="text-blue-600 hover:underline">Sign in.</span>
+            </Link>
+          </div>
+        </MDBCardBody>
+      </MDBCard>
+    </MDBContainer>
 
-            <div className="w-[100%] mt-5 text-[12px] md:text-[18px]">
-              Already have an account?{" "}
-              <Link href="/login">
-                <span className="text-blue-600 hover:underline">Sign in.</span>
-              </Link>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="space-y-3">
-              <div
-                className="text-end cursor-pointer"
-                onClick={() => setIsOtp(false)}
-              >
-                X
-              </div>
+    // <div className="log-reg-page-main-div bg-[url('/assets/mangoBg.jpg')] bg-cover">
+    //   <CustomLoadingBar ref={loadingBarRef} />
 
-              <hr />
+    //   {message.text && message.type && (
+    //     <Message text={message.text} type={message.type} />
+    //   )}
 
-              <div className="w-[90%]">
-                Enter the One Time Password (OTP) sent to your mobile
-              </div>
+    //   <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] rounded-sm shadow-md bg-zinc-900 bg-opacity-95 text-white">
+    //     {!isOtp ? (
+    //       <>
+    //         <div className="mb-3 text-center">Registration</div>
 
-              <input
-                type="text"
-                className="border-[1px] border-white w-full p-2 outline-0 bg-transparent"
-                placeholder="Enter OTP"
-                value={phoneOtp}
-                onChange={(e) => setPhoneOtp(e.target.value)}
-              />
-              <div className="space-x-3 text-end text-[14px]">
-                <button
-                  className="py-1 px-2 bg-gray-500 text-white rounded-sm hover:bg-gray-600 duration-200"
-                  onClick={() => reSendOTP()}
-                >
-                  RESEND OTP
-                </button>
+    //         <form
+    //           action="POST"
+    //           onSubmit={(e) => sendOTP(e)}
+    //           className="space-y-5"
+    //         >
+    //           <div className="flex items-start flex-col">
+    //             <label htmlFor="name">
+    //               Name <span className="text-red-600">*</span>
+    //             </label>
+    //             <input
+    //               type="text"
+    //               id="name"
+    //               name="name"
+    //               className="input-tag"
+    //               placeholder="John Doe"
+    //               value={formData.name}
+    //               required
+    //               onChange={(e) => handleFormState(e)}
+    //             />
+    //           </div>
 
-                {flagPhone ? (
-                  <button
-                    className="py-1 px-2 bg-green-600 bg-opacity-70 text-white rounded-sm"
-                    disabled
-                  >
-                    Verifying
-                  </button>
-                ) : (
-                  <button
-                    className="py-1 px-2 bg-green-600 text-white rounded-sm hover:bg-green-700 duration-200"
-                    onClick={() => verifyOtp()}
-                  >
-                    VERIFY
-                  </button>
-                )}
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-    </div>
+    //           <div className="flex items-start flex-col">
+    //             <label htmlFor="email">
+    //               Email <span className="text-red-600">*</span>
+    //             </label>
+    //             <div className="flex justify-between border-b-2 border-black w-full">
+    //               <input
+    //                 type="email"
+    //                 id="email"
+    //                 name="email"
+    //                 className="outline-none pt-2 w-[73%] bg-transparent"
+    //                 placeholder="John@xyz.com"
+    //                 value={formData.email}
+    //                 required
+    //                 onChange={(e) => handleFormState(e)}
+    //               />
+    //             </div>
+    //           </div>
+
+    //           <div>
+    //             <label htmlFor="phone">
+    //               Phone Number <span className="text-red-600">*</span>
+    //             </label>
+    //             <div className="flex justify-between border-b-2 border-black">
+    //               <input
+    //                 type="tel"
+    //                 id="phone"
+    //                 name="phone"
+    //                 className="outline-none pt-2 w-[73%] bg-transparent"
+    //                 placeholder="+91 9876543210"
+    //                 value={formData.phone}
+    //                 required
+    //                 onChange={(e) => handleFormState(e)}
+    //               />
+    //             </div>
+    //           </div>
+
+    //           <div className="flex items-start flex-col">
+    //             <label htmlFor="password">
+    //               Password <span className="text-red-600">*</span>
+    //             </label>
+    //             <div className="flex justify-between input-tag">
+    //               <input
+    //                 type="password"
+    //                 id="password"
+    //                 name="password"
+    //                 className="outline-none w-full bg-transparent"
+    //                 placeholder="Enter your password"
+    //                 value={formData.password}
+    //                 required
+    //                 onChange={(e) => {
+    //                   handleFormState(e);
+    //                   handlePasswordCheck(e);
+    //                 }}
+    //               />
+    //             </div>
+    //             {errorMessage && (
+    //               <div className="text-red-500 text-[12px]">{errorMessage}</div>
+    //             )}
+    //           </div>
+
+    //           <div className="flex items-start flex-col">
+    //             <label htmlFor="cpassword">
+    //               Confirm Password <span className="text-red-600">*</span>
+    //             </label>
+    //             <div className="flex justify-between input-tag">
+    //               <input
+    //                 type={`${isVisibleConfirmPassword ? "text" : "password"}`}
+    //                 id="cpassword"
+    //                 name="confirm_password"
+    //                 className="outline-none w-full bg-transparent"
+    //                 placeholder="Confirm your password"
+    //                 value={formData.confirm_password}
+    //                 required
+    //                 onChange={(e) => handleFormState(e)}
+    //               />
+    //               {isVisibleConfirmPassword ? (
+    //                 <VisibilityIcon
+    //                   className="cursor-pointer"
+    //                   onClick={() =>
+    //                     setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
+    //                   }
+    //                 />
+    //               ) : (
+    //                 <VisibilityOffIcon
+    //                   className="cursor-pointer"
+    //                   onClick={() =>
+    //                     setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
+    //                   }
+    //                 />
+    //               )}
+    //             </div>
+    //           </div>
+
+    //           <button
+    //             type="submit"
+    //             className="btn bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white duration-200"
+    //           >
+    //             Register
+    //           </button>
+    //         </form>
+
+    //         <div className="w-[100%] mt-5 text-[12px] md:text-[18px]">
+    //           Already have an account?{" "}
+    //           <Link href="/login">
+    //             <span className="text-blue-600 hover:underline">Sign in.</span>
+    //           </Link>
+    //         </div>
+    //       </>
+    //     ) : (
+    //       <>
+    //         <div className="space-y-3">
+    //           <div
+    //             className="text-end cursor-pointer"
+    //             onClick={() => setIsOtp(false)}
+    //           >
+    //             X
+    //           </div>
+
+    //           <hr />
+
+    //           <div className="w-[90%]">
+    //             Enter the One Time Password (OTP) sent to your mobile
+    //           </div>
+
+    //           <input
+    //             type="text"
+    //             className="border-[1px] border-white w-full p-2 outline-0 bg-transparent"
+    //             placeholder="Enter OTP"
+    //             value={phoneOtp}
+    //             onChange={(e) => setPhoneOtp(e.target.value)}
+    //           />
+    //           <div className="space-x-3 text-end text-[14px]">
+    //             <button
+    //               className="py-1 px-2 bg-gray-500 text-white rounded-sm hover:bg-gray-600 duration-200"
+    //               onClick={() => reSendOTP()}
+    //             >
+    //               RESEND OTP
+    //             </button>
+
+    //             {flagPhone ? (
+    //               <button
+    //                 className="py-1 px-2 bg-green-600 bg-opacity-70 text-white rounded-sm"
+    //                 disabled
+    //               >
+    //                 Verifying
+    //               </button>
+    //             ) : (
+    //               <button
+    //                 className="py-1 px-2 bg-green-600 text-white rounded-sm hover:bg-green-700 duration-200"
+    //                 onClick={() => verifyOtp()}
+    //               >
+    //                 VERIFY
+    //               </button>
+    //             )}
+    //           </div>
+    //         </div>
+    //       </>
+    //     )}
+    //   </div>
+    // </div>
   );
 }
 
