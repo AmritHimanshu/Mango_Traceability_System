@@ -211,6 +211,94 @@ function page() {
           </MDBCardBody>
         </MDBCard>
       </MDBContainer>
+
+      {/* <div className="log-reg-page-main-div">
+        <CustomLoadingBar ref={loadingBarRef} />
+
+        {message.text && message.type && (
+          <Message text={message.text} type={message.type} />
+        )}
+
+        <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] rounded-sm shadow-md bg-zinc-900 bg-opacity-95 text-white">
+          <div className="mb-3 text-center">Login</div>
+
+          <form
+            action="POST"
+            className="space-y-10"
+            onSubmit={(e) => handleFormData(e)}
+          >
+            <div className="flex items-start flex-col">
+              <label htmlFor="id">
+                Email <span className="text-red-600">*</span>
+              </label>
+              <input
+                type="email"
+                id="id"
+                name="id"
+                value={email}
+                className="input-tag bg-transparent"
+                placeholder="example@gmail.com"
+                required
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div className="flex items-start flex-col">
+              <label htmlFor="password">
+                Password <span className="text-red-600">*</span>
+              </label>
+              <div className="flex justify-between input-tag">
+                <input
+                  type={`${isVisiblePassword ? "text" : "password"}`}
+                  id="password"
+                  name="password"
+                  value={password}
+                  className="outline-none w-full bg-transparent"
+                  placeholder="Enter your password"
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {isVisiblePassword ? (
+                  <VisibilityIcon
+                    className="cursor-pointer"
+                    onClick={() => setIsVisiblePassword(!isVisiblePassword)}
+                  />
+                ) : (
+                  <VisibilityOffIcon
+                    className="cursor-pointer"
+                    onClick={() => setIsVisiblePassword(!isVisiblePassword)}
+                  />
+                )}
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="btn bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white duration-200"
+            >
+              Login
+            </button>
+          </form>
+
+          <div className="flex text-[9px] md:text-[14px] lg:text-[16px]">
+            <div className="w-[100%] mt-5 text-start">
+              Forgot password?{" "}
+              <Link href={FORGOT_PASSWORD}>
+                <span className="text-blue-600 hover:underline">
+                  click here
+                </span>
+              </Link>
+            </div>
+
+            <div className="w-[100%] mt-5 text-end">
+              Don't have an account?{" "}
+              <Link href={REGISTER}>
+                <span className="text-blue-600 hover:underline">Sign up.</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div> */}
     </>
   );
 }
