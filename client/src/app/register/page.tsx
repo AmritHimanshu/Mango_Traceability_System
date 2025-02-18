@@ -381,6 +381,12 @@ function page() {
       fluid
       className="d-flex flex-column justify-content-center align-items-center vh"
     >
+      <CustomLoadingBar ref={loadingBarRef} />
+
+      {message.text && message.type && (
+        <Message text={message.text} type={message.type} />
+      )}
+
       <div
         className="p-5 bg-image"
         style={{
@@ -400,75 +406,130 @@ function page() {
           backdropFilter: "blur(30px)",
         }}
       >
-        <MDBCardBody className="p-5 text-center">
-          <h2 className="fw-bold mb-5">Sign up now</h2>
+        {!isOtp ? (
+          <>
+            <MDBCardBody className="p-5 text-center">
+              <h2 className="fw-bold mb-5">Sign up now</h2>
 
-          <MDBInput
-            wrapperClass="mb-4"
-            label="Name"
-            id="name"
-            name="name"
-            type="text"
-            value={formData.name}
-            required
-            onChange={(e) => handleFormState(e)}
-          />
+              <MDBInput
+                wrapperClass="mb-4"
+                label="Name"
+                id="name"
+                name="name"
+                type="text"
+                value={formData.name}
+                required
+                onChange={(e) => handleFormState(e)}
+              />
 
-          <MDBInput
-            wrapperClass="mb-4"
-            label="Email"
-            id="email"
-            name="email"
-            type="email"
-          />
+              <MDBInput
+                wrapperClass="mb-4"
+                label="Email"
+                id="email"
+                name="email"
+                type="email"
+              />
 
-          <MDBInput
-            wrapperClass="mb-4"
-            label="Phone number"
-            id="phone"
-            name="phone"
-            type="tel"
-            value={formData.phone}
-            required
-            onChange={(e) => handleFormState(e)}
-          />
+              <MDBInput
+                wrapperClass="mb-4"
+                label="Phone number"
+                id="phone"
+                name="phone"
+                type="tel"
+                value={formData.phone}
+                required
+                onChange={(e) => handleFormState(e)}
+              />
 
-          <MDBInput
-            wrapperClass="mb-4"
-            label="Password"
-            name="password"
-            id="password"
-            type="password"
-            value={formData.password}
-            required
-            onChange={(e) => {
-              handleFormState(e);
-              handlePasswordCheck(e);
-            }}
-          />
+              <MDBInput
+                wrapperClass="mb-4"
+                label="Password"
+                name="password"
+                id="password"
+                type="password"
+                value={formData.password}
+                required
+                onChange={(e) => {
+                  handleFormState(e);
+                  handlePasswordCheck(e);
+                }}
+              />
 
-          <MDBInput
-            wrapperClass="mb-4"
-            label="Confirm Password"
-            name="confirm_password"
-            id="cpassword"
-            type="password"
-            value={formData.confirm_password}
-            required
-            onChange={(e) => handleFormState(e)}
-          />
+              <MDBInput
+                wrapperClass="mb-4"
+                label="Confirm Password"
+                name="confirm_password"
+                id="cpassword"
+                type="password"
+                value={formData.confirm_password}
+                required
+                onChange={(e) => handleFormState(e)}
+              />
 
-          <MDBBtn className="w-100 mb-4" size="sm">
-            sign up
-          </MDBBtn>
+              <MDBBtn className="w-100 mb-4" size="sm">
+                sign up
+              </MDBBtn>
 
-          <div className="w-[100%] mt-5 text-[9px] md:text-[13px]">
-            Already have an account?{" "}
-            <Link href="/login">
-              <span className="text-blue-600 hover:underline">Sign in.</span>
-            </Link>
-          </div>
-        </MDBCardBody>
+              <div className="w-[100%] mt-5 text-[11px] md:text-[15px]">
+                Already have an account?{" "}
+                <Link href="/login">
+                  <span className="text-blue-600 hover:underline">
+                    Sign in.
+                  </span>
+                </Link>
+              </div>
+            </MDBCardBody>
+          </>
+        ) : (
+          <>
+            <MDBCardBody className="p-5 text-center">
+              <div className="mb-3">
+                Enter the One Time Password (OTP) sent to your mobile
+              </div>
+
+              <MDBInput
+                wrapperClass="mb-4"
+                label="Enter OTP"
+                id="name"
+                name="name"
+                type="text"
+                value={phoneOtp}
+                onChange={(e) => setPhoneOtp(e.target.value)}
+              />
+
+              <MDBRow>
+                <MDBCol col="6">
+                  <MDBBtn
+                    className="w-100 mb-4"
+                    size="sm"
+                    style={{ backgroundColor: "#6b7280" }}
+                    onClick={() => reSendOTP()}
+                  >
+                    RESEND OTP
+                  </MDBBtn>
+                </MDBCol>
+
+                {flagPhone ? (
+                  <MDBCol col="6">
+                    <MDBBtn className="w-100 mb-4" size="sm">
+                      VERIFYING
+                    </MDBBtn>
+                  </MDBCol>
+                ) : (
+                  <MDBCol col="6">
+                    <MDBBtn
+                      className="w-100 mb-4"
+                      size="sm"
+                      onClick={() => verifyOtp()}
+                    >
+                      VERIFY
+                    </MDBBtn>
+                  </MDBCol>
+                )}
+              </MDBRow>
+            </MDBCardBody>
+          </>
+        )}
       </MDBCard>
     </MDBContainer>
 
