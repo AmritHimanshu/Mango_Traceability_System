@@ -9,11 +9,18 @@ import {
   UPDATE_PASSWORD,
   VERIFY_OTP_EMAIL,
 } from "@/utils/Apis/api";
+import { LOGIN } from "@/utils/Paths/paths";
+import Message from "../components/common/Message";
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBCard,
+  MDBCardBody,
+  MDBInput,
+} from "mdb-react-ui-kit";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { LOGIN } from "@/utils/Paths/paths";
-import Message from "../components/common/Message";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -221,145 +228,283 @@ function page() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-[calc(100vh-0px)] bg-[url('/assets/mangoBg.jpg')] bg-cover relative">
-      <CustomLoadingBar ref={loadingBarRef} />
+    <>
+      <MDBContainer
+        fluid
+        className="d-flex flex-column justify-content-center align-items-center vh-100"
+      >
+        <CustomLoadingBar ref={loadingBarRef} />
 
-      {message.text && message.type && (
-        <Message text={message.text} type={message.type} />
-      )}
-
-      <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] rounded-sm shadow-md bg-zinc-900 bg-opacity-95 text-white">
-        {!isEmailOtpSent && !isOtpVerified && (
-          <div className="mb-10 text-sm md:text-xl text-center">
-            Reset your Password
-          </div>
+        {message.text && message.type && (
+          <Message text={message.text} type={message.type} />
         )}
 
-        {isEmailOtpSent && !isOtpVerified && (
-          <div className="mb-10 text-sm md:text-xl text-center">
-            OTP Verification
-          </div>
-        )}
+        <div
+          className="p-5 bg-image"
+          style={{
+            backgroundImage:
+              "url(https://mdbootstrap.com/img/new/textures/full/171.jpg)",
+            height: "300px",
+            width: "100%",
+          }}
+        ></div>
 
-        {isEmailOtpSent && isOtpVerified && (
-          <div className="mb-10 text-sm md:text-xl text-center">
-            Enter new password
-          </div>
-        )}
+        <MDBCard
+          className="mx-5 mb-5 p-5 shadow-5 w-100"
+          style={{
+            marginTop: "-100px",
+            maxWidth: "600px",
+            background: "hsla(0, 0%, 100%, 0.8)",
+            backdropFilter: "blur(30px)",
+          }}
+        >
+          <MDBCardBody className="p-5 text-center">
+            {!isEmailOtpSent && !isOtpVerified && (
+              <h2 className="fw-bold mb-5">Reset your Password</h2>
+            )}
 
-        {!isEmailOtpSent && !isOtpVerified && (
-          <div className="flex items-start flex-col space-y-5">
-            <label htmlFor="email">Enter your email:</label>
-            <div className="flex justify-between input-tag">
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="outline-none w-full bg-transparent"
-                placeholder="John@xyz.com"
-                value={email}
-                required
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
+            {isEmailOtpSent && !isOtpVerified && (
+              <h2 className="fw-bold mb-5">OTP Verification</h2>
+            )}
 
-            <button
-              className="btn bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white"
-              onClick={() => sendOtpToEmail()}
-            >
-              Verify email
-            </button>
-          </div>
-        )}
+            {isEmailOtpSent && isOtpVerified && (
+              <h2 className="fw-bold mb-5">Enter new password</h2>
+            )}
 
-        {isEmailOtpSent && !isOtpVerified && (
-          <div className="flex items-start flex-col space-y-5">
-            <label htmlFor="otp">Enter otp:</label>
-            <div className="flex justify-between input-tag">
-              <input
-                type="text"
-                id="otp"
-                name="otp"
-                className="outline-none w-full bg-transparent"
-                placeholder="enter your otp"
-                value={otp}
-                required
-                onChange={(e) => setOtp(e.target.value)}
-              />
-            </div>
-
-            <button
-              className="btn bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white"
-              onClick={() => verifyOtpToEmail()}
-            >
-              Submit
-            </button>
-          </div>
-        )}
-
-        {isEmailOtpSent && isOtpVerified && (
-          <>
-            <div className="flex items-start flex-col mb-5">
-              <label htmlFor="password">
-                Password <span className="text-red-600">*</span>
-              </label>
-              <div className="flex justify-between input-tag">
-                <input
-                  type={`${isVisiblePassword ? "text" : "password"}`}
-                  id="password"
-                  name="password"
-                  className="outline-none w-full bg-transparent"
-                  placeholder="Enter your password"
-                  value={password}
+            {!isEmailOtpSent && !isOtpVerified && (
+              <>
+                <MDBInput
+                  wrapperClass="mb-4"
+                  label="Email"
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={email}
                   required
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    handlePasswordCheck(e);
-                  }}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
-                {isVisiblePassword ? (
-                  <VisibilityIcon
-                    onClick={() => setIsVisiblePassword(!isVisiblePassword)}
-                  />
-                ) : (
-                  <VisibilityOffIcon
-                    onClick={() => setIsVisiblePassword(!isVisiblePassword)}
-                  />
-                )}
-              </div>
-              {errorMessage && (
-                <div className="text-red-500 text-[12px]">{errorMessage}</div>
-              )}
-            </div>
 
-            <div className="flex items-start flex-col mb-5">
-              <label htmlFor="cpassword">
-                Confirm Password <span className="text-red-600">*</span>
-              </label>
-              <div className="flex justify-between input-tag">
-                <input
-                  type="password"
+                <MDBBtn
+                  className="w-100 mb-4"
+                  size="sm"
+                  onClick={() => sendOtpToEmail()}
+                >
+                  Verify email
+                </MDBBtn>
+              </>
+            )}
+
+            {isEmailOtpSent && !isOtpVerified && (
+              <>
+                <MDBInput
+                  wrapperClass="mb-4"
+                  label="Enter OTP"
+                  id="otp"
+                  name="otp"
+                  type="text"
+                  value={otp}
+                  required
+                  onChange={(e) => setOtp(e.target.value)}
+                />
+
+                <MDBBtn
+                  className="w-100 mb-4"
+                  size="sm"
+                  onClick={() => verifyOtpToEmail()}
+                >
+                  Submit
+                </MDBBtn>
+              </>
+            )}
+
+            {isEmailOtpSent && isOtpVerified && (
+              <>
+                <div className="mb-4">
+                  <MDBInput
+                    // wrapperClass="mb-4"
+                    label="Enter new password"
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={password}
+                    required
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      handlePasswordCheck(e);
+                    }}
+                  />
+
+                  {errorMessage && (
+                    <div className="text-red-500 text-[12px]">
+                      {errorMessage}
+                    </div>
+                  )}
+                </div>
+
+                <MDBInput
+                  wrapperClass="mb-4"
+                  label="Confirm your password"
                   id="cpassword"
                   name="confirm_password"
-                  className="outline-none w-full bg-transparent"
-                  placeholder="Confirm your password"
+                  type="password"
                   value={confirm_password}
                   required
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-              </div>
-            </div>
 
-            <button
-              className="btn bg-green-600 text-white"
-              onClick={() => changePassword()}
-            >
-              Change password
-            </button>
-          </>
-        )}
-      </div>
-    </div>
+                <MDBBtn
+                  className="w-100 mb-4"
+                  size="sm"
+                  onClick={() => changePassword()}
+                >
+                  Change password
+                </MDBBtn>
+              </>
+            )}
+          </MDBCardBody>
+        </MDBCard>
+      </MDBContainer>
+    </>
+
+    // <div className="flex flex-col items-center justify-center h-[calc(100vh-0px)] bg-[url('/assets/mangoBg.jpg')] bg-cover relative">
+    //   <CustomLoadingBar ref={loadingBarRef} />
+
+    //   {message.text && message.type && (
+    //     <Message text={message.text} type={message.type} />
+    //   )}
+
+    //   <div className="p-5 w-[330px] md:w-[400px] lg:w-[500px] rounded-sm shadow-md bg-zinc-900 bg-opacity-95 text-white">
+    //     {!isEmailOtpSent && !isOtpVerified && (
+    //       <div className="mb-10 text-sm md:text-xl text-center">
+    //         Reset your Password
+    //       </div>
+    //     )}
+
+    //     {isEmailOtpSent && !isOtpVerified && (
+    //       <div className="mb-10 text-sm md:text-xl text-center">
+    //         OTP Verification
+    //       </div>
+    //     )}
+
+    //     {isEmailOtpSent && isOtpVerified && (
+    //       <div className="mb-10 text-sm md:text-xl text-center">
+    //         Enter new password
+    //       </div>
+    //     )}
+
+    //     {!isEmailOtpSent && !isOtpVerified && (
+    //       <div className="flex items-start flex-col space-y-5">
+    //         <label htmlFor="email">Enter your email:</label>
+    //         <div className="flex justify-between input-tag">
+    //           <input
+    //             type="email"
+    //             id="email"
+    //             name="email"
+    //             className="outline-none w-full bg-transparent"
+    //             placeholder="John@xyz.com"
+    //             value={email}
+    //             required
+    //             onChange={(e) => setEmail(e.target.value)}
+    //           />
+    //         </div>
+
+    //         <button
+    //           className="btn bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white"
+    //           onClick={() => sendOtpToEmail()}
+    //         >
+    //           Verify email
+    //         </button>
+    //       </div>
+    //     )}
+
+    //     {isEmailOtpSent && !isOtpVerified && (
+    //       <div className="flex items-start flex-col space-y-5">
+    //         <label htmlFor="otp">Enter otp:</label>
+    //         <div className="flex justify-between input-tag">
+    //           <input
+    //             type="text"
+    //             id="otp"
+    //             name="otp"
+    //             className="outline-none w-full bg-transparent"
+    //             placeholder="enter your otp"
+    //             value={otp}
+    //             required
+    //             onChange={(e) => setOtp(e.target.value)}
+    //           />
+    //         </div>
+
+    //         <button
+    //           className="btn bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white"
+    //           onClick={() => verifyOtpToEmail()}
+    //         >
+    //           Submit
+    //         </button>
+    //       </div>
+    //     )}
+
+    //     {isEmailOtpSent && isOtpVerified && (
+    //       <>
+    //         <div className="flex items-start flex-col mb-5">
+    //           <label htmlFor="password">
+    //             Password <span className="text-red-600">*</span>
+    //           </label>
+    //           <div className="flex justify-between input-tag">
+    //             <input
+    //               type={`${isVisiblePassword ? "text" : "password"}`}
+    //               id="password"
+    //               name="password"
+    //               className="outline-none w-full bg-transparent"
+    //               placeholder="Enter your password"
+    //               value={password}
+    //               required
+    //               onChange={(e) => {
+    //                 setPassword(e.target.value);
+    //                 handlePasswordCheck(e);
+    //               }}
+    //             />
+    //             {isVisiblePassword ? (
+    //               <VisibilityIcon
+    //                 onClick={() => setIsVisiblePassword(!isVisiblePassword)}
+    //               />
+    //             ) : (
+    //               <VisibilityOffIcon
+    //                 onClick={() => setIsVisiblePassword(!isVisiblePassword)}
+    //               />
+    //             )}
+    //           </div>
+    //           {errorMessage && (
+    //             <div className="text-red-500 text-[12px]">{errorMessage}</div>
+    //           )}
+    //         </div>
+
+    //         <div className="flex items-start flex-col mb-5">
+    //           <label htmlFor="cpassword">
+    //             Confirm Password <span className="text-red-600">*</span>
+    //           </label>
+    //           <div className="flex justify-between input-tag">
+    //             <input
+    //               type="password"
+    //               id="cpassword"
+    //               name="confirm_password"
+    //               className="outline-none w-full bg-transparent"
+    //               placeholder="Confirm your password"
+    //               value={confirm_password}
+    //               required
+    //               onChange={(e) => setConfirmPassword(e.target.value)}
+    //             />
+    //           </div>
+    //         </div>
+
+    //         <button
+    //           className="btn bg-green-600 text-white"
+    //           onClick={() => changePassword()}
+    //         >
+    //           Change password
+    //         </button>
+    //       </>
+    //     )}
+    //   </div>
+    // </div>
   );
 }
 

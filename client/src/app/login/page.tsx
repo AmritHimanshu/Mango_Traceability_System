@@ -18,10 +18,6 @@ import {
   MDBInput,
 } from "mdb-react-ui-kit";
 
-// Material UI Icons
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -177,7 +173,7 @@ function page() {
               wrapperClass="mb-4"
               label="Password"
               id="password"
-              type={`${isVisiblePassword ? "text" : "password"}`}
+              type="password"
               value={password}
               required
               onChange={(e) => setPassword(e.target.value)}
