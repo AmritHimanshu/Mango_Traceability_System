@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import ReduxProvider from "@/store/redux-provider";
-import { Roboto } from 'next/font/google'
+import { Roboto } from "next/font/google";
+import "mdb-react-ui-kit/dist/css/mdb.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./globals.css";
 import "../styles/style.css";
 
 const roboto = Roboto({
-  weight: '400',
-  subsets: ['latin'],
-})
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Mango Traceability System",
@@ -22,9 +24,7 @@ export default function RootLayout({
   return (
     <ReduxProvider>
       <html lang="en">
-        <body className={`${roboto.className} antialiased`}>
-          {children}
-        </body>
+        <body className={`${roboto.className} antialiased`}>{children}</body>
       </html>
     </ReduxProvider>
   );
