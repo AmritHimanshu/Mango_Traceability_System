@@ -45,7 +45,7 @@ function Header() {
 
   return (
     <>
-      <div className="sticky top-0 z-[9999] bg-sky-700 text-white shadow-lg">
+      <div className="sticky top-0 z-[9999] bg-sky-700 text-white shadow-md">
         <div className="py-3 px-5 flex items-center justify-between">
           {!isMenu ? (
             <Link href="/">
