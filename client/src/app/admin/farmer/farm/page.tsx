@@ -37,6 +37,21 @@ function page() {
   const [message, setMessage] = useState({ text: "", type: "" });
   const [isQRCode, setIsQRCode] = useState(false);
 
+  const [editData, setEditData] = useState({
+    name: "",
+    value: "",
+  });
+  console.log(editData);
+
+  const handleOnEdit = (fieldName: string) => {
+    setEditData((prev) => ({ ...prev, name: fieldName }));
+  };
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    console.log(typeof e.target.value);
+  };
+
   const fetchFarmData = async () => {
     if (loadingBarRef.current) {
       loadingBarRef.current.continuousStart();
@@ -103,7 +118,6 @@ function page() {
 
       {farmData && !isQRCode ? (
         <div className="space-y-5 lg:space-y-10 my-5">
-
           <Map coordinates={farmData.geoFenceData} height="300px" />
 
           <div className="flex items-center justify-between">
@@ -150,11 +164,31 @@ function page() {
             )}
 
             {farmData.ploughingDate && (
-              <div className="flex items-start space-x-3">
+              <div className="flex items-star items-center space-x-3">
                 <div className="font-bold">Ploughing Date:</div>
                 <div>
-                  {new Date(farmData.ploughingDate).toISOString().split("T")[0]}
+                  {/* {new Date(farmData.ploughingDate).toISOString().split("T")[0]} */}
+                  <input
+                    type="date"
+                    id="ploughingDate"
+                    name="ploughingDate"
+                    value={
+                      farmData.ploughingDate
+                        ? new Date(farmData.ploughingDate)
+                            .toISOString()
+                            .split("T")[0]
+                        : ""
+                    }
+                    className="input-tag-edit"
+                    onChange={(e) => handleOnChange(e)}
+                  />
                 </div>
+                <button
+                  className="px-[7px] text-[14px] bg-gray-200 hover:bg-gray-100 duration-300"
+                  onClick={() => handleOnEdit("ploughingDate")}
+                >
+                  Edit
+                </button>
               </div>
             )}
 

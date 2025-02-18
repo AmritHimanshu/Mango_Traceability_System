@@ -11,5 +11,9 @@
 }
 
 .input-tag{
-    @apply outline-none pt-2 border-b-2 border-black w-full bg-transparent
+    @apply outline-none py-2 border-b-2 border-black w-full bg-transparent
+}
+
+.input-tag-edit{
+    @apply outline-none border-b-2 border-black w-full bg-transparent
 }
