@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Header from "../components/Header/Header";
-import Sidebar from "../components/common/Sidebar";
 
 export const metadata: Metadata = {
   title: "Mango Traceability System",
@@ -12,7 +11,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div>
       <Header />
       <div className="flex">
-        <Sidebar />
         {children}
       </div>
     </div>

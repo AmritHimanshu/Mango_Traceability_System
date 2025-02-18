@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { admin, farmer } from "@/utils/Sidebar/sidebarList";
 import { useAppSelector } from "@/store/store";
-import mango_logo from "../../../../public/assets/Mango_logo.png";
+import { usePathname, useRouter } from "next/navigation";
 import Header_Menu from "./Header_Menu";
 
 // Material UI Icon
@@ -14,6 +14,11 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function Header() {
   const userState = useAppSelector((state) => state.user.userState);
+
+  const pathname = usePathname();
+  const path = pathname.split("/")[2];
+
+  const router = useRouter();
 
   const [isClient, setIsClient] = useState(false);
   const [isMenu, setIsMenu] = useState(false);
@@ -39,69 +44,89 @@ function Header() {
   if (!isClient) return null;
 
   return (
-    <div className="sticky top-0 z-[9999] bg-slate-200">
-      <div className="p-2 sm:py-4 sm:px-4 flex items-center justify-between">
-        {!isMenu ? (
-          <Link href="/">
-            <div className="flex items-center justify-start">
-              <Image
-                src={mango_logo}
-                alt="mango_logo"
-                priority={true}
-                height={40}
-                width={40}
-              />
-              <div className="flex flex-col items-center">
-                <p className="text-xl font-bold">MTS</p>
-                <div className="text-[5px] font-bold">
-                  Mango Traceability System
+    <>
+      <div className="sticky top-0 z-[9999] bg-sky-700 text-white shadow-lg">
+        <div className="py-3 px-5 flex items-center justify-between">
+          {!isMenu ? (
+            <Link href="/">
+              <div className="flex items-center justify-start">
+                <div className="flex flex-col items-center">
+                  <p className="text-xl font-bold">MTS</p>
+                  <div className="text-[5px] font-bold">
+                    Mango Traceability System
+                  </div>
                 </div>
               </div>
+            </Link>
+          ) : (
+            <div
+              className="py-2 flex space-x-2 cursor-pointer"
+              onClick={() => setIsMenu(false)}
+            >
+              <ArrowBackIcon />
+              <div>Back</div>
             </div>
-          </Link>
-        ) : (
-          <div
-            className="py-2 flex space-x-2 cursor-pointer"
-            onClick={() => setIsMenu(false)}
-          >
-            <ArrowBackIcon />
-            <div>Back</div>
-          </div>
-        )}
+          )}
 
-        {userState && (
-          <>
-            {!isMenu ? (
-              <>
-              <div className="md:hidden">
+          {!isMenu ? (
+            <>
+              <div className="lg:hidden">
                 <MenuIcon
                   className="cursor-pointer"
                   onClick={() => setIsMenu(!isMenu)}
                 />
               </div>
-              <div className="hidden md:block text-center text-sm font-semibold text-gray-800">
-                <div>{userState.name.toUpperCase()}</div>
-                <div className="font-thin text-[11px]">{userState.uniqueID}</div>
+              <div className="hidden lg:block text-center text-sm">
+                <div className="flex space-x-5">
+                  {userState?.role === "Admin" &&
+                    admin.map((list, index) => (
+                      <div
+                        key={index}
+                        className={`cursor-pointer text-gray-50 hover:text-white duration-300 ${
+                          pathname === list.path || path === list.base_path
+                            ? "font-bold text-[18px] text-white"
+                            : "bg-transparent"
+                        }`}
+                        onClick={() => router.push(list.path)}
+                      >
+                        {list.name}
+                      </div>
+                    ))}
+
+                  {userState?.role === "Farmer" &&
+                    farmer.map((list, index) => (
+                      <div
+                        key={index}
+                        className={`cursor-pointer ${
+                          pathname === list.path || path === list.base_path
+                            ? "font-bold text-[16px]"
+                            : "bg-transparent"
+                        }`}
+                        onClick={() => router.push(list.path)}
+                      >
+                        {list.name}
+                      </div>
+                    ))}
+                </div>
               </div>
-              </>
-            ) : (
-              <div className="md:hidden">
-                <CloseIcon
-                  className="cursor-pointer"
-                  onClick={() => setIsMenu(!isMenu)}
-                />
-              </div>
-            )}
-          </>
+            </>
+          ) : (
+            <div className="md:hidden">
+              <CloseIcon
+                className="cursor-pointer"
+                onClick={() => setIsMenu(!isMenu)}
+              />
+            </div>
+          )}
+        </div>
+
+        {isMenu && (
+          <div>
+            <Header_Menu onNavigationComplete={handleIsMenuState} />
+          </div>
         )}
       </div>
-
-      {isMenu && (
-        <div>
-          <Header_Menu onNavigationComplete={handleIsMenuState} />
-        </div>
-      )}
-    </div>
+    </>
   );
 }
 
