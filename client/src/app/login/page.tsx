@@ -172,29 +172,16 @@ function page() {
               required
               onChange={(e) => setEmail(e.target.value)}
             />
-            
-            <div className="flex items-center mb-4 space-x-2">
-              <MDBInput
-                // wrapperClass="mb-4"
-                label="Password"
-                id="password"
-                type={`${isVisiblePassword ? "text" : "password"}`}
-                value={password}
-                required
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {/* {isVisiblePassword ? (
-                <VisibilityIcon
-                  className="cursor-pointer"
-                  onClick={() => setIsVisiblePassword(!isVisiblePassword)}
-                />
-              ) : (
-                <VisibilityOffIcon
-                  className="cursor-pointer"
-                  onClick={() => setIsVisiblePassword(!isVisiblePassword)}
-                />
-              )} */}
-            </div>
+
+            <MDBInput
+              wrapperClass="mb-4"
+              label="Password"
+              id="password"
+              type={`${isVisiblePassword ? "text" : "password"}`}
+              value={password}
+              required
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
             <MDBBtn
               className="w-100 mb-4"

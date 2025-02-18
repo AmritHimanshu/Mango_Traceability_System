@@ -470,16 +470,33 @@ function page() {
                 )}
               </div>
 
-              <MDBInput
-                wrapperClass="mb-4"
-                label="Confirm Password"
-                name="confirm_password"
-                id="cpassword"
-                type="password"
-                value={formData.confirm_password}
-                required
-                onChange={(e) => handleFormState(e)}
-              />
+              <div className="flex items-center mb-4 space-x-2">
+                <MDBInput
+                  // wrapperClass="mb-4"
+                  label="Confirm Password"
+                  name="confirm_password"
+                  id="cpassword"
+                  type={`${isVisibleConfirmPassword ? "text" : "password"}`}
+                  value={formData.confirm_password}
+                  required
+                  onChange={(e) => handleFormState(e)}
+                />
+                {isVisibleConfirmPassword ? (
+                  <VisibilityIcon
+                    className="cursor-pointer"
+                    onClick={() =>
+                      setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
+                    }
+                  />
+                ) : (
+                  <VisibilityOffIcon
+                    className="cursor-pointer"
+                    onClick={() =>
+                      setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
+                    }
+                  />
+                )}
+              </div>
 
               <MDBBtn
                 className="w-100 mb-4"
