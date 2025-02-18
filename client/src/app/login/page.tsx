@@ -169,7 +169,6 @@ function page() {
               id="email"
               type="email"
               value={email}
-              placeholder="john@gmail.com"
               required
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -180,7 +179,6 @@ function page() {
                 id="password"
                 type={`${isVisiblePassword ? "text" : "password"}`}
                 value={password}
-                placeholder="Enter your password"
                 required
                 onChange={(e) => setPassword(e.target.value)}
               />
