@@ -5,7 +5,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ADMIN_FETCH_FARMER_FARM_DATA } from "@/utils/Apis/api";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
-import { ADMIN_FARM, CERTIFICATE, FARMER, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
+import {
+  ADMIN_FARM,
+  CERTIFICATE,
+  FARMER,
+  LOGIN,
+  NOT_FOUND,
+} from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
 import QRCode from "react-qr-code";
 import { Farm } from "@/utils/Types/interfaces";
@@ -15,6 +21,7 @@ const Map = dynamic(() => import("@/app/components/farmer/MapCoordinates"), {
   ssr: false,
 });
 import CloseIcon from "@mui/icons-material/Close";
+import Message from "@/app/components/common/Message";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -27,6 +34,7 @@ function page() {
   const farm_id = searchParams.get("farm_id");
 
   const [farmData, setFarmData] = useState<Farm>();
+  const [message, setMessage] = useState({ text: "", type: "" });
   const [isQRCode, setIsQRCode] = useState(false);
 
   const fetchFarmData = async () => {
@@ -61,16 +69,18 @@ function page() {
       }
 
       if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
         router.push(FARMER);
         const error = new Error(data.error);
         throw error;
       }
 
       setFarmData(data);
-    } catch (error) {
-      console.log("Error: ", error);
-      alert(error);
-    }
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -85,13 +95,19 @@ function page() {
     <div className="page-main-div">
       <CustomLoadingBar ref={loadingBarRef} />
 
+      {message.text && message.type && (
+        <Message text={message.text} type={message.type} />
+      )}
+
       {farmData && <Heading text={farmData.farm} />}
 
       {farmData && !isQRCode ? (
         <div className="space-y-5 lg:space-y-10 my-5">
           <div className="text-end my-7">
             <button
-              onClick={()=>router.push(`${ADMIN_FARM}/edit?farm_id=${farm_id}`)}
+              onClick={() =>
+                router.push(`${ADMIN_FARM}/edit?farm_id=${farm_id}`)
+              }
               className="bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2 py-1 text-[11px] md:text-lg"
             >
               Edit
