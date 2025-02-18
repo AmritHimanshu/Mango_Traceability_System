@@ -7,14 +7,15 @@ function Heading({ text }: { text: string }) {
 
   return (
     <>
-      <div className="pb-2 md:pb-4 lg:pb-3 font-bold md:text-[16px] lg:text-[20px] space-x-2">
+      <div className="pb-3 md:pb-4 lg:pb-3 font-bold md:text-[16px] lg:text-[20px] text-black space-x-2">
         <ArrowBackIcon
           style={{ cursor: "pointer" }}
           onClick={() => router.back()}
         />{" "}
         <span>{text}</span>
       </div>
-      <hr className="border-[1px] border-gray-200" />
+
+      <hr className="border-[1px] border-gray-500" />
     </>
   );
 }
