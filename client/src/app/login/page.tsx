@@ -15,11 +15,7 @@ import {
   MDBContainer,
   MDBCard,
   MDBCardBody,
-  MDBCol,
-  MDBRow,
   MDBInput,
-  MDBCheckbox,
-  MDBIcon,
 } from "mdb-react-ui-kit";
 
 // Material UI Icons
