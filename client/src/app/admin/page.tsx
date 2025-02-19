@@ -153,7 +153,7 @@ function page() {
         throw error;
       }
 
-      setMessage({ text: data.message, type: "error" });
+      setMessage({ text: data.message, type: "success" });
 
       fetchNoOfUsers();
       fetchPendingRequests();
@@ -232,20 +232,20 @@ function page() {
       </div>
 
       {pendingRequests.length > 0 && (
-        <div className="bg-gray-50 py-3 my-10">
-          <div className="pb-2 text-[16px] md:text-[18px] font-bold text-center underline">
+        <div className="py-3 my-10">
+          <div className="pb-3 text-[16px] md:text-[18px] font-bold text-center underline">
             Recent Pending Requests
           </div>
-          <div className="w-full overflow-x-auto">
-            <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] border-2 table-fixed">
+          <div className="w-full overflow-x-auto rounded-lg overflow-hidden">
+            <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
               <thead>
-                <tr className="text-start font-bold bg-gray-200">
-                  <td className="px-2 py-4 border-y-2">Name</td>
-                  <td className="px-2 py-4 border-y-2">Email</td>
-                  <td className="px-2 py-4 border-y-2">Phone</td>
-                  <td className="px-2 py-4 border-y-2">Date</td>
-                  <td className="px-2 py-4 border-y-2">Assign role</td>
-                  <td className="px-2 py-4 border-y-2"></td>
+                <tr className="text-start font-bold bg-gray-600 text-white">
+                  <td className="px-2 py-4">Name</td>
+                  <td className="px-2 py-4">Email</td>
+                  <td className="px-2 py-4">Phone</td>
+                  <td className="px-2 py-4">Date</td>
+                  <td className="px-2 py-4">Assign role</td>
+                  <td className="px-2 py-4"></td>
                 </tr>
               </thead>
 
@@ -262,7 +262,7 @@ function page() {
           </div>
 
           <div
-            className="mt-5 underline text-end cursor-pointer hover:text-blue-500 duration-200"
+            className="mt-3 underline text-end cursor-pointer hover:text-blue-700 duration-200"
             onClick={() => router.push("/admin/pending-requests")}
           >
             view all

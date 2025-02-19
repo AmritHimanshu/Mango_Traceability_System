@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { PendingUserTableProps } from "@/utils/Types/interfaces";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 function PendingUserTable({ user, authenticateReq }: PendingUserTableProps) {
   const [selectedButton, setSelectedButton] = useState("");
@@ -26,7 +28,7 @@ function PendingUserTable({ user, authenticateReq }: PendingUserTableProps) {
   };
 
   return (
-    <tr className="text-start even:bg-gray-50">
+    <tr className="text-start text-black bg-gray-200">
       <td
         className="px-2 py-4 border-y-2 w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
         title={user.name}
@@ -55,12 +57,12 @@ function PendingUserTable({ user, authenticateReq }: PendingUserTableProps) {
           hour12: true,
         })}
       </td>
-      <td className="px-2 border-y-2 w-[120px] min-w-[100px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
+      <td className="px-2 border-y-2">
         <select
           name="role"
           id="role"
           value={selectRole}
-          className="w-full px-2 py-2 border-[1px] border-black outline-0"
+          className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
           onChange={(e) => setSelectRole(e.target.value)}
         >
           <option value="">Select role</option>
@@ -68,21 +70,18 @@ function PendingUserTable({ user, authenticateReq }: PendingUserTableProps) {
           <option value="Farmer">Farmer</option>
         </select>
       </td>
-      <td className="px-2 border-y-2 text-end space-x-2">
-        <button
-          className="w-[30px] md:w-[50px] lg:w-[100px] bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white py-2 rounded-sm duration-200"
+      <td className="px-2 border-y-2">
+        <div className="flex items-center justify-evenly">
+        <CheckCircleOutlineOutlinedIcon
+          style={{ color: "green", cursor: "pointer" }}
           onClick={() => handleOnClick(user._id, selectRole, true, "Accept")}
-          disabled={selectedButton === "Reject"}
-        >
-          {selectedButton === "Accept" ? "Accepting" : "Accept"}
-        </button>
-        <button
-          className="w-[30px] md:w-[50px] lg:w-[100px] bg-red-500 bg-opacity-90 hover:bg-opacity-100 text-white py-2 rounded-sm duration-200"
+        />
+
+        <CloseOutlinedIcon
+          style={{ color: "red", cursor: "pointer" }}
           onClick={() => handleOnClick(user._id, selectRole, false, "Reject")}
-          disabled={selectedButton === "Accept"}
-        >
-          {selectedButton === "Reject" ? "Rejecting" : "Reject"}
-        </button>
+        />
+        </div>
       </td>
     </tr>
   );
