@@ -171,12 +171,12 @@ function page() {
             <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed shadow-xl">
               <thead>
                 <tr className="text-start font-bold bg-gray-600 text-white">
-                  <td className="px-2 py-4 border-y-2">Name</td>
-                  <td className="px-2 py-4 border-y-2">Email</td>
-                  <td className="px-2 py-4 border-y-2">Phone</td>
-                  <td className="px-2 py-4 border-y-2">Date</td>
-                  <td className="px-2 py-4 border-y-2">Assign role</td>
-                  <td className="px-2 py-4 border-y-2 text-center">Accept/Reject</td>
+                  <td className="px-2 py-4">Name</td>
+                  <td className="px-2 py-4">Email</td>
+                  <td className="px-2 py-4">Phone</td>
+                  <td className="px-2 py-4">Date</td>
+                  <td className="px-2 py-4">Assign role</td>
+                  <td className="px-2 py-4 text-center">Accept/Reject</td>
                 </tr>
               </thead>
 

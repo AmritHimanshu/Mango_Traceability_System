@@ -245,7 +245,7 @@ function page() {
                   <td className="px-2 py-4">Phone</td>
                   <td className="px-2 py-4">Date</td>
                   <td className="px-2 py-4">Assign role</td>
-                  <td className="px-2 py-4 border-y-2 text-center">Accept/Reject</td>
+                  <td className="px-2 py-4 text-center">Accept/Reject</td>
                 </tr>
               </thead>
 
@@ -262,10 +262,10 @@ function page() {
           </div>
 
           <div
-            className="mt-3 underline text-end cursor-pointer hover:text-blue-700 duration-200"
-            onClick={() => router.push("/admin/pending-requests")}
+            className="text-end"
           >
-            view all
+            <span className="mt-3 underline text-end cursor-pointer hover:text-blue-700 duration-200"
+            onClick={() => router.push("/admin/pending-requests")}>view all</span>
           </div>
         </div>
       )}
