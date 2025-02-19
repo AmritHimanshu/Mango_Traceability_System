@@ -121,7 +121,7 @@ function page() {
 
       <Heading text={farmerName} />
 
-      <div className="my-3">
+      <div className="my-5">
         {farms.length > 0 ? (
           <ListFarmTable farms={farms} handleClick={handleSelectedFarm} />
         ) : (
