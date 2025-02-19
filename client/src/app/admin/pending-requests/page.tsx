@@ -167,16 +167,16 @@ function page() {
 
       <div className="mt-5">
         {pendingRequests.length > 0 ? (
-          <div className="w-full overflow-x-auto">
-            <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] border-2 table-fixed">
+          <div className="w-full overflow-x-auto rounded-lg overflow-hidden">
+            <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed shadow-xl">
               <thead>
-                <tr className="text-start font-bold bg-gray-200">
+                <tr className="text-start font-bold bg-gray-600 text-white">
                   <td className="px-2 py-4 border-y-2">Name</td>
                   <td className="px-2 py-4 border-y-2">Email</td>
                   <td className="px-2 py-4 border-y-2">Phone</td>
                   <td className="px-2 py-4 border-y-2">Date</td>
                   <td className="px-2 py-4 border-y-2">Assign role</td>
-                  <td className="px-2 py-4 border-y-2"></td>
+                  <td className="px-2 py-4 border-y-2 text-center">Accept/Reject</td>
                 </tr>
               </thead>
 
