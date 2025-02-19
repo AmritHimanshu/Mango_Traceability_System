@@ -13,18 +13,18 @@ function Table_List({ users, url }: { users: User[]; url: string }) {
     <div className="w-full overflow-x-auto rounded-lg overflow-hidden shadow-xl">
       <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
         <thead>
-          <tr className="text-start font-bold bg-gray-600 text-white">
-            <td className="px-2 py-4 border-y-2">ID</td>
-            <td className="px-2 py-4 border-y-2">Name</td>
-            <td className="px-2 py-4 border-y-2">Email</td>
-            <td className="px-2 py-4 border-y-2">Phone</td>
-            <td className="px-2 py-4 border-y-2"></td>
+          <tr className="font-bold bg-gray-600 text-white">
+            <td className="px-2 py-4">ID</td>
+            <td className="px-2 py-4">Name</td>
+            <td className="px-2 py-4">Email</td>
+            <td className="px-2 py-4">Phone</td>
+            <td className="px-2 py-4"></td>
           </tr>
         </thead>
 
         <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
           {users.map((user, index) => (
-            <tr key={index} className="text-start text-black bg-gray-200">
+            <tr key={index} className="text text-black bg-gray-200">
               <td
                 className="px-2 py-4 border-y-2 w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
                 title={user.uniqueID}
