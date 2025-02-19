@@ -236,7 +236,7 @@ function page() {
           <div className="pb-3 text-[16px] md:text-[18px] font-bold text-center underline">
             Recent Pending Requests
           </div>
-          <div className="w-full overflow-x-auto rounded-lg overflow-hidden">
+          <div className="w-full overflow-x-auto rounded-lg overflow-hidden shadow-2xl">
             <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
               <thead>
                 <tr className="text-start font-bold bg-gray-600 text-white">
@@ -262,7 +262,7 @@ function page() {
           </div>
 
           <div
-            className="text-end"
+            className="text-end my-4"
           >
             <span className="mt-3 underline text-end cursor-pointer hover:text-blue-700 duration-200"
             onClick={() => router.push("/admin/pending-requests")}>view all</span>

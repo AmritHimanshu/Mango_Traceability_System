@@ -10,10 +10,10 @@ function Table_List({ users, url }: { users: User[]; url: string }) {
   };
 
   return (
-    <div className="w-full overflow-x-auto rounded-lg overflow-hidden">
-            <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
+    <div className="w-full overflow-x-auto rounded-lg overflow-hidden shadow-xl">
+      <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
         <thead>
-        <tr className="text-start font-bold bg-gray-600 text-white">
+          <tr className="text-start font-bold bg-gray-600 text-white">
             <td className="px-2 py-4 border-y-2">ID</td>
             <td className="px-2 py-4 border-y-2">Name</td>
             <td className="px-2 py-4 border-y-2">Email</td>
