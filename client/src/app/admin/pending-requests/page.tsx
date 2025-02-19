@@ -167,8 +167,8 @@ function page() {
 
       <div className="mt-5">
         {pendingRequests.length > 0 ? (
-          <div className="w-full overflow-x-auto rounded-lg overflow-hidden">
-            <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed shadow-xl">
+          <div className="w-full overflow-x-auto rounded-lg overflow-hidden shadow-xl">
+            <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
               <thead>
                 <tr className="text-start font-bold bg-gray-600 text-white">
                   <td className="px-2 py-4">Name</td>
