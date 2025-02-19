@@ -28,26 +28,26 @@ function PendingUserTable({ user, authenticateReq }: PendingUserTableProps) {
   };
 
   return (
-    <tr className="text-start text-black bg-gray-200">
+    <tr className="text-start text-black bg-indigo-100 border-b-[1px] border-black last:border-b-0">
       <td
-        className="px-2 py-4 border-y-2 w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
+        className="px-2 py-4 w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
         title={user.name}
       >
         {user.name}
       </td>
       <td
-        className="px-2 py-4 border-y-2 w-[150px] min-w-[120px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
+        className="px-2 py-4 w-[150px] min-w-[120px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
         title={user.email}
       >
         {user.email}
       </td>
       <td
-        className="px-2 py-4 border-y-2 w-[150px] min-w-[120px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
+        className="px-2 py-4 w-[150px] min-w-[120px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
         title={String(user.phone)}
       >
         {user.phone}
       </td>
-      <td className="px-2 py-4 border-y-2 w-[120px] min-w-[100px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
+      <td className="px-2 py-4 w-[120px] min-w-[100px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
         {new Date(user.createdAt).toLocaleString("en-IN", {
           day: "2-digit",
           month: "2-digit",
@@ -57,7 +57,7 @@ function PendingUserTable({ user, authenticateReq }: PendingUserTableProps) {
           hour12: true,
         })}
       </td>
-      <td className="px-2 border-y-2">
+      <td className="px-2">
         <select
           name="role"
           id="role"
@@ -70,7 +70,7 @@ function PendingUserTable({ user, authenticateReq }: PendingUserTableProps) {
           <option value="Farmer">Farmer</option>
         </select>
       </td>
-      <td className="px-2 border-y-2">
+      <td className="px-2">
         <div className="flex items-center justify-evenly">
         <CheckCircleOutlineOutlinedIcon
           style={{ color: "green", cursor: "pointer" }}
