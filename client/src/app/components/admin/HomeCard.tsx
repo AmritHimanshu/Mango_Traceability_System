@@ -22,7 +22,7 @@ function HomeCard({ title, description, count, bgColor }: HomeCardProps) {
       onMouseEnter={() => setIsMouseEnter(true)}
       onMouseLeave={() => setIsMouseEnter(false)}
     >
-      <div className={`absolute ${isMouseEnter ? "h-full w-full opacity-70" : "h-0 w-0"} duration-300 rounded-full bg-gradient-to-t from-black to-neutral-400`}></div>
+      {/* <div className={`absolute ${isMouseEnter ? "h-full w-full opacity-70" : "h-0 w-0"} duration-300 rounded-full bg-gradient-to-t from-black to-neutral-400`}></div> */}
       <p>{title}</p>
       <p className="text-[12px] font-normal">{description}</p>
       <p className="text-[16px] md:text-[20px]">{count}</p>
