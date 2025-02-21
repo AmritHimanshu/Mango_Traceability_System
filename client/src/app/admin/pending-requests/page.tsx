@@ -168,29 +168,29 @@ function page() {
       <div className="mt-5">
         {pendingRequests.length > 0 ? (
           <div className="w-full overflow-x-auto rounded-lg shadow-2xl">
-          <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
-            <thead>
-              <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
-                <td className="px-4 py-3 text-left">Name</td>
-                <td className="px-4 py-3 text-left">Email</td>
-                <td className="px-4 py-3 text-left">Phone</td>
-                <td className="px-4 py-3 text-left">Date</td>
-                <td className="px-4 py-3 text-left">Assign role</td>
-                <td className="px-4 py-3 text-center">Accept/Reject</td>
-              </tr>
-            </thead>
+            <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
+              <thead>
+                <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
+                  <td className="px-4 py-3 text-left">Name</td>
+                  <td className="px-4 py-3 text-left">Email</td>
+                  <td className="px-4 py-3 text-left">Phone</td>
+                  <td className="px-4 py-3 text-left">Date</td>
+                  <td className="px-4 py-3 text-left">Assign role</td>
+                  <td className="px-4 py-3 text-center">Accept/Reject</td>
+                </tr>
+              </thead>
 
-            <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
-              {pendingRequests.map((user, index) => (
-                <PendingUserTable
-                  key={index}
-                  user={user}
-                  authenticateReq={authenticateReq}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
+              <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
+                {pendingRequests.map((user, index) => (
+                  <PendingUserTable
+                    key={index}
+                    user={user}
+                    authenticateReq={authenticateReq}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
         ) : (
           <div className="text-center text-gray-500">No records found!</div>
         )}
