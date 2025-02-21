@@ -41,7 +41,6 @@ function page() {
     name: "",
     value: "",
   });
-  console.log(editData);
 
   const handleOnEdit = (fieldName: string) => {
     setEditData((prev) => ({ ...prev, name: fieldName }));
@@ -413,7 +412,7 @@ function page() {
           )}
 
           <button
-            className="btn bg-blue-500 text-white hover:bg-blue-600 duration-200"
+            className="w-full !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
             onClick={() => setIsQRCode(true)}
           >
             Generate QR code
