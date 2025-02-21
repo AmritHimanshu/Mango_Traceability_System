@@ -205,7 +205,7 @@ function page() {
       <Heading text="OVERVIEW" />
 
       <div className="lg:my-10 pt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 place-items-center">
-      <HomeCard
+        <HomeCard
           title="Total number of pending requests"
           description=""
           count={noOfPendingRequests}
@@ -236,16 +236,16 @@ function page() {
           <div className="pb-3 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold text-center underline">
             Recent Pending Requests
           </div>
-          <div className="w-full overflow-x-auto rounded-lg overflow-hidden shadow-2xl">
+          <div className="w-full overflow-x-auto rounded-lg shadow-2xl">
             <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
               <thead>
-                <tr className="text-start font-bold bg-primarycColor bg-opacity-80 text-white">
-                  <td className="px-2 py-4">Name</td>
-                  <td className="px-2 py-4">Email</td>
-                  <td className="px-2 py-4">Phone</td>
-                  <td className="px-2 py-4">Date</td>
-                  <td className="px-2 py-4">Assign role</td>
-                  <td className="px-2 py-4 text-center">Accept/Reject</td>
+                <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
+                  <td className="px-4 py-3 text-left">Name</td>
+                  <td className="px-4 py-3 text-left">Email</td>
+                  <td className="px-4 py-3 text-left">Phone</td>
+                  <td className="px-4 py-3 text-left">Date</td>
+                  <td className="px-4 py-3 text-left">Assign role</td>
+                  <td className="px-4 py-3 text-center">Accept/Reject</td>
                 </tr>
               </thead>
 
@@ -261,11 +261,13 @@ function page() {
             </table>
           </div>
 
-          <div
-            className="text-end my-4"
-          >
-            <span className="mt-3 underline text-end cursor-pointer hover:text-blue-700 duration-200"
-            onClick={() => router.push("/admin/pending-requests")}>view all</span>
+          <div className="text-end my-4">
+            <span
+              className="mt-3 underline text-end cursor-pointer hover:text-blue-700 duration-200"
+              onClick={() => router.push("/admin/pending-requests")}
+            >
+              view all
+            </span>
           </div>
         </div>
       )}
