@@ -9,7 +9,7 @@ function ListFarmTable({ farms, handleClick }: ListFarmTableProps) {
     <div className="w-full max-w-[1100px] m-auto overflow-x-auto rounded-lg overflow-hidden shadow-2xl">
       <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
         <thead>
-          <tr className="text-start font-bold bg-gray-600 text-white">
+          <tr className="text-start font-bold bg-sky-600 text-white">
             <td className="px-2 py-4 border-y-2">ID</td>
             <td className="px-2 py-4 border-y-2">Farm Name</td>
             <td className="px-2 py-4 border-y-2">Crop Name</td>
@@ -22,7 +22,7 @@ function ListFarmTable({ farms, handleClick }: ListFarmTableProps) {
           {farms.map((farm, index) => (
             <tr
               key={index}
-              className="text-start text-black bg-indigo-100 border-b-[1px] border-black last:border-b-0"
+              className="text-start text-black bg-sky-100 border-b-[1px] border-black last:border-b-0"
             >
               <td
                 className="px-2 py-4 w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"

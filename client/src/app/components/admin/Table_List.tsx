@@ -14,7 +14,7 @@ function Table_List({ users, url }: { users: User[]; url: string }) {
     <div className="w-full max-w-[1100px] m-auto overflow-x-auto rounded-lg overflow-hidden shadow-xl">
       <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
         <thead>
-          <tr className="font-bold bg-gray-600 text-white">
+          <tr className="font-bold bg-sky-600 text-white">
             <td className="px-2 py-4">ID</td>
             <td className="px-2 py-4">Name</td>
             <td className="px-2 py-4">Email</td>
@@ -25,7 +25,7 @@ function Table_List({ users, url }: { users: User[]; url: string }) {
 
         <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
           {users.map((user, index) => (
-            <tr key={index} className="text-black bg-indigo-100 border-b-[1px] border-black last:border-b-0">
+            <tr key={index} className="text-black bg-sky-100 border-b-[1px] border-black last:border-b-0">
               <td
                 className="px-2 py-4 w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
                 title={user.uniqueID}
