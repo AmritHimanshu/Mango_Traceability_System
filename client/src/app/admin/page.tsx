@@ -209,7 +209,7 @@ function page() {
           title="Total number of pending requests"
           description=""
           count={noOfPendingRequests}
-          bgColor="violet"
+          bgColor="orange"
         />
         <HomeCard
           title="Total number of verified managers"

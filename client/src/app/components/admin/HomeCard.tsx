@@ -7,8 +7,7 @@ const allowedColors: Record<string, string> = {
   red: "bg-red-600",
   blue: "bg-blue-700",
   green: "bg-green-600",
-  orange: "bg-orange-500",
-  violet: "bg-violet-600",
+  orange: "bg-orange-700",
 };
 
 function HomeCard({ title, description, count, bgColor }: HomeCardProps) {
