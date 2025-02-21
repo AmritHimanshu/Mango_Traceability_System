@@ -204,7 +204,7 @@ function page() {
 
       <Heading text="OVERVIEW" />
 
-      <div className="pt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 place-items-center">
+      <div className="lg:my-10 pt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 place-items-center">
       <HomeCard
           title="Total number of pending requests"
           description=""
@@ -232,8 +232,8 @@ function page() {
       </div>
 
       {pendingRequests.length > 0 && (
-        <div className="py-3 my-10">
-          <div className="pb-3 text-[16px] md:text-[18px] font-bold text-center underline">
+        <div className="py-3 my-16">
+          <div className="pb-3 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold text-center underline">
             Recent Pending Requests
           </div>
           <div className="w-full overflow-x-auto rounded-lg overflow-hidden shadow-2xl">
