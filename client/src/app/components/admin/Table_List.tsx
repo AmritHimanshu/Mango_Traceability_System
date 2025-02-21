@@ -20,6 +20,7 @@ function Table_List({ users, url }: { users: User[]; url: string }) {
               <td className="px-4 py-3 text-left">Name</td>
               <td className="px-4 py-3 text-left">Email</td>
               <td className="px-4 py-3 text-left">Phone</td>
+              <td className="px-4 py-3 text-left">Joined on</td>
               <td className="px-4 py-3 text-left"></td>
             </tr>
           </thead>
@@ -54,13 +55,26 @@ function Table_List({ users, url }: { users: User[]; url: string }) {
                 >
                   {user.phone}
                 </td>
+                <td
+                  className="px-4 py-3 align-middle w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
+                  title={String(user.phone)}
+                >
+                  {new Date(user.createdAt).toLocaleString("en-IN", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: true,
+                  })}
+                </td>
                 <td className="px-2 text-end">
-                  <MDBBtn
-                    className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[13px]"
+                  <button
+                    className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[7px] bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px]"
                     onClick={() => handleOnView(user._id)}
                   >
                     View
-                  </MDBBtn>
+                  </button>
                 </td>
               </tr>
             ))}
