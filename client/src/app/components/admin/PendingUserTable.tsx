@@ -28,7 +28,7 @@ function PendingUserTable({ user, authenticateReq }: PendingUserTableProps) {
   };
 
   return (
-    <tr className="text-start text-black bg-indigo-100 border-b-[1px] border-black last:border-b-0">
+    <tr className="text-start text-black bg-sky-100 border-b-[1px] border-black last:border-b-0">
       <td
         className="px-2 py-4 w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
         title={user.name}

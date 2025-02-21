@@ -239,7 +239,7 @@ function page() {
           <div className="w-full overflow-x-auto rounded-lg overflow-hidden shadow-2xl">
             <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
               <thead>
-                <tr className="text-start font-bold bg-gray-600 text-white">
+                <tr className="text-start font-bold bg-sky-600 text-white">
                   <td className="px-2 py-4">Name</td>
                   <td className="px-2 py-4">Email</td>
                   <td className="px-2 py-4">Phone</td>
