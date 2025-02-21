@@ -58,11 +58,11 @@ function PendingUserTable({ user, authenticateReq }: PendingUserTableProps) {
       <td className="px-4 py-3 align-middle">
         <div className="flex items-center justify-evenly">
           <CheckCircleOutlineOutlinedIcon
-            style={{ color: "green", cursor: "pointer" }}
+            style={{ color: "green", cursor: "pointer", fontSize: "30px" }}
             onClick={() => handleOnClick(user._id, selectRole, true, "Accept")}
           />
           <CloseOutlinedIcon
-            style={{ color: "red", cursor: "pointer" }}
+            style={{ color: "red", cursor: "pointer", fontSize: "30px" }}
             onClick={() => handleOnClick(user._id, selectRole, false, "Reject")}
           />
         </div>
