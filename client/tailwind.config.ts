@@ -12,6 +12,8 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         cardBackground: '#f0f9ff',
+        primarycColor: '#31473A',
+        secondaryColor: '#EDF4F2',
       },
     },
   },
