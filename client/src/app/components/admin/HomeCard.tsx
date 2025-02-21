@@ -21,7 +21,7 @@ function HomeCard({ title, description, count, bgColor }: HomeCardProps) {
       >
         {title}
       </div>
-      <div className={`py-3 xl:py-5 font-bold text-black text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl ${bgColorClass} bg-opacity-20`}>
+      <div className={`py-3 xl:py-5 font-bold text-black text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl ${bgColorClass} bg-opacity-10`}>
         {count}
       </div>
     </div>
