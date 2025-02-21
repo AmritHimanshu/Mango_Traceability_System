@@ -5,7 +5,7 @@ import { MDBBtn } from "mdb-react-ui-kit";
 
 function Table_List({ users, url }: { users: User[]; url: string }) {
   const router = useRouter();
-  console.log(users);
+
   const handleOnView = async (user_id: string) => {
     router.push(`${url}/${user_id}`);
   };
@@ -70,7 +70,7 @@ function Table_List({ users, url }: { users: User[]; url: string }) {
                 </td>
                 <td className="px-2 text-end">
                   <button
-                    className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[7px] bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px]"
+                    className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px]"
                     onClick={() => handleOnView(user._id)}
                   >
                     View
