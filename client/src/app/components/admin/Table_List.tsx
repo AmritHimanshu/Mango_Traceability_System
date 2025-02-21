@@ -1,7 +1,6 @@
 import React from "react";
 import { User } from "@/utils/Types/interfaces";
 import { useRouter } from "next/navigation";
-import { MDBBtn } from "mdb-react-ui-kit";
 
 function Table_List({ users, url }: { users: User[]; url: string }) {
   const router = useRouter();
