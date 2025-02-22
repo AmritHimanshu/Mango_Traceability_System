@@ -7,7 +7,7 @@ router.put('/api/save-farm-data/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const updates = req.body;
-        
+
         if (!updates || Object.keys(updates).length === 0) {
             return res.status(400).json({ error: "No fields to update provided." });
         }
@@ -42,15 +42,15 @@ router.put('/api/save-farm-data/:id', async (req, res) => {
 
             for (const key in arrayFields) {
                 updateQuery.$push[key] = { $each: Array.isArray(arrayFields[key]) ? arrayFields[key] : [arrayFields[key]] };
-            }            
+            }
         }
-        
+
         if (Object.keys(nonArrayFields).length > 0) {
             updateQuery.$set = nonArrayFields;
         }
 
-        const updatedFarmer = await Farmer.findByIdAndUpdate(
-            id,
+        const updatedFarmer = await Farmer.findOneAndUpdate(
+            { uniqueID: id },
             updateQuery,
             { new: true }
         );
