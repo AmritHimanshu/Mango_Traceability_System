@@ -23,7 +23,7 @@ router.get('/api/fetch-farms-list', async (req, res) => {
 
 router.get('/api/fetch-few-farms-list', async (req, res) => {
     try {
-        const farmList = await Farmer.find({ userUniqueId: req.rootUser.uniqueID }).sort("-createdAt").select('farm crop geoFenceData').limit(2);
+        const farmList = await Farmer.find({ userUniqueId: req.rootUser.uniqueID }).sort("-createdAt").select('farm crop geoFenceData uniqueID').limit(2);
 
         return res.status(201).json(farmList);
     } catch (error) {

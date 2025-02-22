@@ -50,7 +50,7 @@ export type PendingUserTableProps = {
 
 // Farmer
 export type Farm = {
-  userId: { name: string; email: string; phone: string };
+  userUniqueId: { name: string; email: string; phone: string };
   farm: string;
   geoFenceData: { lat: number; lng: number }[];
   area: number;
@@ -90,7 +90,7 @@ export type Farm = {
 };
 
 export type FarmList = {
-  userId: string;
+  userUniqueId: string;
   farm: string;
   crop: string;
   createdAt: string;
@@ -103,6 +103,7 @@ export type FewFarmList = {
   farm: string;
   geoFenceData: { lat: number; lng: number }[];
   _id: string;
+  uniqueID: string;
 };
 
 export type ListFarmTableProps = {

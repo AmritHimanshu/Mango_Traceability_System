@@ -8,7 +8,7 @@ import { FARMS } from "@/utils/Paths/paths";
 
 function HomeCard({ data }: farmerHomeCardProps) {
   const router = useRouter();
-
+console.log(data)
   return (
     <div className="w-full rounded-md overflow-hidden space-y-2">
       <MapCoordinates coordinates={data.geoFenceData} height="200px" />
@@ -20,7 +20,7 @@ function HomeCard({ data }: farmerHomeCardProps) {
         </div>
         <button
           className="px-3 text-center bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white duration-200"
-          onClick={() => router.push(`${FARMS}/${data._id}`)}
+          onClick={() => router.push(`${FARMS}/${data.uniqueID}`)}
         >
           view
         </button>
