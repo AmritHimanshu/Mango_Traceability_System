@@ -84,7 +84,9 @@ router.get('/api/fetch-farmer-farms-list/:id', async (req, res) => {
     try {
         const farmList = await Farmer.find({ userId: _id }).sort("-createdAt").skip(parseInt(skip)).limit(parseInt(limit)).populate("userId", "_id name email");
 
-        return res.status(201).json(farmList);
+        const user = await User.find(_id).select("name uniqueID");
+        
+        return res.status(201).send({farmList, user});
     } catch (error) {
         console.log("/api/fetch-farmer-farms-list: ", error);
         return res.status(500).json({ error: "Internal Server Error" });

@@ -60,12 +60,12 @@ function page() {
         throw error;
       }
 
-      setFarmerName(data[0].userId.name);
+      setFarmerName(data.user[0].name);
 
       setFarms((prev) => {
-        if (prev.length === 0) return data;
+        if (prev.length === 0) return data.farmList;
         else {
-          return [...prev, ...data];
+          return [...prev, ...data.farmList];
         }
       });
     } catch (error) {}
