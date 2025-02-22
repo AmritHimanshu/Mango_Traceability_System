@@ -390,12 +390,14 @@ function page() {
             </div>
           )}
 
-          <button
-            className="w-full !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
-            onClick={() => setIsQRCode(true)}
-          >
-            Generate QR code
-          </button>
+          <div className="text-center">
+            <button
+              className="!w-[130px] md:!w-[150px] lg:!w-[200px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+              onClick={() => setIsQRCode(true)}
+            >
+              Generate QR code
+            </button>
+          </div>
         </div>
       ) : (
         <>
