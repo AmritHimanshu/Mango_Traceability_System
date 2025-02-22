@@ -16,7 +16,7 @@ router.post('/api/new-farm', async (req, res) => {
         }
 
         const farm = new Farmer({
-            userId: req.rootUser,
+            userUniqueId: req.rootUser.uniqueID,
             farm: farmName,
             crop: cropName,
             geoFenceData: coordinates.map(coord => ({

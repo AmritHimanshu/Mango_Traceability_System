@@ -12,7 +12,7 @@ router.get('/api/fetch-farms-list', async (req, res) => {
             return res.status(403).json({ error: "You don't have permission." });
         }
 
-        const farmList = await Farmer.find({ userId: req.rootUser._id }).sort("-createdAt").select('farm crop createdAt uniqueID').skip(parseInt(skip)).limit(parseInt(limit));
+        const farmList = await Farmer.find({ userUniqueId: req.rootUser.uniqueID }).sort("-createdAt").select('farm crop createdAt uniqueID').skip(parseInt(skip)).limit(parseInt(limit));
 
         return res.status(201).json(farmList);
     } catch (error) {
@@ -23,7 +23,7 @@ router.get('/api/fetch-farms-list', async (req, res) => {
 
 router.get('/api/fetch-few-farms-list', async (req, res) => {
     try {
-        const farmList = await Farmer.find({ userUniqueId: req.rootUser.userUniqueId }).sort("-createdAt").select('farm crop geoFenceData').limit(2);
+        const farmList = await Farmer.find({ userUniqueId: req.rootUser.uniqueID }).sort("-createdAt").select('farm crop geoFenceData').limit(2);
 
         return res.status(201).json(farmList);
     } catch (error) {
