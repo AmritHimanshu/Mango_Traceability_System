@@ -54,7 +54,7 @@ function ListFarmTable({ farms, handleClick }: ListFarmTableProps) {
               <td className="px-2 text-end">
                 <button
                   className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
-                  onClick={() => handleClick(farm._id)}
+                  onClick={() => handleClick(farm.uniqueID)}
                 >
                   View
                 </button>
