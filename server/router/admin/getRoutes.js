@@ -95,7 +95,7 @@ router.get('/api/fetch-farmer-farm-data/:farm_id', async (req, res) => {
     const { farm_id } = req.params;
 
     try {
-        const farm = await Farmer.findOne({ uniqueID: farm_id }).populate("userId", "name email phone");
+        const farm = await Farmer.findOne({ uniqueID: farm_id });
 
         if (!farm) {
             return res.status(404).json({ error: "Farm not found" });

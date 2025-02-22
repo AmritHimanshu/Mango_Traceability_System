@@ -50,7 +50,7 @@ export type PendingUserTableProps = {
 
 // Farmer
 export type Farm = {
-  userUniqueId: { name: string; email: string; phone: string };
+  userUniqueId: string;
   farm: string;
   geoFenceData: { lat: number; lng: number }[];
   area: number;
