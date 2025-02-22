@@ -11,7 +11,7 @@ const authenticateAdmin = async (req, res, next) => {
             return res.status(401).json({ error: "Token has expired" });
         }
 
-        const rootUser = await User.findOne({ _id: verifyToken._id, "tokens.token": token });
+        const rootUser = await User.findOne({ uniqueID: verifyToken.uniqueID, "tokens.token": token });
         if (!rootUser) {
             return res.status(401).json({ error: "User not found" });
         }
