@@ -211,6 +211,8 @@ function page() {
       router.push(`${FARMS}/${id}`);
     } catch (error) {}
 
+    setIsSave(false);
+
     setTimeout(() => {
       setMessage({ text: "", type: "" });
     }, 2000);
@@ -233,7 +235,7 @@ function page() {
       <div className="text-end my-7">
         <button
           onClick={handleOnCancel}
-          className="bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2 py-1 text-[11px] md:text-lg"
+          className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
         >
           Cancel
         </button>
@@ -581,7 +583,7 @@ function page() {
 
       <div className="mt-16">
         <button
-          className="btn text-[11px] md:text-lg bg-green-600 bg-opacity-90 text-white hover:bg-opacity-100 duration-200"
+          className="w-full !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
           onClick={() => setIsSave(true)}
         >
           Save
@@ -599,13 +601,13 @@ function page() {
             </div>
             <div className="text-end text-[11px] md:text-lg space-x-2">
               <button
-                className="py-1 px-2 bg-red-600 text-white rounded-sm hover:bg-red-700 duration-200"
+                className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
                 onClick={() => setIsSave(false)}
               >
                 Cancel
               </button>
               <button
-                className="py-1 px-2 bg-green-600 text-white rounded-sm hover:bg-green-700 duration-200"
+                className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
                 onClick={() => handleOnSave()}
               >
                 Confirm
