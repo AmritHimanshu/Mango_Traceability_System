@@ -35,8 +35,6 @@ router.get('/api/fetch-few-farms-list', async (req, res) => {
 router.get('/api/fetch-farm-data/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        console.log(id)
-        // const _id = new mongoose.Types.ObjectId(id);
 
         const farmData = await Farmer.findOne({ userUniqueId: req.rootUser.uniqueID, uniqueID: id });
 
