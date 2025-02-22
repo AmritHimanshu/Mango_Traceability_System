@@ -79,14 +79,13 @@ router.get('/api/fetch-farmer-farms-list/:id', async (req, res) => {
     const skip = req.query.skip;
 
     const { id } = req.params;
-    const _id = new mongoose.Types.ObjectId(id);
 
     try {
-        const farmList = await Farmer.find({ userId: _id }).sort("-createdAt").skip(parseInt(skip)).limit(parseInt(limit)).populate("userId", "_id name email");
+        const farmList = await Farmer.find({ userUniqueId: id }).sort("-createdAt").skip(parseInt(skip)).limit(parseInt(limit));
 
-        const user = await User.find(_id).select("name uniqueID");
-        
-        return res.status(201).send({farmList, user});
+        const user = await User.find({ uniqueID: id }).select("name uniqueID");
+
+        return res.status(201).send({ farmList, user });
     } catch (error) {
         console.log("/api/fetch-farmer-farms-list: ", error);
         return res.status(500).json({ error: "Internal Server Error" });

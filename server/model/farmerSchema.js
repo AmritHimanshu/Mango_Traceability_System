@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { ObjectId } = mongoose.Schema.Types;
 const { randomInt } = require("crypto");
 
 const farmerSchema = new mongoose.Schema(

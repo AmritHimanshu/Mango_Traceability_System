@@ -70,7 +70,7 @@ function Table_List({ users, url }: { users: User[]; url: string }) {
                 <td className="px-2 text-end">
                   <button
                     className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
-                    onClick={() => handleOnView(user._id)}
+                    onClick={() => handleOnView(user.uniqueID)}
                   >
                     View
                   </button>
