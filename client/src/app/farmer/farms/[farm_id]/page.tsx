@@ -147,14 +147,16 @@ function page() {
 
       {farm && (
         <>
-          <button
-            onClick={() => setIsDelete(true)}
-            className="my-5 text-[11px] md:text-lg bg-red-600 text-white hover:bg-red-100 hover:text-red-600 duration-200 rounded-sm px-2 py-2"
-          >
-            Delete
-          </button>
+          <div className="my-3 text-right">
+            <button
+              onClick={() => setIsDelete(true)}
+              className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+            >
+              Delete
+            </button>
+          </div>
 
-          <div className="space-y-5 lg:space-y-10 my-5">
+          <div className="space-y-5 lg:space-y-10 my-4 text-[10px] md:text-[13px] lg:text-[16px]">
             <Map coordinates={farm.geoFenceData} height="300px" />
 
             <div className="flex items-center justify-between">
@@ -163,11 +165,11 @@ function page() {
                 <div className="text-sm">{farm.uniqueID}</div>
               </div>
               {farm.area && (
-              <div className="flex items-center space-x-3">
-                <div className="font-bold">Area:</div>
-                <div>{farm.area.toFixed(2)} sq. m</div>
-              </div>
-            )}
+                <div className="flex items-center space-x-3">
+                  <div className="font-bold">Area:</div>
+                  <div>{farm.area.toFixed(2)} sq. m</div>
+                </div>
+              )}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
@@ -410,12 +412,14 @@ function page() {
               </div>
             )}
 
-            <button
-              className="btn bg-blue-500 text-white hover:bg-blue-600 duration-200"
-              onClick={handleOnEdit}
-            >
-              Add data
-            </button>
+            <div className="text-center">
+              <button
+                className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                onClick={handleOnEdit}
+              >
+                Add data
+              </button>
+            </div>
           </div>
         </>
       )}
