@@ -4,12 +4,12 @@ const { randomInt } = require("crypto");
 
 const farmerSchema = new mongoose.Schema(
     {
-        user: {
+        userId: {
             type: ObjectId,
             ref: "USER",
             required: true
         },
-        userId: {
+        userUniqueId: {
             type: String,
             required: true
         },
