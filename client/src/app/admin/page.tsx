@@ -5,7 +5,12 @@ import { useRouter } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
 import { User } from "@/utils/Types/interfaces";
-import { LOGIN } from "@/utils/Paths/paths";
+import {
+  FARMER_MANAGEMENT,
+  LOGIN,
+  MANAGER_MANAGEMENT,
+  PENDING_REQUESTS,
+} from "@/utils/Paths/paths";
 import {
   ADMIN_AUTHENTICATE_USER,
   ADMIN_FETCH_NO_OF_USERS,
@@ -210,24 +215,28 @@ function page() {
           description=""
           count={noOfPendingRequests}
           bgColor="orange"
+          url={PENDING_REQUESTS}
         />
         <HomeCard
           title="Total number of verified managers"
           description=""
           count={noOfVerifiedManagers}
           bgColor="green"
+          url={MANAGER_MANAGEMENT}
         />
         <HomeCard
           title="Total number of verified farmers"
           description=""
           count={noOfVerifiedFarmers}
           bgColor="green"
+          url={FARMER_MANAGEMENT}
         />
         <HomeCard
           title="Total number of rejected requests"
           description=""
           count={noOfRejectedRequests}
           bgColor="red"
+          url=""
         />
       </div>
 

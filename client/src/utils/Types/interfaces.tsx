@@ -41,6 +41,7 @@ export type HomeCardProps = {
   description: string;
   count: number;
   bgColor: string;
+  url: string;
 };
 
 export type PendingUserTableProps = {
