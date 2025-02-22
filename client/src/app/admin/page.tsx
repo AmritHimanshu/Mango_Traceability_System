@@ -236,7 +236,7 @@ function page() {
           <div className="pb-3 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold text-center underline">
             Recent Pending Requests
           </div>
-          <div className="w-full overflow-x-auto rounded-lg shadow-2xl">
+          <div className="w-full rounded-lg shadow-2xl overflow-hidden">
             <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
               <thead>
                 <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
