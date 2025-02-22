@@ -232,7 +232,7 @@ function page() {
 
       <Heading text={`${farm?.farm} (Edit)`} />
 
-      <div className="text-end my-7">
+      <div className="text-end my-3">
         <button
           onClick={handleOnCancel}
           className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
@@ -581,9 +581,9 @@ function page() {
         )}
       </div>
 
-      <div className="mt-16">
+      <div className="mt-16 text-center">
         <button
-          className="w-full !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+          className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
           onClick={() => setIsSave(true)}
         >
           Save

@@ -115,9 +115,9 @@ function page() {
 
       <Heading text="FARMS" />
 
-      <div className="my-2">
+      <div className="my-5 text-center">
         <button
-          className="btn bg-blue-500 text-white hover:bg-blue-600 duration-200"
+          className="!w-[130px] md:!w-[150px] lg:!w-[200px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
           onClick={() => router.push(CREATE_FARM)}
         >
           Click here to Add farm
