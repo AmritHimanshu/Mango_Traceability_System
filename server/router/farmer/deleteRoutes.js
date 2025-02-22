@@ -6,9 +6,8 @@ router.delete('/api/delete-farm/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-        const farm = await Farmer.findById(id);
-
-        if (JSON.stringify(req.rootUser._id) !== JSON.stringify(farm.userId)) {
+        const farm = await Farmer.findOne({ uniqueID: id });
+        if (req.rootUser.uniqueID !== farm.userUniqueId) {
             return res.status(403).json({ error: "You are not authorized to delete." });
         }
 

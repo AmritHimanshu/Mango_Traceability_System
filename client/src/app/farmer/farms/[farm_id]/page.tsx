@@ -106,7 +106,7 @@ function page() {
 
       if (res.status === 403) {
         setMessage({ text: data.error, type: "error" });
-        router.push(LOGIN);
+        // router.push(LOGIN);
         const error = new Error(data.error);
         throw error;
       } else if (res.status === 404 || res.status === 500) {
@@ -124,6 +124,8 @@ function page() {
       router.push(FARMS);
     } catch (error) {}
 
+    setIsDelete(false);
+    
     setTimeout(() => {
       setMessage({ text: "", type: "" });
     }, 2000);
