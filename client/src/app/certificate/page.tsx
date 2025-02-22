@@ -58,7 +58,7 @@ function page() {
         throw error;
       }
 
-      setFarmData(data);
+      setFarmData(data.farm);
     } catch (error) {
       console.log("Error: ", error);
       alert(error);
@@ -103,7 +103,7 @@ function page() {
             )}
             </div>
 
-          <div className="bg-cardBackground p-3 rounded-md">
+          {/* <div className="bg-cardBackground p-3 rounded-md">
             <div className="flex items-center space-x-3">
               <div className="font-bold">Farmer Name: </div>
               <div>{farmData.userId.name}</div>
@@ -116,7 +116,7 @@ function page() {
               <div className="font-bold">Farmer Phone: </div>
               <div>{farmData.userId.phone}</div>
             </div>
-          </div>
+          </div> */}
 
           <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
             {farmData.farm && (

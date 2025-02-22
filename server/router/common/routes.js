@@ -195,8 +195,11 @@ router.get('/api/certificate-farm-detail/:farm_id', async (req, res) => {
     const { farm_id } = req.params;
 
     try {
-        const farm = await Farmer.findOne({ _id: farm_id }).populate("userId", "name email");
-        return res.status(201).json(farm);
+        const farm = await Farmer.findOne({ uniqueID: farm_id });
+
+        const user = await User.findOne({ uniqueID: farm.userUniqueId }).select("name email phone");
+
+        return res.status(201).json({ farm, user });
     } catch (error) {
         console.log("/api/certificate-farm-detail: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
