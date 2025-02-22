@@ -434,13 +434,13 @@ function page() {
             </div>
             <div className="text-end text-[11px] md:text-lg space-x-2">
               <button
-                className="py-1 px-2 bg-red-600 text-white rounded-sm hover:bg-red-700 duration-200"
+                className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
                 onClick={() => setIsDelete(false)}
               >
                 Cancel
               </button>
               <button
-                className="py-1 px-2 bg-green-600 text-white rounded-sm hover:bg-green-700 duration-200"
+                className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
                 onClick={() => handleOnDelete()}
               >
                 Confirm
