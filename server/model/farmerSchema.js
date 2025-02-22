@@ -4,11 +4,6 @@ const { randomInt } = require("crypto");
 
 const farmerSchema = new mongoose.Schema(
     {
-        userId: {
-            type: ObjectId,
-            ref: "USER",
-            required: true
-        },
         userUniqueId: {
             type: String,
             required: true
