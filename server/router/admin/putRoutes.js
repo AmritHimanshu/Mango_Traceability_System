@@ -97,7 +97,7 @@ router.put('/api/edit-farm-data/:id', async (req, res) => {
         }
 
         // Save the updated farmer document
-        await farmer.save();
+        // await farmer.save();
 
         // Return the updated farmer data
         return res.status(201).json({ message: "Successfully updated" });
