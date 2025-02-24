@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { HomeCardProps } from "@/utils/Types/interfaces";
 import { useRouter } from "next/navigation";
+import InfoIcon from "@mui/icons-material/Info";
 
 const allowedColors: Record<string, string> = {
   red: "bg-red-600",
@@ -30,12 +31,14 @@ function HomeCard({ title, description, count, bgColor, url }: HomeCardProps) {
         }`}
       >
         {isHover && (
-          <button
-            className={`!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200 ${bgColorClass}`}
-            onClick={() => router.push(url)}
-          >
-            view
-          </button>
+          <InfoIcon
+          style={{
+            color: `${bgColor}`,
+            cursor: "pointer",
+            fontSize: "30px",
+          }}
+          onClick={() => router.push(url)}
+        />
         )}
       </div>
 
