@@ -177,7 +177,10 @@ function page() {
                   <td className="px-4 py-3 text-left">Phone</td>
                   <td className="px-4 py-3 text-left">Date</td>
                   <td className="px-4 py-3 text-left">Assign role</td>
-                  <td className="px-4 py-3 text-center">Accept/Reject</td>
+                  <td className="px-4 py-3 text-center">
+                    <span className="text-green-400">Accept</span>/
+                    <span className="text-red-400">Reject</span>
+                  </td>
                 </tr>
               </thead>
 
