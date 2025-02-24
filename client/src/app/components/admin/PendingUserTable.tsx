@@ -3,9 +3,13 @@
 import React, { useState } from "react";
 import { PendingUserTableProps } from "@/utils/Types/interfaces";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-function PendingUserTable({ user, authenticateReq }: PendingUserTableProps) {
+function PendingUserTable({
+  idx,
+  user,
+  authenticateReq,
+}: PendingUserTableProps) {
   const [selectedButton, setSelectedButton] = useState("");
 
   const [selectRole, setSelectRole] = useState("");
@@ -29,6 +33,9 @@ function PendingUserTable({ user, authenticateReq }: PendingUserTableProps) {
 
   return (
     <tr className="text-black bg-secondaryColor odd:bg-opacity-30 border-b-[1px] border-black last:border-b-0">
+      <td className="px-4 py-3 align-middle w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
+        {idx + 1}
+      </td>
       <td className="px-4 py-3 align-middle w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
         {user.name}
       </td>
@@ -61,7 +68,7 @@ function PendingUserTable({ user, authenticateReq }: PendingUserTableProps) {
             style={{ color: "green", cursor: "pointer", fontSize: "30px" }}
             onClick={() => handleOnClick(user._id, selectRole, true, "Accept")}
           />
-          <CloseOutlinedIcon
+          <DeleteIcon
             style={{ color: "red", cursor: "pointer", fontSize: "30px" }}
             onClick={() => handleOnClick(user._id, selectRole, false, "Reject")}
           />

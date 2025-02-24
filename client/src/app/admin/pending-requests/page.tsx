@@ -171,6 +171,7 @@ function page() {
             <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
               <thead>
                 <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
+                  <td className="px-4 py-3 text-left">S. No.</td>
                   <td className="px-4 py-3 text-left">Name</td>
                   <td className="px-4 py-3 text-left">Email</td>
                   <td className="px-4 py-3 text-left">Phone</td>
@@ -184,6 +185,7 @@ function page() {
                 {pendingRequests.map((user, index) => (
                   <PendingUserTable
                     key={index}
+                    idx={index}
                     user={user}
                     authenticateReq={authenticateReq}
                   />
