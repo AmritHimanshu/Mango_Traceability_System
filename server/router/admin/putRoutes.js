@@ -54,19 +54,16 @@ router.put('/api/edit-farm-data/:id', async (req, res) => {
 
     try {
         const { id } = req.params;
-        const { field, value, index, subField } = req.body; // field: field name, value: new value, index: for arrays, subField: for nested objects
+        const { field, value, index, subField } = req.body;
 
         console.log("Field: ", field, "value: ", value, "index: ", index, "subfield: ", subField);
 
-        // Find the farmer by ID
         const farmer = await Farmer.findOne({ uniqueID: id });
         if (!farmer) {
             return res.status(404).json({ error: 'Farmer not found' });
         }
 
-        // Handle nested fields (e.g., arrays like weedingDate or objects like irrigationDates)
         if (index !== null) {
-            // Update a specific element in an array
             if (!farmer[field]) {
                 return res.status(400).json({ error: `Field ${field} does not exist` });
             }
@@ -79,7 +76,6 @@ router.put('/api/edit-farm-data/:id', async (req, res) => {
             }
             farmer[field][index] = value;
         } else if (subField !== "") {
-            // Update a nested field in an object (e.g., irrigationDates.artificial)
             if (!farmer[field]) {
                 return res.status(400).json({ error: `Field ${field} does not exist` });
             }
@@ -91,18 +87,15 @@ router.put('/api/edit-farm-data/:id', async (req, res) => {
             }
             farmer[field][subField] = value;
         } else {
-            // Update a regular field
             if (!farmer[field]) {
                 return res.status(400).json({ message: `Field ${field} does not exist` });
             }
             farmer[field] = value;
         }
 
-        // Save the updated farmer document
         console.log(farmer);
         await farmer.save();
 
-        // Return the updated farmer data
         return res.status(201).json({ message: "Successfully updated" });
     } catch (error) {
         console.log("/api/edit-farm-data: ", error);

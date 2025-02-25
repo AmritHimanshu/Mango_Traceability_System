@@ -13,7 +13,6 @@ import { FARMER, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import Heading from "@/app/components/common/Heading";
 import Message from "@/app/components/common/Message";
 
-// Define the Farm type based on your schema
 interface Farm {
   farm: string;
   geoFenceData: { lat: number; lng: number }[];
@@ -52,11 +51,10 @@ function Page() {
   const [farmData, setFarmData] = useState<Farm | null>(null);
   const [message, setMessage] = useState({ text: "", type: "" });
   const [selectedField, setSelectedField] = useState("");
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null); // For array fields
-  const [selectedSubField, setSelectedSubField] = useState(""); // For nested objects
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedSubField, setSelectedSubField] = useState("");
   const [newValue, setNewValue] = useState("");
 
-  // Fetch farm data
   const fetchFarmData = async () => {
     if (loadingBarRef.current) {
       loadingBarRef.current.continuousStart();
@@ -108,30 +106,25 @@ function Page() {
     fetchFarmData();
   }, []);
 
-  // Handle field selection
   const handleFieldChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedField(e.target.value);
-    setSelectedIndex(null); // Reset index when field changes
-    setSelectedSubField(""); // Reset subField when field changes
-    setNewValue(""); // Reset new value
+    setSelectedIndex(null); 
+    setSelectedSubField("");
+    setNewValue("");
   };
 
-  // Handle index selection for array fields
   const handleIndexChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedIndex(parseInt(e.target.value));
   };
 
-  // Handle sub-field selection for nested objects
   const handleSubFieldChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedSubField(e.target.value);
   };
 
-  // Handle new value input
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewValue(e.target.value);
   };
 
-  // Handle update
   const handleUpdate = async () => {
     if (!selectedField || !newValue) {
       setMessage({
@@ -172,7 +165,6 @@ function Page() {
     }
   };
 
-  // Handle delete
   const handleDelete = async () => {
     if (!selectedField) {
       setMessage({ text: "Please select a field to delete", type: "error" });
@@ -209,7 +201,6 @@ function Page() {
     }
   };
 
-  // Render input fields dynamically based on the selected field
   const renderInputField = () => {
     if (!farmData) return null;
 
