@@ -114,6 +114,10 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
         text: "Please select a field and enter a value",
         type: "error",
       });
+
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
@@ -161,6 +165,8 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
         const error = new Error(data.error);
         throw error;
       }
+
+      setMessage({ text: data.message, type: "success" });
     } catch (error) {}
 
     onclick(false);
