@@ -33,6 +33,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
     date?: string;
     volume?: number;
     quantity?: number;
+    yield?: number;
     name?: string;
   }>({});
 
@@ -121,29 +122,55 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
         text: "Please select a field",
         type: "error",
       });
+
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
-    const isMultiField = [
+    const isArrayField = [
       "fertilizerApplications",
       "pesticideApplications",
       "bagging",
       "specialCare",
     ].includes(selectedField);
-
-    if (isMultiField && (!newMultiValue.date || selectedIndex === null)) {
+  
+    const isObjectField = selectedField === "harvest";
+  
+    if (isArrayField && selectedIndex === null) {
       setMessage({
-        text: "Please fill all fields for multi-field entries",
+        text: "Please select an entry to update",
         type: "error",
       });
+
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
+  
+    if (isObjectField && (!newMultiValue.date || !newMultiValue.yield)) {
+      setMessage({
+        text: "Please fill all fields for the harvest entry",
+        type: "error",
+      });
 
-    if (!isMultiField && !newSingleValue) {
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
+      return;
+    }
+  
+    if (!isArrayField && !isObjectField && !newSingleValue) {
       setMessage({
         text: "Please enter a value",
         type: "error",
       });
+
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
       return;
     }
 
@@ -158,7 +185,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
           credentials: "include",
           body: JSON.stringify({
             field: selectedField,
-            value: isMultiField ? newMultiValue : newSingleValue, // Send the correct value
+            value: isArrayField || isObjectField ? newMultiValue : newSingleValue,
             index: selectedIndex,
             subField: selectedSubField,
           }),
@@ -429,6 +456,32 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
             )}
           </>
         );
+      case "harvest":
+        return (
+          <div className="space-y-2">
+            <input
+              type="date"
+              value={newMultiValue.date || ""}
+              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              onChange={(e) =>
+                setNewMultiValue({ ...newMultiValue, date: e.target.value })
+              }
+              placeholder="Harvest Date"
+            />
+            <input
+              type="number"
+              value={newMultiValue.yield || ""}
+              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              onChange={(e) =>
+                setNewMultiValue({
+                  ...newMultiValue,
+                  yield: parseFloat(e.target.value),
+                })
+              }
+              placeholder="Harvest Yield"
+            />
+          </div>
+        );
       default:
         return null;
     }
@@ -473,6 +526,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
             </option>
             <option value="bagging">Bagging</option>
             <option value="specialCare">Special Care</option>
+            <option value="harvest">Harvest</option>
           </select>
         </div>
 
