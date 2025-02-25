@@ -18,6 +18,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const farm_id = searchParams.get("farm_id");
@@ -116,6 +117,10 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
       return;
     }
 
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+
     try {
       const res = await fetch(
         `${BASE_URL}/${ADMIN_EDIT_FARM_DATA}/${farm_id}`,
@@ -136,17 +141,37 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
 
       const data = await res.json();
 
-      if (res.status === 201) {
-        setMessage({ text: data.message, type: "success" });
-        fetchFarmData();
-      } else {
+      if (res.status === 400) {
         setMessage({ text: data.error, type: "error" });
+        const error = new Error(data.error);
+        throw error;
       }
-    } catch (error) {
-      setMessage({ text: "An error occurred", type: "error" });
-    }
+
+      if (res.status !== 201 && res.status !== 500) {
+        router.push(LOGIN);
+        if (loadingBarRef.current) {
+          loadingBarRef.current.complete();
+        }
+        return;
+      }
+
+      if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
+        router.push(`${ADMIN_FARM}?farm_id=${farm_id}`);
+        const error = new Error(data.error);
+        throw error;
+      }
+    } catch (error) {}
 
     onclick(false);
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
   };
 
   const handleDelete = async () => {
