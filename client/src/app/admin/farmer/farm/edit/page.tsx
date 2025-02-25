@@ -163,7 +163,7 @@ function Page() {
 
       if (res.status === 201) {
         setMessage({ text: data.message, type: "success" });
-        fetchFarmData(); // Refresh the data
+        fetchFarmData();
       } else {
         setMessage({ text: data.error, type: "error" });
       }
@@ -215,12 +215,12 @@ function Page() {
 
     switch (selectedField) {
       case "farm":
+      case "crop":
         return (
           <input
             type="text"
             value={newValue}
             onChange={handleValueChange}
-            placeholder="Enter new farm name"
           />
         );
       case "ploughingDate":
@@ -300,7 +300,12 @@ function Page() {
           <select onChange={handleFieldChange}>
             <option value="">Select a field</option>
             <option value="farm">Farm Name</option>
+            <option value="crop">Crop Name</option>
             <option value="ploughingDate">Ploughing Date</option>
+            <option value="sowingDate">Sowing Date</option>
+            <option value="floweringDate">Flowering Date</option>
+            <option value="pheromoneTrapDate">Pheromone Trap Date</option>
+            <option value="lureChangeDate">Lure Change Date</option>
             <option value="weedingDate">Weeding Date</option>
             <option value="irrigationDates">Irrigation Dates</option>
             <option value="fertilizerApplications">
