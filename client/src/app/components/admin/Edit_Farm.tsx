@@ -209,7 +209,7 @@ function Edit_Farm() {
       case "farm":
       case "crop":
         return (
-          <input type="text" value={newValue} onChange={handleValueChange} />
+          <input type="text" value={newValue} className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200" onChange={handleValueChange} />
         );
       case "ploughingDate":
       case "sowingDate":
@@ -217,12 +217,12 @@ function Edit_Farm() {
       case "pheromoneTrapDate":
       case "lureChangeDate":
         return (
-          <input type="date" value={newValue} onChange={handleValueChange} />
+          <input type="date" value={newValue} className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200" onChange={handleValueChange} />
         );
       case "weedingDate":
         return (
           <>
-            <select onChange={handleIndexChange}>
+            <select className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200" onChange={handleIndexChange}>
               <option value="">Select a date to edit/delete</option>
               {farmData.weedingDate.map((date, index) => (
                 <option key={index} value={index}>
@@ -230,18 +230,18 @@ function Edit_Farm() {
                 </option>
               ))}
             </select>
-            <input type="date" value={newValue} onChange={handleValueChange} />
+            <input type="date" value={newValue} className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200" onChange={handleValueChange} />
           </>
         );
       case "irrigationDates":
         return (
           <>
-            <select onChange={handleSubFieldChange}>
+            <select className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200" onChange={handleSubFieldChange}>
               <option value="">Select a sub-field</option>
               <option value="artificial">Artificial</option>
               <option value="natural">Natural</option>
             </select>
-            <input type="date" value={newValue} onChange={handleValueChange} />
+            <input type="date" value={newValue} className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200" onChange={handleValueChange} />
           </>
         );
       case "fertilizerApplications":
@@ -250,7 +250,7 @@ function Edit_Farm() {
       case "specialCare":
         return (
           <>
-            <select onChange={handleIndexChange}>
+            <select className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200" onChange={handleIndexChange}>
               <option value="">Select an entry to edit/delete</option>
               {farmData[selectedField].map((entry, index) => (
                 <option key={index} value={index}>
@@ -261,6 +261,7 @@ function Edit_Farm() {
             <input
               type="text"
               value={newValue}
+              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
               onChange={handleValueChange}
               placeholder="Enter new value"
             />
@@ -280,9 +281,9 @@ function Edit_Farm() {
       )}
 
       <div className="bg-white text-black p-5 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5">
-        <div className="space-x-3">
+        <div className="space-y-2">
           <label>Select Field:</label>
-          <select onChange={handleFieldChange}>
+          <select className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200" onChange={handleFieldChange}>
             <option value="">Select a field</option>
             <option value="farm">Farm Name</option>
             <option value="crop">Crop Name</option>
@@ -305,25 +306,27 @@ function Edit_Farm() {
         </div>
 
         {selectedField && (
-          <div>
+          <div className="space-y-2">
             <label>New Value:</label>
             {renderInputField()}
           </div>
         )}
 
+        <div className="flex items-center justify-between">
         <button
-          className="px-[7px] text-[14px] bg-blue-200 hover:bg-blue-100 duration-300"
-          onClick={handleUpdate}
-        >
-          Update
-        </button>
-
-        <button
-          className="px-[7px] text-[14px] bg-red-200 hover:bg-red-100 duration-300"
+          className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
           onClick={handleDelete}
         >
           Delete
         </button>
+
+        <button
+          className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+          onClick={handleUpdate}
+        >
+          Update
+        </button>
+        </div>
       </div>
     </div>
   );
