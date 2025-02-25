@@ -83,6 +83,11 @@ function page() {
     }
   };
 
+  const handleOnClose = (bool: boolean) => {
+    setIsEdit(bool);
+    fetchFarmData();
+  };
+
   useEffect(() => {
     fetchFarmData();
   }, []);
@@ -405,7 +410,7 @@ function page() {
 
       {isEdit && (
         <div className="fixed z-[9999] top-0 left-0 w-full h-full bg-neutral-900 bg-opacity-80 flex items-center">
-          <Edit_Farm onclick={setIsEdit}/>
+          <Edit_Farm onclick={handleOnClose} />
         </div>
       )}
     </div>
