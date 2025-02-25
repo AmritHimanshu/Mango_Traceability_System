@@ -55,9 +55,8 @@ router.put('/api/edit-farm-data/:id', async (req, res) => {
       const { id } = req.params;
       const { field, value, index, subField } = req.body;
   
-      console.log("Field: ", field, "value: ", value, "index: ", index, "subfield: ", subField);
-  
       const farmer = await Farmer.findOne({ uniqueID: id });
+
       if (!farmer) {
         return res.status(404).json({ error: 'Farmer not found' });
       }
@@ -96,7 +95,6 @@ router.put('/api/edit-farm-data/:id', async (req, res) => {
         farmer[field] = value;
       }
   
-      console.log(farmer);
       await farmer.save();
   
       return res.status(201).json({ message: "Successfully updated" });
