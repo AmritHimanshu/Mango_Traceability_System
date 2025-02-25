@@ -16,6 +16,7 @@ const Map = dynamic(() => import("@/app/components/farmer/MapCoordinates"), {
 });
 import CloseIcon from "@mui/icons-material/Close";
 import Message from "@/app/components/common/Message";
+import Edit_Farm from "@/app/components/admin/Edit_Farm";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -30,6 +31,7 @@ function page() {
   const [farmData, setFarmData] = useState<Farm>();
   const [message, setMessage] = useState({ text: "", type: "" });
   const [isQRCode, setIsQRCode] = useState(false);
+  const [isEdit, setIsEdit] = useState(true);
 
   const fetchFarmData = async () => {
     if (loadingBarRef.current) {
@@ -86,7 +88,7 @@ function page() {
   }, []);
 
   return (
-    <div className="page-main-div">
+    <div className="page-main-div relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
       {message.text && message.type && (
@@ -97,6 +99,15 @@ function page() {
 
       {farmData && !isQRCode ? (
         <div className="space-y-5 lg:space-y-10 my-5">
+          <div className="text-right">
+            <button
+              className="!w-[130px] md:!w-[150px] lg:!w-[200px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+              onClick={() => setIsEdit(true)}
+            >
+              Edit
+            </button>
+          </div>
+
           <Map coordinates={farmData.geoFenceData} height="300px" />
 
           <div className="flex items-center justify-between">
@@ -390,6 +401,12 @@ function page() {
             </div>
           )}
         </>
+      )}
+
+      {isEdit && (
+        <div className="fixed z-[9999] top-0 left-0 w-full h-full bg-neutral-900 bg-opacity-80 flex items-center">
+          <Edit_Farm />
+        </div>
       )}
     </div>
   );
