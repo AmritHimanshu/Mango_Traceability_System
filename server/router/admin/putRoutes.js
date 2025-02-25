@@ -51,56 +51,60 @@ router.put('/api/authenticate-user/:id', async (req, res) => {
 });
 
 router.put('/api/edit-farm-data/:id', async (req, res) => {
-
     try {
-        const { id } = req.params;
-        const { field, value, index, subField } = req.body;
-
-        console.log("Field: ", field, "value: ", value, "index: ", index, "subfield: ", subField);
-
-        const farmer = await Farmer.findOne({ uniqueID: id });
-        if (!farmer) {
-            return res.status(404).json({ error: 'Farmer not found' });
+      const { id } = req.params;
+      const { field, value, index, subField } = req.body;
+  
+      console.log("Field: ", field, "value: ", value, "index: ", index, "subfield: ", subField);
+  
+      const farmer = await Farmer.findOne({ uniqueID: id });
+      if (!farmer) {
+        return res.status(404).json({ error: 'Farmer not found' });
+      }
+  
+      if (index !== null && index !== undefined) {
+        if (!farmer[field]) {
+          return res.status(400).json({ error: `Field ${field} does not exist` });
         }
-
-        if (index !== null) {
-            if (!farmer[field]) {
-                return res.status(400).json({ error: `Field ${field} does not exist` });
-            }
-            if (!Array.isArray(farmer[field])) {
-                return res.status(400).json({ error: `Field ${field} is not an array` });
-            }
-            if (index < 0 || index >= farmer[field].length) {
-                return res.status(400).json({ error: `Invalid index for field ${field}` });
-            }
-            farmer[field][index] = value;
-        } else if (subField !== "") {
-            if (!farmer[field]) {
-                return res.status(400).json({ error: `Field ${field} does not exist` });
-            }
-            if (typeof farmer[field] !== 'object' || Array.isArray(farmer[field])) {
-                return res.status(400).json({ error: `Field ${field} is not an object` });
-            }
-            if (!farmer[field][subField]) {
-                return res.status(400).json({ error: `Sub-field ${subField} does not exist in ${field}` });
-            }
-            farmer[field][subField] = value;
-        } else {
-            if (!farmer[field]) {
-                return res.status(400).json({ message: `Field ${field} does not exist` });
-            }
-            farmer[field] = value;
+        if (!Array.isArray(farmer[field])) {
+          return res.status(400).json({ error: `Field ${field} is not an array` });
         }
-
-        console.log(farmer);
-        await farmer.save();
-
-        return res.status(201).json({ message: "Successfully updated" });
+        if (index < 0 || index >= farmer[field].length) {
+          return res.status(400).json({ error: `Invalid index for field ${field}` });
+        }
+  
+        farmer[field][index] = value;
+      }
+      else if (subField && subField !== "") {
+        if (!farmer[field]) {
+          return res.status(400).json({ error: `Field ${field} does not exist` });
+        }
+        if (typeof farmer[field] !== 'object' || Array.isArray(farmer[field])) {
+          return res.status(400).json({ error: `Field ${field} is not an object` });
+        }
+        if (!farmer[field][subField]) {
+          return res.status(400).json({ error: `Sub-field ${subField} does not exist in ${field}` });
+        }
+  
+        farmer[field][subField] = value;
+      }
+      else {
+        if (!farmer[field]) {
+          return res.status(400).json({ error: `Field ${field} does not exist` });
+        }
+  
+        farmer[field] = value;
+      }
+  
+      console.log(farmer);
+      await farmer.save();
+  
+      return res.status(201).json({ message: "Successfully updated" });
     } catch (error) {
-        console.log("/api/edit-farm-data: ", error);
-        return res.status(500).json({ error: "Internal Server Error" });
+      console.log("/api/edit-farm-data: ", error);
+      return res.status(500).json({ error: "Internal Server Error" });
     }
-});
+  });
 
 
 module.exports = router;
