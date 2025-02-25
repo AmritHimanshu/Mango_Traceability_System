@@ -9,12 +9,12 @@ import {
 } from "@/utils/Apis/api";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
-import { ADMIN_FARM, FARMER, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
+import { ADMIN_FARM, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import { Farm } from "@/utils/Types/interfaces";
 import Message from "@/app/components/common/Message";
 import CloseIcon from "@mui/icons-material/Close";
 
-function Edit_Farm({ onclick }: { onclick: () => void }) {
+function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
@@ -145,6 +145,8 @@ function Edit_Farm({ onclick }: { onclick: () => void }) {
     } catch (error) {
       setMessage({ text: "An error occurred", type: "error" });
     }
+
+    onclick(false);
   };
 
   const handleDelete = async () => {
@@ -292,7 +294,10 @@ function Edit_Farm({ onclick }: { onclick: () => void }) {
 
       <div className="bg-white text-black p-5 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5">
         <div className="text-right">
-          <CloseIcon style={{ color: "red", cursor: "pointer" }} />
+          <CloseIcon
+            style={{ color: "red", cursor: "pointer" }}
+            onClick={() => onclick(false)}
+          />
         </div>
         <div className="space-y-2">
           <label>Select Field:</label>

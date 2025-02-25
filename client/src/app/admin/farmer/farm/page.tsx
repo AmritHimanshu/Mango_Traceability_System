@@ -31,7 +31,7 @@ function page() {
   const [farmData, setFarmData] = useState<Farm>();
   const [message, setMessage] = useState({ text: "", type: "" });
   const [isQRCode, setIsQRCode] = useState(false);
-  const [isEdit, setIsEdit] = useState(true);
+  const [isEdit, setIsEdit] = useState(false);
 
   const fetchFarmData = async () => {
     if (loadingBarRef.current) {
