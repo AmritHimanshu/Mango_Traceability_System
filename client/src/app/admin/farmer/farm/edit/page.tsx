@@ -285,7 +285,6 @@ function Page() {
       {farmData && <Heading text={farmData.farm} />}
 
       <div className="space-y-5 lg:space-y-10 my-5">
-        {/* Field Selection */}
         <div>
           <label>Select Field:</label>
           <select onChange={handleFieldChange}>
@@ -307,11 +306,9 @@ function Page() {
             </option>
             <option value="bagging">Bagging</option>
             <option value="specialCare">Special Care</option>
-            {/* Add more fields as needed */}
           </select>
         </div>
 
-        {/* Dynamic Input Field */}
         {selectedField && (
           <div>
             <label>New Value:</label>
@@ -319,7 +316,6 @@ function Page() {
           </div>
         )}
 
-        {/* Update Button */}
         <button
           className="px-[7px] text-[14px] bg-blue-200 hover:bg-blue-100 duration-300"
           onClick={handleUpdate}
@@ -327,7 +323,6 @@ function Page() {
           Update
         </button>
 
-        {/* Delete Button */}
         <button
           className="px-[7px] text-[14px] bg-red-200 hover:bg-red-100 duration-300"
           onClick={handleDelete}
