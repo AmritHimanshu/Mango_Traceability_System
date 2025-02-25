@@ -9,7 +9,7 @@ import {
 } from "@/utils/Apis/api";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
-import { FARMER, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
+import { ADMIN_FARM, FARMER, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import { Farm } from "@/utils/Types/interfaces";
 import Message from "@/app/components/common/Message";
 
@@ -51,6 +51,12 @@ function Edit_Farm() {
         return router.push(NOT_FOUND);
       }
 
+      if (res.status === 400) {
+        setMessage({ text: data.error, type: "error" });
+        const error = new Error(data.error);
+        throw error;
+      }
+
       if (res.status !== 201 && res.status !== 500) {
         router.push(LOGIN);
         if (loadingBarRef.current) {
@@ -61,14 +67,16 @@ function Edit_Farm() {
 
       if (res.status === 500) {
         setMessage({ text: data.error, type: "error" });
-        router.push(FARMER);
+        router.push(`${ADMIN_FARM}?farm_id=${farm_id}`);
         throw new Error(data.error);
       }
 
       setFarmData(data.farm);
-    } catch (error) {
-      setMessage({ text: "An error occurred", type: "error" });
-    }
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
 
     if (loadingBarRef.current) {
       loadingBarRef.current.complete();
@@ -181,7 +189,12 @@ function Edit_Farm() {
       case "farm":
       case "crop":
         return (
-          <input type="text" value={newValue} className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200" onChange={handleValueChange} />
+          <input
+            type="text"
+            value={newValue}
+            className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+            onChange={handleValueChange}
+          />
         );
       case "ploughingDate":
       case "sowingDate":
@@ -189,12 +202,20 @@ function Edit_Farm() {
       case "pheromoneTrapDate":
       case "lureChangeDate":
         return (
-          <input type="date" value={newValue} className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200" onChange={handleValueChange} />
+          <input
+            type="date"
+            value={newValue}
+            className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+            onChange={handleValueChange}
+          />
         );
       case "weedingDate":
         return (
           <>
-            <select className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200" onChange={handleIndexChange}>
+            <select
+              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              onChange={handleIndexChange}
+            >
               <option value="">Select a date to edit/delete</option>
               {farmData.weedingDate.map((date, index) => (
                 <option key={index} value={index}>
@@ -202,18 +223,31 @@ function Edit_Farm() {
                 </option>
               ))}
             </select>
-            <input type="date" value={newValue} className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200" onChange={handleValueChange} />
+            <input
+              type="date"
+              value={newValue}
+              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              onChange={handleValueChange}
+            />
           </>
         );
       case "irrigationDates":
         return (
           <>
-            <select className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200" onChange={handleSubFieldChange}>
+            <select
+              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              onChange={handleSubFieldChange}
+            >
               <option value="">Select a sub-field</option>
               <option value="artificial">Artificial</option>
               <option value="natural">Natural</option>
             </select>
-            <input type="date" value={newValue} className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200" onChange={handleValueChange} />
+            <input
+              type="date"
+              value={newValue}
+              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              onChange={handleValueChange}
+            />
           </>
         );
       case "fertilizerApplications":
@@ -222,7 +256,10 @@ function Edit_Farm() {
       case "specialCare":
         return (
           <>
-            <select className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200" onChange={handleIndexChange}>
+            <select
+              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              onChange={handleIndexChange}
+            >
               <option value="">Select an entry to edit/delete</option>
               {farmData[selectedField].map((entry, index) => (
                 <option key={index} value={index}>
@@ -255,7 +292,10 @@ function Edit_Farm() {
       <div className="bg-white text-black p-5 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5">
         <div className="space-y-2">
           <label>Select Field:</label>
-          <select className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200" onChange={handleFieldChange}>
+          <select
+            className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+            onChange={handleFieldChange}
+          >
             <option value="">Select a field</option>
             <option value="farm">Farm Name</option>
             <option value="crop">Crop Name</option>
@@ -285,19 +325,19 @@ function Edit_Farm() {
         )}
 
         <div className="flex items-center justify-between">
-        <button
-          className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
-          onClick={handleDelete}
-        >
-          Delete
-        </button>
+          <button
+            className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
 
-        <button
-          className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
-          onClick={handleUpdate}
-        >
-          Update
-        </button>
+          <button
+            className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+            onClick={handleUpdate}
+          >
+            Update
+          </button>
         </div>
       </div>
     </div>
