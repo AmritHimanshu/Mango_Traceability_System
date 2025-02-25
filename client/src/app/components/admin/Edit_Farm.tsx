@@ -28,7 +28,13 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
   const [selectedField, setSelectedField] = useState("");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [selectedSubField, setSelectedSubField] = useState("");
-  const [newValue, setNewValue] = useState("");
+  const [newSingleValue, setNewSingleValue] = useState<string>("");
+  const [newMultiValue, setNewMultiValue] = useState<{
+    date?: string;
+    volume?: number;
+    quantity?: number;
+    name?: string;
+  }>({});
 
   const fetchFarmData = async () => {
     if (loadingBarRef.current) {
@@ -93,7 +99,8 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
     setSelectedField(e.target.value);
     setSelectedIndex(null);
     setSelectedSubField("");
-    setNewValue("");
+    setNewSingleValue(""); // Reset single-field value
+    setNewMultiValue({}); // Reset multi-field value
   };
 
   const handleIndexChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -105,24 +112,39 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
   };
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewValue(e.target.value);
+    setNewSingleValue(e.target.value);
   };
 
   const handleUpdate = async () => {
-    if (!selectedField || !newValue) {
+    if (!selectedField) {
       setMessage({
-        text: "Please select a field and enter a value",
+        text: "Please select a field",
         type: "error",
       });
-
-      setTimeout(() => {
-        setMessage({ text: "", type: "" });
-      }, 2000);
       return;
     }
 
-    if (loadingBarRef.current) {
-      loadingBarRef.current.continuousStart();
+    const isMultiField = [
+      "fertilizerApplications",
+      "pesticideApplications",
+      "bagging",
+      "specialCare",
+    ].includes(selectedField);
+
+    if (isMultiField && (!newMultiValue.date || selectedIndex === null)) {
+      setMessage({
+        text: "Please fill all fields for multi-field entries",
+        type: "error",
+      });
+      return;
+    }
+
+    if (!isMultiField && !newSingleValue) {
+      setMessage({
+        text: "Please enter a value",
+        type: "error",
+      });
+      return;
     }
 
     try {
@@ -136,7 +158,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
           credentials: "include",
           body: JSON.stringify({
             field: selectedField,
-            value: newValue,
+            value: isMultiField ? newMultiValue : newSingleValue, // Send the correct value
             index: selectedIndex,
             subField: selectedSubField,
           }),
@@ -161,7 +183,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
 
       if (res.status === 500) {
         setMessage({ text: data.error, type: "error" });
-        router.push(`${ADMIN_FARM}?farm_id=${farm_id}`);
+        // router.push(`${ADMIN_FARM}?farm_id=${farm_id}`);
         const error = new Error(data.error);
         throw error;
       }
@@ -181,8 +203,11 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
   };
 
   const handleDelete = async () => {
-    if (!selectedField) {
-      setMessage({ text: "Please select a field to delete", type: "error" });
+    if (!selectedField || selectedIndex === null) {
+      setMessage({
+        text: "Please select a field and entry to delete",
+        type: "error",
+      });
       return;
     }
 
@@ -198,7 +223,6 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
           body: JSON.stringify({
             field: selectedField,
             index: selectedIndex,
-            subField: selectedSubField,
           }),
         }
       );
@@ -225,7 +249,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
         return (
           <input
             type="text"
-            value={newValue}
+            value={newSingleValue}
             className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
             onChange={handleValueChange}
           />
@@ -238,7 +262,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
         return (
           <input
             type="date"
-            value={newValue}
+            value={newSingleValue}
             className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
             onChange={handleValueChange}
           />
@@ -259,7 +283,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
             </select>
             <input
               type="date"
-              value={newValue}
+              value={newSingleValue}
               className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
               onChange={handleValueChange}
             />
@@ -278,7 +302,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
             </select>
             <input
               type="date"
-              value={newValue}
+              value={newSingleValue}
               className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
               onChange={handleValueChange}
             />
@@ -286,7 +310,87 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
         );
       case "fertilizerApplications":
       case "pesticideApplications":
+        return (
+          <>
+            <select
+              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              onChange={handleIndexChange}
+            >
+              <option value="">Select an entry to edit/delete</option>
+              {farmData[selectedField].map((entry, index) => (
+                <option key={index} value={index}>
+                  {new Date(entry.date).toISOString().split("T")[0]}
+                </option>
+              ))}
+            </select>
+            {selectedIndex !== null && (
+              <div className="space-y-2">
+                <input
+                  type="date"
+                  value={newMultiValue.date || ""}
+                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                  onChange={(e) =>
+                    setNewMultiValue({ ...newMultiValue, date: e.target.value })
+                  }
+                  placeholder="Date"
+                />
+                <input
+                  type="number"
+                  value={newMultiValue.volume || ""}
+                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                  onChange={(e) =>
+                    setNewMultiValue({
+                      ...newMultiValue,
+                      volume: parseFloat(e.target.value),
+                    })
+                  }
+                  placeholder="Volume"
+                />
+              </div>
+            )}
+          </>
+        );
       case "bagging":
+        return (
+          <>
+            <select
+              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              onChange={handleIndexChange}
+            >
+              <option value="">Select an entry to edit/delete</option>
+              {farmData[selectedField].map((entry, index) => (
+                <option key={index} value={index}>
+                  {new Date(entry.date).toISOString().split("T")[0]}
+                </option>
+              ))}
+            </select>
+            {selectedIndex !== null && (
+              <div className="space-y-2">
+                <input
+                  type="date"
+                  value={newMultiValue.date || ""}
+                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                  onChange={(e) =>
+                    setNewMultiValue({ ...newMultiValue, date: e.target.value })
+                  }
+                  placeholder="Date"
+                />
+                <input
+                  type="number"
+                  value={newMultiValue.quantity || ""}
+                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                  onChange={(e) =>
+                    setNewMultiValue({
+                      ...newMultiValue,
+                      quantity: parseFloat(e.target.value),
+                    })
+                  }
+                  placeholder="Quantity"
+                />
+              </div>
+            )}
+          </>
+        );
       case "specialCare":
         return (
           <>
@@ -301,13 +405,28 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
                 </option>
               ))}
             </select>
-            <input
-              type="text"
-              value={newValue}
-              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
-              onChange={handleValueChange}
-              placeholder="Enter new value"
-            />
+            {selectedIndex !== null && (
+              <div className="space-y-2">
+                <input
+                  type="date"
+                  value={newMultiValue.date || ""}
+                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                  onChange={(e) =>
+                    setNewMultiValue({ ...newMultiValue, date: e.target.value })
+                  }
+                  placeholder="Date"
+                />
+                <input
+                  type="text"
+                  value={newMultiValue.name || ""}
+                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                  onChange={(e) =>
+                    setNewMultiValue({ ...newMultiValue, name: e.target.value })
+                  }
+                  placeholder="Name"
+                />
+              </div>
+            )}
           </>
         );
       default:
