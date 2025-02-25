@@ -68,7 +68,6 @@ router.put('/api/edit-farm-data/:id', async (req, res) => {
                 return res.status(400).json({ error: `Field ${field} does not exist` });
             }
             if (!Array.isArray(farmer[field])) {
-                console.log("dhf")
                 return res.status(400).json({ error: `Field ${field} is not an array` });
             }
             if (index < 0 || index >= farmer[field].length) {
