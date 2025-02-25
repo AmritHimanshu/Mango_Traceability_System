@@ -210,7 +210,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
 
       if (res.status === 500) {
         setMessage({ text: data.error, type: "error" });
-        // router.push(`${ADMIN_FARM}?farm_id=${farm_id}`);
+        router.push(`${ADMIN_FARM}?farm_id=${farm_id}`);
         const error = new Error(data.error);
         throw error;
       }
