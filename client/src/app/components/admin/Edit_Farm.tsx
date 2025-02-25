@@ -11,35 +11,7 @@ import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import { FARMER, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import { Farm } from "@/utils/Types/interfaces";
-import Heading from "@/app/components/common/Heading";
 import Message from "@/app/components/common/Message";
-
-// interface Farm {
-//   farm: string;
-//   geoFenceData: { lat: number; lng: number }[];
-//   area: number;
-//   crop: string;
-//   ploughingDate: string;
-//   weedingDate: string[];
-//   sowingDate: string;
-//   floweringDate: string;
-//   pheromoneTrapDate: string;
-//   lureChangeDate: string;
-//   irrigationDates: {
-//     artificial: string[];
-//     natural: string[];
-//   };
-//   fertilizerApplications: { date: string; volume: number }[];
-//   pesticideApplications: { date: string; volume: number }[];
-//   bagging: { date: string; quantity: number }[];
-//   specialCare: { date: string; name: string }[];
-//   harvest: {
-//     date: string;
-//     yield: number;
-//   };
-//   uniqueID: string;
-//   qrCode: string;
-// }
 
 function Edit_Farm() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
