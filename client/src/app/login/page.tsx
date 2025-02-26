@@ -34,6 +34,7 @@ function page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState({ text: "", type: "" });
+  
   const { capchaToken, recaptchaRef, handleRecaptcha } = useRecaptcha();
 
   const logOut = async () => {

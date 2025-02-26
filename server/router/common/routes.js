@@ -149,13 +149,27 @@ router.post("/api/verify-otp-email", (req, res) => {
 });
 
 router.post("/api/send-otp-phone", async (req, res) => {
-    const { phone } = req.body;
+    const { phone, capchaToken } = req.body;
 
-    if (!phone) {
-        return res.status(400).json({ error: "Phone is required." });
+    if (!phone || !capchaToken) {
+        return res.status(422).json({ error: "Fill all the fields and complete the captcha." });
     }
 
     try {
+        const recaptchaResponse = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+                secret: process.env.RECAPTCHA_SECRET_KEY,
+                response: capchaToken
+            })
+        });
+
+        const verificationData = await recaptchaResponse.json();
+        if (!verificationData.success) {
+            return res.status(400).json({ error: "reCAPTCHA validation failed." });
+        }
+        
         await sendOtpToPhone(phone);
         res.status(201).json({ message: "OTP sent successfully." });
     } catch (error) {
