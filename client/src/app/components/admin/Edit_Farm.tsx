@@ -290,6 +290,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
         return (
           <input
             type="date"
+            max={new Date().toISOString().split("T")[0]}
             value={newSingleValue}
             className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
             onChange={handleValueChange}
@@ -311,6 +312,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
             </select>
             <input
               type="date"
+              max={new Date().toISOString().split("T")[0]}
               value={newSingleValue}
               className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
               onChange={handleValueChange}
@@ -347,6 +349,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
                 {selectedIndex !== null && (
                   <input
                     type="date"
+                    max={new Date().toISOString().split("T")[0]}
                     value={newSingleValue}
                     className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
                     onChange={handleValueChange}
@@ -375,6 +378,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
               <div className="space-y-2">
                 <input
                   type="date"
+                  max={new Date().toISOString().split("T")[0]}
                   value={newMultiValue.date || ""}
                   className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
                   onChange={(e) =>
@@ -416,6 +420,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
               <div className="space-y-2">
                 <input
                   type="date"
+                  max={new Date().toISOString().split("T")[0]}
                   value={newMultiValue.date || ""}
                   className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
                   onChange={(e) =>
@@ -457,6 +462,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
               <div className="space-y-2">
                 <input
                   type="date"
+                  max={new Date().toISOString().split("T")[0]}
                   value={newMultiValue.date || ""}
                   className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
                   onChange={(e) =>
@@ -482,6 +488,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
           <div className="space-y-2">
             <input
               type="date"
+              max={new Date().toISOString().split("T")[0]}
               value={newMultiValue.date || ""}
               className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
               onChange={(e) =>
