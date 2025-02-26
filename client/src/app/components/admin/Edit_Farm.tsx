@@ -259,7 +259,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
 
       if (res.status === 201) {
         setMessage({ text: "Data deleted successfully", type: "success" });
-        fetchFarmData(); // Refresh the data
+        fetchFarmData();
       } else {
         setMessage({ text: data.message, type: "error" });
       }
