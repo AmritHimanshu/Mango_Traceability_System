@@ -373,9 +373,9 @@ function page() {
 
       const data = await res.json();
 
-      if(res.status === 400){
+      if (res.status === 400) {
         setMessage({ text: data.error, type: "error" });
-        handleRecaptcha('');
+        handleRecaptcha("");
         if (recaptchaRef.current) {
           recaptchaRef.current.reset();
         }
@@ -521,8 +521,14 @@ function page() {
                 )}
               </div>
 
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey={`${RECAPTCHA_SITE_KEY}`}
+                onChange={handleRecaptcha}
+              />
+
               <MDBBtn
-                className="w-100 mb-4"
+                className="w-100 my-4"
                 size="sm"
                 onClick={(e) => sendOTP(e)}
               >
