@@ -8,7 +8,7 @@ import {
   ADMIN_FETCH_FARMER_FARM_DATA,
   FARMER_SAVE_FARM_DATA,
 } from "@/utils/Apis/api";
-import { FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
+import { ADMIN_FARM, FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import { Farm } from "@/utils/Types/interfaces";
 import Message from "@/app/components/common/Message";
 import Heading from "@/app/components/common/Heading";
@@ -130,7 +130,7 @@ function page() {
   }, []);
 
   const handleOnCancel = () => {
-    router.push(`${FARMS}/${id}`);
+    router.push(`${ADMIN_FARM}?farm_id=${id}`);
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
