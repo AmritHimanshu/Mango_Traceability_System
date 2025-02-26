@@ -100,8 +100,8 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
     setSelectedField(e.target.value);
     setSelectedIndex(null);
     setSelectedSubField("");
-    setNewSingleValue(""); // Reset single-field value
-    setNewMultiValue({}); // Reset multi-field value
+    setNewSingleValue("");
+    setNewMultiValue({});
   };
 
   const handleIndexChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
