@@ -523,8 +523,9 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="bg-white text-black p-5 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5">
-        <div className="text-right">
+      <div className="bg-white text-black p-3 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5 rounded-md">
+        <div className="py-2 flex items-center justify-between border-black border-b-[1px]">
+          <div className="font-bold">Edit Data</div>
           <CloseIcon
             style={{ color: "red", cursor: "pointer" }}
             onClick={() => onclick(false)}
