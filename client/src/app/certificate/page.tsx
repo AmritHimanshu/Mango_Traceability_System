@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { LoadingBarRef } from "react-top-loading-bar";
 import { useSearchParams } from "next/navigation";
-import { Farm } from "@/utils/Types/interfaces";
+import { Farm, userCert } from "@/utils/Types/interfaces";
 import dynamic from "next/dynamic";
 import { CERTIFICATE_FARM_DETAIL } from "@/utils/Apis/api";
 import { isMobile } from "@/utils/IsMobile/isMobile";
@@ -32,6 +32,7 @@ function page() {
   const farm_id = searchParams.get("farm_id");
 
   const [farmData, setFarmData] = useState<Farm>();
+  const [userData, setUserData] = useState<userCert>();
   const [isPDF, setIsPDF] = useState(false);
 
   const fetchFarmData = async () => {
@@ -59,6 +60,7 @@ function page() {
       }
 
       setFarmData(data.farm);
+      setUserData(data.user);
     } catch (error) {
       console.log("Error: ", error);
       alert(error);
@@ -372,10 +374,10 @@ function page() {
         </>
       ) : (
         <>
-          <div className="text-right">
+          <div className="mb-2 text-right">
             <CloseIcon onClick={() => setIsPDF(false)} />
           </div>
-          <Certificate farmData={farmData} farm_id={farm_id} />
+          <Certificate farmData={farmData} userData={userData} farm_id={farm_id} />
         </>
       )}
     </div>

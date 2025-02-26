@@ -1,16 +1,18 @@
 import React, { useEffect } from "react";
 import { Document, pdf } from "@react-pdf/renderer";
 import { PDFViewer } from "@react-pdf/renderer";
-import { Farm } from "@/utils/Types/interfaces";
+import { Farm, userCert } from "@/utils/Types/interfaces";
 import { saveAs } from "file-saver";
 import { isMobile } from "@/utils/IsMobile/isMobile";
 import PDFContent from "./PDFContent";
 
 function Certificate({
   farmData,
+  userData,
   farm_id,
 }: {
   farmData: Farm | undefined;
+  userData: userCert | undefined;
   farm_id: string | null;
 }) {
   useEffect(() => {
@@ -18,7 +20,11 @@ function Certificate({
       const generatePdf = async () => {
         const blob = await pdf(
           <Document>
-            <PDFContent farmData={farmData} farm_id={farm_id} />
+            <PDFContent
+              farmData={farmData}
+              userData={userData}
+              farm_id={farm_id}
+            />
           </Document>
         ).toBlob();
         saveAs(blob, `certificate_${farm_id}.pdf`);
@@ -41,7 +47,7 @@ function Certificate({
         }}
       >
         <Document>
-          <PDFContent farmData={farmData} farm_id={farm_id} />
+          <PDFContent farmData={farmData} userData={userData} farm_id={farm_id} />
         </Document>
       </PDFViewer>
     </div>

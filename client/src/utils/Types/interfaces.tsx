@@ -135,3 +135,9 @@ export type ListFarmApplicationsDataProps = {
 export type farmerHomeCardProps = {
   data: FewFarmList;
 };
+
+export type userCert = {
+  name: string;
+  email: string;
+  phone: number;
+}

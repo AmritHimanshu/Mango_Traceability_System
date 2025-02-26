@@ -1,15 +1,17 @@
 import React from "react";
 import { styles } from "./style";
-import { Farm } from "@/utils/Types/interfaces";
+import { Farm, userCert } from "@/utils/Types/interfaces";
 import { Page, Text, View } from "@react-pdf/renderer";
 import { Table, TD, TR } from "@ag-media/react-pdf-table";
 import ListFarmCertificate from "@/app/components/farmer/ListFarmCertificate";
 
 function PDFContent({
   farmData,
+  userData,
   farm_id,
 }: {
   farmData: Farm | undefined;
+  userData: userCert | undefined;
   farm_id: string | null;
 }) {
   return (
@@ -22,8 +24,8 @@ function PDFContent({
           <Text>Date</Text>
         </View>
         <View style={styles.spaceY}>
-          <Text style={styles.textBold}>{farmData?.userId.name}</Text>
-          <Text>{farmData?.userId.email}</Text>
+          <Text style={styles.textBold}>{userData?.name}</Text>
+          <Text>{userData?.email}</Text>
         </View>
       </View>
 
@@ -104,27 +106,32 @@ function PDFContent({
       </View>
 
       <View style={{ marginTop: 20 }}>
-        <Text style={{ fontWeight: "bold", marginBottom: 5 }}>Weeding Dates: </Text>
+        <Text style={{ fontWeight: "bold", marginBottom: 5 }}>
+          Weeding Dates:{" "}
+        </Text>
         <View>
           <Table style={styles.table}>
-              {farmData?.weedingDate
-                .reduce<string[][]>((acc, date, index) => {
-                  if (index % 3 === 0) acc.push([]);
-                  acc[acc.length - 1].push(date);
-                  return acc;
-                }, [])
-                .map((row, rowIndex) => (
-                  <TR
-                    key={rowIndex}
-                    className="hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
-                  >
-                    {row.map((date, index) => (
-                      <TD key={index} style={{ border: "1px solid #ccc", padding: 5 }}>
-                        {new Date(date).toISOString().split("T")[0]}
-                      </TD>
-                    ))}
-                  </TR>
-                ))}
+            {farmData?.weedingDate
+              .reduce<string[][]>((acc, date, index) => {
+                if (index % 3 === 0) acc.push([]);
+                acc[acc.length - 1].push(date);
+                return acc;
+              }, [])
+              .map((row, rowIndex) => (
+                <TR
+                  key={rowIndex}
+                  className="hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
+                >
+                  {row.map((date, index) => (
+                    <TD
+                      key={index}
+                      style={{ border: "1px solid #ccc", padding: 5 }}
+                    >
+                      {new Date(date).toISOString().split("T")[0]}
+                    </TD>
+                  ))}
+                </TR>
+              ))}
           </Table>
         </View>
       </View>
@@ -267,21 +274,25 @@ function PDFContent({
 
       <View>
         {farmData?.harvest && (
-          <Text>
-            Harvest:{" "}
+          <View style={{ marginTop: 20 }}>
             <Text>
-              <Text>Date: </Text>
+              Harvest:{" "}
               <Text>
-                {farmData?.harvest
-                  ? new Date(farmData.harvest.date).toISOString().split("T")[0]
-                  : " - "}
+                <Text>Date: </Text>
+                <Text>
+                  {farmData?.harvest
+                    ? new Date(farmData.harvest.date)
+                        .toISOString()
+                        .split("T")[0]
+                    : " - "}
+                </Text>
+              </Text>
+              <Text>
+                <Text>Yield: </Text>
+                <Text>{farmData?.harvest.yield}</Text>
               </Text>
             </Text>
-            <Text>
-              <Text>Yield: </Text>
-              <Text>{farmData?.harvest.yield}</Text>
-            </Text>
-          </Text>
+          </View>
         )}
       </View>
     </Page>
