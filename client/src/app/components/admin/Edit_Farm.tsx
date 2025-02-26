@@ -231,14 +231,22 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
   };
 
   const handleDelete = async () => {
-    if (!selectedField || selectedIndex === null) {
+    if (!selectedField) {
       setMessage({
-        text: "Please select a field and entry to delete",
+        text: "Please select a field",
         type: "error",
       });
       return;
     }
-
+  
+    if (selectedIndex === null) {
+      setMessage({
+        text: "Please select an entry to delete",
+        type: "error",
+      });
+      return;
+    }
+  
     try {
       const res = await fetch(
         `${BASE_URL}/${ADMIN_DELETE_FARM_DATA}/${farm_id}`,
@@ -251,17 +259,18 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
           body: JSON.stringify({
             field: selectedField,
             index: selectedIndex,
+            subField: selectedSubField || null,
           }),
         }
       );
-
+  
       const data = await res.json();
-
+  
       if (res.status === 201) {
         setMessage({ text: "Data deleted successfully", type: "success" });
         fetchFarmData();
       } else {
-        setMessage({ text: data.message, type: "error" });
+        setMessage({ text: data.error || "Failed to delete data", type: "error" });
       }
     } catch (error) {
       setMessage({ text: "An error occurred", type: "error" });
