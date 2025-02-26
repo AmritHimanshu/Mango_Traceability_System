@@ -251,6 +251,7 @@ function page() {
               type="date"
               id="ploughingDate"
               name="ploughingDate"
+              max={new Date().toISOString().split("T")[0]}
               value={
                 farmData.ploughingDate
                   ? new Date(farmData.ploughingDate).toISOString().split("T")[0]
@@ -268,6 +269,7 @@ function page() {
             type="date"
             id="weedingDate"
             name="weedingDate"
+            max={new Date().toISOString().split("T")[0]}
             value={weedingDate}
             className="input-tag"
             onChange={(e) => setWeedingDate(e.target.value)}
@@ -283,6 +285,7 @@ function page() {
               type="date"
               id="sowingDate"
               name="sowingDate"
+              max={new Date().toISOString().split("T")[0]}
               value={
                 farmData.sowingDate
                   ? new Date(farmData.sowingDate).toISOString().split("T")[0]
@@ -303,6 +306,7 @@ function page() {
               type="date"
               id="floweringDate"
               name="floweringDate"
+              max={new Date().toISOString().split("T")[0]}
               value={
                 farmData.floweringDate
                   ? new Date(farmData.floweringDate).toISOString().split("T")[0]
@@ -323,6 +327,7 @@ function page() {
               type="date"
               id="pheromoneTrapDate"
               name="pheromoneTrapDate"
+              max={new Date().toISOString().split("T")[0]}
               value={
                 farmData.pheromoneTrapDate
                   ? new Date(farmData.pheromoneTrapDate)
@@ -345,6 +350,7 @@ function page() {
               type="date"
               id="lureChangeDate"
               name="lureChangeDate"
+              max={new Date().toISOString().split("T")[0]}
               value={
                 farmData.lureChangeDate
                   ? new Date(farmData.lureChangeDate)
@@ -369,6 +375,7 @@ function page() {
                 type="date"
                 id="artificial"
                 name="artificial"
+                max={new Date().toISOString().split("T")[0]}
                 value={artificial}
                 className="input-tag"
                 onChange={(e) => setArtificial(e.target.value)}
@@ -380,6 +387,7 @@ function page() {
                 type="date"
                 id="natural"
                 name="natural"
+                max={new Date().toISOString().split("T")[0]}
                 value={natural}
                 className="input-tag"
                 onChange={(e) => setNatural(e.target.value)}
@@ -397,6 +405,7 @@ function page() {
                 type="date"
                 id="fertilizerDate"
                 name="fertilizerDate"
+                max={new Date().toISOString().split("T")[0]}
                 value={fertilizerApplications.date}
                 className="input-tag"
                 onChange={(e) =>
@@ -435,6 +444,7 @@ function page() {
                 type="date"
                 id="pesticideDate"
                 name="pesticideDate"
+                max={new Date().toISOString().split("T")[0]}
                 value={pesticideApplications.date}
                 className="input-tag"
                 onChange={(e) =>
@@ -473,6 +483,7 @@ function page() {
                 type="date"
                 id="baggingDate"
                 name="baggingDate"
+                max={new Date().toISOString().split("T")[0]}
                 value={bagging.date}
                 className="input-tag"
                 onChange={(e) =>
@@ -511,6 +522,7 @@ function page() {
                 type="date"
                 id="specialCareDate"
                 name="specialCareDate"
+                max={new Date().toISOString().split("T")[0]}
                 value={specialCare.date}
                 className="input-tag"
                 onChange={(e) =>
@@ -550,6 +562,7 @@ function page() {
                   type="date"
                   id="harvestDate"
                   name="harvestDate"
+                  max={new Date().toISOString().split("T")[0]}
                   value={harvest.date}
                   className="input-tag"
                   onChange={(e) =>
