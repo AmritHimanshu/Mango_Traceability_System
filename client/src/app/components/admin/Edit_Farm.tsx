@@ -195,7 +195,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
 
       const data = await res.json();
 
-      if (res.status === 400) {
+      if (res.status === 400 || res.status === 404) {
         setMessage({ text: data.error, type: "error" });
         const error = new Error(data.error);
         throw error;
@@ -238,7 +238,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
       });
       return;
     }
-  
+
     if (selectedIndex === null) {
       setMessage({
         text: "Please select an entry to delete",
@@ -246,7 +246,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
       });
       return;
     }
-  
+
     try {
       const res = await fetch(
         `${BASE_URL}/${ADMIN_DELETE_FARM_DATA}/${farm_id}`,
@@ -263,17 +263,41 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
           }),
         }
       );
-  
+
       const data = await res.json();
-  
-      if (res.status === 201) {
-        setMessage({ text: "Data deleted successfully", type: "success" });
-        fetchFarmData();
-      } else {
-        setMessage({ text: data.error || "Failed to delete data", type: "error" });
+
+      if (res.status === 400 || res.status === 404) {
+        setMessage({ text: data.error, type: "error" });
+        const error = new Error(data.error);
+        throw error;
       }
-    } catch (error) {
-      setMessage({ text: "An error occurred", type: "error" });
+
+      if (res.status !== 201 && res.status !== 500) {
+        router.push(LOGIN);
+        if (loadingBarRef.current) {
+          loadingBarRef.current.complete();
+        }
+        return;
+      }
+
+      if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
+        router.push(`${ADMIN_FARM}?farm_id=${farm_id}`);
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      setMessage({ text: data.message, type: "success" });
+    } catch (error) {}
+
+    onclick(false);
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
     }
   };
 
@@ -347,12 +371,13 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
                   onChange={handleIndexChange}
                 >
                   <option value="">Select a date to edit</option>
-                  {farmData.irrigationDates[selectedSubField as keyof typeof farmData.irrigationDates].map((date, index) => (
-                      <option key={index} value={index}>
-                        {new Date(date).toISOString().split("T")[0]}
-                      </option>
-                    )
-                  )}
+                  {farmData.irrigationDates[
+                    selectedSubField as keyof typeof farmData.irrigationDates
+                  ].map((date, index) => (
+                    <option key={index} value={index}>
+                      {new Date(date).toISOString().split("T")[0]}
+                    </option>
+                  ))}
                 </select>
 
                 {selectedIndex !== null && (
