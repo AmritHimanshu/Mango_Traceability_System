@@ -5,11 +5,7 @@ import { PendingUserTableProps } from "@/utils/Types/interfaces";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-function PendingUserTable({
-  idx,
-  user,
-  authenticateReq,
-}: PendingUserTableProps) {
+function PendingUserTable({ idx, user, confirmReq }: PendingUserTableProps) {
   const [selectedButton, setSelectedButton] = useState("");
 
   const [selectRole, setSelectRole] = useState("");
@@ -22,7 +18,7 @@ function PendingUserTable({
   ) => {
     try {
       setSelectedButton(buttonText);
-      await authenticateReq(id, role, status);
+      confirmReq(id, role, status);
       setSelectedButton("");
       setSelectRole("");
     } catch (error) {
@@ -56,7 +52,10 @@ function PendingUserTable({
         })}
       </td>
       <td className="px-4 py-3 align-middle">
-        <select className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200">
+        <select
+          className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+          onChange={(e) => setSelectRole(e.target.value)}
+        >
           <option value="">Select role</option>
           <option value="Manager">Manager</option>
           <option value="Farmer">Farmer</option>
