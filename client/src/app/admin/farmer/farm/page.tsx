@@ -5,7 +5,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ADMIN_FETCH_FARMER_FARM_DATA } from "@/utils/Apis/api";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
-import { CERTIFICATE, FARMER, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
+import {
+  ADMIN_FARM,
+  CERTIFICATE,
+  FARMER,
+  LOGIN,
+  NOT_FOUND,
+} from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
 import QRCode from "react-qr-code";
 import { Farm } from "@/utils/Types/interfaces";
@@ -92,6 +98,10 @@ function page() {
     fetchFarmData();
   }, []);
 
+  const handleOnAddData = () => {
+    router.push(`${ADMIN_FARM}/edit?farm_id=${farm_id}`);
+  };
+
   return (
     <div className="page-main-div relative">
       <CustomLoadingBar ref={loadingBarRef} />
@@ -104,7 +114,13 @@ function page() {
 
       {farmData && !isQRCode ? (
         <div className="space-y-5 lg:space-y-10 my-5">
-          <div className="text-right">
+          <div className="space-x-2 text-right">
+            <button
+              className="!w-[130px] md:!w-[150px] lg:!w-[200px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+              onClick={() => handleOnAddData()}
+            >
+              Add data
+            </button>
             <button
               className="!w-[130px] md:!w-[150px] lg:!w-[200px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
               onClick={() => setIsEdit(true)}
