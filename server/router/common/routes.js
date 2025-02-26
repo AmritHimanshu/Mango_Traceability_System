@@ -46,12 +46,26 @@ router.post('/api/register-user', async (req, res) => {
 });
 
 router.post('/api/signin-user', async (req, res) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
-        return res.status(422).json({ error: "Fill all the fields" });
+    const { email, password, capchaToken } = req.body;
+    if (!email || !password || !capchaToken) {
+        return res.status(422).json({ error: "Fill all the fields and complete the captcha." });
     }
 
     try {
+        const recaptchaResponse = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+                secret: process.env.RECAPTCHA_SECRET_KEY,
+                response: capchaToken
+            })
+        });
+
+        const verificationData = await recaptchaResponse.json();
+        if (!verificationData.success) {
+            return res.status(400).json({ error: "reCAPTCHA validation failed." });
+        }
+
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(401).json({ error: "Incorrect credentials" });

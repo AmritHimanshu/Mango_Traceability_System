@@ -17,9 +17,12 @@ import {
   MDBCardBody,
   MDBInput,
 } from "mdb-react-ui-kit";
+import ReCAPTCHA from "react-google-recaptcha";
+import useRecaptcha from "@/utils/Services/useRecaptcha";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+  const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
 
@@ -31,6 +34,7 @@ function page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState({ text: "", type: "" });
+  const { capchaToken, recaptchaRef, handleRecaptcha } = useRecaptcha();
 
   const logOut = async () => {
     try {
@@ -85,6 +89,14 @@ function page() {
       return;
     }
 
+    if (!capchaToken) {
+      setMessage({ text: "Complete the captcha.", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
+      return;
+    }
+
     if (loadingBarRef.current) {
       loadingBarRef.current.continuousStart();
     }
@@ -99,10 +111,23 @@ function page() {
         body: JSON.stringify({
           email,
           password,
+          capchaToken,
         }),
       });
 
       const data = await res.json();
+
+      if(res.status === 400){
+        setMessage({ text: data.error, type: "error" });
+        handleRecaptcha('');
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      recaptchaRef.current?.reset();
 
       if (res.status !== 201) {
         setMessage({ text: data.error, type: "error" });
@@ -113,7 +138,6 @@ function page() {
       dispatch(setUserState(data));
       router.push("/");
 
-      // setMessage({ text: "Successfully signed in", type: "success" });
     } catch (error) {}
 
     setTimeout(() => {
@@ -179,8 +203,14 @@ function page() {
               onChange={(e) => setPassword(e.target.value)}
             />
 
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey={`${RECAPTCHA_SITE_KEY}`}
+              onChange={handleRecaptcha}
+            />
+
             <MDBBtn
-              className="w-100 mb-4"
+              className="w-100 my-4"
               size="sm"
               onClick={(e) => handleFormData(e)}
             >
