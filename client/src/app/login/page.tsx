@@ -17,6 +17,7 @@ import {
   MDBCardBody,
   MDBInput,
 } from "mdb-react-ui-kit";
+import reCAPTCHA from "react-google-recaptcha";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
