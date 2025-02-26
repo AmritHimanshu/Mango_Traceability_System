@@ -5,8 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import {
+    ADMIN_ADD_FARM_DATA,
   ADMIN_FETCH_FARMER_FARM_DATA,
-  FARMER_SAVE_FARM_DATA,
 } from "@/utils/Apis/api";
 import { ADMIN_FARM, FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import { Farm } from "@/utils/Types/interfaces";
@@ -179,7 +179,7 @@ function page() {
         loadingBarRef.current.continuousStart();
       }
 
-      const res = await fetch(`${BASE_URL}/${FARMER_SAVE_FARM_DATA}/${id}`, {
+      const res = await fetch(`${BASE_URL}/${ADMIN_ADD_FARM_DATA}/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -211,7 +211,7 @@ function page() {
       }
 
       setMessage({ text: data.message, type: "success" });
-      router.push(`${FARMS}/${id}`);
+      router.push(`${ADMIN_FARM}?farm_id=${id}`);
     } catch (error) {}
 
     setIsSave(false);

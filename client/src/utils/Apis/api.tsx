@@ -22,6 +22,7 @@ export const ADMIN_FETCH_FARMER_FARM_DATA = "admin/api/fetch-farmer-farm-data";
 // Admin PUT APIs
 export const ADMIN_AUTHENTICATE_USER = "admin/api/authenticate-user";
 export const ADMIN_EDIT_FARM_DATA = "admin/api/edit-farm-data";
+export const ADMIN_ADD_FARM_DATA = "admin/api/add-farm-data";
 
 // Farmer DELETE APIs
 export const ADMIN_DELETE_FARM_DATA = "admin/api/delete-farm-data";
