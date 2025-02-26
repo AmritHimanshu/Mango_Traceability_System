@@ -38,6 +38,12 @@ function page() {
   const [noOfPendingRequests, setNoOfPendingRequests] = useState(0);
   const [noOfRejectedRequests, sestNoOfRejectedRequests] = useState(0);
   const [pendingRequests, setPendingRequests] = useState<User[]>([]);
+  const [isConfirm, setIsConfirm] = useState(false);
+  const [parameter, setParameter] = useState({
+    id: "",
+    role: "",
+    status: false,
+  });
 
   const fetchNoOfUsers = async () => {
     if (loadingBarRef.current) {
@@ -193,8 +199,26 @@ function page() {
     }
   }, []);
 
+  const confirmReq = (id: string, role: string, status: boolean) => {
+    setIsConfirm(true);
+    setParameter({
+      id: id,
+      role: role,
+      status: status,
+    });
+  };
+
+  const handleOnCancel = () => {
+    setIsConfirm(false);
+    setParameter({
+      id: "",
+      role: "",
+      status: false,
+    });
+  };
+
   return (
-    <div className="page-main-div">
+    <div className="page-main-div relative">
       <CustomLoadingBar ref={loadingBarRef} />
 
       {message.text && message.type && (
@@ -268,7 +292,7 @@ function page() {
                     key={index}
                     idx={index}
                     user={user}
-                    authenticateReq={authenticateReq}
+                    confirmReq={confirmReq}
                   />
                 ))}
               </tbody>
@@ -282,6 +306,41 @@ function page() {
             >
               view all
             </span>
+          </div>
+        </div>
+      )}
+
+      {isConfirm && (
+        <div className="fixed z-[9999] top-0 left-0 w-full h-full bg-neutral-900 bg-opacity-80 flex items-center">
+          <div className="bg-white p-3 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5 rounded-md">
+            <div>
+              <div className="text-sm md:text-xl">
+                Are you sure, you want to save?
+              </div>
+              <div className="text-[10px] md:text-[13px]">
+                You will not be able to edit/change after saving!
+              </div>
+            </div>
+            <div className="text-end text-[11px] md:text-lg space-x-2">
+              <button
+                className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                onClick={() => handleOnCancel()}
+              >
+                Cancel
+              </button>
+              <button
+                className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                onClick={() =>
+                  authenticateReq(
+                    parameter.id,
+                    parameter.role,
+                    parameter.status
+                  )
+                }
+              >
+                Confirm
+              </button>
+            </div>
           </div>
         </div>
       )}
