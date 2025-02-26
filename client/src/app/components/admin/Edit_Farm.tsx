@@ -135,9 +135,9 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
       "bagging",
       "specialCare",
     ].includes(selectedField);
-  
+
     const isObjectField = selectedField === "harvest";
-  
+
     if (isArrayField && selectedIndex === null) {
       setMessage({
         text: "Please select an entry to update",
@@ -149,7 +149,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
       }, 2000);
       return;
     }
-  
+
     if (isObjectField && (!newMultiValue.date || !newMultiValue.yield)) {
       setMessage({
         text: "Please fill all fields for the harvest entry",
@@ -161,7 +161,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
       }, 2000);
       return;
     }
-  
+
     if (!isArrayField && !isObjectField && !newSingleValue) {
       setMessage({
         text: "Please enter a value",
@@ -185,7 +185,8 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
           credentials: "include",
           body: JSON.stringify({
             field: selectedField,
-            value: isArrayField || isObjectField ? newMultiValue : newSingleValue,
+            value:
+              isArrayField || isObjectField ? newMultiValue : newSingleValue,
             index: selectedIndex,
             subField: selectedSubField,
           }),
@@ -327,12 +328,32 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
               <option value="artificial">Artificial</option>
               <option value="natural">Natural</option>
             </select>
-            <input
-              type="date"
-              value={newSingleValue}
-              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
-              onChange={handleValueChange}
-            />
+
+            {selectedSubField && (
+              <>
+                <select
+                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                  onChange={handleIndexChange}
+                >
+                  <option value="">Select a date to edit</option>
+                  {farmData.irrigationDates[selectedSubField as keyof typeof farmData.irrigationDates].map((date, index) => (
+                      <option key={index} value={index}>
+                        {new Date(date).toISOString().split("T")[0]}
+                      </option>
+                    )
+                  )}
+                </select>
+
+                {selectedIndex !== null && (
+                  <input
+                    type="date"
+                    value={newSingleValue}
+                    className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                    onChange={handleValueChange}
+                  />
+                )}
+              </>
+            )}
           </>
         );
       case "fertilizerApplications":
