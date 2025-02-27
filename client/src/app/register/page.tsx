@@ -424,7 +424,7 @@ function page() {
             />
           </div>
 
-          <div className="bg-primarycColor text-white flex-grow flex items-center overflow-y-scroll">
+          <div className="bg-primarycColor text-white flex-grow flex items-center overflow-y-auto">
             {!isOtp ? (
               <>
                 <div className="p-3 w-full xl:w-[400px] m-auto space-y-5">
@@ -554,7 +554,49 @@ function page() {
               </>
             ) : (
               <>
-                
+                <div className="p-3 w-full xl:w-[400px] m-auto space-y-5">
+                  <div className="mb-3 text-sm">
+                    Enter the One Time Password (OTP) sent to your mobile
+                  </div>
+                  <hr />
+                  <div className="space-y-2">
+                    <label htmlFor="name">Enter OTP</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={phoneOtp}
+                      required
+                      onChange={(e) => setPhoneOtp(e.target.value)}
+                      className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <button
+                      className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-[#6b7280] bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                      onClick={() => reSendOTP()}
+                    >
+                      RESEND OTP
+                    </button>
+
+                    {!flagPhone ? (
+                      <button
+                        className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                        onClick={() => verifyOtp()}
+                      >
+                        VERIFY
+                      </button>
+                    ) : (
+                      <button
+                        className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                        disabled
+                      >
+                        VERIFYING...
+                      </button>
+                    )}
+                  </div>
+                </div>
               </>
             )}
           </div>
