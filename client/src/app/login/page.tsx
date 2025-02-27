@@ -153,14 +153,14 @@ function page() {
 
   return (
     <>
-      <div className="p-5 w-full h-[100vh] overflow-y-auto relative">
+      <div className="p-5 w-full h-[100vh] overflow-y-auto relative xl:border-2 border-red-500">
         <CustomLoadingBar ref={loadingBarRef} />
 
         {message.text && message.type && (
           <Message text={message.text} type={message.type} />
         )}
 
-        <div className="border-4 border-primarycColor rounded-md w-[calc(100%-10%)] m-auto h-full flex">
+        <div className="border-4 border-primarycColor rounded-md w-[calc(100%-10%)] m-auto  h-full flex">
           <div className="w-[40%]">
             <Image
               src={image}
