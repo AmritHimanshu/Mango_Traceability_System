@@ -19,7 +19,6 @@ import {
   MDBCardBody,
   MDBInput,
 } from "mdb-react-ui-kit";
-import image from "@/app/assets/mango_login_img.jpg";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -240,11 +239,12 @@ function page() {
         )}
 
         <div className="border-4 border-primarycColor rounded-md w-[calc(100%-10%)] m-auto h-full flex">
-          <div className="w-[40%] hidden xl:block">
+          <div className="w-[50%] hidden xl:block relative h-full">
             <Image
-              src={image}
+              src="/assets/image.jpeg"
               alt=""
-              className="w-full h-full object-contain"
+              fill
+              className="object-fill"
             />
           </div>
 
