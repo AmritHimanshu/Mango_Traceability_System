@@ -183,6 +183,7 @@ function page() {
                   className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
                 />
               </div>
+
               <div className="space-y-2">
                 <label htmlFor="password">Password</label>
                 <input
@@ -196,11 +197,13 @@ function page() {
                 />
               </div>
 
-              <ReCAPTCHA
-                ref={recaptchaRef}
-                sitekey={`${RECAPTCHA_SITE_KEY}`}
-                onChange={handleRecaptcha}
-              />
+              <div className="flex items-center justify-center">
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey={`${RECAPTCHA_SITE_KEY}`}
+                  onChange={handleRecaptcha}
+                />
+              </div>
 
               <div className="text-center">
                 <button

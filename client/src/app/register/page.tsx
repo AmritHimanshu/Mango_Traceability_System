@@ -424,43 +424,139 @@ function page() {
             />
           </div>
 
-          <div className="bg-primarycColor text-white flex-grow flex items-center">
-            <div className="p-3 w-full xl:w-[400px] m-auto space-y-5">
-              <div className="mt-2 text-xl text-center">Registration</div>
-              <div className="space-y-2">
-                <label htmlFor="name">Email</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  // onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
-                />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  // onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
-                />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  required
-                  // onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
-                />
-              </div>
-            </div>
+          <div className="bg-primarycColor text-white flex-grow flex items-center overflow-y-scroll">
+            {!isOtp ? (
+              <>
+                <div className="p-3 w-full xl:w-[400px] m-auto space-y-5">
+                  <div className="mt-2 text-xl text-center">Registration</div>
+                  <div className="space-y-2">
+                    <label htmlFor="name">Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      required
+                      onChange={(e) => handleFormState(e)}
+                      className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="email">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      required
+                      onChange={(e) => handleFormState(e)}
+                      className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="phone">Phone</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      required
+                      onChange={(e) => handleFormState(e)}
+                      className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="password">Password</label>
+                    <input
+                      type="password"
+                      id="password"
+                      name="password"
+                      value={formData.password}
+                      required
+                      onChange={(e) => {
+                        handleFormState(e);
+                        handlePasswordCheck(e);
+                      }}
+                      className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                    />
+                    {errorMessage && (
+                      <div className="text-yellow-300 text-[12px] text-start">
+                        {errorMessage}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="confirm_password">Confirm Password</label>
+                    <div className="flex items-center justify-between space-x-2 w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500">
+                      <input
+                        type={`${
+                          isVisibleConfirmPassword ? "text" : "password"
+                        }`}
+                        id="confirm_password"
+                        name="confirm_password"
+                        value={formData.confirm_password}
+                        required
+                        onChange={(e) => handleFormState(e)}
+                        className="outline-0"
+                      />
+                      {isVisibleConfirmPassword ? (
+                        <VisibilityIcon
+                          className="cursor-pointer"
+                          onClick={() =>
+                            setIsVisibleConfirmPassword(
+                              !isVisibleConfirmPassword
+                            )
+                          }
+                        />
+                      ) : (
+                        <VisibilityOffIcon
+                          className="cursor-pointer"
+                          onClick={() =>
+                            setIsVisibleConfirmPassword(
+                              !isVisibleConfirmPassword
+                            )
+                          }
+                        />
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-center">
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      sitekey={`${RECAPTCHA_SITE_KEY}`}
+                      onChange={handleRecaptcha}
+                    />
+                  </div>
+
+                  <div className="text-center">
+                    <button
+                      className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                      onClick={(e) => sendOTP(e)}
+                    >
+                      Register
+                    </button>
+                  </div>
+
+                  <div className="w-[100%] my-5 text-[11px] md:text-[15px] text-center">
+                    Already have an account?{" "}
+                    <Link href="/login">
+                      <span className="text-yellow-400 hover:underline">
+                        Sign in.
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                
+              </>
+            )}
           </div>
         </div>
       </div>
