@@ -425,8 +425,41 @@ function page() {
           </div>
 
           <div className="bg-primarycColor text-white flex-grow flex items-center">
-            <div  className="p-3 w-full xl:w-[400px] m-auto space-y-5">
-
+            <div className="p-3 w-full xl:w-[400px] m-auto space-y-5">
+              <div className="mt-2 text-xl text-center">Registration</div>
+              <div className="space-y-2">
+                <label htmlFor="name">Email</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  // onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  // onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  required
+                  // onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                />
+              </div>
             </div>
           </div>
         </div>

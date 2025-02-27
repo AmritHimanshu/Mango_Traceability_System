@@ -174,12 +174,13 @@ function page() {
               <div className="space-y-2">
                 <label htmlFor="email">Email</label>
                 <input
-                  type="text"
+                  type="email"
                   id="email"
                   name="email"
+                  value={email}
                   required
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                  className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
                 />
               </div>
               <div className="space-y-2">
@@ -188,9 +189,10 @@ function page() {
                   type="password"
                   id="password"
                   name="password"
+                  value={password}
                   required
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                  className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
                 />
               </div>
 
