@@ -93,32 +93,17 @@ function page() {
             <Map coordinates={farmData.geoFenceData} height="300px" />
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <div className="font-bold">ID:</div>
-                <div className="text-sm">{farmData.uniqueID}</div>
-              </div>
-              {farmData.area && (
+            <div className="flex items-center space-x-3">
+              <div className="font-bold">ID:</div>
+              <div className="text-sm">{farmData.uniqueID}</div>
+            </div>
+            {farmData.area && (
               <div className="flex items-center space-x-3">
                 <div className="font-bold">Area:</div>
                 <div>{farmData.area.toFixed(2)} sq. m</div>
               </div>
             )}
-            </div>
-
-          {/* <div className="bg-cardBackground p-3 rounded-md">
-            <div className="flex items-center space-x-3">
-              <div className="font-bold">Farmer Name: </div>
-              <div>{farmData.userId.name}</div>
-            </div>
-            <div className="flex items-center space-x-3">
-              <div className="font-bold">Farmer Email: </div>
-              <div>{farmData.userId.email}</div>
-            </div>
-            <div className="flex items-center space-x-3">
-              <div className="font-bold">Farmer Phone: </div>
-              <div>{farmData.userId.phone}</div>
-            </div>
-          </div> */}
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
             {farmData.farm && (
@@ -136,7 +121,7 @@ function page() {
             )}
 
             {farmData.ploughingDate && (
-              <div className="flex items-start space-x-3">
+              <div className="flex items-star items-center space-x-3">
                 <div className="font-bold">Ploughing Date:</div>
                 <div>
                   {new Date(farmData.ploughingDate).toISOString().split("T")[0]}
@@ -213,156 +198,161 @@ function page() {
             )}
           </div>
 
-          {farmData.weedingDate.length > 0 && (
-            <div className="flex items-start flex-col space-y-3">
-              <div className="font-bold">Weeding Date:</div>
-              <>
-                <table className="w-full border-collapse border border-gray-300">
-                  <thead></thead>
-                  <tbody>
-                    {farmData.weedingDate
-                      .reduce<string[][]>((acc, date, index) => {
-                        if (index % 3 === 0) acc.push([]);
-                        acc[acc.length - 1].push(date);
-                        return acc;
-                      }, [])
-                      .map((row, rowIndex) => (
-                        <tr
-                          key={rowIndex}
-                          className="text-center hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
-                        >
-                          {row.map((date, index) => (
-                            <td
-                              key={index}
-                              className="border border-gray-300 p-2"
-                            >
-                              {new Date(date).toISOString().split("T")[0]}
-                            </td>
-                          ))}
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-              </>
-            </div>
-          )}
-
-          {(farmData.irrigationDates.artificial.length > 0 ||
-            farmData.irrigationDates.natural.length > 0) && (
-            <div className="flex items-start flex-col space-y-3">
-              <div className="font-bold">Irrigation Dates:</div>
-              <>
-                <table className="w-full border-collapse border border-gray-300">
-                  <thead>
-                    <tr className="bg-gray-100">
-                      {farmData.irrigationDates.artificial.length > 0 && (
-                        <th className="border border-gray-300 px-4 py-2">
-                          Artificial
-                        </th>
-                      )}
-                      {farmData.irrigationDates.natural.length > 0 && (
-                        <th className="border border-gray-300 px-4 py-2">
-                          Natural
-                        </th>
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {(() => {
-                      const maxLength = Math.max(
-                        farmData.irrigationDates.artificial.length,
-                        farmData.irrigationDates.natural.length
-                      );
-
-                      return Array.from({ length: maxLength }).map(
-                        (_, index) => (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            {farmData.weedingDate.length > 0 && (
+              <div className="flex items-start flex-col space-y-3">
+                <div className="font-bold">Weeding Date:</div>
+                <>
+                  <table className="w-full border-collapse border border-gray-300">
+                    <thead></thead>
+                    <tbody>
+                      {farmData.weedingDate
+                        .reduce<string[][]>((acc, date, index) => {
+                          if (index % 3 === 0) acc.push([]);
+                          acc[acc.length - 1].push(date);
+                          return acc;
+                        }, [])
+                        .map((row, rowIndex) => (
                           <tr
-                            key={index}
-                            className="hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
+                            key={rowIndex}
+                            className="text-center hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
                           >
-                            {farmData.irrigationDates.artificial.length > 0 && (
-                              <td className="border border-gray-300 px-4 py-2">
-                                {farmData.irrigationDates.artificial[index]
-                                  ? new Date(
-                                      farmData.irrigationDates.artificial[index]
-                                    )
-                                      .toISOString()
-                                      .split("T")[0]
-                                  : ""}
+                            {row.map((date, index) => (
+                              <td
+                                key={index}
+                                className="border border-gray-300 p-2"
+                              >
+                                {new Date(date).toISOString().split("T")[0]}
                               </td>
-                            )}
-                            {farmData.irrigationDates.natural.length > 0 && (
-                              <td className="border border-gray-300 px-4 py-2">
-                                {farmData.irrigationDates.natural[index]
-                                  ? new Date(
-                                      farmData.irrigationDates.natural[index]
-                                    )
-                                      .toISOString()
-                                      .split("T")[0]
-                                  : ""}
-                              </td>
-                            )}
+                            ))}
                           </tr>
-                        )
-                      );
-                    })()}
-                  </tbody>
-                </table>
-              </>
-            </div>
-          )}
+                        ))}
+                    </tbody>
+                  </table>
+                </>
+              </div>
+            )}
 
-          {farmData.fertilizerApplications.length > 0 && (
-            <div className="flex items-start flex-col space-y-3">
-              <div className="font-bold">Fertilizer Application:</div>
-              <ListFarmApplicationsData
-                data={farmData.fertilizerApplications}
-                columns={[
-                  { header: "Date", key: "date" },
-                  { header: "Volume (L)", key: "volume" },
-                ]}
-              />
-            </div>
-          )}
+            {(farmData.irrigationDates.artificial.length > 0 ||
+              farmData.irrigationDates.natural.length > 0) && (
+              <div className="flex items-start flex-col space-y-3">
+                <div className="font-bold">Irrigation Dates:</div>
+                <>
+                  <table className="w-full border-collapse border border-gray-300">
+                    <thead>
+                      <tr className="bg-gray-100">
+                        {farmData.irrigationDates.artificial.length > 0 && (
+                          <th className="border border-gray-300 px-4 py-2">
+                            Artificial
+                          </th>
+                        )}
+                        {farmData.irrigationDates.natural.length > 0 && (
+                          <th className="border border-gray-300 px-4 py-2">
+                            Natural
+                          </th>
+                        )}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(() => {
+                        const maxLength = Math.max(
+                          farmData.irrigationDates.artificial.length,
+                          farmData.irrigationDates.natural.length
+                        );
 
-          {farmData.pesticideApplications.length > 0 && (
-            <div className="flex items-start flex-col space-y-3">
-              <div className="font-bold">Pesticide Application:</div>
-              <ListFarmApplicationsData
-                data={farmData.pesticideApplications}
-                columns={[
-                  { header: "Date", key: "date" },
-                  { header: "Volume (L)", key: "volume" },
-                ]}
-              />
-            </div>
-          )}
+                        return Array.from({ length: maxLength }).map(
+                          (_, index) => (
+                            <tr
+                              key={index}
+                              className="hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
+                            >
+                              {farmData.irrigationDates.artificial.length >
+                                0 && (
+                                <td className="border border-gray-300 px-4 py-2">
+                                  {farmData.irrigationDates.artificial[index]
+                                    ? new Date(
+                                        farmData.irrigationDates.artificial[
+                                          index
+                                        ]
+                                      )
+                                        .toISOString()
+                                        .split("T")[0]
+                                    : ""}
+                                </td>
+                              )}
+                              {farmData.irrigationDates.natural.length > 0 && (
+                                <td className="border border-gray-300 px-4 py-2">
+                                  {farmData.irrigationDates.natural[index]
+                                    ? new Date(
+                                        farmData.irrigationDates.natural[index]
+                                      )
+                                        .toISOString()
+                                        .split("T")[0]
+                                    : ""}
+                                </td>
+                              )}
+                            </tr>
+                          )
+                        );
+                      })()}
+                    </tbody>
+                  </table>
+                </>
+              </div>
+            )}
 
-          {farmData.bagging.length > 0 && (
-            <div className="flex items-start flex-col space-y-3">
-              <div className="font-bold">Bagging:</div>
-              <ListFarmApplicationsData
-                data={farmData.bagging}
-                columns={[
-                  { header: "Date", key: "date" },
-                  { header: "Quantity", key: "quantity" },
-                ]}
-              />
-            </div>
-          )}
+            {farmData.fertilizerApplications.length > 0 && (
+              <div className="flex items-start flex-col space-y-3">
+                <div className="font-bold">Fertilizer Application:</div>
+                <ListFarmApplicationsData
+                  data={farmData.fertilizerApplications}
+                  columns={[
+                    { header: "Date", key: "date" },
+                    { header: "Volume (L)", key: "volume" },
+                  ]}
+                />
+              </div>
+            )}
 
-          {farmData.specialCare.length > 0 && (
-            <div className="flex items-start flex-col space-y-3">
-              <div className="font-bold">Special care:</div>
-              <ListFarmApplicationsData
-                data={farmData.specialCare}
-                columns={[
-                  { header: "Date", key: "date" },
-                  { header: "Name", key: "name" },
-                ]}
-              />
-            </div>
-          )}
+            {farmData.pesticideApplications.length > 0 && (
+              <div className="flex items-start flex-col space-y-3">
+                <div className="font-bold">Pesticide Application:</div>
+                <ListFarmApplicationsData
+                  data={farmData.pesticideApplications}
+                  columns={[
+                    { header: "Date", key: "date" },
+                    { header: "Volume (L)", key: "volume" },
+                  ]}
+                />
+              </div>
+            )}
+
+            {farmData.bagging.length > 0 && (
+              <div className="flex items-start flex-col space-y-3">
+                <div className="font-bold">Bagging:</div>
+                <ListFarmApplicationsData
+                  data={farmData.bagging}
+                  columns={[
+                    { header: "Date", key: "date" },
+                    { header: "Quantity", key: "quantity" },
+                  ]}
+                />
+              </div>
+            )}
+
+            {farmData.specialCare.length > 0 && (
+              <div className="flex items-start flex-col space-y-3">
+                <div className="font-bold">Special care:</div>
+                <ListFarmApplicationsData
+                  data={farmData.specialCare}
+                  columns={[
+                    { header: "Date", key: "date" },
+                    { header: "Name", key: "name" },
+                  ]}
+                />
+              </div>
+            )}
+          </div>
 
             <button
               onClick={handleDownload}
