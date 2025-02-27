@@ -311,7 +311,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
           <input
             type="text"
             value={newSingleValue}
-            className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+            className="input-tag"
             onChange={handleValueChange}
           />
         );
@@ -325,7 +325,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
             type="date"
             max={new Date().toISOString().split("T")[0]}
             value={newSingleValue}
-            className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+            className="input-tag"
             onChange={handleValueChange}
           />
         );
@@ -333,7 +333,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
         return (
           <>
             <select
-              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              className="input-tag"
               onChange={handleIndexChange}
             >
               <option value="">Select a date to edit/delete</option>
@@ -347,7 +347,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
               type="date"
               max={new Date().toISOString().split("T")[0]}
               value={newSingleValue}
-              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              className="input-tag"
               onChange={handleValueChange}
             />
           </>
@@ -356,7 +356,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
         return (
           <>
             <select
-              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              className="input-tag"
               onChange={handleSubFieldChange}
             >
               <option value="">Select a sub-field</option>
@@ -367,7 +367,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
             {selectedSubField && (
               <>
                 <select
-                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                  className="input-tag"
                   onChange={handleIndexChange}
                 >
                   <option value="">Select a date to edit</option>
@@ -385,7 +385,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
                     type="date"
                     max={new Date().toISOString().split("T")[0]}
                     value={newSingleValue}
-                    className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                    className="input-tag"
                     onChange={handleValueChange}
                   />
                 )}
@@ -398,7 +398,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
         return (
           <>
             <select
-              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              className="input-tag"
               onChange={handleIndexChange}
             >
               <option value="">Select an entry to edit/delete</option>
@@ -414,7 +414,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
                   type="date"
                   max={new Date().toISOString().split("T")[0]}
                   value={newMultiValue.date || ""}
-                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                  className="input-tag"
                   onChange={(e) =>
                     setNewMultiValue({ ...newMultiValue, date: e.target.value })
                   }
@@ -423,7 +423,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
                 <input
                   type="number"
                   value={newMultiValue.volume || ""}
-                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                  className="input-tag"
                   onChange={(e) =>
                     setNewMultiValue({
                       ...newMultiValue,
@@ -440,7 +440,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
         return (
           <>
             <select
-              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              className="input-tag"
               onChange={handleIndexChange}
             >
               <option value="">Select an entry to edit/delete</option>
@@ -456,7 +456,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
                   type="date"
                   max={new Date().toISOString().split("T")[0]}
                   value={newMultiValue.date || ""}
-                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                  className="input-tag"
                   onChange={(e) =>
                     setNewMultiValue({ ...newMultiValue, date: e.target.value })
                   }
@@ -465,7 +465,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
                 <input
                   type="number"
                   value={newMultiValue.quantity || ""}
-                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                  className="input-tag"
                   onChange={(e) =>
                     setNewMultiValue({
                       ...newMultiValue,
@@ -482,7 +482,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
         return (
           <>
             <select
-              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              className="input-tag"
               onChange={handleIndexChange}
             >
               <option value="">Select an entry to edit/delete</option>
@@ -498,7 +498,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
                   type="date"
                   max={new Date().toISOString().split("T")[0]}
                   value={newMultiValue.date || ""}
-                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                  className="input-tag"
                   onChange={(e) =>
                     setNewMultiValue({ ...newMultiValue, date: e.target.value })
                   }
@@ -507,7 +507,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
                 <input
                   type="text"
                   value={newMultiValue.name || ""}
-                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                  className="input-tag"
                   onChange={(e) =>
                     setNewMultiValue({ ...newMultiValue, name: e.target.value })
                   }
@@ -524,7 +524,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
               type="date"
               max={new Date().toISOString().split("T")[0]}
               value={newMultiValue.date || ""}
-              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              className="input-tag"
               onChange={(e) =>
                 setNewMultiValue({ ...newMultiValue, date: e.target.value })
               }
@@ -533,7 +533,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
             <input
               type="number"
               value={newMultiValue.yield || ""}
-              className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+              className="input-tag"
               onChange={(e) =>
                 setNewMultiValue({
                   ...newMultiValue,
@@ -568,7 +568,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
         <div className="space-y-2">
           <label>Select Field:</label>
           <select
-            className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+            className="input-tag"
             onChange={handleFieldChange}
           >
             <option value="">Select a field</option>

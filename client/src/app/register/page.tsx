@@ -429,7 +429,7 @@ function page() {
                       value={formData.name}
                       required
                       onChange={(e) => handleFormState(e)}
-                      className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                      className="input-tag"
                     />
                   </div>
 
@@ -442,7 +442,7 @@ function page() {
                       value={formData.email}
                       required
                       onChange={(e) => handleFormState(e)}
-                      className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                      className="input-tag"
                     />
                   </div>
 
@@ -455,7 +455,7 @@ function page() {
                       value={formData.phone}
                       required
                       onChange={(e) => handleFormState(e)}
-                      className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                      className="input-tag"
                     />
                   </div>
 
@@ -471,7 +471,7 @@ function page() {
                         handleFormState(e);
                         handlePasswordCheck(e);
                       }}
-                      className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                      className="input-tag"
                     />
                     {errorMessage && (
                       <div className="text-yellow-300 text-[12px] text-start">
@@ -482,7 +482,7 @@ function page() {
 
                   <div className="space-y-2">
                     <label htmlFor="confirm_password">Confirm Password</label>
-                    <div className="flex items-center justify-between space-x-2 w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500">
+                    <div className="flex items-center justify-between space-x-2 input-tag">
                       <input
                         type={`${
                           isVisibleConfirmPassword ? "text" : "password"
@@ -559,7 +559,7 @@ function page() {
                       value={phoneOtp}
                       required
                       onChange={(e) => setPhoneOtp(e.target.value)}
-                      className="w-full px-2 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                      className="input-tag"
                     />
                   </div>
 
