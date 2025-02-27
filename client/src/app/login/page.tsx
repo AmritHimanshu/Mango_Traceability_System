@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { setUserState } from "@/store/features/userSlice";
 import { useAppDispatch } from "@/store/store";
@@ -19,6 +20,7 @@ import {
 } from "mdb-react-ui-kit";
 import ReCAPTCHA from "react-google-recaptcha";
 import useRecaptcha from "@/utils/Services/useRecaptcha";
+import image from "@/app/assets/mango_login_img.jpg";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -34,7 +36,7 @@ function page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState({ text: "", type: "" });
-  
+
   const { capchaToken, recaptchaRef, handleRecaptcha } = useRecaptcha();
 
   const logOut = async () => {
@@ -118,9 +120,9 @@ function page() {
 
       const data = await res.json();
 
-      if(res.status === 400){
+      if (res.status === 400) {
         setMessage({ text: data.error, type: "error" });
-        handleRecaptcha('');
+        handleRecaptcha("");
         if (recaptchaRef.current) {
           recaptchaRef.current.reset();
         }
@@ -138,7 +140,6 @@ function page() {
 
       dispatch(setUserState(data));
       router.push("/");
-
     } catch (error) {}
 
     setTimeout(() => {
@@ -152,94 +153,85 @@ function page() {
 
   return (
     <>
-      <MDBContainer
-        fluid
-        className="d-flex flex-column justify-content-center align-items-center vh-100"
-      >
+      <div className="p-5 w-full h-[100vh] overflow-y-auto relative">
         <CustomLoadingBar ref={loadingBarRef} />
 
         {message.text && message.type && (
           <Message text={message.text} type={message.type} />
         )}
 
-        <div
-          className="p-5 bg-image"
-          style={{
-            backgroundImage:
-              "url(https://mdbootstrap.com/img/new/textures/full/171.jpg)",
-            height: "300px",
-            width: "100%",
-          }}
-        ></div>
-
-        <MDBCard
-          className="mx-5 mb-5 p-5 shadow-5 w-100"
-          style={{
-            marginTop: "-100px",
-            maxWidth: "600px",
-            background: "hsla(0, 0%, 100%, 0.8)",
-            backdropFilter: "blur(30px)",
-          }}
-        >
-          <MDBCardBody className="p-5 text-center">
-            <h2 className="fw-bold mb-5">Sign In</h2>
-
-            <MDBInput
-              wrapperClass="mb-4"
-              label="Email"
-              id="email"
-              type="email"
-              value={email}
-              required
-              onChange={(e) => setEmail(e.target.value)}
+        <div className="border-4 border-primarycColor rounded-md w-[calc(100%-10%)] m-auto h-full flex">
+          <div className="w-[40%]">
+            <Image
+              src={image}
+              alt=""
+              className="w-full h-full object-contain"
             />
-
-            <MDBInput
-              wrapperClass="mb-4"
-              label="Password"
-              id="password"
-              type="password"
-              value={password}
-              required
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <ReCAPTCHA
-              ref={recaptchaRef}
-              sitekey={`${RECAPTCHA_SITE_KEY}`}
-              onChange={handleRecaptcha}
-            />
-
-            <MDBBtn
-              className="w-100 my-4"
-              size="sm"
-              onClick={(e) => handleFormData(e)}
-            >
-              sign in
-            </MDBBtn>
-
-            <div className="flex text-[9px] md:text-[13px] lg:text-[16px">
-              <div className="w-[100%] mt-5 text-start">
-                Forgot password?{" "}
-                <Link href={FORGOT_PASSWORD}>
-                  <span className="text-blue-600 hover:underline">
-                    click here
-                  </span>
-                </Link>
+          </div>
+          <div className="bg-primarycColor text-white flex-grow flex items-center">
+            <div className="p-3 w-[400px] m-auto space-y-5">
+              <div className="mt-2 text-xl text-center">Login</div>
+              <div className="space-y-2">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="text"
+                  id="email"
+                  name="email"
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500"
+                />
               </div>
 
-              <div className="w-[100%] mt-5 text-end">
-                Don't have an account?{" "}
-                <Link href={REGISTER}>
-                  <span className="text-blue-600 hover:underline">
-                    Sign up.
-                  </span>
-                </Link>
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey={`${RECAPTCHA_SITE_KEY}`}
+                onChange={handleRecaptcha}
+              />
+
+              <div className="text-center">
+                <button
+                  className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                  onClick={(e) => handleFormData(e)}
+                >
+                  Login
+                </button>
+              </div>
+
+              <div className="flex text-[9px] md:text-[13px] my-5">
+                <div className="w-[100%] text-start">
+                  Forgot password?{" "}
+                  <Link href={FORGOT_PASSWORD}>
+                    <span className="text-yellow-400 hover:underline">
+                      click here
+                    </span>
+                  </Link>
+                </div>
+
+                <div className="w-[100%] text-end">
+                  Don't have an account?{" "}
+                  <Link href={REGISTER}>
+                    <span className="text-yellow-400 hover:underline">
+                      Sign up.
+                    </span>
+                  </Link>
+                </div>
               </div>
             </div>
-          </MDBCardBody>
-        </MDBCard>
-      </MDBContainer>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
