@@ -160,107 +160,112 @@ function page() {
             <Map coordinates={farm.geoFenceData} height="300px" />
 
             <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="font-bold">ID:</div>
+              <div className="text-sm">{farm.uniqueID}</div>
+            </div>
+            {farm.area && (
               <div className="flex items-center space-x-3">
-                <div className="font-bold">ID:</div>
-                <div className="text-sm">{farm.uniqueID}</div>
+                <div className="font-bold">Area:</div>
+                <div>{farm.area.toFixed(2)} sq. m</div>
               </div>
-              {farm.area && (
-                <div className="flex items-center space-x-3">
-                  <div className="font-bold">Area:</div>
-                  <div>{farm.area.toFixed(2)} sq. m</div>
-                </div>
-              )}
-            </div>
+            )}
+          </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
-              {farm.farm && (
-                <div className="flex items-start space-x-3">
-                  <div className="font-bold">Farm Name:</div>
-                  <div>{farm.farm}</div>
-                </div>
-              )}
+          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
+            {farm.farm && (
+              <div className="flex items-start space-x-3">
+                <div className="font-bold">Farm Name:</div>
+                <div>{farm.farm}</div>
+              </div>
+            )}
 
-              {farm.crop && (
-                <div className="flex items-start space-x-3">
-                  <div className="font-bold">Crop Name:</div>
-                  <div>{farm.crop}</div>
-                </div>
-              )}
+            {farm.crop && (
+              <div className="flex items-start space-x-3">
+                <div className="font-bold">Crop Name:</div>
+                <div>{farm.crop}</div>
+              </div>
+            )}
 
-              {farm.ploughingDate && (
-                <div className="flex items-start space-x-3">
-                  <div className="font-bold">Ploughing Date:</div>
-                  <div>
-                    {new Date(farm.ploughingDate).toISOString().split("T")[0]}
-                  </div>
+            {farm.ploughingDate && (
+              <div className="flex items-star items-center space-x-3">
+                <div className="font-bold">Ploughing Date:</div>
+                <div>
+                  {new Date(farm.ploughingDate).toISOString().split("T")[0]}
                 </div>
-              )}
+              </div>
+            )}
 
-              {farm.sowingDate && (
-                <div className="flex items-start space-x-3">
-                  <div className="font-bold">Sowing Date:</div>
-                  <div>
-                    {new Date(farm.sowingDate).toISOString().split("T")[0]}
-                  </div>
+            {farm.sowingDate && (
+              <div className="flex items-start space-x-3">
+                <div className="font-bold">Sowing Date:</div>
+                <div>
+                  {new Date(farm.sowingDate).toISOString().split("T")[0]}
                 </div>
-              )}
+              </div>
+            )}
 
-              {farm.floweringDate && (
-                <div className="flex items-start space-x-3">
-                  <div className="font-bold">Flowering Date:</div>
-                  <div>
-                    {new Date(farm.floweringDate).toISOString().split("T")[0]}
-                  </div>
+            {farm.floweringDate && (
+              <div className="flex items-start space-x-3">
+                <div className="font-bold">Flowering Date:</div>
+                <div>
+                  {new Date(farm.floweringDate).toISOString().split("T")[0]}
                 </div>
-              )}
+              </div>
+            )}
 
-              {farm.pheromoneTrapDate && (
-                <div className="flex items-start space-x-3">
-                  <div className="font-bold">Pheromone Trap Date:</div>
-                  <div>
-                    {
-                      new Date(farm.pheromoneTrapDate)
-                        .toISOString()
-                        .split("T")[0]
-                    }
-                  </div>
+            {farm.pheromoneTrapDate && (
+              <div className="flex items-start space-x-3">
+                <div className="font-bold">Pheromone Trap Date:</div>
+                <div>
+                  {
+                    new Date(farm.pheromoneTrapDate)
+                      .toISOString()
+                      .split("T")[0]
+                  }
                 </div>
-              )}
+              </div>
+            )}
 
-              {farm.lureChangeDate && (
-                <div className="flex items-start space-x-3">
-                  <div className="font-bold">Lure Change Date:</div>
-                  <div>
-                    {new Date(farm.lureChangeDate).toISOString().split("T")[0]}
-                  </div>
+            {farm.lureChangeDate && (
+              <div className="flex items-start space-x-3">
+                <div className="font-bold">Lure Change Date:</div>
+                <div>
+                  {
+                    new Date(farm.lureChangeDate)
+                      .toISOString()
+                      .split("T")[0]
+                  }
                 </div>
-              )}
+              </div>
+            )}
 
-              {farm.harvest && (
-                <div className="flex items-start flex-col space-y-3">
-                  <div className="font-bold">Harvest Date:</div>
-                  <div>
-                    {farm.harvest.date && (
-                      <div className="flex space-x-5">
-                        <div>Date:</div>
-                        <div>
-                          {
-                            new Date(farm.harvest.date)
-                              .toISOString()
-                              .split("T")[0]
-                          }
-                        </div>
-                      </div>
-                    )}
+            {farm.harvest && (
+              <div className="flex items-start flex-col space-y-3">
+                <div className="font-bold">Harvest Date:</div>
+                <div>
+                  {farm.harvest.date && (
                     <div className="flex space-x-5">
-                      <div>Yield:</div>
-                      <div>{farm.harvest.yield}</div>
+                      <div>Date:</div>
+                      <div>
+                        {
+                          new Date(farm.harvest.date)
+                            .toISOString()
+                            .split("T")[0]
+                        }
+                      </div>
                     </div>
+                  )}
+                  <div className="flex space-x-5">
+                    <div>Yield:</div>
+                    <div>{farm.harvest.yield}</div>
                   </div>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
+          </div>
 
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             {farm.weedingDate.length > 0 && (
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Weeding Date:</div>
@@ -328,11 +333,14 @@ function page() {
                               key={index}
                               className="hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
                             >
-                              {farm.irrigationDates.artificial.length > 0 && (
+                              {farm.irrigationDates.artificial.length >
+                                0 && (
                                 <td className="border border-gray-300 px-4 py-2">
                                   {farm.irrigationDates.artificial[index]
                                     ? new Date(
-                                        farm.irrigationDates.artificial[index]
+                                        farm.irrigationDates.artificial[
+                                          index
+                                        ]
                                       )
                                         .toISOString()
                                         .split("T")[0]
@@ -411,6 +419,7 @@ function page() {
                 />
               </div>
             )}
+          </div>
 
             <div className="text-center">
               <button
