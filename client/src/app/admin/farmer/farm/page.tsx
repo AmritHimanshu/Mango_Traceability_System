@@ -112,7 +112,7 @@ function page() {
 
       {farmData && <Heading text={farmData.farm} />}
 
-      {farmData && !isQRCode ? (
+      {farmData && (
         <div className="space-y-5 lg:space-y-10 my-5">
           <div className="space-x-2 text-right">
             <button
@@ -399,28 +399,28 @@ function page() {
             </button>
           </div>
         </div>
-      ) : (
-        <>
-          {isQRCode && (
-            <div className="fixed z-[9999] top-0 left-0 w-full h-full bg-neutral-900 bg-opacity-80 flex items-center">
-              <div className="bg-white p-3 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5 rounded-md">
-                <div className="flex items-center justify-between">
-                  <h2 className="font-bold text-lg">Scan QR Code for the Certificate</h2>
-                  <CloseIcon
-                    className="cursor-pointer text-red-600"
-                    onClick={() => setIsQRCode(false)}
-                  />
-                </div>
-                <div className="flex justify-center items-center bg-white p-4">
-                  <QRCode
-                    value={`${FRONTEND_BASE_URL}/${CERTIFICATE}?farm_id=${farm_id}`}
-                    size={200}
-                  />
-                </div>
-              </div>
+      )}
+
+      {isQRCode && (
+        <div className="fixed z-[9999] top-0 left-0 w-full h-full bg-neutral-900 bg-opacity-80 flex items-center">
+          <div className="bg-white p-3 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5 rounded-md">
+            <div className="flex items-center justify-between">
+              <h2 className="font-bold text-lg">
+                Scan QR Code for the Certificate
+              </h2>
+              <CloseIcon
+                className="cursor-pointer text-red-600"
+                onClick={() => setIsQRCode(false)}
+              />
             </div>
-          )}
-        </>
+            <div className="flex justify-center items-center bg-white p-4">
+              <QRCode
+                value={`${FRONTEND_BASE_URL}/${CERTIFICATE}?farm_id=${farm_id}`}
+                size={200}
+              />
+            </div>
+          </div>
+        </div>
       )}
 
       {isEdit && (
