@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/store/store";
 import { setUserState } from "@/store/features/userSlice";
@@ -27,6 +28,7 @@ import {
 } from "mdb-react-ui-kit";
 import ReCAPTCHA from "react-google-recaptcha";
 import useRecaptcha from "@/utils/Services/useRecaptcha";
+import image from "@/app/assets/mango_login_img.jpg";
 
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -405,198 +407,224 @@ function page() {
   };
 
   return (
-    <MDBContainer
-      fluid
-      className="d-flex flex-column justify-content-center align-items-center vh-100"
-    >
-      <CustomLoadingBar ref={loadingBarRef} />
+    <>
+      <div className="p-2 xl:p-5 w-full h-[100vh] overflow-y-auto relative">
+        <CustomLoadingBar ref={loadingBarRef} />
 
-      {message.text && message.type && (
-        <Message text={message.text} type={message.type} />
-      )}
+        {message.text && message.type && (
+          <Message text={message.text} type={message.type} />
+        )}
 
-      <div
-        className="p-5 bg-image"
-        style={{
-          backgroundImage:
-            "url(https://mdbootstrap.com/img/new/textures/full/171.jpg)",
-          height: "300px",
-          width: "100%",
-        }}
-      ></div>
+        <div className="border-4 border-primarycColor rounded-md w-[calc(100%-10%)] m-auto h-full flex">
+          <div className="w-[40%] hidden xl:block">
+            <Image
+              src={image}
+              alt=""
+              className="w-full h-full object-contain"
+            />
+          </div>
 
-      <MDBCard
-        className="mx-5 mb-5 p-5 shadow-5 w-100"
-        style={{
-          marginTop: "-200px",
-          maxWidth: "600px",
-          background: "hsla(0, 0%, 100%, 0.8)",
-          backdropFilter: "blur(30px)",
-        }}
+          <div className="bg-primarycColor text-white flex-grow flex items-center">
+            <div  className="p-3 w-full xl:w-[400px] m-auto space-y-5">
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* <MDBContainer
+        fluid
+        className="d-flex flex-column justify-content-center align-items-center vh-100"
       >
-        {!isOtp ? (
-          <>
-            <MDBCardBody className="p-5 text-center">
-              <h2 className="fw-bold mb-5">Sign up now</h2>
+        <CustomLoadingBar ref={loadingBarRef} />
 
-              <MDBInput
-                wrapperClass="mb-4"
-                label="Name"
-                id="name"
-                name="name"
-                type="text"
-                value={formData.name}
-                required
-                onChange={(e) => handleFormState(e)}
-              />
+        {message.text && message.type && (
+          <Message text={message.text} type={message.type} />
+        )}
 
-              <MDBInput
-                wrapperClass="mb-4"
-                label="Email"
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                required
-                onChange={(e) => handleFormState(e)}
-              />
+        <div
+          className="p-5 bg-image"
+          style={{
+            backgroundImage:
+              "url(https://mdbootstrap.com/img/new/textures/full/171.jpg)",
+            height: "300px",
+            width: "100%",
+          }}
+        ></div>
 
-              <MDBInput
-                wrapperClass="mb-4"
-                label="Phone number"
-                id="phone"
-                name="phone"
-                type="tel"
-                value={formData.phone}
-                required
-                onChange={(e) => handleFormState(e)}
-              />
+        <MDBCard
+          className="mx-5 mb-5 p-5 shadow-5 w-100"
+          style={{
+            marginTop: "-200px",
+            maxWidth: "600px",
+            background: "hsla(0, 0%, 100%, 0.8)",
+            backdropFilter: "blur(30px)",
+          }}
+        >
+          {!isOtp ? (
+            <>
+              <MDBCardBody className="p-5 text-center">
+                <h2 className="fw-bold mb-5">Sign up now</h2>
 
-              <div className=" mb-4">
                 <MDBInput
-                  wrapperClass="mb-0"
-                  label="Password"
-                  name="password"
-                  id="password"
-                  type="password"
-                  value={formData.password}
-                  required
-                  onChange={(e) => {
-                    handleFormState(e);
-                    handlePasswordCheck(e);
-                  }}
-                />
-                {errorMessage && (
-                  <div className="text-red-500 text-[12px] text-start">
-                    {errorMessage}
-                  </div>
-                )}
-              </div>
-
-              <div className="flex items-center mb-4 space-x-2">
-                <MDBInput
-                  // wrapperClass="mb-4"
-                  label="Confirm Password"
-                  name="confirm_password"
-                  id="cpassword"
-                  type={`${isVisibleConfirmPassword ? "text" : "password"}`}
-                  value={formData.confirm_password}
+                  wrapperClass="mb-4"
+                  label="Name"
+                  id="name"
+                  name="name"
+                  type="text"
+                  value={formData.name}
                   required
                   onChange={(e) => handleFormState(e)}
                 />
-                {isVisibleConfirmPassword ? (
-                  <VisibilityIcon
-                    className="cursor-pointer"
-                    onClick={() =>
-                      setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
-                    }
+
+                <MDBInput
+                  wrapperClass="mb-4"
+                  label="Email"
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  required
+                  onChange={(e) => handleFormState(e)}
+                />
+
+                <MDBInput
+                  wrapperClass="mb-4"
+                  label="Phone number"
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  value={formData.phone}
+                  required
+                  onChange={(e) => handleFormState(e)}
+                />
+
+                <div className=" mb-4">
+                  <MDBInput
+                    wrapperClass="mb-0"
+                    label="Password"
+                    name="password"
+                    id="password"
+                    type="password"
+                    value={formData.password}
+                    required
+                    onChange={(e) => {
+                      handleFormState(e);
+                      handlePasswordCheck(e);
+                    }}
                   />
-                ) : (
-                  <VisibilityOffIcon
-                    className="cursor-pointer"
-                    onClick={() =>
-                      setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
-                    }
+                  {errorMessage && (
+                    <div className="text-red-500 text-[12px] text-start">
+                      {errorMessage}
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex items-center mb-4 space-x-2">
+                  <MDBInput
+                    // wrapperClass="mb-4"
+                    label="Confirm Password"
+                    name="confirm_password"
+                    id="cpassword"
+                    type={`${isVisibleConfirmPassword ? "text" : "password"}`}
+                    value={formData.confirm_password}
+                    required
+                    onChange={(e) => handleFormState(e)}
                   />
-                )}
-              </div>
+                  {isVisibleConfirmPassword ? (
+                    <VisibilityIcon
+                      className="cursor-pointer"
+                      onClick={() =>
+                        setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
+                      }
+                    />
+                  ) : (
+                    <VisibilityOffIcon
+                      className="cursor-pointer"
+                      onClick={() =>
+                        setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
+                      }
+                    />
+                  )}
+                </div>
 
-              <ReCAPTCHA
-                ref={recaptchaRef}
-                sitekey={`${RECAPTCHA_SITE_KEY}`}
-                onChange={handleRecaptcha}
-              />
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey={`${RECAPTCHA_SITE_KEY}`}
+                  onChange={handleRecaptcha}
+                />
 
-              <MDBBtn
-                className="w-100 my-4"
-                size="sm"
-                onClick={(e) => sendOTP(e)}
-              >
-                sign up
-              </MDBBtn>
+                <MDBBtn
+                  className="w-100 my-4"
+                  size="sm"
+                  onClick={(e) => sendOTP(e)}
+                >
+                  sign up
+                </MDBBtn>
 
-              <div className="w-[100%] mt-5 text-[11px] md:text-[15px]">
-                Already have an account?{" "}
-                <Link href="/login">
-                  <span className="text-blue-600 hover:underline">
-                    Sign in.
-                  </span>
-                </Link>
-              </div>
-            </MDBCardBody>
-          </>
-        ) : (
-          <>
-            <MDBCardBody className="p-5 text-center">
-              <div className="mb-3">
-                Enter the One Time Password (OTP) sent to your mobile
-              </div>
+                <div className="w-[100%] mt-5 text-[11px] md:text-[15px]">
+                  Already have an account?{" "}
+                  <Link href="/login">
+                    <span className="text-blue-600 hover:underline">
+                      Sign in.
+                    </span>
+                  </Link>
+                </div>
+              </MDBCardBody>
+            </>
+          ) : (
+            <>
+              <MDBCardBody className="p-5 text-center">
+                <div className="mb-3">
+                  Enter the One Time Password (OTP) sent to your mobile
+                </div>
 
-              <MDBInput
-                wrapperClass="mb-4"
-                label="Enter OTP"
-                id="name"
-                name="name"
-                type="text"
-                value={phoneOtp}
-                onChange={(e) => setPhoneOtp(e.target.value)}
-              />
+                <MDBInput
+                  wrapperClass="mb-4"
+                  label="Enter OTP"
+                  id="name"
+                  name="name"
+                  type="text"
+                  value={phoneOtp}
+                  onChange={(e) => setPhoneOtp(e.target.value)}
+                />
 
-              <MDBRow>
-                <MDBCol col="6">
-                  <MDBBtn
-                    className="w-100 mb-4"
-                    size="sm"
-                    style={{ backgroundColor: "#6b7280" }}
-                    onClick={() => reSendOTP()}
-                  >
-                    RESEND OTP
-                  </MDBBtn>
-                </MDBCol>
-
-                {flagPhone ? (
-                  <MDBCol col="6">
-                    <MDBBtn className="w-100 mb-4" size="sm">
-                      VERIFYING
-                    </MDBBtn>
-                  </MDBCol>
-                ) : (
+                <MDBRow>
                   <MDBCol col="6">
                     <MDBBtn
                       className="w-100 mb-4"
                       size="sm"
-                      onClick={() => verifyOtp()}
+                      style={{ backgroundColor: "#6b7280" }}
+                      onClick={() => reSendOTP()}
                     >
-                      VERIFY
+                      RESEND OTP
                     </MDBBtn>
                   </MDBCol>
-                )}
-              </MDBRow>
-            </MDBCardBody>
-          </>
-        )}
-      </MDBCard>
-    </MDBContainer>
+
+                  {flagPhone ? (
+                    <MDBCol col="6">
+                      <MDBBtn className="w-100 mb-4" size="sm">
+                        VERIFYING
+                      </MDBBtn>
+                    </MDBCol>
+                  ) : (
+                    <MDBCol col="6">
+                      <MDBBtn
+                        className="w-100 mb-4"
+                        size="sm"
+                        onClick={() => verifyOtp()}
+                      >
+                        VERIFY
+                      </MDBBtn>
+                    </MDBCol>
+                  )}
+                </MDBRow>
+              </MDBCardBody>
+            </>
+          )}
+        </MDBCard>
+      </MDBContainer> */}
+    </>
   );
 }
 
