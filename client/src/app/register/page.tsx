@@ -2,8 +2,8 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { parsePhoneNumberFromString } from "libphonenumber-js";
 import Image from "next/image";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/store/store";
 import { setUserState } from "@/store/features/userSlice";
@@ -17,15 +17,6 @@ import {
 } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
 import Message from "../components/common/Message";
-import {
-  MDBBtn,
-  MDBContainer,
-  MDBCard,
-  MDBCardBody,
-  MDBCol,
-  MDBRow,
-  MDBInput,
-} from "mdb-react-ui-kit";
 import ReCAPTCHA from "react-google-recaptcha";
 import useRecaptcha from "@/utils/Services/useRecaptcha";
 import image from "@/app/assets/mango_login_img.jpg";

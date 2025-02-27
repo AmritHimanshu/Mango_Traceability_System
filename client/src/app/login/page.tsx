@@ -11,13 +11,6 @@ import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
 import { LOGOUT_USER, SIGNIN_USER } from "@/utils/Apis/api";
 import { FORGOT_PASSWORD, REGISTER } from "@/utils/Paths/paths";
 import Message from "../components/common/Message";
-import {
-  MDBBtn,
-  MDBContainer,
-  MDBCard,
-  MDBCardBody,
-  MDBInput,
-} from "mdb-react-ui-kit";
 import ReCAPTCHA from "react-google-recaptcha";
 import useRecaptcha from "@/utils/Services/useRecaptcha";
 import image from "@/app/assets/mango_login_img.jpg";
