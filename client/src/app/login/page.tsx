@@ -153,15 +153,15 @@ function page() {
 
   return (
     <>
-      <div className="p-5 w-full h-[100vh] overflow-y-auto relative xl:border-2 border-red-500">
+      <div className="p-2 xl:p-5 w-full h-[100vh] overflow-y-auto relative">
         <CustomLoadingBar ref={loadingBarRef} />
 
         {message.text && message.type && (
           <Message text={message.text} type={message.type} />
         )}
 
-        <div className="border-4 border-primarycColor rounded-md w-[calc(100%-10%)] m-auto  h-full flex">
-          <div className="w-[40%]">
+        <div className="border-4 border-primarycColor rounded-md w-[calc(100%-10%)] m-auto h-full flex">
+          <div className="w-[40%] hidden xl:block">
             <Image
               src={image}
               alt=""
@@ -169,7 +169,7 @@ function page() {
             />
           </div>
           <div className="bg-primarycColor text-white flex-grow flex items-center">
-            <div className="p-3 w-[400px] m-auto space-y-5">
+            <div className="p-3 w-full xl:w-[400px] m-auto space-y-5">
               <div className="mt-2 text-xl text-center">Login</div>
               <div className="space-y-2">
                 <label htmlFor="email">Email</label>
