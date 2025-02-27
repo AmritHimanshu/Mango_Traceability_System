@@ -144,7 +144,7 @@ function page() {
             )}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5">
             {farmData.farm && (
               <div className="flex items-start space-x-3">
                 <div className="font-bold">Farm Name:</div>
