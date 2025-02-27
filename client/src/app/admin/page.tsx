@@ -127,6 +127,8 @@ function page() {
       setTimeout(() => {
         setMessage({ text: "", type: "" });
       }, 2000);
+
+      setIsConfirm(false);
       return;
     }
 
