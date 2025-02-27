@@ -279,7 +279,7 @@ function page() {
                 <>
                   <table className="table">
                     <thead>
-                    <tr className="table-head-tr">
+                      <tr className="table-head-tr">
                         {farmData.irrigationDates.artificial.length > 0 && (
                           <th className="border border-gray-300 px-4 py-2">
                             Artificial
@@ -301,10 +301,7 @@ function page() {
 
                         return Array.from({ length: maxLength }).map(
                           (_, index) => (
-                            <tr
-                              key={index}
-                              className="table-body-tr"
-                            >
+                            <tr key={index} className="table-body-tr">
                               {farmData.irrigationDates.artificial.length >
                                 0 && (
                                 <td className="table-body-tr-td">
@@ -405,19 +402,21 @@ function page() {
       ) : (
         <>
           {isQRCode && (
-            <div className="mt-4">
-              <div className="flex items-center justify-between">
-                <h2 className="font-bold text-lg">QR Code for Certificate</h2>
-                <CloseIcon
-                  className="cursor-pointer"
-                  onClick={() => setIsQRCode(false)}
-                />
-              </div>
-              <div className="flex justify-center items-center bg-white p-4">
-                <QRCode
-                  value={`${FRONTEND_BASE_URL}/${CERTIFICATE}?farm_id=${farm_id}`}
-                  size={200}
-                />
+            <div className="fixed z-[9999] top-0 left-0 w-full h-full bg-neutral-900 bg-opacity-80 flex items-center">
+              <div className="bg-white p-3 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5 rounded-md">
+                <div className="flex items-center justify-between">
+                  <h2 className="font-bold text-lg">Scan QR Code for the Certificate</h2>
+                  <CloseIcon
+                    className="cursor-pointer text-red-600"
+                    onClick={() => setIsQRCode(false)}
+                  />
+                </div>
+                <div className="flex justify-center items-center bg-white p-4">
+                  <QRCode
+                    value={`${FRONTEND_BASE_URL}/${CERTIFICATE}?farm_id=${farm_id}`}
+                    size={200}
+                  />
+                </div>
               </div>
             </div>
           )}
