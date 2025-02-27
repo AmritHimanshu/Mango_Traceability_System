@@ -242,9 +242,9 @@ function page() {
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Weeding Date:</div>
                 <>
-                  <table className="w-full border-collapse border border-gray-300">
+                  <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
                     <thead></thead>
-                    <tbody>
+                    <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
                       {farmData.weedingDate
                         .reduce<string[][]>((acc, date, index) => {
                           if (index % 3 === 0) acc.push([]);
@@ -254,12 +254,12 @@ function page() {
                         .map((row, rowIndex) => (
                           <tr
                             key={rowIndex}
-                            className="text-center hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
+                            className="text-black border-[1px] border-black"
                           >
                             {row.map((date, index) => (
                               <td
                                 key={index}
-                                className="border border-gray-300 p-2"
+                                className="px-4 py-3 align-middle w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
                               >
                                 {new Date(date).toISOString().split("T")[0]}
                               </td>
@@ -277,9 +277,9 @@ function page() {
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Irrigation Dates:</div>
                 <>
-                  <table className="w-full border-collapse border border-gray-300">
+                  <table className="table">
                     <thead>
-                      <tr className="bg-gray-100">
+                    <tr className="table-head-tr">
                         {farmData.irrigationDates.artificial.length > 0 && (
                           <th className="border border-gray-300 px-4 py-2">
                             Artificial
@@ -292,7 +292,7 @@ function page() {
                         )}
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="table-body">
                       {(() => {
                         const maxLength = Math.max(
                           farmData.irrigationDates.artificial.length,
@@ -303,11 +303,11 @@ function page() {
                           (_, index) => (
                             <tr
                               key={index}
-                              className="hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
+                              className="table-body-tr"
                             >
                               {farmData.irrigationDates.artificial.length >
                                 0 && (
-                                <td className="border border-gray-300 px-4 py-2">
+                                <td className="table-body-tr-td">
                                   {farmData.irrigationDates.artificial[index]
                                     ? new Date(
                                         farmData.irrigationDates.artificial[
@@ -320,7 +320,7 @@ function page() {
                                 </td>
                               )}
                               {farmData.irrigationDates.natural.length > 0 && (
-                                <td className="border border-gray-300 px-4 py-2">
+                                <td className="table-body-tr-td">
                                   {farmData.irrigationDates.natural[index]
                                     ? new Date(
                                         farmData.irrigationDates.natural[index]
