@@ -435,7 +435,7 @@ function page() {
 
       {isDelete && (
         <div className="fixed z-[9999] top-0 left-0 w-full h-full bg-neutral-900 bg-opacity-80 flex items-center">
-          <div className="bg-white p-5 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5">
+          <div className="bg-white text-black p-3 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5 rounded-md">
             <div>
               <div className="text-sm md:text-xl">
                 Are you sure, you want to delete?
