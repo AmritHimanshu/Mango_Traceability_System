@@ -127,36 +127,38 @@ function page() {
 
       <div className="p-5 space-y-3">
         <div className="space-y-10">
-          <div className="flex items-start flex-col">
-            <label htmlFor="farmName">
-              Name of the farm <span className="text-red-600">*</span>
-            </label>
-            <input
-              type="text"
-              id="farmName"
-              name="farmName"
-              value={farmName}
-              className="input-tag"
-              required
-              onChange={(e) => setFarmName(e.target.value)}
-            />
-          </div>
+          <div className="flex items-center justify-between flex-col space-y-7 md:flex-row md:space-y-0">
+            <div className="space-y-2 w-[100%] md:w-[40%] xl:w-[20%]">
+              <label htmlFor="farmName">
+                Name of the farm <span className="text-red-600">*</span>
+              </label>
+              <input
+                type="text"
+                id="farmName"
+                name="farmName"
+                value={farmName}
+                className="input-tag"
+                required
+                onChange={(e) => setFarmName(e.target.value)}
+              />
+            </div>
 
-          <div className="flex items-start justify-between">
-            <label htmlFor="cropName">
-              Name of the crop <span className="text-red-600">*</span>
-            </label>
-            <select
-              name="cropName"
-              id="cropName"
-              value={cropName}
-              className="border-2 border-black px-2 py-1 outline-0"
-              onChange={(e) => setCropName(e.target.value)}
-            >
-              <option value="">Select crop</option>
-              <option value="Mango">Mango</option>
-              <option value="Lichi">Lichi</option>
-            </select>
+            <div className="space-y-2 w-[100%] md:w-[40%] xl:w-[20%]">
+              <label htmlFor="cropName">
+                Name of the crop <span className="text-red-600">*</span>
+              </label>
+              <select
+                name="cropName"
+                id="cropName"
+                value={cropName}
+                className="input-tag"
+                onChange={(e) => setCropName(e.target.value)}
+              >
+                <option value="">Select crop</option>
+                <option value="Mango">Mango</option>
+                <option value="Lichi">Lichi</option>
+              </select>
+            </div>
           </div>
 
           <Map submitForm={handlesubmitForm} />
