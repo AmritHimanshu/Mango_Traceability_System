@@ -398,15 +398,15 @@ function page() {
 
   return (
     <>
-      <div className="p-2 xl:p-5 w-full h-[100vh] overflow-y-auto relative">
+      <div className="p-2 xl:p-5 w-full h-[100vh] overflow-y-auto relative bg-gradient-to-tr from-customOrange to-customGreen flex items-center justify-center">
         <CustomLoadingBar ref={loadingBarRef} />
 
         {message.text && message.type && (
           <Message text={message.text} type={message.type} />
         )}
 
-        <div className="border-4 border-primarycColor rounded-md w-[calc(100%-10%)] m-auto h-full flex">
-          <div className="w-[50%] hidden xl:block relative h-full">
+        <div className="rounded-md overflow-hidden w-[1200px] m-auto h-[800px] flex shadow-xl">
+          <div className="w-[50%] hidden lg:block relative h-full">
             <Image
               src="/assets/registration_image.jpg"
               alt=""
@@ -415,10 +415,10 @@ function page() {
             />
           </div>
 
-          <div className="bg-primarycColor text-white flex-grow flex items-center overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-primarycColor [&::-webkit-scrollbar-thumb]:bg-secondaryColor [&::-webkit-scrollbar-thumb]:rounded-full">
+          <div className="bg-white text-black flex-grow flex items-center overflow-y-auto">
             {!isOtp ? (
               <>
-                <div className="p-3 w-full xl:w-[400px] m-auto space-y-5">
+                <div className="p-3 w-full lg:w-[400px] m-auto space-y-5">
                   <div className="mt-2 text-xl text-center">Registration</div>
                   <div className="space-y-2">
                     <label htmlFor="name">Name</label>
@@ -533,10 +533,10 @@ function page() {
                     </button>
                   </div>
 
-                  <div className="w-[100%] my-5 text-[11px] md:text-[15px] text-center">
+                  <div className="w-[100%] my-3 text-[11px] md:text-[15px] text-center">
                     Already have an account?{" "}
                     <Link href="/login">
-                      <span className="text-yellow-400 hover:underline">
+                      <span className="text-blue-600 hover:underline">
                         Sign in.
                       </span>
                     </Link>
@@ -545,7 +545,7 @@ function page() {
               </>
             ) : (
               <>
-                <div className="p-3 w-full xl:w-[400px] m-auto space-y-5">
+                <div className="p-3 w-full lg:w-[400px] m-auto space-y-5">
                   <div className="mb-3 text-sm">
                     Enter the One Time Password (OTP) sent to your mobile
                   </div>

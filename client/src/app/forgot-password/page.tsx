@@ -12,13 +12,6 @@ import {
 } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
 import Message from "../components/common/Message";
-import {
-  MDBBtn,
-  MDBContainer,
-  MDBCard,
-  MDBCardBody,
-  MDBInput,
-} from "mdb-react-ui-kit";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -231,15 +224,15 @@ function page() {
 
   return (
     <>
-      <div className="p-2 xl:p-5 w-full h-[100vh] overflow-y-auto relative">
+      <div className="p-2 xl:p-5 w-full h-[100vh] overflow-y-auto relative bg-gradient-to-tr from-customOrange to-customGreen flex items-center justify-center">
         <CustomLoadingBar ref={loadingBarRef} />
 
         {message.text && message.type && (
           <Message text={message.text} type={message.type} />
         )}
 
-        <div className="border-4 border-primarycColor rounded-md w-[calc(100%-10%)] m-auto h-full flex">
-          <div className="w-[50%] hidden xl:block relative h-full">
+        <div className="rounded-md overflow-hidden w-[1000px] m-auto h-[500px] flex shadow-xl">
+          <div className="w-[50%] hidden lg:block relative h-full">
             <Image
               src="/assets/login_image.jpg"
               alt=""
@@ -248,8 +241,8 @@ function page() {
             />
           </div>
 
-          <div className="bg-primarycColor text-white flex-grow flex items-center">
-            <div className="p-3 w-full xl:w-[400px] m-auto space-y-5">
+          <div className="bg-white text-black flex-grow flex items-center">
+            <div className="p-3 w-full lg:w-[400px] m-auto space-y-5">
               {!isEmailOtpSent && !isOtpVerified && (
                 <div className="mt-2 text-xl text-center">
                   Reset your Password

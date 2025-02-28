@@ -14,6 +14,8 @@ export default {
         cardBackground: '#f0f9ff',
         primarycColor: '#31473A',
         secondaryColor: '#EDF4F2',
+        customGreen: '#34AD54',
+        customOrange: '#FF9933',
       },
     },
   },
