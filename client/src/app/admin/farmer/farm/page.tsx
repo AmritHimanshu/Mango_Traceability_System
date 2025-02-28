@@ -144,6 +144,89 @@ function page() {
             )}
           </div>
 
+          <div>
+            <table className="table">
+              <thead>
+                <tr className="table-head-tr">
+                  <th>Ploughing Date</th>
+                  <th>Sowing Date</th>
+                  <th>Flowering Date:</th>
+                  <th>Pheromone Trap Date</th>
+                  <th>Lure Change Date</th>
+                </tr>
+              </thead>
+              <tbody className="table-body">
+                <tr className="table-body-tr">
+                  <td className="table-body-tr-td">
+                    {farmData?.ploughingDate ? (
+                      <>
+                        {
+                          new Date(farmData.ploughingDate)
+                            .toISOString()
+                            .split("T")[0]
+                        }
+                      </>
+                    ) : (
+                      <>{"-"}</>
+                    )}
+                  </td>
+                  <td className="table-body-tr-td">
+                    {farmData?.sowingDate ? (
+                      <>
+                        {
+                          new Date(farmData.sowingDate)
+                            .toISOString()
+                            .split("T")[0]
+                        }
+                      </>
+                    ) : (
+                      <>{"-"}</>
+                    )}
+                  </td>
+                  <td className="table-body-tr-td">
+                    {farmData?.floweringDate ? (
+                      <>
+                        {
+                          new Date(farmData.floweringDate)
+                            .toISOString()
+                            .split("T")[0]
+                        }
+                      </>
+                    ) : (
+                      <>{"-"}</>
+                    )}
+                  </td>
+                  <td className="table-body-tr-td">
+                    {farmData?.pheromoneTrapDate ? (
+                      <>
+                        {
+                          new Date(farmData.pheromoneTrapDate)
+                            .toISOString()
+                            .split("T")[0]
+                        }
+                      </>
+                    ) : (
+                      <>{"-"}</>
+                    )}
+                  </td>
+                  <td className="table-body-tr-td">
+                    {farmData?.lureChangeDate ? (
+                      <>
+                        {
+                          new Date(farmData.lureChangeDate)
+                            .toISOString()
+                            .split("T")[0]
+                        }
+                      </>
+                    ) : (
+                      <>{"-"}</>
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5">
             {farmData.farm && (
               <div className="flex items-start space-x-3">
