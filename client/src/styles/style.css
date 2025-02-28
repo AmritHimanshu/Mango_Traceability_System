@@ -6,6 +6,10 @@
     @apply p-5 w-full h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-secondaryColor [&::-webkit-scrollbar-thumb]:bg-primarycColor [&::-webkit-scrollbar-thumb]:rounded-full
 }
 
+.page-main-div-certificate{
+    @apply p-5 w-full h-[100vh] overflow-y-auto relative [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-secondaryColor [&::-webkit-scrollbar-thumb]:bg-primarycColor [&::-webkit-scrollbar-thumb]:rounded-full
+}
+
 .btn{
     @apply py-2 px-4 text-[13px] md:text-[15px] rounded-sm font-bold w-full m-auto
 }
