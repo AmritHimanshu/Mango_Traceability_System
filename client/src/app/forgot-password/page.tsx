@@ -241,7 +241,7 @@ function page() {
         <div className="border-4 border-primarycColor rounded-md w-[calc(100%-10%)] m-auto h-full flex">
           <div className="w-[50%] hidden xl:block relative h-full">
             <Image
-              src="/assets/image.jpeg"
+              src="/assets/login_image.jpg"
               alt=""
               fill
               className="object-fill"
