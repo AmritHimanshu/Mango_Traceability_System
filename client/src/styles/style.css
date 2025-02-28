@@ -3,7 +3,7 @@
 }
 
 .page-main-div{
-    @apply p-5 w-full h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-secondaryColors [&::-webkit-scrollbar-thumb]:bg-primarycColor [&::-webkit-scrollbar-thumb]:rounded-full
+    @apply p-5 w-full h-[calc(100vh-56px)] md:h-[calc(100vh-72px)] overflow-y-auto relative [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-secondaryColor [&::-webkit-scrollbar-thumb]:bg-primarycColor [&::-webkit-scrollbar-thumb]:rounded-full
 }
 
 .btn{
