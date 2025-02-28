@@ -242,59 +242,6 @@ function page() {
               </div>
             )}
 
-            {farmData.ploughingDate && (
-              <div className="flex items-star items-center space-x-3">
-                <div className="font-bold">Ploughing Date:</div>
-                <div>
-                  {new Date(farmData.ploughingDate).toISOString().split("T")[0]}
-                </div>
-              </div>
-            )}
-
-            {farmData.sowingDate && (
-              <div className="flex items-start space-x-3">
-                <div className="font-bold">Sowing Date:</div>
-                <div>
-                  {new Date(farmData.sowingDate).toISOString().split("T")[0]}
-                </div>
-              </div>
-            )}
-
-            {farmData.floweringDate && (
-              <div className="flex items-start space-x-3">
-                <div className="font-bold">Flowering Date:</div>
-                <div>
-                  {new Date(farmData.floweringDate).toISOString().split("T")[0]}
-                </div>
-              </div>
-            )}
-
-            {farmData.pheromoneTrapDate && (
-              <div className="flex items-start space-x-3">
-                <div className="font-bold">Pheromone Trap Date:</div>
-                <div>
-                  {
-                    new Date(farmData.pheromoneTrapDate)
-                      .toISOString()
-                      .split("T")[0]
-                  }
-                </div>
-              </div>
-            )}
-
-            {farmData.lureChangeDate && (
-              <div className="flex items-start space-x-3">
-                <div className="font-bold">Lure Change Date:</div>
-                <div>
-                  {
-                    new Date(farmData.lureChangeDate)
-                      .toISOString()
-                      .split("T")[0]
-                  }
-                </div>
-              </div>
-            )}
-
             {farmData.harvest && (
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Harvest Date:</div>
