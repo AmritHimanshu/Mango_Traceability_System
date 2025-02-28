@@ -415,7 +415,7 @@ function page() {
             />
           </div>
 
-          <div className="bg-primarycColor text-white flex-grow flex items-center overflow-y-auto">
+          <div className="bg-primarycColor text-white flex-grow flex items-center overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-primarycColor [&::-webkit-scrollbar-thumb]:bg-secondaryColor [&::-webkit-scrollbar-thumb]:rounded-full">
             {!isOtp ? (
               <>
                 <div className="p-3 w-full xl:w-[400px] m-auto space-y-5">
