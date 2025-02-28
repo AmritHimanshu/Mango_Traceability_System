@@ -16,284 +16,251 @@ function PDFContent({
 }) {
   return (
     <Page size="A4" style={styles.page}>
-      <View style={styles.header}>
-        <View style={styles.spaceY}>
-          <Text style={[styles.title, styles.textBold]}>
-            Mango Traceability System
-          </Text>
-          <Text>Date</Text>
-        </View>
-        <View style={styles.spaceY}>
-          <Text style={styles.textBold}>{userData?.name}</Text>
-          <Text>{userData?.email}</Text>
-        </View>
-      </View>
+      <View style={styles.spaceY}>
+        <View style={styles.firstSection}>
+          <View style={styles.flexCol}>
+            <Text style={styles.textBold}>{farmData?.farm}</Text>
+            <Text style={styles.subTitle}>{farmData?.uniqueID}</Text>
+          </View>
 
-      <View style={styles.header}>
-        <View style={styles.spaceY}>
-          <Text>
-            Farm Name: <Text>{farmData?.farm}</Text>
-          </Text>
-          <Text style={[styles.farmId, styles.spaceY, styles.textBold]}>
-            Farm ID: <Text>{farm_id}</Text>
-          </Text>
-        </View>
-        <View>
-          <Text>
-            Farm Area: <Text>{farmData?.area.toFixed(2)} sq. m</Text>
-          </Text>
-          <Text>
-            Crop Name: <Text>{farmData?.crop}</Text>
-          </Text>
-        </View>
-      </View>
+          <View style={[styles.firstSectionMid, styles.textBold]}>
+            <Text>Mango</Text>
+            <View style={styles.flexRow}>
+              <Text style={styles.straigthLine}></Text>
+              <Text>Traceability</Text>
+              <Text style={styles.straigthLine}></Text>
+            </View>
+            <Text>System</Text>
+          </View>
 
-      <View>
-        <Text style={[styles.textBold, styles.info]}>Farm information: </Text>
-      </View>
-
-      <View style={styles.header}>
-        <View style={styles.spaceY}>
-          <Text>
-            Ploughing Date:{" "}
-            <Text>
-              {farmData?.ploughingDate
-                ? new Date(farmData.ploughingDate).toISOString().split("T")[0]
-                : " - "}
+          <View style={styles.flexCol}>
+            <Text style={styles.textBold}>{farmData?.crop}</Text>
+            <Text style={styles.subTitle}>
+              {new Date(Date.now()).toISOString().split("T")[0]}
             </Text>
-          </Text>
-
-          <Text>
-            Sowing Date:{" "}
-            <Text>
-              {farmData?.sowingDate
-                ? new Date(farmData.sowingDate).toISOString().split("T")[0]
-                : " - "}
-            </Text>
-          </Text>
+          </View>
         </View>
 
         <View style={styles.spaceY}>
-          <Text>
-            Flowering Date:{" "}
-            <Text>
-              {farmData?.floweringDate
-                ? new Date(farmData.floweringDate).toISOString().split("T")[0]
-                : " - "}
-            </Text>
-          </Text>
-
-          <Text>
-            Pheromone Trap Date:{" "}
-            <Text>
-              {farmData?.pheromoneTrapDate
-                ? new Date(farmData.pheromoneTrapDate)
-                    .toISOString()
-                    .split("T")[0]
-                : " - "}
-            </Text>
-          </Text>
-
-          <Text>
-            Lure Change Date:{" "}
-            <Text>
-              {farmData?.lureChangeDate
-                ? new Date(farmData.lureChangeDate).toISOString().split("T")[0]
-                : " - "}
-            </Text>
-          </Text>
-        </View>
-      </View>
-
-      <View style={{ marginTop: 20 }}>
-        <Text style={{ fontWeight: "bold", marginBottom: 5 }}>
-          Weeding Dates:{" "}
-        </Text>
-        <View>
-          <Table style={styles.table}>
-            {farmData?.weedingDate
-              .reduce<string[][]>((acc, date, index) => {
-                if (index % 3 === 0) acc.push([]);
-                acc[acc.length - 1].push(date);
-                return acc;
-              }, [])
-              .map((row, rowIndex) => (
-                <TR
-                  key={rowIndex}
-                  className="hover:bg-gray-50 even:bg-gray-50 odd:bg-white"
-                >
-                  {row.map((date, index) => (
-                    <TD
-                      key={index}
-                      style={{ border: "1px solid #ccc", padding: 5 }}
-                    >
-                      {new Date(date).toISOString().split("T")[0]}
-                    </TD>
-                  ))}
-                </TR>
-              ))}
-          </Table>
-        </View>
-      </View>
-
-      <View>
-        {((farmData?.irrigationDates.artificial &&
-          farmData.irrigationDates.artificial.length > 0) ||
-          (farmData?.irrigationDates.natural &&
-            farmData.irrigationDates.natural.length > 0)) && (
-          <View style={{ marginTop: 20 }}>
-            <Text style={{ fontWeight: "bold", marginBottom: 5 }}>
-              Irrigation Dates:
-            </Text>
+          <View>
             <Table style={styles.table}>
-              <TR style={styles.textBold}>
-                {farmData?.irrigationDates.artificial.length > 0 && (
-                  <TD style={{ border: "1px solid #ccc", padding: 5 }}>
-                    <Text>Artificial</Text>
-                  </TD>
-                )}
-                {farmData?.irrigationDates.natural.length > 0 && (
-                  <TD style={{ border: "1px solid #ccc", padding: 5 }}>
-                    <Text>Natural</Text>
-                  </TD>
-                )}
+              <TR style={styles.tableHeader}>
+                <TD style={styles.tableHeaderData}>Ploughing Date</TD>
+                <TD style={styles.tableHeaderData}>Sowing Date</TD>
+                <TD style={styles.tableHeaderData}>Flowering Date</TD>
+                <TD style={styles.tableHeaderData}>Pheromone Trap Date</TD>
+                <TD style={styles.tableHeaderData}>Lure Change Date</TD>
               </TR>
-              {(() => {
-                const maxLength = Math.max(
-                  farmData?.irrigationDates.artificial.length || 0,
-                  farmData?.irrigationDates.natural.length || 0
-                );
-
-                return Array.from({ length: maxLength }).map((_, index) => (
-                  <TR key={index}>
-                    {farmData?.irrigationDates.artificial.length > 0 && (
-                      <TD
-                        style={{
-                          border: "1px solid #ccc",
-                          padding: 5,
-                        }}
-                      >
-                        {farmData.irrigationDates.artificial[index]
-                          ? new Date(farmData.irrigationDates.artificial[index])
-                              .toISOString()
-                              .split("T")[0]
-                          : "-"}
-                      </TD>
-                    )}
-                    {farmData?.irrigationDates.natural.length > 0 && (
-                      <TD
-                        style={{
-                          border: "1px solid #ccc",
-                          padding: 5,
-                        }}
-                      >
-                        {farmData.irrigationDates.natural[index]
-                          ? new Date(farmData.irrigationDates.natural[index])
-                              .toISOString()
-                              .split("T")[0]
-                          : "-"}
-                      </TD>
-                    )}
-                  </TR>
-                ));
-              })()}
-            </Table>
-          </View>
-        )}
-      </View>
-
-      <View>
-        {farmData?.fertilizerApplications &&
-          farmData.fertilizerApplications.length > 0 && (
-            <View style={{ marginTop: 20 }}>
-              <Text style={{ fontWeight: "bold", marginBottom: 5 }}>
-                Fertilizer Application:
-              </Text>
-              <ListFarmCertificate
-                data={farmData.fertilizerApplications}
-                columns={[
-                  { header: "Date", key: "date" },
-                  { header: "Volume (L)", key: "volume" },
-                ]}
-              />
-            </View>
-          )}
-      </View>
-
-      <View>
-        {farmData?.pesticideApplications &&
-          farmData.pesticideApplications.length > 0 && (
-            <View style={{ marginTop: 20 }}>
-              <Text style={{ fontWeight: "bold", marginBottom: 5 }}>
-                Pesticide Application:
-              </Text>
-              <ListFarmCertificate
-                data={farmData.pesticideApplications}
-                columns={[
-                  { header: "Date", key: "date" },
-                  { header: "Volume (L)", key: "volume" },
-                ]}
-              />
-            </View>
-          )}
-      </View>
-
-      <View>
-        {farmData?.bagging && farmData.bagging.length > 0 && (
-          <View style={{ marginTop: 20 }}>
-            <Text style={{ fontWeight: "bold", marginBottom: 5 }}>
-              Bagging:
-            </Text>
-            <ListFarmCertificate
-              data={farmData.bagging}
-              columns={[
-                { header: "Date", key: "date" },
-                { header: "Quantity", key: "quantity" },
-              ]}
-            />
-          </View>
-        )}
-      </View>
-
-      <View>
-        {farmData?.specialCare && farmData.specialCare.length > 0 && (
-          <View style={{ marginTop: 20 }}>
-            <Text style={{ fontWeight: "bold", marginBottom: 5 }}>
-              Special care:
-            </Text>
-            <ListFarmCertificate
-              data={farmData.specialCare}
-              columns={[
-                { header: "Date", key: "date" },
-                { header: "Name", key: "name" },
-              ]}
-            />
-          </View>
-        )}
-      </View>
-
-      <View>
-        {farmData?.harvest && (
-          <View style={{ marginTop: 20 }}>
-            <Text>
-              Harvest:{" "}
-              <Text>
-                <Text>Date: </Text>
-                <Text>
-                  {farmData?.harvest
-                    ? new Date(farmData.harvest.date)
+              <TR>
+                <TD style={styles.tableBodyData}>
+                  {farmData?.ploughingDate
+                    ? new Date(farmData.ploughingDate)
                         .toISOString()
                         .split("T")[0]
                     : " - "}
-                </Text>
-              </Text>
-              <Text>
-                <Text>Yield: </Text>
-                <Text>{farmData?.harvest.yield}</Text>
-              </Text>
-            </Text>
+                </TD>
+                <TD style={styles.tableBodyData}>
+                  {farmData?.sowingDate
+                    ? new Date(farmData.sowingDate).toISOString().split("T")[0]
+                    : " - "}
+                </TD>
+                <TD style={styles.tableBodyData}>
+                  {farmData?.floweringDate
+                    ? new Date(farmData.floweringDate)
+                        .toISOString()
+                        .split("T")[0]
+                    : " - "}
+                </TD>
+                <TD style={styles.tableBodyData}>
+                  {farmData?.pheromoneTrapDate
+                    ? new Date(farmData.pheromoneTrapDate)
+                        .toISOString()
+                        .split("T")[0]
+                    : " - "}
+                </TD>
+                <TD style={styles.tableBodyData}>
+                  {farmData?.lureChangeDate
+                    ? new Date(farmData.lureChangeDate)
+                        .toISOString()
+                        .split("T")[0]
+                    : " - "}
+                </TD>
+              </TR>
+            </Table>
           </View>
-        )}
+
+          <View style={styles.gridContainer}>
+            <View style={[styles.gridItem, styles.flexCol]}>
+              <Text style={styles.subTitle}>Weeding Dates</Text>
+              <Table style={styles.table}>
+                {farmData?.weedingDate
+                  .reduce<string[][]>((acc, date, index) => {
+                    if (index % 3 === 0) acc.push([]);
+                    acc[acc.length - 1].push(date);
+                    return acc;
+                  }, [])
+                  .map((row, rowIndex) => (
+                    <TR key={rowIndex}>
+                      {row.map((date, index) => (
+                        <TD
+                          key={index}
+                          style={styles.tableBodyData}
+                        >
+                          {new Date(date).toISOString().split("T")[0]}
+                        </TD>
+                      ))}
+                    </TR>
+                  ))}
+              </Table>
+            </View>
+
+            <View style={[styles.gridItem, styles.flexCol]}>
+              <Text style={styles.subTitle}>Irrigation Dates</Text>
+              {((farmData?.irrigationDates.artificial &&
+                farmData.irrigationDates.artificial.length > 0) ||
+                (farmData?.irrigationDates.natural &&
+                  farmData.irrigationDates.natural.length > 0)) && (
+                <Table style={styles.table}>
+                  <TR style={styles.tableHeader}>
+                    {farmData?.irrigationDates.artificial.length > 0 && (
+                      <TD style={styles.tableHeaderData}>
+                        <Text>Artificial</Text>
+                      </TD>
+                    )}
+                    {farmData?.irrigationDates.natural.length > 0 && (
+                      <TD style={styles.tableHeaderData}>
+                        <Text>Natural</Text>
+                      </TD>
+                    )}
+                  </TR>
+                  {(() => {
+                    const maxLength = Math.max(
+                      farmData?.irrigationDates.artificial.length || 0,
+                      farmData?.irrigationDates.natural.length || 0
+                    );
+
+                    return Array.from({ length: maxLength }).map((_, index) => (
+                      <TR key={index}>
+                        {farmData?.irrigationDates.artificial.length > 0 && (
+                          <TD style={styles.tableBodyData}>
+                            {farmData.irrigationDates.artificial[index]
+                              ? new Date(
+                                  farmData.irrigationDates.artificial[index]
+                                )
+                                  .toISOString()
+                                  .split("T")[0]
+                              : "-"}
+                          </TD>
+                        )}
+                        {farmData?.irrigationDates.natural.length > 0 && (
+                          <TD style={styles.tableBodyData}>
+                            {farmData.irrigationDates.natural[index]
+                              ? new Date(
+                                  farmData.irrigationDates.natural[index]
+                                )
+                                  .toISOString()
+                                  .split("T")[0]
+                              : "-"}
+                          </TD>
+                        )}
+                      </TR>
+                    ));
+                  })()}
+                </Table>
+              )}
+            </View>
+
+            <View style={[styles.gridItem, styles.flexCol]}>
+              {farmData?.fertilizerApplications &&
+                farmData.fertilizerApplications.length > 0 && (
+                  <>
+                    <Text style={styles.subTitle}>Fertilizer Application</Text>
+
+                    <ListFarmCertificate
+                      data={farmData.fertilizerApplications}
+                      columns={[
+                        { header: "Date", key: "date" },
+                        { header: "Volume (L)", key: "volume" },
+                      ]}
+                    />
+                  </>
+                )}
+            </View>
+
+            <View style={[styles.gridItem, styles.flexCol]}>
+              {farmData?.pesticideApplications &&
+                farmData.pesticideApplications.length > 0 && (
+                  <>
+                    <Text style={styles.subTitle}>Pesticide Application</Text>
+
+                    <ListFarmCertificate
+                      data={farmData.pesticideApplications}
+                      columns={[
+                        { header: "Date", key: "date" },
+                        { header: "Volume (L)", key: "volume" },
+                      ]}
+                    />
+                  </>
+                )}
+            </View>
+
+            <View style={[styles.gridItem, styles.flexCol]}>
+              {farmData?.bagging && farmData.bagging.length > 0 && (
+                <>
+                  <Text style={styles.subTitle}>Bagging</Text>
+                  <ListFarmCertificate
+                    data={farmData.bagging}
+                    columns={[
+                      { header: "Date", key: "date" },
+                      { header: "Quantity", key: "quantity" },
+                    ]}
+                  />
+                </>
+              )}
+            </View>
+
+            <View style={[styles.gridItem, styles.flexCol]}>
+              {farmData?.specialCare && farmData.specialCare.length > 0 && (
+                <>
+                  <Text style={styles.subTitle}>Special care</Text>
+                  <ListFarmCertificate
+                    data={farmData.specialCare}
+                    columns={[
+                      { header: "Date", key: "date" },
+                      { header: "Name", key: "name" },
+                    ]}
+                  />
+                </>
+              )}
+            </View>
+
+            <View style={[styles.gridItem, styles.flexCol]}>
+              {farmData?.harvest && (
+                <>
+                  <Text style={styles.subTitle}>Harvest</Text>
+                  <Table style={styles.table}>
+                    <TR style={styles.tableHeader}>
+                      <TD style={styles.tableHeaderData}>Date</TD>
+                      <TD style={styles.tableHeaderData}>Yield</TD>
+                    </TR>
+                    <TR>
+                      <TD style={styles.tableBodyData}>
+                        {
+                          new Date(farmData.harvest.date)
+                            .toISOString()
+                            .split("T")[0]
+                        }
+                      </TD>
+                      <TD style={styles.tableBodyData}>
+                        {farmData?.harvest.yield}
+                      </TD>
+                    </TR>
+                  </Table>
+                </>
+              )}
+            </View>
+          </View>
+        </View>
       </View>
     </Page>
   );
