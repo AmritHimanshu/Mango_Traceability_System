@@ -21,7 +21,7 @@ function HomeCard({ data }: farmerHomeCardProps) {
         </div>
         <div>
           <button
-            className="!w-[70px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-85 duration-200"
+            className="!w-[70px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
             onClick={() => router.push(`${FARMS}/${data.uniqueID}`)}
           >
             view
