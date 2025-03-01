@@ -133,7 +133,10 @@ function page() {
         <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-50 flex items-center justify-center"></div>
       </div>
 
-      <div className="p-5 space-y-3">
+      <div className="my-5 !space-y-5 p-2">
+        <div className="text-center font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-black">
+          Create Your <span className="text-customGreen">Farm</span>
+        </div>
         <div className="space-y-10">
           <div className="flex items-center justify-between flex-col space-y-7 md:flex-row md:space-y-0">
             <div className="space-y-2 w-[100%] md:w-[40%] xl:w-[20%]">

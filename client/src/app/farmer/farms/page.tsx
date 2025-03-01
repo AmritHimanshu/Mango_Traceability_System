@@ -123,7 +123,7 @@ function page() {
         <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-50 flex items-center justify-center">
           <div className="text-center">
             <button
-              className="!w-[220px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customOrange bg-opacity-90 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+              className="!w-[170px] lg:!w-[220px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customOrange bg-opacity-90 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
               onClick={() => router.push(CREATE_FARM)}
             >
               Click here to Add farm
