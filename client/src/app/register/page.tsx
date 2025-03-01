@@ -526,7 +526,7 @@ function page() {
 
                   <div className="text-center">
                     <button
-                      className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                      className="!w-[70px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-85 duration-200"
                       onClick={(e) => sendOTP(e)}
                     >
                       Register
@@ -565,7 +565,7 @@ function page() {
 
                   <div className="flex items-center justify-between">
                     <button
-                      className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-[#6b7280] bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                      className="!w-[70px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-[#6b7280] text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-85 duration-200"
                       onClick={() => reSendOTP()}
                     >
                       RESEND OTP
@@ -573,14 +573,14 @@ function page() {
 
                     {!flagPhone ? (
                       <button
-                        className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                        className="!w-[70px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-85 duration-200"
                         onClick={() => verifyOtp()}
                       >
                         VERIFY
                       </button>
                     ) : (
                       <button
-                        className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                        className="!w-[70px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-85 duration-200"
                         disabled
                       >
                         VERIFYING...
