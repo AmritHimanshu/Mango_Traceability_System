@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import {
@@ -11,7 +12,6 @@ import {
 import { FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import { Farm } from "@/utils/Types/interfaces";
 import dynamic from "next/dynamic";
-import Heading from "@/app/components/common/Heading";
 const Map = dynamic(() => import("@/app/components/farmer/MapCoordinates"), {
   ssr: false,
 });
@@ -143,14 +143,22 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      {farm?.farm && <Heading text={farm.farm} />}
+      <div className="h-[500px] md:h-[600px] xl:h-[400px] relative">
+        <Image
+          src="/assets/plant.jpg"
+          alt="Lychee Fruit"
+          layout="fill"
+          objectFit="cover"
+        />
+        <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-50 flex items-center justify-start"></div>
+      </div>
 
       {farm && (
-        <>
+        <div className="my-5 max-w-[80%] m-auto text-black">
           <div className="my-3 text-right">
             <button
               onClick={() => setIsDelete(true)}
-              className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+              className="!w-[70px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-red-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
             >
               Delete
             </button>
@@ -413,14 +421,14 @@ function page() {
 
             <div className="text-center">
               <button
-                className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                className="!w-[120px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
                 onClick={handleOnEdit}
               >
                 Add data
               </button>
             </div>
           </div>
-        </>
+        </div>
       )}
 
       {isDelete && (
