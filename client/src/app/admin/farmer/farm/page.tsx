@@ -132,16 +132,33 @@ function page() {
           <Map coordinates={farmData.geoFenceData} height="300px" />
 
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="font-bold">ID:</div>
-              <div className="text-sm">{farmData.uniqueID}</div>
+            <div>
+              {farmData.farm && (
+                <div className="flex items-start space-x-3">
+                  <div className="font-bold">Farm Name:</div>
+                  <div>{farmData.farm}</div>
+                </div>
+              )}
+
+              {farmData.crop && (
+                <div className="flex items-start space-x-3">
+                  <div className="font-bold">Crop Name:</div>
+                  <div>{farmData.crop}</div>
+                </div>
+              )}
             </div>
-            {farmData.area && (
+            <div>
               <div className="flex items-center space-x-3">
-                <div className="font-bold">Area:</div>
-                <div>{farmData.area.toFixed(2)} sq. m</div>
+                <div className="font-bold">ID:</div>
+                <div className="text-sm">{farmData.uniqueID}</div>
               </div>
-            )}
+              {farmData.area && (
+                <div className="flex items-center space-x-3">
+                  <div className="font-bold">Area:</div>
+                  <div>{farmData.area.toFixed(2)} sq. m</div>
+                </div>
+              )}
+            </div>
           </div>
 
           <div>
@@ -225,46 +242,6 @@ function page() {
                 </tr>
               </tbody>
             </table>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5">
-            {farmData.farm && (
-              <div className="flex items-start space-x-3">
-                <div className="font-bold">Farm Name:</div>
-                <div>{farmData.farm}</div>
-              </div>
-            )}
-
-            {farmData.crop && (
-              <div className="flex items-start space-x-3">
-                <div className="font-bold">Crop Name:</div>
-                <div>{farmData.crop}</div>
-              </div>
-            )}
-
-            {farmData.harvest && (
-              <div className="flex items-start flex-col space-y-3">
-                <div className="font-bold">Harvest Date:</div>
-                <div>
-                  {farmData.harvest.date && (
-                    <div className="flex space-x-5">
-                      <div>Date:</div>
-                      <div>
-                        {
-                          new Date(farmData.harvest.date)
-                            .toISOString()
-                            .split("T")[0]
-                        }
-                      </div>
-                    </div>
-                  )}
-                  <div className="flex space-x-5">
-                    <div>Yield:</div>
-                    <div>{farmData.harvest.yield}</div>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -416,6 +393,34 @@ function page() {
                     { header: "Name", key: "name" },
                   ]}
                 />
+              </div>
+            )}
+
+            {farmData.harvest && (
+              <div className="flex items-start flex-col space-y-3">
+                <div className="font-bold">Harvest:</div>
+                <table className="table">
+                  <thead>
+                    <tr className="table-head-tr">
+                      <th>Date</th>
+                      <th>Yield (kg)</th>
+                    </tr>
+                  </thead>
+                  <tbody className="table-body">
+                    <tr className="table-body-tr">
+                      <td className="table-body-tr-td">
+                        {
+                          new Date(farmData.harvest.date)
+                            .toISOString()
+                            .split("T")[0]
+                        }
+                      </td>
+                      <td className="table-body-tr-td">
+                        {farmData.harvest.yield}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             )}
           </div>
