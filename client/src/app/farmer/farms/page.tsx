@@ -10,6 +10,7 @@ import { FarmList } from "@/utils/Types/interfaces";
 import ListFarmTable from "@/app/components/admin/ListFarmTable";
 import Heading from "@/app/components/common/Heading";
 import Message from "@/app/components/common/Message";
+import Image from "next/image";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -113,15 +114,23 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <Heading text="FARMS" />
-
-      <div className="my-5 text-center">
+      <div className="h-[500px] md:h-[600px] xl:h-[400px] relative">
+        <Image
+          src="/assets/lychee-fruit.jpg"
+          alt="Lychee Fruit"
+          layout="fill"
+          objectFit="cover"
+        />
+        <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-50 flex items-center justify-center">
+        <div className="text-center">
         <button
-          className="!w-[130px] md:!w-[150px] lg:!w-[200px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+          className="!w-[130px] md:!w-[150px] lg:!w-[200px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-customOrange bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
           onClick={() => router.push(CREATE_FARM)}
         >
           Click here to Add farm
         </button>
+      </div>
+        </div>
       </div>
 
       <div className="my-3">
