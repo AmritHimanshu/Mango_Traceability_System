@@ -10,7 +10,6 @@ import { LOGIN } from "@/utils/Paths/paths";
 import { FewFarmList } from "@/utils/Types/interfaces";
 import HomeCard from "../components/farmer/HomeCard";
 import Message from "../components/common/Message";
-import Footer from "../components/common/Footer";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -130,8 +129,6 @@ function page() {
         </div>
       )}
       </div>
-
-      <Footer/>
     </div>
   );
 }
