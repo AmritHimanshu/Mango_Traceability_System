@@ -133,7 +133,8 @@ function page() {
         </div>
       </div>
 
-      <div className="my-3">
+      <div className="my-5 !space-y-5 p-2">
+      <div className="text-center font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-black">Your <span className="text-customGreen">Farms</span></div>
         {farms.length > 0 ? (
           <ListFarmTable farms={farms} handleClick={handleSelectedFarm} />
         ) : (
