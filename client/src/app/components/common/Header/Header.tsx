@@ -66,7 +66,7 @@ function Header() {
       >
         <div className="py-3 px-5 flex items-center justify-between">
           {!isMenu ? (
-            <Link href="/">
+            <Link href="/" className="hover:text-customOrange">
               <div className="flex items-center justify-start">
                 <div className="flex flex-col items-center">
                   <p className="text-xl font-bold">MTS</p>
