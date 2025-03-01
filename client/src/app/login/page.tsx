@@ -200,7 +200,7 @@ function page() {
 
               <div className="text-center">
                 <button
-                  className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                  className="!w-[130px] text-lg lg:text-xl py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
                   onClick={(e) => handleFormData(e)}
                 >
                   Login
