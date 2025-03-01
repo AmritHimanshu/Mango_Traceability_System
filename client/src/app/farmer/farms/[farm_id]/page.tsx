@@ -32,7 +32,7 @@ function page() {
 
   const [farm, setFarm] = useState<Farm>();
 
-  const fetchFarmData = async () => {
+  const fetchfarm = async () => {
     if (loadingBarRef.current) {
       loadingBarRef.current.continuousStart();
     }
@@ -81,7 +81,7 @@ function page() {
   };
 
   useEffect(() => {
-    fetchFarmData();
+    fetchfarm();
   }, []);
 
   const handleOnEdit = () => {
@@ -153,8 +153,12 @@ function page() {
         />
         <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-70 flex items-center justify-start">
           <div className="w-[80%] m-auto">
-            <div className="text-[30px] md:text-[50px] font-bold text-white">Your Farm</div>
-            <div className="text-customOrange text-[20px] md:text-[30px]">{farm?.farm}</div>
+            <div className="text-[30px] md:text-[50px] font-bold text-white">
+              Your Farm
+            </div>
+            <div className="text-customOrange text-[20px] md:text-[30px]">
+              {farm?.farm}
+            </div>
           </div>
         </div>
       </div>
@@ -174,105 +178,116 @@ function page() {
             <Map coordinates={farm.geoFenceData} height="300px" />
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <div className="font-bold">ID:</div>
-                <div className="text-sm">{farm.uniqueID}</div>
+              <div>
+                {farm.farm && (
+                  <div className="flex items-start space-x-3">
+                    <div className="font-bold">Farm Name:</div>
+                    <div>{farm.farm}</div>
+                  </div>
+                )}
+
+                {farm.crop && (
+                  <div className="flex items-start space-x-3">
+                    <div className="font-bold">Crop Name:</div>
+                    <div>{farm.crop}</div>
+                  </div>
+                )}
               </div>
-              {farm.area && (
+              <div>
                 <div className="flex items-center space-x-3">
-                  <div className="font-bold">Area:</div>
-                  <div>{farm.area.toFixed(2)} sq. m</div>
+                  <div className="font-bold">ID:</div>
+                  <div className="text-sm">{farm.uniqueID}</div>
                 </div>
-              )}
+                {farm.area && (
+                  <div className="flex items-center space-x-3">
+                    <div className="font-bold">Area:</div>
+                    <div>{farm.area.toFixed(2)} sq. m</div>
+                  </div>
+                )}
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5">
-              {farm.farm && (
-                <div className="flex items-start space-x-3">
-                  <div className="font-bold">Farm Name:</div>
-                  <div>{farm.farm}</div>
-                </div>
-              )}
-
-              {farm.crop && (
-                <div className="flex items-start space-x-3">
-                  <div className="font-bold">Crop Name:</div>
-                  <div>{farm.crop}</div>
-                </div>
-              )}
-
-              {farm.ploughingDate && (
-                <div className="flex items-star items-center space-x-3">
-                  <div className="font-bold">Ploughing Date:</div>
-                  <div>
-                    {new Date(farm.ploughingDate).toISOString().split("T")[0]}
-                  </div>
-                </div>
-              )}
-
-              {farm.sowingDate && (
-                <div className="flex items-start space-x-3">
-                  <div className="font-bold">Sowing Date:</div>
-                  <div>
-                    {new Date(farm.sowingDate).toISOString().split("T")[0]}
-                  </div>
-                </div>
-              )}
-
-              {farm.floweringDate && (
-                <div className="flex items-start space-x-3">
-                  <div className="font-bold">Flowering Date:</div>
-                  <div>
-                    {new Date(farm.floweringDate).toISOString().split("T")[0]}
-                  </div>
-                </div>
-              )}
-
-              {farm.pheromoneTrapDate && (
-                <div className="flex items-start space-x-3">
-                  <div className="font-bold">Pheromone Trap Date:</div>
-                  <div>
-                    {
-                      new Date(farm.pheromoneTrapDate)
-                        .toISOString()
-                        .split("T")[0]
-                    }
-                  </div>
-                </div>
-              )}
-
-              {farm.lureChangeDate && (
-                <div className="flex items-start space-x-3">
-                  <div className="font-bold">Lure Change Date:</div>
-                  <div>
-                    {new Date(farm.lureChangeDate).toISOString().split("T")[0]}
-                  </div>
-                </div>
-              )}
-
-              {farm.harvest && (
-                <div className="flex items-start flex-col space-y-3">
-                  <div className="font-bold">Harvest Date:</div>
-                  <div>
-                    {farm.harvest.date && (
-                      <div className="flex space-x-5">
-                        <div>Date:</div>
-                        <div>
+            <div>
+              <table className="table">
+                <thead>
+                  <tr className="table-head-tr">
+                    <th>Ploughing Date</th>
+                    <th>Sowing Date</th>
+                    <th>Flowering Date:</th>
+                    <th>Pheromone Trap Date</th>
+                    <th>Lure Change Date</th>
+                  </tr>
+                </thead>
+                <tbody className="table-body">
+                  <tr className="table-body-tr">
+                    <td className="table-body-tr-td">
+                      {farm?.ploughingDate ? (
+                        <>
                           {
-                            new Date(farm.harvest.date)
+                            new Date(farm.ploughingDate)
                               .toISOString()
                               .split("T")[0]
                           }
-                        </div>
-                      </div>
-                    )}
-                    <div className="flex space-x-5">
-                      <div>Yield:</div>
-                      <div>{farm.harvest.yield}</div>
-                    </div>
-                  </div>
-                </div>
-              )}
+                        </>
+                      ) : (
+                        <>{"-"}</>
+                      )}
+                    </td>
+                    <td className="table-body-tr-td">
+                      {farm?.sowingDate ? (
+                        <>
+                          {
+                            new Date(farm.sowingDate)
+                              .toISOString()
+                              .split("T")[0]
+                          }
+                        </>
+                      ) : (
+                        <>{"-"}</>
+                      )}
+                    </td>
+                    <td className="table-body-tr-td">
+                      {farm?.floweringDate ? (
+                        <>
+                          {
+                            new Date(farm.floweringDate)
+                              .toISOString()
+                              .split("T")[0]
+                          }
+                        </>
+                      ) : (
+                        <>{"-"}</>
+                      )}
+                    </td>
+                    <td className="table-body-tr-td">
+                      {farm?.pheromoneTrapDate ? (
+                        <>
+                          {
+                            new Date(farm.pheromoneTrapDate)
+                              .toISOString()
+                              .split("T")[0]
+                          }
+                        </>
+                      ) : (
+                        <>{"-"}</>
+                      )}
+                    </td>
+                    <td className="table-body-tr-td">
+                      {farm?.lureChangeDate ? (
+                        <>
+                          {
+                            new Date(farm.lureChangeDate)
+                              .toISOString()
+                              .split("T")[0]
+                          }
+                        </>
+                      ) : (
+                        <>{"-"}</>
+                      )}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-14">
@@ -421,6 +436,34 @@ function page() {
                       { header: "Name", key: "name" },
                     ]}
                   />
+                </div>
+              )}
+
+              {farm.harvest && (
+                <div className="flex items-start flex-col space-y-3">
+                  <div className="font-bold">Harvest:</div>
+                  <table className="table">
+                    <thead>
+                      <tr className="table-head-tr">
+                        <th>Date</th>
+                        <th>Yield (kg)</th>
+                      </tr>
+                    </thead>
+                    <tbody className="table-body">
+                      <tr className="table-body-tr">
+                        <td className="table-body-tr-td">
+                          {
+                            new Date(farm.harvest.date)
+                              .toISOString()
+                              .split("T")[0]
+                          }
+                        </td>
+                        <td className="table-body-tr-td">
+                          {farm.harvest.yield}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               )}
             </div>
