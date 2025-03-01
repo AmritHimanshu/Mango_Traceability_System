@@ -2,13 +2,13 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
 import { FARMER_NEW_FARM } from "@/utils/Apis/api";
 import { FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
 import { useAppSelector } from "@/store/store";
-import Heading from "@/app/components/common/Heading";
 import Message from "@/app/components/common/Message";
 const Map = dynamic(() => import("@/app/components/farmer/Map"), {
   ssr: false,
@@ -123,7 +123,15 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <Heading text="Create New Farm" />
+      <div className="h-[500px] md:h-[600px] xl:h-[400px] relative">
+        <Image
+          src="/assets/lychee-fruit.jpg"
+          alt="Lychee Fruit"
+          layout="fill"
+          objectFit="cover"
+        />
+        <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-50 flex items-center justify-center"></div>
+      </div>
 
       <div className="p-5 space-y-3">
         <div className="space-y-10">
