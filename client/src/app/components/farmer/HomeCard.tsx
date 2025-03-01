@@ -8,7 +8,7 @@ import { FARMS } from "@/utils/Paths/paths";
 
 function HomeCard({ data }: farmerHomeCardProps) {
   const router = useRouter();
-console.log(data)
+
   return (
     <div className="w-full rounded-md overflow-hidden space-y-2">
       <MapCoordinates coordinates={data.geoFenceData} height="200px" />

@@ -9,7 +9,6 @@ import { FARMER_FETCH_FEW_FARMS_LIST } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
 import { FewFarmList } from "@/utils/Types/interfaces";
 import HomeCard from "../components/farmer/HomeCard";
-import Heading from "../components/common/Heading";
 import Message from "../components/common/Message";
 
 function page() {
@@ -93,13 +92,28 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      {userState && showWelcome && (
-        <div className="text-center p-2 bg-yellow-300 text-black font-bold shadow-md mb-5">
-          Welcome {userState.name}!
-        </div>
-      )}
+      <div className="h-[100vh] relative">
+        <video
+          autoPlay
+          loop
+          muted
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/assets/bg_video.mp4" type="video/mp4" />
+        </video>
 
-      <Heading text="OVERVIEW" />
+        <div className="absolute top-0 w-full h-full bg-neutral-950 bg-opacity-35 flex items-center justify-center text-white">
+          <div className="flex items-center justify-between w-[60%]">
+            <div className="w-[50%]">
+              <div className="text-[85px] font-bold">Pure Organic Products</div>
+            </div>
+
+            <div className="w-[40%] text-[20px]">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cupiditate soluta asperiores ipsam at quaerat modi quia ex id inventore? Vero.
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-5">
         {farmList.map((farm, index) => (

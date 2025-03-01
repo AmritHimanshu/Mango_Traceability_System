@@ -22,10 +22,24 @@ function Header() {
 
   const [isClient, setIsClient] = useState(false);
   const [isMenu, setIsMenu] = useState(false);
+  const [scrolling, setScrolling] = useState(false);
 
   const handleIsMenuState = () => {
     setIsMenu(false);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolling(true);
+      } else {
+        setScrolling(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, true);
+    return () => window.removeEventListener("scroll", handleScroll, true);
+  }, []);
 
   useEffect(() => {
     setIsClient(true);
@@ -45,7 +59,11 @@ function Header() {
 
   return (
     <>
-      <div className="sticky top-0 z-[9999] bg-primarycColor text-white shadow-md">
+      <div
+        className={`fixed w-full top-0 z-[9999] transition-all duration-300 ${
+          scrolling ? "bg-white shadow-md text-black" : "bg-transparent text-white"
+        }`}
+      >
         <div className="py-3 px-5 flex items-center justify-between">
           {!isMenu ? (
             <Link href="/">
@@ -82,7 +100,7 @@ function Header() {
                     admin.map((list, index) => (
                       <div
                         key={index}
-                        className={`cursor-pointer text-gray-50 hover:text-white duration-300 ${
+                        className={`cursor-pointer ${
                           pathname === list.path || path === list.base_path
                             ? "font-bold text-[16px] text-white"
                             : "bg-transparent"
@@ -99,7 +117,7 @@ function Header() {
                         key={index}
                         className={`cursor-pointer ${
                           pathname === list.path || path === list.base_path
-                            ? "font-bold text-[16px]"
+                            ? "font-bold text-[16px] text-customOrange"
                             : "bg-transparent"
                         }`}
                         onClick={() => router.push(list.path)}
