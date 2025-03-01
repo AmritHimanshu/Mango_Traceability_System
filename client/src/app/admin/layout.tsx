@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Header from "../components/common/Header/Header";
+import Footer from "../components/common/Footer";
 
 export const metadata: Metadata = {
   title: "Mango Traceability System",
@@ -10,9 +11,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <Header />
-      <div className="flex">
-        {children}
-      </div>
+      <div className="flex">{children}</div>
+      <Footer />
     </div>
   );
 }
