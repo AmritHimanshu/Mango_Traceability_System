@@ -10,20 +10,23 @@ function HomeCard({ data }: farmerHomeCardProps) {
   const router = useRouter();
 
   return (
-    <div className="w-[350px] rounded-md overflow-hidden space-y-2">
+    <div className="w-[350px] bg-white p-3 shadow-lg rounded-md space-y-3">
       <MapCoordinates coordinates={data.geoFenceData} height="200px" />
 
-      <div className="flex justify-between">
+      <div className="flex items-center justify-between">
         <div>
+          <div className="text-sm font-bold text-gray-500">{data.uniqueID}</div>
           <div className="font-bold">{data.farm}</div>
-          <div className="text-[13px]">{data.crop}</div>
+          <div className="text-base">{data.crop}</div>
         </div>
-        <button
-          className="px-3 text-center bg-green-600 bg-opacity-90 hover:bg-opacity-100 text-white duration-200"
-          onClick={() => router.push(`${FARMS}/${data.uniqueID}`)}
-        >
-          view
-        </button>
+        <div>
+          <button
+            className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+            onClick={() => router.push(`${FARMS}/${data.uniqueID}`)}
+          >
+            view
+          </button>
+        </div>
       </div>
     </div>
   );

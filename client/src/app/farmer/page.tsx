@@ -10,7 +10,6 @@ import { LOGIN } from "@/utils/Paths/paths";
 import { FewFarmList } from "@/utils/Types/interfaces";
 import HomeCard from "../components/farmer/HomeCard";
 import Message from "../components/common/Message";
-import Footer from "../components/common/Footer";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -121,15 +120,13 @@ function page() {
       {farmList.length > 0 && (
         <div className="my-5 !space-y-5 p-2">
           <div className="text-center font-bold text-2xl text-black">Recent <span className="text-customGreen">Farms</span></div>
-          <div className="flex flex-row items-center justify-evenly flex-wrap max-w-[1000px] m-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-fit mx-auto justify-center">
             {farmList.map((farm, index) => (
               <HomeCard key={index} data={farm} />
             ))}
           </div>
         </div>
       )}
-
-      <Footer />
     </div>
   );
 }
