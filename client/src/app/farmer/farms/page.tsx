@@ -8,7 +8,6 @@ import { CREATE_FARM, FARMS, LOGIN } from "@/utils/Paths/paths";
 import { FARMER_FETCH_FARMS_LIST } from "@/utils/Apis/api";
 import { FarmList } from "@/utils/Types/interfaces";
 import ListFarmTable from "@/app/components/admin/ListFarmTable";
-import Heading from "@/app/components/common/Heading";
 import Message from "@/app/components/common/Message";
 import Image from "next/image";
 
