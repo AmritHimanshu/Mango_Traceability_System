@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
 import { useAppSelector } from "@/store/store";
-import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
+import CustomLoadingBar from "../components/common/loadingBar/CustomLoadingBar";
 import { FARMER_FETCH_FEW_FARMS_LIST } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
 import { FewFarmList } from "@/utils/Types/interfaces";

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { LoadingBarRef } from "react-top-loading-bar";
-import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
+import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
 import {
   FARMER_DELETE_FARM_DATA,
   FARMER_FETCH_FARM_DATA,

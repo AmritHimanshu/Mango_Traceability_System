@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { setUserState } from "@/store/features/userSlice";
 import { useAppDispatch } from "@/store/store";
 import { LoadingBarRef } from "react-top-loading-bar";
-import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
+import CustomLoadingBar from "../components/common/loadingBar/CustomLoadingBar";
 import { LOGOUT_USER, SIGNIN_USER } from "@/utils/Apis/api";
 import { FORGOT_PASSWORD, REGISTER } from "@/utils/Paths/paths";
 import Message from "../components/common/Message";

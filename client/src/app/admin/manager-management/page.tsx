@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
-import CustomLoadingBar from "../../components/loadingBar/CustomLoadingBar";
+import CustomLoadingBar from "../../components/common/loadingBar/CustomLoadingBar";
 import { User } from "@/utils/Types/interfaces";
 import { LOGIN, MANAGER } from "@/utils/Paths/paths";
 import { ADMIN_MANAGER_MANAGEMENT } from "@/utils/Apis/api";

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Header from "../components/Header/Header";
+import Header from "../components/common/Header/Header";
 
 export const metadata: Metadata = {
   title: "Mango Traceability System",

@@ -6,7 +6,7 @@ import { FarmList } from "@/utils/Types/interfaces";
 import { LoadingBarRef } from "react-top-loading-bar";
 import { ADMIN_FARM, LOGIN } from "@/utils/Paths/paths";
 import { ADMIN_FETCH_FARMER_FARM_LIST } from "@/utils/Apis/api";
-import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
+import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
 import Message from "@/app/components/common/Message";
 import Heading from "@/app/components/common/Heading";
 import ListFarmTable from "@/app/components/admin/ListFarmTable";

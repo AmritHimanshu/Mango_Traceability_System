@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ADMIN_FETCH_FARMER_FARM_DATA } from "@/utils/Apis/api";
 import { LoadingBarRef } from "react-top-loading-bar";
-import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
+import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
 import {
   ADMIN_FARM,
   CERTIFICATE,

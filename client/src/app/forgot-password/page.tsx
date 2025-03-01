@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
-import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
+import CustomLoadingBar from "../components/common/loadingBar/CustomLoadingBar";
 import {
   FORGOT_SEND_OTP_EMAIL,
   UPDATE_PASSWORD,

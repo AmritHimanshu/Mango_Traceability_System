@@ -8,7 +8,7 @@ import dynamic from "next/dynamic";
 import { CERTIFICATE_FARM_DETAIL } from "@/utils/Apis/api";
 import { isMobile } from "@/utils/IsMobile/isMobile";
 import ListFarmApplicationsData from "@/app/components/farmer/ListFarmApplicationsData";
-import CustomLoadingBar from "@/app/components/loadingBar/CustomLoadingBar";
+import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
 const Certificate = dynamic(() => import("@/app/certificate/Certificate"), {
   ssr: false,
 });

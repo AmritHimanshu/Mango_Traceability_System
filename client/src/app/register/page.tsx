@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/store/store";
 import { setUserState } from "@/store/features/userSlice";
 import { LoadingBarRef } from "react-top-loading-bar";
-import CustomLoadingBar from "../components/loadingBar/CustomLoadingBar";
+import CustomLoadingBar from "../components/common/loadingBar/CustomLoadingBar";
 import {
   LOGOUT_USER,
   REGISTER_USER,
