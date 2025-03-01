@@ -121,19 +121,21 @@ function page() {
           objectFit="cover"
         />
         <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-50 flex items-center justify-center">
-        <div className="text-center">
-        <button
-          className="!w-[220px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customOrange bg-opacity-90 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
-          onClick={() => router.push(CREATE_FARM)}
-        >
-          Click here to Add farm
-        </button>
-      </div>
+          <div className="text-center">
+            <button
+              className="!w-[220px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customOrange bg-opacity-90 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+              onClick={() => router.push(CREATE_FARM)}
+            >
+              Click here to Add farm
+            </button>
+          </div>
         </div>
       </div>
 
       <div className="my-5 !space-y-5 p-2">
-      <div className="text-center font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-black">Your <span className="text-customGreen">Farms</span></div>
+        <div className="text-center font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-black">
+          Your <span className="text-customGreen">Farms</span>
+        </div>
         {farms.length > 0 ? (
           <ListFarmTable farms={farms} handleClick={handleSelectedFarm} />
         ) : (
