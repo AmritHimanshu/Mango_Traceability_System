@@ -10,6 +10,7 @@ import { LOGIN } from "@/utils/Paths/paths";
 import { FewFarmList } from "@/utils/Types/interfaces";
 import HomeCard from "../components/farmer/HomeCard";
 import Message from "../components/common/Message";
+import Footer from "../components/common/Footer";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -92,7 +93,7 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="h-[100vh] relative">
+      <div className="h-[500px] md:h-[600px] xl:h-[100vh] relative">
         <video
           autoPlay
           loop
@@ -102,13 +103,13 @@ function page() {
           <source src="/assets/bg_video.mp4" type="video/mp4" />
         </video>
 
-        <div className="absolute top-0 w-full h-full bg-neutral-950 bg-opacity-35 flex items-center justify-center text-white">
-          <div className="flex items-center justify-between w-[60%]">
-            <div className="w-[50%]">
-              <div className="text-[85px] font-bold">Pure Organic Products</div>
+        <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-50 flex items-center justify-center text-white">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between space-y-10 lg:space-y-0 w-full lg:w-[60%]">
+            <div className="w-full lg:w-[50%]">
+              <div className="w-full text-[30px] md:text-[50px] xl:text-[60px] 2xl:text-[80px] font-bold">Pure Organic Products</div>
             </div>
 
-            <div className="w-[40%] text-[20px]">
+            <div className="w-full lg:w-[45%] text-base md:text-lg lg:text-base 2xl:text-xl">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit.
               Cupiditate soluta asperiores ipsam at quaerat modi quia ex id
               inventore? Vero.
@@ -117,16 +118,20 @@ function page() {
         </div>
       </div>
 
+      <div>
       {farmList.length > 0 && (
         <div className="my-5 !space-y-5 p-2">
-          <div className="text-center font-bold text-2xl text-black">Recent <span className="text-customGreen">Farms</span></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-fit mx-auto justify-center">
+          <div className="text-center font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-black">Recent <span className="text-customGreen">Farms</span></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 w-fit mx-auto justify-center">
             {farmList.map((farm, index) => (
               <HomeCard key={index} data={farm} />
             ))}
           </div>
         </div>
       )}
+      </div>
+
+      <Footer/>
     </div>
   );
 }
