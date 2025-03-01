@@ -33,13 +33,13 @@ function Footer() {
         <div className="font-bold text-xl">Quicks Links</div>
         <div className="text-start w-[100px] md:m-auto">
           <div className="cursor-default text-sm my-4">
-            <Link href="/">Home</Link>
+            <Link href="/" className="hover:text-customOrange">Home</Link>
           </div>
           <div className="cursor-default text-sm my-4">
-            <Link href="#">About Us</Link>
+            <Link href="#" className="hover:text-customOrange">About Us</Link>
           </div>
           <div className="cursor-default text-sm my-4">
-            <Link href="/#">Contact Us</Link>
+            <Link href="/#" className="hover:text-customOrange">Contact Us</Link>
           </div>
         </div>
       </div>
