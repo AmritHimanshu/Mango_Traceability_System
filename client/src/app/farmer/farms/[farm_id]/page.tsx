@@ -168,7 +168,7 @@ function page() {
           <div className="my-3 text-right">
             <button
               onClick={() => setIsDelete(true)}
-              className="!w-[70px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-red-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+              className="!w-[100px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-red-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
             >
               Delete
             </button>
