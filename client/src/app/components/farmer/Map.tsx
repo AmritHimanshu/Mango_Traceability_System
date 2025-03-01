@@ -109,7 +109,7 @@ function Map({ submitForm }: MapProps) {
         <div className="flex justify-between">
           <button
             onClick={handleReset}
-            className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-gray-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+            className="!w-[70px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-gray-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
             style={{ marginRight: "10px" }}
           >
             Reset
@@ -118,26 +118,28 @@ function Map({ submitForm }: MapProps) {
           {!tracking ? (
             <button
               onClick={handleStartTracking}
-              className="!w-[80px] md:!w-[100px] lg:!w-[150px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+              className="!w-[150px] lg:!w-[200px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-gray-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
             >
               Start Tracking
             </button>
           ) : (
             <button
               onClick={handleStopTracking}
-              className="!w-[80px] md:!w-[100px] lg:!w-[150px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+              className="!w-[150px] lg:!w-[200px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-gray-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
             >
               Stop Tracking
             </button>
           )}
         </div>
 
-        <button
-          className="w-full !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
-          onClick={handleSubmit}
-        >
-          Create farm
-        </button>
+        <div className="text-center">
+          <button
+            className="!w-[150px] lg:!w-[200px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+            onClick={handleSubmit}
+          >
+            Create farm
+          </button>
+        </div>
       </div>
     </div>
   );

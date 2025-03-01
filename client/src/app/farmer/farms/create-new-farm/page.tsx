@@ -137,8 +137,8 @@ function page() {
         <div className="text-center font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-black">
           Create Your <span className="text-customGreen">Farm</span>
         </div>
-        <div className="space-y-10">
-          <div className="flex items-center justify-between flex-col space-y-7 md:flex-row md:space-y-0">
+        <div className="space-y-10 max-w-[80%] m-auto">
+          <div className="flex items-center justify-between flex-col space-y-7 md:flex-row md:space-y-0 text-black">
             <div className="space-y-2 w-[100%] md:w-[40%] xl:w-[20%]">
               <label htmlFor="farmName">
                 Name of the farm <span className="text-red-600">*</span>
