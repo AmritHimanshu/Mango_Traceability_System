@@ -10,7 +10,7 @@ function HomeCard({ data }: farmerHomeCardProps) {
   const router = useRouter();
 
   return (
-    <div className="w-full rounded-md overflow-hidden space-y-2">
+    <div className="w-[350px] rounded-md overflow-hidden space-y-2">
       <MapCoordinates coordinates={data.geoFenceData} height="200px" />
 
       <div className="flex justify-between">

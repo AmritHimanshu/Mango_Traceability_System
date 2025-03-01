@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: rgb(250, 255, 250);
+  --background: white;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -61,7 +61,7 @@ function Header() {
     <>
       <div
         className={`fixed w-full top-0 z-[9999] transition-all duration-300 ${
-          scrolling ? "bg-white shadow-md text-black" : "bg-transparent text-white"
+          scrolling ? "bg-white text-black shadow-sm" : "bg-transparent text-white"
         }`}
       >
         <div className="py-3 px-5 flex items-center justify-between">

@@ -10,6 +10,7 @@ import { LOGIN } from "@/utils/Paths/paths";
 import { FewFarmList } from "@/utils/Types/interfaces";
 import HomeCard from "../components/farmer/HomeCard";
 import Message from "../components/common/Message";
+import Footer from "../components/common/Footer";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -109,19 +110,26 @@ function page() {
             </div>
 
             <div className="w-[40%] text-[20px]">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cupiditate soluta asperiores ipsam at quaerat modi quia ex id inventore? Vero.
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+              Cupiditate soluta asperiores ipsam at quaerat modi quia ex id
+              inventore? Vero.
             </div>
           </div>
         </div>
       </div>
 
-      <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-5">
-        {farmList.map((farm, index) => (
-          <div key={index} className="p-3 bg-gray-50 shadow-md">
-            <HomeCard data={farm} />
+      {farmList.length > 0 && (
+        <div className="my-5 !space-y-5 p-2">
+          <div className="text-center font-bold text-2xl text-black">Recent <span className="text-customGreen">Farms</span></div>
+          <div className="flex flex-row items-center justify-evenly flex-wrap max-w-[1000px] m-auto">
+            {farmList.map((farm, index) => (
+              <HomeCard key={index} data={farm} />
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      )}
+
+      <Footer />
     </div>
   );
 }
