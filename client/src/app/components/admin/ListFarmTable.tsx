@@ -9,7 +9,7 @@ function ListFarmTable({ farms, handleClick }: ListFarmTableProps) {
     <div className="w-full overflow-x-auto rounded-lg shadow-2xl">
       <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
         <thead>
-          <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
+          <tr className="font-bold bg-customGreen text-white">
             <td className="px-4 py-3 text-left">S. No.</td>
             <td className="px-4 py-3 text-left">ID</td>
             <td className="px-4 py-3 text-left">Farm Name</td>
@@ -23,7 +23,7 @@ function ListFarmTable({ farms, handleClick }: ListFarmTableProps) {
           {farms.map((farm, index) => (
             <tr
               key={index}
-              className="text-black bg-secondaryColor odd:bg-opacity-30 border-b-[1px] border-black last:border-b-0"
+              className="text-black bg-customGreen bg-opacity-10 odd:bg-opacity-15 border-b-[1px] border-black last:border-b-0"
             >
               <td className="px-4 py-3 align-middle w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
                 {index + 1}
