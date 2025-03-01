@@ -241,7 +241,7 @@ function page() {
         <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-70 flex items-center justify-start">
           <div className="w-[80%] m-auto">
             <div className="text-[30px] md:text-[50px] font-bold text-white">
-              Your Farm
+              Edit Your Farm
             </div>
             <div className="text-customOrange text-[20px] md:text-[30px]">
               {farm?.farm}
@@ -597,7 +597,7 @@ function page() {
                   />
                 </div>
                 <div className="w-[48%]">
-                  <label htmlFor="harvestYield">Yield:</label>
+                  <label htmlFor="harvestYield">Yield (kg):</label>
                   <input
                     type="number"
                     id="harvestYield"
