@@ -102,7 +102,7 @@ function Header() {
                         key={index}
                         className={`cursor-pointer ${
                           pathname === list.path || path === list.base_path
-                            ? "font-bold text-[16px] text-white"
+                            ? "font-bold text-[16px] text-customOrange"
                             : "bg-transparent"
                         }`}
                         onClick={() => router.push(list.path)}

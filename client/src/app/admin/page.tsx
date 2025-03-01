@@ -19,7 +19,6 @@ import {
 import { useAppSelector } from "@/store/store";
 import Message from "../components/common/Message";
 import HomeCard from "../components/admin/HomeCard";
-import Heading from "../components/common/Heading";
 import PendingUserTable from "../components/admin/PendingUserTable";
 
 function page() {
@@ -220,20 +219,39 @@ function page() {
   };
 
   return (
-    <div className="page-main-div relative">
+    <div className="page-main-div">
       <CustomLoadingBar ref={loadingBarRef} />
 
       {message.text && message.type && (
         <Message text={message.text} type={message.type} />
       )}
 
-      {userState && showWelcome && (
-        <div className="text-center p-2 bg-yellow-300 text-black font-bold shadow-md mb-5">
-          Welcome {userState.name}!
-        </div>
-      )}
+      <div className="h-[500px] md:h-[600px] xl:h-[100vh] relative">
+        <video
+          autoPlay
+          loop
+          muted
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/assets/bg_video.mp4" type="video/mp4" />
+        </video>
 
-      <Heading text="OVERVIEW" />
+        <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-50 flex items-center justify-center text-white">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between space-y-10 lg:space-y-0 w-full lg:w-[60%]">
+            <div className="w-full lg:w-[50%]">
+              <div className="w-full text-[30px] md:text-[50px] xl:text-[60px] 2xl:text-[80px] font-bold">
+                Pure <span className="text-customGreen">Organic</span> Products
+              </div>
+            </div>
+
+            <div className="w-full lg:w-[45%] text-base md:text-lg lg:text-base 2xl:text-xl">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+              Cupiditate soluta asperiores ipsam at quaerat modi quia ex id
+              inventore? Vero.
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div className="lg:my-10 pt- grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 place-items-center">
         <HomeCard
