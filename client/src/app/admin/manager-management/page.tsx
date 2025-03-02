@@ -2,13 +2,13 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../../components/common/loadingBar/CustomLoadingBar";
 import { User } from "@/utils/Types/interfaces";
 import { LOGIN, MANAGER } from "@/utils/Paths/paths";
 import { ADMIN_MANAGER_MANAGEMENT } from "@/utils/Apis/api";
 import Message from "@/app/components/common/Message";
-import Heading from "@/app/components/common/Heading";
 import Table_List from "@/app/components/admin/Table_List";
 
 function page() {
@@ -100,14 +100,34 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <Heading text="MANAGER MANAGEMENT" />
+      <div className="h-[500px] md:h-[600px] xl:h-[400px] relative">
+        <Image
+          src="/assets/manager_image.jpeg"
+          alt="Manager"
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center"
+        />
+        <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-50 flex items-center justify-center">
+          <div className="w-[80%] m-auto">
+            <div className="text-[30px] md:text-[50px] font-bold text-white">
+              Manager Management
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <div className="mt-5">
-        {managers.length > 0 ? (
-          <Table_List users={managers} url={MANAGER} />
-        ) : (
-          <div className="text-center text-gray-500">No records found!</div>
-        )}
+      <div className="my-5">
+        <div className="max-w-[80%] m-auto space-y-5">
+          <div className="text-center font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-black">
+            Managers
+          </div>
+          {managers.length > 0 ? (
+            <Table_List users={managers} url={MANAGER} />
+          ) : (
+            <div className="text-center text-gray-500">No records found!</div>
+          )}
+        </div>
       </div>
     </div>
   );

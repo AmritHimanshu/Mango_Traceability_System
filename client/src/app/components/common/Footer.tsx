@@ -2,7 +2,7 @@ import Link from "next/link";
 
 function Footer() {
   return (
-    <div className="bg-neutral-900 p-5 mt-5 text-left text-white grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+    <div className="bg-neutral-900 p-5 mt- text-left text-white grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
       <div className="my-5">
         <div className="font-bold text-xl">About Us</div>
         <p className="leading-7 mt-4 text-gray-100">
