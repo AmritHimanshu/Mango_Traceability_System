@@ -2,13 +2,13 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
 import { FarmList } from "@/utils/Types/interfaces";
 import { LoadingBarRef } from "react-top-loading-bar";
 import { ADMIN_FARM, LOGIN } from "@/utils/Paths/paths";
 import { ADMIN_FETCH_FARMER_FARM_LIST } from "@/utils/Apis/api";
 import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
 import Message from "@/app/components/common/Message";
-import Heading from "@/app/components/common/Heading";
 import ListFarmTable from "@/app/components/admin/ListFarmTable";
 
 function page() {
@@ -22,6 +22,7 @@ function page() {
   const user_id = pathname.split("/").pop();
 
   const [farms, setFarms] = useState<FarmList[]>([]);
+  console.log(farms);
   const [farmerName, setFarmerName] = useState("");
   const [message, setMessage] = useState({ text: "", type: "" });
 
@@ -119,16 +120,39 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <Heading text={farmerName} />
+      <div className="h-[500px] md:h-[600px] xl:h-[400px] relative">
+        <Image
+          src="/assets/farmers_image.jpg"
+          alt="Manager"
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center"
+        />
+        <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-50 flex items-center justify-center">
+          <div className="w-[80%] m-auto">
+            <div className="text-[30px] md:text-[50px] font-bold text-white">
+              Farmer
+            </div>
+            <div className="text-customOrange text-[20px] md:text-[30px]">
+              {farmerName}
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div className="my-5">
-        {farms.length > 0 ? (
-          <ListFarmTable farms={farms} handleClick={handleSelectedFarm} />
-        ) : (
-          <div className="text-center text-gray-500 my-2">
-            No records found!
+        <div className="max-w-[80%] m-auto space-y-5">
+          <div className="text-center font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-black">
+            List of <span className="text-customGreen">Farms</span>
           </div>
-        )}
+          {farms.length > 0 ? (
+            <ListFarmTable farms={farms} handleClick={handleSelectedFarm} />
+          ) : (
+            <div className="text-center text-gray-500 my-2">
+              No records found!
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
