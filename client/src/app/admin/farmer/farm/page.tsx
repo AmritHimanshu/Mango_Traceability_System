@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 import { ADMIN_FETCH_FARMER_FARM_DATA } from "@/utils/Apis/api";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
@@ -15,7 +16,6 @@ import {
 import dynamic from "next/dynamic";
 import QRCode from "react-qr-code";
 import { Farm } from "@/utils/Types/interfaces";
-import Heading from "@/app/components/common/Heading";
 import ListFarmApplicationsData from "@/app/components/farmer/ListFarmApplicationsData";
 const Map = dynamic(() => import("@/app/components/farmer/MapCoordinates"), {
   ssr: false,
@@ -110,10 +110,28 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      {farmData && <Heading text={farmData.farm} />}
+      <div className="h-[500px] md:h-[600px] xl:h-[400px] relative">
+        <Image
+          src="/assets/plant.jpg"
+          alt="Lychee Fruit"
+          layout="fill"
+          objectFit="cover"
+          objectPosition="top"
+        />
+        <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-70 flex items-center justify-start">
+          <div className="w-[80%] m-auto">
+            <div className="text-[30px] md:text-[50px] font-bold text-white">
+              Farm
+            </div>
+            <div className="text-customOrange text-[20px] md:text-[30px]">
+              {farmData?.farm}
+            </div>
+          </div>
+        </div>
+      </div>
 
       {farmData && (
-        <div className="space-y-5 lg:space-y-10 my-5">
+        <div className="my-5 max-w-[80%] m-auto text-black space-y-5 lg:space-y-10 text-[10px] md:text-[13px] lg:text-[16px]">
           <div className="space-x-2 text-right">
             <button
               className="!w-[130px] md:!w-[150px] lg:!w-[200px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
@@ -402,8 +420,8 @@ function page() {
                 <table className="table">
                   <thead>
                     <tr className="table-head-tr">
-                      <th>Date</th>
-                      <th>Yield (kg)</th>
+                      <th className="border border-gray-300 px-4 py-2">Date</th>
+                      <th className="border border-gray-300 px-4 py-2">Yield (kg)</th>
                     </tr>
                   </thead>
                   <tbody className="table-body">
