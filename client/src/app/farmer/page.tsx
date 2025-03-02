@@ -105,7 +105,9 @@ function page() {
         <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-50 flex items-center justify-center text-white">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between space-y-10 lg:space-y-0 w-full lg:w-[60%]">
             <div className="w-full lg:w-[50%]">
-              <div className="w-full text-[30px] md:text-[50px] xl:text-[60px] 2xl:text-[80px] font-bold">Pure <span className="text-customGreen">Organic</span> Products</div>
+              <div className="w-full text-[30px] md:text-[50px] xl:text-[60px] 2xl:text-[80px] font-bold">
+                Pure <span className="text-customGreen">Organic</span> Products
+              </div>
             </div>
 
             <div className="w-full lg:w-[45%] text-base md:text-lg lg:text-base 2xl:text-xl">
@@ -118,16 +120,18 @@ function page() {
       </div>
 
       <div>
-      {farmList.length > 0 && (
-        <div className="my-5 !space-y-5 p-2">
-          <div className="text-center font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-black">Recent <span className="text-customGreen">Farms</span></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 w-fit mx-auto justify-center">
-            {farmList.map((farm, index) => (
-              <HomeCard key={index} data={farm} />
-            ))}
+        {farmList.length > 0 && (
+          <div className="my-5 !space-y-5 p-2">
+            <div className="text-center font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-black">
+              Recent <span className="text-customGreen">Farms</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 w-fit mx-auto justify-center">
+              {farmList.map((farm, index) => (
+                <HomeCard key={index} data={farm} />
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
     </div>
   );
