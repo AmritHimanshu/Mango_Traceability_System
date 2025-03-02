@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../../components/common/loadingBar/CustomLoadingBar";
 import { User } from "@/utils/Types/interfaces";
@@ -11,9 +12,7 @@ import {
   ADMIN_PENDING_REQUESTS,
 } from "@/utils/Apis/api";
 import Message from "@/app/components/common/Message";
-import Heading from "@/app/components/common/Heading";
 import PendingUserTable from "@/app/components/admin/PendingUserTable";
-import "../../../styles/style.css";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -196,42 +195,62 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <Heading text="PENDING REQUESTS" />
-
-      <div className="mt-5">
-        {pendingRequests.length > 0 ? (
-          <div className="w-full overflow-x-auto rounded-lg shadow-2xl">
-            <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
-              <thead>
-                <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
-                  <td className="px-4 py-3 text-left">S. No.</td>
-                  <td className="px-4 py-3 text-left">Name</td>
-                  <td className="px-4 py-3 text-left">Email</td>
-                  <td className="px-4 py-3 text-left">Phone</td>
-                  <td className="px-4 py-3 text-left">Date</td>
-                  <td className="px-4 py-3 text-left">Assign role</td>
-                  <td className="px-4 py-3 text-center">
-                    <span className="text-green-400">Accept</span>/
-                    <span className="text-red-400">Reject</span>
-                  </td>
-                </tr>
-              </thead>
-
-              <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
-                {pendingRequests.map((user, index) => (
-                  <PendingUserTable
-                    key={index}
-                    idx={index}
-                    user={user}
-                    confirmReq={confirmReq}
-                  />
-                ))}
-              </tbody>
-            </table>
+      <div className="h-[500px] md:h-[600px] xl:h-[400px] relative">
+        <Image
+          src="/assets/pending_requests.jpg"
+          alt="Pending Requests"
+          layout="fill"
+          objectFit="cover"
+          objectPosition="top"
+        />
+        <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-70 flex items-center justify-start">
+          <div className="w-[80%] m-auto">
+            <div className="text-[30px] md:text-[50px] font-bold text-white">
+              Pending Requests
+            </div>
           </div>
-        ) : (
-          <div className="text-center text-gray-500">No records found!</div>
-        )}
+        </div>
+      </div>
+
+      <div className="my-5">
+        <div className="max-w-[80%] m-auto space-y-5">
+          <div className="text-center font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-black">
+            Pending Requests
+          </div>
+          {pendingRequests.length > 0 ? (
+            <div className="w-full overflow-x-auto rounded-lg shadow-2xl">
+              <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
+                <thead>
+                  <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
+                    <td className="px-4 py-3 text-left">S. No.</td>
+                    <td className="px-4 py-3 text-left">Name</td>
+                    <td className="px-4 py-3 text-left">Email</td>
+                    <td className="px-4 py-3 text-left">Phone</td>
+                    <td className="px-4 py-3 text-left">Date</td>
+                    <td className="px-4 py-3 text-left">Assign role</td>
+                    <td className="px-4 py-3 text-center">
+                      <span className="text-green-400">Accept</span>/
+                      <span className="text-red-400">Reject</span>
+                    </td>
+                  </tr>
+                </thead>
+
+                <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
+                  {pendingRequests.map((user, index) => (
+                    <PendingUserTable
+                      key={index}
+                      idx={index}
+                      user={user}
+                      confirmReq={confirmReq}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className="text-center text-gray-500">No records found!</div>
+          )}
+        </div>
       </div>
 
       {isConfirm && (

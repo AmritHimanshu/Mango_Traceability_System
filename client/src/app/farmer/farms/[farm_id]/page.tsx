@@ -146,7 +146,7 @@ function page() {
       <div className="h-[500px] md:h-[600px] xl:h-[400px] relative">
         <Image
           src="/assets/plant.jpg"
-          alt="Lychee Fruit"
+          alt="Plant"
           layout="fill"
           objectFit="cover"
           objectPosition="top"

@@ -123,7 +123,7 @@ function page() {
       <div className="h-[500px] md:h-[600px] xl:h-[400px] relative">
         <Image
           src="/assets/farmers_image.jpg"
-          alt="Manager"
+          alt="Farmer"
           layout="fill"
           objectFit="cover"
           objectPosition="center"
