@@ -134,13 +134,13 @@ function page() {
         <div className="my-5 max-w-[80%] m-auto text-black space-y-5 lg:space-y-10 text-[10px] md:text-[13px] lg:text-[16px]">
           <div className="space-x-2 text-right">
             <button
-              className="!w-[130px] md:!w-[150px] lg:!w-[200px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+              className="!w-[100px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-green-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
               onClick={() => handleOnAddData()}
             >
               Add data
             </button>
             <button
-              className="!w-[130px] md:!w-[150px] lg:!w-[200px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+              className="!w-[100px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-red-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
               onClick={() => setIsEdit(true)}
             >
               Edit
