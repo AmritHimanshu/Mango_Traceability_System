@@ -253,82 +253,86 @@ function page() {
         </div>
       </div>
 
-      <div className="my-5 max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] 2xl:max-w-[60%] m-auto grid grid-cols-1 md:grid-cols-2 gap-5">
-        <HomeCard
-          title="Total number of pending requests"
-          description="pending_requests"
-          count={noOfPendingRequests}
-          textColor="orange"
-          url={PENDING_REQUESTS}
-        />
-        <HomeCard
-          title="Total number of verified managers"
-          description="verified_managers"
-          count={noOfVerifiedManagers}
-          textColor="green"
-          url={MANAGER_MANAGEMENT}
-        />
-        <HomeCard
-          title="Total number of verified farmers"
-          description="verified_farmers"
-          count={noOfVerifiedFarmers}
-          textColor="green"
-          url={FARMER_MANAGEMENT}
-        />
-        <HomeCard
-          title="Total number of rejected requests"
-          description="rejected_requests"
-          count={noOfRejectedRequests}
-          textColor="red"
-          url=""
-        />
+      <div className="my-5">
+        {pendingRequests.length > 0 && (
+          <div className="max-w-[80%] m-auto space-y-5">
+            <div className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold text-black text-center underline">
+              Recent Pending Requests
+            </div>
+            <div className="w-full rounded-lg shadow-2xl overflow-hidden">
+              <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
+                <thead>
+                  <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
+                    <td className="px-4 py-3 text-left">S. No.</td>
+                    <td className="px-4 py-3 text-left">Name</td>
+                    <td className="px-4 py-3 text-left">Email</td>
+                    <td className="px-4 py-3 text-left">Phone</td>
+                    <td className="px-4 py-3 text-left">Date</td>
+                    <td className="px-4 py-3 text-left">Assign role</td>
+                    <td className="px-4 py-3 text-center">
+                      <span className="text-green-400">Accept</span>/
+                      <span className="text-red-400">Reject</span>
+                    </td>
+                  </tr>
+                </thead>
+
+                <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
+                  {pendingRequests.map((user, index) => (
+                    <PendingUserTable
+                      key={index}
+                      idx={index}
+                      user={user}
+                      confirmReq={confirmReq}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="text-end">
+              <span
+                className="mt-3 underline text-end cursor-pointer hover:text-customGreen duration-200"
+                onClick={() => router.push("/admin/pending-requests")}
+              >
+                view all
+              </span>
+            </div>
+          </div>
+        )}
       </div>
 
-      {pendingRequests.length > 0 && (
-        <div className="my-5 space-y-5">
-          <div className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold text-center underline">
-            Recent Pending Requests
-          </div>
-          <div className="w-full rounded-lg shadow-2xl overflow-hidden">
-            <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
-              <thead>
-                <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
-                  <td className="px-4 py-3 text-left">S. No.</td>
-                  <td className="px-4 py-3 text-left">Name</td>
-                  <td className="px-4 py-3 text-left">Email</td>
-                  <td className="px-4 py-3 text-left">Phone</td>
-                  <td className="px-4 py-3 text-left">Date</td>
-                  <td className="px-4 py-3 text-left">Assign role</td>
-                  <td className="px-4 py-3 text-center">
-                    <span className="text-green-400">Accept</span>/
-                    <span className="text-red-400">Reject</span>
-                  </td>
-                </tr>
-              </thead>
-
-              <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
-                {pendingRequests.map((user, index) => (
-                  <PendingUserTable
-                    key={index}
-                    idx={index}
-                    user={user}
-                    confirmReq={confirmReq}
-                  />
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="text-end my-4">
-            <span
-              className="mt-3 underline text-end cursor-pointer hover:text-blue-700 duration-200"
-              onClick={() => router.push("/admin/pending-requests")}
-            >
-              view all
-            </span>
-          </div>
+      <div className="my-5 bg-customGreen bg-opacity-10 p-5">
+        <div className="max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] 2xl:max-w-[60%] m-auto grid grid-cols-1 md:grid-cols-2 gap-5">
+          <HomeCard
+            title="Total number of pending requests"
+            description="pending_requests"
+            count={noOfPendingRequests}
+            textColor="orange"
+            url={PENDING_REQUESTS}
+          />
+          <HomeCard
+            title="Total number of verified managers"
+            description="verified_managers"
+            count={noOfVerifiedManagers}
+            textColor="green"
+            url={MANAGER_MANAGEMENT}
+          />
+          <HomeCard
+            title="Total number of verified farmers"
+            description="verified_farmers"
+            count={noOfVerifiedFarmers}
+            textColor="green"
+            url={FARMER_MANAGEMENT}
+          />
+          <HomeCard
+            title="Total number of rejected requests"
+            description="rejected_requests"
+            count={noOfRejectedRequests}
+            textColor="red"
+            url=""
+          />
         </div>
-      )}
+      </div>
 
       {isConfirm && (
         <div className="fixed z-[9999] top-0 left-0 w-full h-full bg-neutral-900 bg-opacity-80 flex items-center">
