@@ -40,7 +40,7 @@ export type HomeCardProps = {
   title: string;
   description: string;
   count: number;
-  bgColor: string;
+  textColor: string;
   url: string;
 };
 

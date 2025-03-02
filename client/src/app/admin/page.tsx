@@ -253,40 +253,40 @@ function page() {
         </div>
       </div>
 
-      <div className="lg:my-10 pt- grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 place-items-center">
+      <div className="my-5 max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] 2xl:max-w-[60%] m-auto grid grid-cols-1 md:grid-cols-2 gap-5">
         <HomeCard
           title="Total number of pending requests"
-          description=""
+          description="pending_requests"
           count={noOfPendingRequests}
-          bgColor="orange"
+          textColor="orange"
           url={PENDING_REQUESTS}
         />
         <HomeCard
           title="Total number of verified managers"
-          description=""
+          description="verified_managers"
           count={noOfVerifiedManagers}
-          bgColor="green"
+          textColor="green"
           url={MANAGER_MANAGEMENT}
         />
         <HomeCard
           title="Total number of verified farmers"
-          description=""
+          description="verified_farmers"
           count={noOfVerifiedFarmers}
-          bgColor="green"
+          textColor="green"
           url={FARMER_MANAGEMENT}
         />
         <HomeCard
           title="Total number of rejected requests"
-          description=""
+          description="rejected_requests"
           count={noOfRejectedRequests}
-          bgColor="red"
+          textColor="red"
           url=""
         />
       </div>
 
       {pendingRequests.length > 0 && (
-        <div className="py-3 mt-5">
-          <div className="pb-3 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold text-center underline">
+        <div className="my-5 space-y-5">
+          <div className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold text-center underline">
             Recent Pending Requests
           </div>
           <div className="w-full rounded-lg shadow-2xl overflow-hidden">
