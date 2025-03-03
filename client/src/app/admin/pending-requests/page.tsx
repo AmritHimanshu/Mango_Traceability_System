@@ -22,6 +22,9 @@ function page() {
   const router = useRouter();
 
   const [pendingRequests, setPendingRequests] = useState<User[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const [message, setMessage] = useState({ text: "", type: "" });
   const [isConfirm, setIsConfirm] = useState(false);
   const [parameter, setParameter] = useState({
@@ -30,8 +33,7 @@ function page() {
     status: false,
   });
 
-  const limit = 20;
-  let skip = 0;
+  const limit = 10;
 
   const fetchPendingRequests = async () => {
     if (loadingBarRef.current) {
@@ -40,7 +42,7 @@ function page() {
 
     try {
       const res = await fetch(
-        `${BASE_URL}/${ADMIN_PENDING_REQUESTS}?limit=${limit}&skip=${skip}`,
+        `${BASE_URL}/${ADMIN_PENDING_REQUESTS}?page=${currentPage}&limit=${limit}`,
         {
           method: "GET",
           headers: {
@@ -51,6 +53,7 @@ function page() {
       );
 
       const data = await res.json();
+      console.log(data);
       if (res.status !== 201 && res.status !== 500) {
         setMessage({ text: data.error, type: "error" });
         router.push(LOGIN);
@@ -64,12 +67,9 @@ function page() {
         throw error;
       }
 
-      setPendingRequests((prev) => {
-        if (prev.length === 0) return data;
-        else {
-          return [...prev, ...data];
-        }
-      });
+      setPendingRequests(data.pendingRequests);
+
+      setTotalPages(data.totalPages);
     } catch (error) {}
 
     setTimeout(() => {
@@ -81,25 +81,9 @@ function page() {
     }
   };
 
-  const handleScroll = () => {
-    if (
-      document.documentElement.clientHeight + window.scrollY >=
-      document.documentElement.scrollHeight
-    ) {
-      skip = skip + limit;
-      fetchPendingRequests();
-    }
-  };
-
   useEffect(() => {
     fetchPendingRequests();
-
-    window.addEventListener("scroll", handleScroll, true);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll, true);
-    };
-  }, []);
+  }, [currentPage]);
 
   const authenticateReq = async (id: string, role: string, status: boolean) => {
     if (!role && status === true) {
@@ -218,35 +202,45 @@ function page() {
             Pending Requests
           </div>
           {pendingRequests.length > 0 ? (
-            <div className="w-full overflow-x-auto rounded-lg shadow-2xl">
-              <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
-                <thead>
-                  <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
-                    <td className="px-4 py-3 text-left">S. No.</td>
-                    <td className="px-4 py-3 text-left">Name</td>
-                    <td className="px-4 py-3 text-left">Email</td>
-                    <td className="px-4 py-3 text-left">Phone</td>
-                    <td className="px-4 py-3 text-left">Date</td>
-                    <td className="px-4 py-3 text-left">Assign role</td>
-                    <td className="px-4 py-3 text-center">
-                      <span className="text-green-400">Accept</span>/
-                      <span className="text-red-400">Reject</span>
-                    </td>
-                  </tr>
-                </thead>
+            <>
+              <div className="w-full overflow-x-auto rounded-lg shadow-2xl">
+                <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
+                  <thead>
+                    <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
+                      <td className="px-4 py-3 text-left">S. No.</td>
+                      <td className="px-4 py-3 text-left">Name</td>
+                      <td className="px-4 py-3 text-left">Email</td>
+                      <td className="px-4 py-3 text-left">Phone</td>
+                      <td className="px-4 py-3 text-left">Date</td>
+                      <td className="px-4 py-3 text-left">Assign role</td>
+                      <td className="px-4 py-3 text-center">
+                        <span className="text-green-400">Accept</span>/
+                        <span className="text-red-400">Reject</span>
+                      </td>
+                    </tr>
+                  </thead>
 
-                <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
-                  {pendingRequests.map((user, index) => (
-                    <PendingUserTable
-                      key={index}
-                      idx={index}
-                      user={user}
-                      confirmReq={confirmReq}
-                    />
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
+                    {pendingRequests.map((user, index) => (
+                      <PendingUserTable
+                        key={index}
+                        idx={index}
+                        user={user}
+                        confirmReq={confirmReq}
+                      />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="space-x-5">
+                {[...Array(totalPages)].map((_, i) => (
+                  <button key={i} onClick={() => setCurrentPage(i + 1)}>
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+            </>
           ) : (
             <div className="text-center text-gray-500">No records found!</div>
           )}
