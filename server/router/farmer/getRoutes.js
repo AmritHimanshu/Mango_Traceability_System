@@ -5,16 +5,18 @@ var mongoose = require('mongoose');
 const Farmer = require('../../model/farmerSchema');
 
 router.get('/api/fetch-farms-list', async (req, res) => {
-    const limit = req.query.limit;
-    const skip = req.query.skip;
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
     try {
         if (req.rootUser.role !== 'Farmer') {
             return res.status(403).json({ error: "You don't have permission." });
         }
 
-        const farmList = await Farmer.find({ userUniqueId: req.rootUser.uniqueID }).sort("-createdAt").select('farm crop createdAt uniqueID').skip(parseInt(skip)).limit(parseInt(limit));
+        const farmList = await Farmer.find({ userUniqueId: req.rootUser.uniqueID }).sort("-createdAt").select('farm crop createdAt uniqueID').skip((page - 1) * limit).limit(limit);
 
-        return res.status(201).json(farmList);
+        const totalFarms = await Farmer.countDocuments({ userUniqueId: req.rootUser.uniqueID });
+
+        return res.status(201).json({ farmList, totalPages: Math.ceil(totalFarms / limit) });
     } catch (error) {
         console.log("/api/fetch-farms-list: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
