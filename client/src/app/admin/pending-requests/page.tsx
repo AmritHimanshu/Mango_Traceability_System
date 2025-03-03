@@ -33,7 +33,7 @@ function page() {
     status: false,
   });
 
-  const limit = 10;
+  const limit = 5;
 
   const fetchPendingRequests = async () => {
     if (loadingBarRef.current) {
@@ -224,7 +224,7 @@ function page() {
                     {pendingRequests.map((user, index) => (
                       <PendingUserTable
                         key={index}
-                        idx={index}
+                        idx={(currentPage - 1) * limit + index}
                         user={user}
                         confirmReq={confirmReq}
                       />
@@ -233,9 +233,13 @@ function page() {
                 </table>
               </div>
 
-              <div className="space-x-5">
+              <div className="space-x-5 text-center text-black">
                 {[...Array(totalPages)].map((_, i) => (
-                  <button key={i} onClick={() => setCurrentPage(i + 1)}>
+                  <button
+                    key={i}
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={`${currentPage == i + 1 && "text-customGreen"}`}
+                  >
                     {i + 1}
                   </button>
                 ))}
