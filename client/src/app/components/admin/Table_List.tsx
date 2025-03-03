@@ -3,7 +3,15 @@ import { User } from "@/utils/Types/interfaces";
 import { useRouter } from "next/navigation";
 import InfoIcon from "@mui/icons-material/Info";
 
-function Table_List({ users, url }: { users: User[]; url: string }) {
+function Table_List({
+  users,
+  idxCalc,
+  url,
+}: {
+  users: User[];
+  idxCalc: number;
+  url: string;
+}) {
   const router = useRouter();
 
   const handleOnView = async (user_id: string) => {
@@ -32,10 +40,8 @@ function Table_List({ users, url }: { users: User[]; url: string }) {
                 key={index}
                 className="text-black bg-secondaryColor odd:bg-opacity-30 border-b-[1px] border-black last:border-b-0"
               >
-                <td
-                  className="px-4 py-3 align-middle w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
-                >
-                  {index + 1}
+                <td className="px-4 py-3 align-middle w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
+                  {idxCalc + index + 1}
                 </td>
                 <td
                   className="px-4 py-3 align-middle w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"

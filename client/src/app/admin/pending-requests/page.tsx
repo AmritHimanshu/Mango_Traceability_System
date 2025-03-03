@@ -53,7 +53,6 @@ function page() {
       );
 
       const data = await res.json();
-      console.log(data);
       if (res.status !== 201 && res.status !== 500) {
         setMessage({ text: data.error, type: "error" });
         router.push(LOGIN);
@@ -68,7 +67,6 @@ function page() {
       }
 
       setPendingRequests(data.pendingRequests);
-
       setTotalPages(data.totalPages);
     } catch (error) {}
 

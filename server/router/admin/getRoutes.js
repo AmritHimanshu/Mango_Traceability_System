@@ -50,12 +50,14 @@ router.get('/api/fetch-no-of-users', async (req, res) => {
 });
 
 router.get('/api/manager-management', async (req, res) => {
-    const limit = req.query.limit;
-    const skip = req.query.skip;
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
     try {
-        const managers = await User.find({ role: 'Manager', isAuthenticated: true, isRejected: false }).select("-password -tokens -updatedAt").skip(parseInt(skip)).limit(parseInt(limit));
+        const managers = await User.find({ role: 'Manager', isAuthenticated: true, isRejected: false }).select("-password -tokens -updatedAt").skip((page - 1) * limit).limit(limit);
 
-        return res.status(201).json(managers);
+        const totalManagers = await User.countDocuments({ role: 'Manager', isAuthenticated: true, isRejected: false });
+
+        return res.status(201).json({ managers, totalPages: Math.ceil(totalManagers / limit) });
     } catch (error) {
         console.log("/api/manager-management: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
@@ -63,12 +65,14 @@ router.get('/api/manager-management', async (req, res) => {
 });
 
 router.get('/api/farmer-management', async (req, res) => {
-    const limit = req.query.limit;
-    const skip = req.query.skip;
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
     try {
-        const farmers = await User.find({ role: 'Farmer', isAuthenticated: true, isRejected: false }).select("-password -tokens -updatedAt").skip(parseInt(skip)).limit(parseInt(limit));
+        const farmers = await User.find({ role: 'Farmer', isAuthenticated: true, isRejected: false }).select("-password -tokens -updatedAt").skip((page - 1) * limit).limit(limit);
 
-        return res.status(201).json(farmers);
+        const totalFarmers = await User.countDocuments({ role: 'Farmer', isAuthenticated: true, isRejected: false });
+
+        return res.status(201).json({ farmers, totalPages: Math.ceil(totalFarmers / limit) });
     } catch (error) {
         console.log("/api/farmer-management: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
