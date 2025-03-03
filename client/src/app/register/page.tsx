@@ -526,7 +526,7 @@ function page() {
 
                   <div className="text-center">
                     <button
-                      className="!w-[70px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                      className="!w-[100px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
                       onClick={(e) => sendOTP(e)}
                     >
                       Register
