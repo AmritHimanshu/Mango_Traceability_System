@@ -80,17 +80,19 @@ router.get('/api/farmer-management', async (req, res) => {
 });
 
 router.get('/api/fetch-farmer-farms-list/:id', async (req, res) => {
-    const limit = req.query.limit;
-    const skip = req.query.skip;
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
 
     const { id } = req.params;
 
     try {
-        const farmList = await Farmer.find({ userUniqueId: id }).sort("-createdAt").skip(parseInt(skip)).limit(parseInt(limit));
+        const farmList = await Farmer.find({ userUniqueId: id }).sort("-createdAt").skip((page - 1) * limit).limit(limit);
+
+        const totalFarms = await Farmer.countDocuments({ userUniqueId: id });
 
         const user = await User.find({ uniqueID: id }).select("name uniqueID");
 
-        return res.status(201).send({ farmList, user });
+        return res.status(201).send({ farmList, totalPages: Math.ceil(totalFarms / limit), user });
     } catch (error) {
         console.log("/api/fetch-farmer-farms-list: ", error);
         return res.status(500).json({ error: "Internal Server Error" });

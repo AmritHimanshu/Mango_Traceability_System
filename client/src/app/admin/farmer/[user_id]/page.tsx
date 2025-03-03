@@ -22,12 +22,12 @@ function page() {
   const user_id = pathname.split("/").pop();
 
   const [farms, setFarms] = useState<FarmList[]>([]);
-  console.log(farms);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [farmerName, setFarmerName] = useState("");
   const [message, setMessage] = useState({ text: "", type: "" });
 
-  const limit = 20;
-  let skip = 0;
+  const limit = 5;
 
   const fetchFarms = async () => {
     if (loadingBarRef.current) {
@@ -36,7 +36,7 @@ function page() {
 
     try {
       const res = await fetch(
-        `${BASE_URL}/${ADMIN_FETCH_FARMER_FARM_LIST}/${user_id}?limit=${limit}&skip=${skip}`,
+        `${BASE_URL}/${ADMIN_FETCH_FARMER_FARM_LIST}/${user_id}?page=${currentPage}&limit=${limit}`,
         {
           method: "GET",
           headers: {
@@ -63,12 +63,8 @@ function page() {
 
       setFarmerName(data.user[0].name);
 
-      setFarms((prev) => {
-        if (prev.length === 0) return data.farmList;
-        else {
-          return [...prev, ...data.farmList];
-        }
-      });
+      setFarms(data.farmList);
+      setTotalPages(data.totalPages);
     } catch (error) {}
 
     setTimeout(() => {
@@ -92,25 +88,9 @@ function page() {
     }
   };
 
-  const handleScroll = () => {
-    if (
-      document.documentElement.clientHeight + window.scrollY >=
-      document.documentElement.scrollHeight
-    ) {
-      skip = skip + limit;
-      fetchFarms();
-    }
-  };
-
   useEffect(() => {
     fetchFarms();
-
-    window.addEventListener("scroll", handleScroll, true);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll, true);
-    };
-  }, []);
+  }, [currentPage]);
 
   return (
     <div className="page-main-div">
@@ -146,7 +126,21 @@ function page() {
             List of <span className="text-customGreen">Farms</span>
           </div>
           {farms.length > 0 ? (
-            <ListFarmTable farms={farms} handleClick={handleSelectedFarm} />
+            <>
+              <ListFarmTable farms={farms} idxCalc={(currentPage - 1) * limit} handleClick={handleSelectedFarm} />
+
+              <div className="space-x-5 text-center text-black">
+                {[...Array(totalPages)].map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={`${currentPage == i + 1 && "text-customGreen"}`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+            </>
           ) : (
             <div className="text-center text-gray-500 my-2">
               No records found!

@@ -4,7 +4,7 @@ import React from "react";
 import { ListFarmTableProps } from "@/utils/Types/interfaces";
 import InfoIcon from "@mui/icons-material/Info";
 
-function ListFarmTable({ farms, handleClick }: ListFarmTableProps) {
+function ListFarmTable({ farms, idxCalc, handleClick }: ListFarmTableProps) {
   return (
     <div className="w-full overflow-x-auto rounded-lg shadow-2xl">
       <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
@@ -26,7 +26,7 @@ function ListFarmTable({ farms, handleClick }: ListFarmTableProps) {
               className="text-black bg-secondaryColor odd:bg-opacity-30 border-b-[1px] border-black last:border-b-0"
             >
               <td className="px-4 py-3 align-middle w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
-                {index + 1}
+                {idxCalc + index + 1}
               </td>
               <td
                 className="px-4 py-3 align-middle w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
