@@ -98,8 +98,9 @@ function page() {
         <Image
           src="/assets/lychee-fruit.jpg"
           alt="Lychee Fruit"
-          layout="fill"
-          objectFit="cover"
+          fill
+          priority
+          style={{ objectPosition: "center", objectFit: "cover" }}
         />
         <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-50 flex items-center justify-center">
           <div className="">
