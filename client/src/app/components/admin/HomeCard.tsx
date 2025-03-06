@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { HomeCardProps } from "@/utils/Types/interfaces";
 import Groups3Icon from "@mui/icons-material/Groups3";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -25,7 +25,34 @@ function HomeCard({
   const [countNum, setCountNum] = useState(0);
   const duration = 2000;
 
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible || countNum > 0) return;
+
     let startValue = 0;
     const interval = Math.floor(duration / (count - 0));
 
@@ -40,10 +67,10 @@ function HomeCard({
     return () => {
       clearInterval(counter);
     };
-  }, [count]);
+  }, [isVisible, count]);
 
   return (
-    <div className="w-[100%] flex items-center justify-between">
+    <div ref={cardRef} className="w-[100%] flex items-center justify-between">
       <div className="w-[30%] text-black text-center space-y-2">
         <div>
           {description === "pending_requests" && (
