@@ -85,9 +85,9 @@ function page() {
         <Image
           src="/assets/manager_image.jpeg"
           alt="Manager"
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center"
+          fill
+          priority
+          style={{ objectPosition: "center", objectFit: "cover" }}
         />
         <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-50 flex items-center justify-center">
           <div className="w-[80%] m-auto">

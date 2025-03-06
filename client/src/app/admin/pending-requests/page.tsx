@@ -181,9 +181,9 @@ function page() {
         <Image
           src="/assets/pending_requests.jpg"
           alt="Pending Requests"
-          layout="fill"
-          objectFit="cover"
-          objectPosition="top"
+          fill
+          priority
+          style={{ objectPosition: "top", objectFit: "cover" }}
         />
         <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-70 flex items-center justify-start">
           <div className="w-[80%] m-auto">
