@@ -168,7 +168,7 @@ function page() {
             <div>
               <div className="flex items-center space-x-3">
                 <div className="font-bold">ID:</div>
-                <div className="text-sm">{farmData.uniqueID}</div>
+                <div className="ext-sm">{farmData.uniqueID}</div>
               </div>
               {farmData.area && (
                 <div className="flex items-center space-x-3">

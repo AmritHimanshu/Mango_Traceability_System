@@ -196,7 +196,7 @@ function page() {
               <div>
                 <div className="flex items-center space-x-3">
                   <div className="font-bold">ID:</div>
-                  <div className="text-sm">{farm.uniqueID}</div>
+                  <div className="">{farm.uniqueID}</div>
                 </div>
                 {farm.area && (
                   <div className="flex items-center space-x-3">
@@ -207,7 +207,7 @@ function page() {
               </div>
             </div>
 
-            <div>
+            <div className="w-full overflow-x-auto">
               <table className="table">
                 <thead>
                   <tr className="table-head-tr">
@@ -330,7 +330,7 @@ function page() {
                 <div className="flex items-start flex-col space-y-3">
                   <div className="font-bold">Irrigation Dates:</div>
                   <>
-                    <table className="table">
+                    <table className="short-table">
                       <thead>
                         <tr className="table-head-tr">
                           {farm.irrigationDates.artificial.length > 0 && (
@@ -442,11 +442,11 @@ function page() {
               {farm.harvest && (
                 <div className="flex items-start flex-col space-y-3">
                   <div className="font-bold">Harvest:</div>
-                  <table className="table">
+                  <table className="short-table">
                     <thead>
                       <tr className="table-head-tr">
-                        <th>Date</th>
-                        <th>Yield (kg)</th>
+                        <th className="border border-gray-300 px-4 py-2">Date</th>
+                        <th className="border border-gray-300 px-4 py-2">Yield (kg)</th>
                       </tr>
                     </thead>
                     <tbody className="table-body">
