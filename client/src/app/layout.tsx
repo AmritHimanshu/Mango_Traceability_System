@@ -2,15 +2,15 @@
 
 import ReduxProvider from "@/store/redux-provider";
 import { useEffect } from "react";
-import { Roboto } from "next/font/google";
+import { Nunito } from "next/font/google";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./globals.css";
 import "../styles/style.css";
 
-const roboto = Roboto({
-  weight: "400",
+const nunito = Nunito({
   subsets: ["latin"],
+  weight: ["300", "400", "600", "700"],
 });
 
 export default function RootLayout({
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <ReduxProvider>
       <html lang="en">
-        <body className={`${roboto.className} antialiased`}>{children}</body>
+        <body className={`${nunito.className} antialiased`}>{children}</body>
       </html>
     </ReduxProvider>
   );
