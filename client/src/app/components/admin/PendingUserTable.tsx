@@ -29,19 +29,19 @@ function PendingUserTable({ idx, user, confirmReq }: PendingUserTableProps) {
 
   return (
     <tr className="text-black bg-secondaryColor odd:bg-opacity-30 border-b-[1px] border-black last:border-b-0">
-      <td className="px-4 py-3 align-middle w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
+      <td className="px-4 py-3 align-middle overflow-hidden text-ellipsis whitespace-nowrap">
         {idx + 1}
       </td>
-      <td className="px-4 py-3 align-middle w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
+      <td className="px-4 py-3 align-middle overflow-hidden text-ellipsis whitespace-nowrap">
         {user.name}
       </td>
-      <td className="px-4 py-3 align-middle w-[150px] min-w-[120px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
+      <td className="px-4 py-3 align-middle  overflow-hidden text-ellipsis whitespace-nowrap">
         {user.email}
       </td>
-      <td className="px-4 py-3 align-middle w-[150px] min-w-[120px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
+      <td className="px-4 py-3 align-middle  overflow-hidden text-ellipsis whitespace-nowrap">
         {user.phone}
       </td>
-      <td className="px-4 py-3 align-middle w-[120px] min-w-[100px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
+      <td className="px-4 py-3 align-middle  overflow-hidden text-ellipsis whitespace-nowrap">
         {new Date(user.createdAt).toLocaleString("en-IN", {
           day: "2-digit",
           month: "2-digit",

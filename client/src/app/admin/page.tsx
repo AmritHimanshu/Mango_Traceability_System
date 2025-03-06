@@ -260,38 +260,40 @@ function page() {
               Recent Pending Requests
             </div>
             <div className="w-full rounded-lg shadow-2xl overflow-hidden">
-              <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
-                <thead>
-                  <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
-                    <td className="px-4 py-3 text-left">S. No.</td>
-                    <td className="px-4 py-3 text-left">Name</td>
-                    <td className="px-4 py-3 text-left">Email</td>
-                    <td className="px-4 py-3 text-left">Phone</td>
-                    <td className="px-4 py-3 text-left">Date</td>
-                    <td className="px-4 py-3 text-left">Assign role</td>
-                    <td className="px-4 py-3 text-center">
-                      <span className="text-green-400">Accept</span>/
-                      <span className="text-red-400">Reject</span>
-                    </td>
-                  </tr>
-                </thead>
+              <div className="w-full overflow-x-auto">
+                <table className="min-w-[1000px] w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
+                  <thead>
+                    <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
+                      <td className="px-4 py-3 text-left w-[100px]">S. No.</td>
+                      <td className="px-4 py-3 text-left">Name</td>
+                      <td className="px-4 py-3 text-left">Email</td>
+                      <td className="px-4 py-3 text-left">Phone</td>
+                      <td className="px-4 py-3 text-left">Date</td>
+                      <td className="px-4 py-3 text-left">Assign role</td>
+                      <td className="px-4 py-3 text-center">
+                        <span className="text-green-400">Accept</span>/
+                        <span className="text-red-400">Reject</span>
+                      </td>
+                    </tr>
+                  </thead>
 
-                <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
-                  {pendingRequests.map((user, index) => (
-                    <PendingUserTable
-                      key={index}
-                      idx={index}
-                      user={user}
-                      confirmReq={confirmReq}
-                    />
-                  ))}
-                </tbody>
-              </table>
+                  <tbody className="text-[12px] md:text-[12px] lg:text-[16px]">
+                    {pendingRequests.map((user, index) => (
+                      <PendingUserTable
+                        key={index}
+                        idx={index}
+                        user={user}
+                        confirmReq={confirmReq}
+                      />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <div className="text-end">
               <span
-                className="mt-3 underline text-end cursor-pointer hover:text-customGreen duration-200"
+                className="text-[12px] md:text-[12px] lg:text-[16px] mt-3 underline text-end cursor-pointer hover:text-customGreen duration-200"
                 onClick={() => router.push("/admin/pending-requests")}
               >
                 view all
