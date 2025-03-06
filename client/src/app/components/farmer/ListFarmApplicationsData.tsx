@@ -9,7 +9,7 @@ function ListFarmApplicationsData({
 }: ListFarmApplicationsDataProps) {
   return (
     <>
-      <table className="table">
+      <table className="short-table">
         <thead>
           <tr className="table-head-tr">
             {columns.map((column, index) => (

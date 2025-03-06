@@ -23,6 +23,10 @@
 }
 
 .table{
+    @apply min-w-[800px] w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed
+}
+
+.short-table{
     @apply w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed
 }
 

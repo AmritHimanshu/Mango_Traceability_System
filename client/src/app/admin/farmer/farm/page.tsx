@@ -180,86 +180,88 @@ function page() {
           </div>
 
           <div>
-            <table className="table">
-              <thead>
-                <tr className="table-head-tr">
-                  <th>Ploughing Date</th>
-                  <th>Sowing Date</th>
-                  <th>Flowering Date:</th>
-                  <th>Pheromone Trap Date</th>
-                  <th>Lure Change Date</th>
-                </tr>
-              </thead>
-              <tbody className="table-body">
-                <tr className="table-body-tr">
-                  <td className="table-body-tr-td">
-                    {farmData?.ploughingDate ? (
-                      <>
-                        {
-                          new Date(farmData.ploughingDate)
-                            .toISOString()
-                            .split("T")[0]
-                        }
-                      </>
-                    ) : (
-                      <>{"-"}</>
-                    )}
-                  </td>
-                  <td className="table-body-tr-td">
-                    {farmData?.sowingDate ? (
-                      <>
-                        {
-                          new Date(farmData.sowingDate)
-                            .toISOString()
-                            .split("T")[0]
-                        }
-                      </>
-                    ) : (
-                      <>{"-"}</>
-                    )}
-                  </td>
-                  <td className="table-body-tr-td">
-                    {farmData?.floweringDate ? (
-                      <>
-                        {
-                          new Date(farmData.floweringDate)
-                            .toISOString()
-                            .split("T")[0]
-                        }
-                      </>
-                    ) : (
-                      <>{"-"}</>
-                    )}
-                  </td>
-                  <td className="table-body-tr-td">
-                    {farmData?.pheromoneTrapDate ? (
-                      <>
-                        {
-                          new Date(farmData.pheromoneTrapDate)
-                            .toISOString()
-                            .split("T")[0]
-                        }
-                      </>
-                    ) : (
-                      <>{"-"}</>
-                    )}
-                  </td>
-                  <td className="table-body-tr-td">
-                    {farmData?.lureChangeDate ? (
-                      <>
-                        {
-                          new Date(farmData.lureChangeDate)
-                            .toISOString()
-                            .split("T")[0]
-                        }
-                      </>
-                    ) : (
-                      <>{"-"}</>
-                    )}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div className="w-full overflow-x-auto">
+              <table className="table">
+                <thead>
+                  <tr className="table-head-tr">
+                    <th>Ploughing Date</th>
+                    <th>Sowing Date</th>
+                    <th>Flowering Date:</th>
+                    <th>Pheromone Trap Date</th>
+                    <th>Lure Change Date</th>
+                  </tr>
+                </thead>
+                <tbody className="table-body">
+                  <tr className="table-body-tr">
+                    <td className="table-body-tr-td">
+                      {farmData?.ploughingDate ? (
+                        <>
+                          {
+                            new Date(farmData.ploughingDate)
+                              .toISOString()
+                              .split("T")[0]
+                          }
+                        </>
+                      ) : (
+                        <>{"-"}</>
+                      )}
+                    </td>
+                    <td className="table-body-tr-td">
+                      {farmData?.sowingDate ? (
+                        <>
+                          {
+                            new Date(farmData.sowingDate)
+                              .toISOString()
+                              .split("T")[0]
+                          }
+                        </>
+                      ) : (
+                        <>{"-"}</>
+                      )}
+                    </td>
+                    <td className="table-body-tr-td">
+                      {farmData?.floweringDate ? (
+                        <>
+                          {
+                            new Date(farmData.floweringDate)
+                              .toISOString()
+                              .split("T")[0]
+                          }
+                        </>
+                      ) : (
+                        <>{"-"}</>
+                      )}
+                    </td>
+                    <td className="table-body-tr-td">
+                      {farmData?.pheromoneTrapDate ? (
+                        <>
+                          {
+                            new Date(farmData.pheromoneTrapDate)
+                              .toISOString()
+                              .split("T")[0]
+                          }
+                        </>
+                      ) : (
+                        <>{"-"}</>
+                      )}
+                    </td>
+                    <td className="table-body-tr-td">
+                      {farmData?.lureChangeDate ? (
+                        <>
+                          {
+                            new Date(farmData.lureChangeDate)
+                              .toISOString()
+                              .split("T")[0]
+                          }
+                        </>
+                      ) : (
+                        <>{"-"}</>
+                      )}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -302,7 +304,7 @@ function page() {
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Irrigation Dates:</div>
                 <>
-                  <table className="table">
+                  <table className="short-table">
                     <thead>
                       <tr className="table-head-tr">
                         {farmData.irrigationDates.artificial.length > 0 && (
@@ -417,11 +419,13 @@ function page() {
             {farmData.harvest && (
               <div className="flex items-start flex-col space-y-3">
                 <div className="font-bold">Harvest:</div>
-                <table className="table">
+                <table className="short-table">
                   <thead>
                     <tr className="table-head-tr">
                       <th className="border border-gray-300 px-4 py-2">Date</th>
-                      <th className="border border-gray-300 px-4 py-2">Yield (kg)</th>
+                      <th className="border border-gray-300 px-4 py-2">
+                        Yield (kg)
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="table-body">
@@ -445,7 +449,7 @@ function page() {
 
           <div className="text-center">
             <button
-              className="!w-[130px] md:!w-[150px] lg:!w-[200px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+              className="!w-[130px] md:!w-[150px] lg:!w-[200px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[5px] lg:py-[7px] bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
               onClick={() => setIsQRCode(true)}
             >
               Generate QR code

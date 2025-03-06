@@ -202,33 +202,35 @@ function page() {
           {pendingRequests.length > 0 ? (
             <>
               <div className="w-full overflow-x-auto rounded-lg shadow-2xl">
-                <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
-                  <thead>
-                    <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
-                      <td className="px-4 py-3 text-left">S. No.</td>
-                      <td className="px-4 py-3 text-left">Name</td>
-                      <td className="px-4 py-3 text-left">Email</td>
-                      <td className="px-4 py-3 text-left">Phone</td>
-                      <td className="px-4 py-3 text-left">Date</td>
-                      <td className="px-4 py-3 text-left">Assign role</td>
-                      <td className="px-4 py-3 text-center">
-                        <span className="text-green-400">Accept</span>/
-                        <span className="text-red-400">Reject</span>
-                      </td>
-                    </tr>
-                  </thead>
+                <div className="w-full overflow-x-auto">
+                  <table className="min-w-[1000px] w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
+                    <thead>
+                      <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
+                        <td className="px-4 py-3 text-left w-[100px]">S. No.</td>
+                        <td className="px-4 py-3 text-left">Name</td>
+                        <td className="px-4 py-3 text-left">Email</td>
+                        <td className="px-4 py-3 text-left">Phone</td>
+                        <td className="px-4 py-3 text-left">Date</td>
+                        <td className="px-4 py-3 text-left">Assign role</td>
+                        <td className="px-4 py-3 text-center">
+                          <span className="text-green-400">Accept</span>/
+                          <span className="text-red-400">Reject</span>
+                        </td>
+                      </tr>
+                    </thead>
 
-                  <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
-                    {pendingRequests.map((user, index) => (
-                      <PendingUserTable
-                        key={index}
-                        idx={(currentPage - 1) * limit + index}
-                        user={user}
-                        confirmReq={confirmReq}
-                      />
-                    ))}
-                  </tbody>
-                </table>
+                    <tbody className="text-[12px] md:text-[12px] lg:text-[16px]">
+                      {pendingRequests.map((user, index) => (
+                        <PendingUserTable
+                          key={index}
+                          idx={(currentPage - 1) * limit + index}
+                          user={user}
+                          confirmReq={confirmReq}
+                        />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
 
               <div className="space-x-5 text-center text-black">
