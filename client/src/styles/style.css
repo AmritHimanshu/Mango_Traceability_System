@@ -45,3 +45,19 @@
 .table-body-tr-td{
     @apply px-4 py-3 align-middle w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap
 }
+
+.text-heading-size{
+    @apply text-base md:text-xl xl:text-2xl
+}
+
+.text-table-head-size{
+    @apply text-sm md:text-base xl:text-lg
+}
+
+.text-table-body-size{
+    @apply text-sm
+}
+
+/* .text-description{
+    @apply 
+} */

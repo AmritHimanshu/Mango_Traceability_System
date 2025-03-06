@@ -256,14 +256,14 @@ function page() {
       <div className="my-5">
         {pendingRequests.length > 0 && (
           <div className="max-w-[80%] m-auto space-y-5">
-            <div className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold text-black text-center underline">
+            <div className="text-heading-size font-bold text-black text-center">
               Recent Pending Requests
             </div>
             <div className="w-full rounded-lg shadow-2xl overflow-hidden">
               <div className="w-full overflow-x-auto">
                 <table className="min-w-[1000px] w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
                   <thead>
-                    <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
+                    <tr className="font-bold bg-primarycColor bg-opacity-80 text-white text-table-head-size">
                       <td className="px-4 py-3 text-left w-[100px]">S. No.</td>
                       <td className="px-4 py-3 text-left">Name</td>
                       <td className="px-4 py-3 text-left">Email</td>
@@ -277,7 +277,7 @@ function page() {
                     </tr>
                   </thead>
 
-                  <tbody className="text-[12px] md:text-[12px] lg:text-[16px]">
+                  <tbody className="text-[12px md:text-[12px lg:text-[16px">
                     {pendingRequests.map((user, index) => (
                       <PendingUserTable
                         key={index}
