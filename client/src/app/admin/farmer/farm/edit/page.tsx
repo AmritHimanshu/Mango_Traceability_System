@@ -9,7 +9,7 @@ import {
   ADMIN_ADD_FARM_DATA,
   ADMIN_FETCH_FARMER_FARM_DATA,
 } from "@/utils/Apis/api";
-import { ADMIN_FARM, FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
+import { ADMIN_FARM, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import { Farm } from "@/utils/Types/interfaces";
 import Message from "@/app/components/common/Message";
 
@@ -168,7 +168,7 @@ function page() {
 
       if (Object.keys(payload).length === 0) {
         setMessage({ text: "No changes to save!", type: "error" });
-        router.push(`${FARMS}/${id}`);
+        router.push(`${ADMIN_FARM}?farm_id=${id}`);
         setTimeout(() => {
           setMessage({ text: "", type: "" });
         }, 2000);
@@ -253,17 +253,17 @@ function page() {
         </div>
       </div>
 
-      <div className="my-5 max-w-[80%] m-auto text-black">
+      <div className="my-5 max-w-[90%] m-auto text-black">
         <div className="text-end my-3">
           <button
             onClick={handleOnCancel}
-            className="!w-[100px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-red-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+            className="!w-[100px] text-button-size bg-red-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
           >
             Cancel
           </button>
         </div>
 
-        <div className="mb-10 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-16">
+        <div className="mb-10 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-10 lg:gap-16">
           {!farm?.ploughingDate && (
             <div className="flex items-start flex-col">
               <label htmlFor="ploughingDate" className="font-bold">
@@ -391,7 +391,7 @@ function page() {
           )}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-10 lg:gap-16">
           <div className="flex items-start flex-col space-y-3">
             <div className="font-bold">Irrigation Dates:</div>
             <div className="w-full flex items-center justify-between">
@@ -622,7 +622,7 @@ function page() {
 
         <div className="mt-16 text-center">
           <button
-            className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+            className="w-[100px] text-button-size bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
             onClick={() => setIsSave(true)}
           >
             Save
@@ -634,22 +634,22 @@ function page() {
         <div className="fixed z-[9999] top-0 left-0 w-full h-full bg-neutral-900 bg-opacity-80 flex items-center">
           <div className="bg-white text-black p-3 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5 rounded-md">
             <div>
-              <div className="text-sm md:text-xl">
+              <div className="text-title-size font-bold">
                 Are you sure, you want to save?
               </div>
-              <div className="text-[10px] md:text-[13px]">
+              <div className="text-[11px] md:text-[13px] lg:text-[15px]">
                 You will not be able to edit/change after saving!
               </div>
             </div>
-            <div className="text-end text-[11px] md:text-lg space-x-2">
+            <div className="text-end space-x-2">
               <button
-                className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                className="w-[100px] text-button-size bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
                 onClick={() => setIsSave(false)}
               >
                 Cancel
               </button>
               <button
-                className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                className="w-[100px] text-button-size bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
                 onClick={() => handleOnSave()}
               >
                 Confirm
