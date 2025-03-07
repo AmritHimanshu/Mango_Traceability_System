@@ -122,7 +122,7 @@ function page() {
       <div>
         {farmList.length > 0 && (
           <div className="my-5 !space-y-5 p-2">
-            <div className="text-center font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-black">
+            <div className="text-center font-bold text-heading-size text-black">
               Recent <span className="text-customGreen">Farms</span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 w-fit mx-auto justify-center">
