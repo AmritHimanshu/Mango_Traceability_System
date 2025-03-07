@@ -602,14 +602,14 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
 
         <div className="flex items-center justify-between">
           <button
-            className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+            className="!w-[130px] text-button-size bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
             onClick={handleDelete}
           >
             Delete
           </button>
 
           <button
-            className="!w-[130px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+            className="!w-[130px] text-button-size bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
             onClick={handleUpdate}
           >
             Update
