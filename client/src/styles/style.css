@@ -55,7 +55,7 @@
 }
 
 .text-table-body-size{
-    @apply text-sm
+    @apply text-sm xl:text-base 2xl:text-lg
 }
 
 /* .text-description{

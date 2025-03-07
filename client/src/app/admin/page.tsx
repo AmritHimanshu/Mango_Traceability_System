@@ -277,7 +277,7 @@ function page() {
                     </tr>
                   </thead>
 
-                  <tbody className="text-[12px md:text-[12px lg:text-[16px">
+                  <tbody className="text-table-body-size">
                     {pendingRequests.map((user, index) => (
                       <PendingUserTable
                         key={index}
