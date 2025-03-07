@@ -255,7 +255,7 @@ function page() {
 
       <div className="my-5">
         {pendingRequests.length > 0 && (
-          <div className="max-w-[80%] m-auto space-y-5">
+          <div className="max-w-[90%] m-auto space-y-5">
             <div className="text-heading-size font-bold text-black text-center">
               Recent Pending Requests
             </div>
@@ -293,7 +293,7 @@ function page() {
 
             <div className="text-end">
               <span
-                className="text-[12px] md:text-[12px] lg:text-[16px] mt-3 underline text-end cursor-pointer hover:text-customGreen duration-200"
+                className="text-[14px] md:text-[15px] lg:text-[17px] mt-3 underline text-end cursor-pointer hover:text-customGreen duration-200"
                 onClick={() => router.push("/admin/pending-requests")}
               >
                 view all
