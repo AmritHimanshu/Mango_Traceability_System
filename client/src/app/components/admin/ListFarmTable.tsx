@@ -8,9 +8,9 @@ function ListFarmTable({ farms, idxCalc, handleClick }: ListFarmTableProps) {
   return (
     <div className="w-full overflow-x-auto rounded-lg shadow-2xl">
       <div className="w-full overflow-x-auto">
-        <table className="min-w-[1000px] w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
+        <table className="min-w-[1000px] w-full table-fixed">
           <thead>
-            <tr className="font-bold bg-primarycColor bg-opacity-80 text-white">
+            <tr className="font-bold bg-primarycColor bg-opacity-80 text-white text-table-head-size">
               <td className="px-4 py-3 text-left w-[100px]">S. No.</td>
               <td className="px-4 py-3 text-left">ID</td>
               <td className="px-4 py-3 text-left">Farm Name</td>
@@ -20,7 +20,7 @@ function ListFarmTable({ farms, idxCalc, handleClick }: ListFarmTableProps) {
             </tr>
           </thead>
 
-          <tbody className="text-[12px] md:text-[12px] lg:text-[16px]">
+          <tbody className="text-table-body-size">
             {farms.map((farm, index) => (
               <tr
                 key={index}
