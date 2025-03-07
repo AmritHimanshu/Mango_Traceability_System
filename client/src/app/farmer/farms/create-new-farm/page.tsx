@@ -135,7 +135,7 @@ function page() {
       </div>
 
       <div className="my-5 !space-y-5 p-2">
-        <div className="text-center font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-black">
+        <div className="text-center font-bold text-heading-size text-black">
           Create Your <span className="text-customGreen">Farm</span>
         </div>
         <div className="space-y-10 max-w-[80%] m-auto">

@@ -164,11 +164,11 @@ function page() {
       </div>
 
       {farm && (
-        <div className="my-5 max-w-[80%] m-auto text-black">
+        <div className="my-5 max-w-[90%] m-auto text-black">
           <div className="my-3 text-right">
             <button
               onClick={() => setIsDelete(true)}
-              className="!w-[100px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-red-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+              className="!w-[100px] text-button-size bg-red-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
             >
               Delete
             </button>
@@ -181,27 +181,27 @@ function page() {
               <div>
                 {farm.farm && (
                   <div className="flex items-start space-x-3">
-                    <div className="font-bold">Farm Name:</div>
-                    <div>{farm.farm}</div>
+                    <div className="font-bold text-title-size">Farm Name:</div>
+                    <div className="text-description-size">{farm.farm}</div>
                   </div>
                 )}
 
                 {farm.crop && (
                   <div className="flex items-start space-x-3">
-                    <div className="font-bold">Crop Name:</div>
-                    <div>{farm.crop}</div>
+                    <div className="font-bold text-title-size">Crop Name:</div>
+                    <div className="text-description-size">{farm.crop}</div>
                   </div>
                 )}
               </div>
               <div>
                 <div className="flex items-center space-x-3">
-                  <div className="font-bold">ID:</div>
-                  <div className="">{farm.uniqueID}</div>
+                  <div className="font-bold text-title-size">ID:</div>
+                  <div className="text-description-size">{farm.uniqueID}</div>
                 </div>
                 {farm.area && (
                   <div className="flex items-center space-x-3">
-                    <div className="font-bold">Area:</div>
-                    <div>{farm.area.toFixed(2)} sq. m</div>
+                    <div className="font-bold text-title-size">Area:</div>
+                    <div className="text-description-size">{farm.area.toFixed(2)} sq. m</div>
                   </div>
                 )}
               </div>
@@ -210,7 +210,7 @@ function page() {
             <div className="w-full overflow-x-auto">
               <table className="table">
                 <thead>
-                  <tr className="table-head-tr">
+                  <tr className="table-head-tr text-table-head-size">
                     <th>Ploughing Date</th>
                     <th>Sowing Date</th>
                     <th>Flowering Date:</th>
@@ -218,7 +218,7 @@ function page() {
                     <th>Lure Change Date</th>
                   </tr>
                 </thead>
-                <tbody className="table-body">
+                <tbody className="table-body text-table-body-size">
                   <tr className="table-body-tr">
                     <td className="table-body-tr-td">
                       {farm?.ploughingDate ? (
@@ -293,14 +293,14 @@ function page() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-14">
               {farm.weedingDate.length > 0 && (
                 <div className="flex items-start flex-col space-y-3">
-                  <div className="font-bold">Weeding Date:</div>
+                  <div className="font-bold text-title-size">Weeding Date:</div>
                   <>
                     <table className="w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
                       <thead></thead>
-                      <tbody className="text-[9px] md:text-[12px] lg:text-[16px]">
+                      <tbody className="text-description-size">
                         {farm.weedingDate
                           .reduce<string[][]>((acc, date, index) => {
-                            if (index % 3 === 0) acc.push([]);
+                            if (index % 2 === 0) acc.push([]);
                             acc[acc.length - 1].push(date);
                             return acc;
                           }, [])
@@ -328,11 +328,11 @@ function page() {
               {(farm.irrigationDates.artificial.length > 0 ||
                 farm.irrigationDates.natural.length > 0) && (
                 <div className="flex items-start flex-col space-y-3">
-                  <div className="font-bold">Irrigation Dates:</div>
+                  <div className="font-bold text-title-size">Irrigation Dates:</div>
                   <>
                     <table className="short-table">
                       <thead>
-                        <tr className="table-head-tr">
+                        <tr className="table-head-tr text-table-head-size">
                           {farm.irrigationDates.artificial.length > 0 && (
                             <th className="border border-gray-300 px-4 py-2">
                               Artificial
@@ -345,7 +345,7 @@ function page() {
                           )}
                         </tr>
                       </thead>
-                      <tbody className="table-body">
+                      <tbody className="table-body text-table-body-size">
                         {(() => {
                           const maxLength = Math.max(
                             farm.irrigationDates.artificial.length,
@@ -389,7 +389,7 @@ function page() {
 
               {farm.fertilizerApplications.length > 0 && (
                 <div className="flex items-start flex-col space-y-3">
-                  <div className="font-bold">Fertilizer Application:</div>
+                  <div className="font-bold text-title-size">Fertilizer Application:</div>
                   <ListFarmApplicationsData
                     data={farm.fertilizerApplications}
                     columns={[
@@ -402,7 +402,7 @@ function page() {
 
               {farm.pesticideApplications.length > 0 && (
                 <div className="flex items-start flex-col space-y-3">
-                  <div className="font-bold">Pesticide Application:</div>
+                  <div className="font-bold text-title-size">Pesticide Application:</div>
                   <ListFarmApplicationsData
                     data={farm.pesticideApplications}
                     columns={[
@@ -415,7 +415,7 @@ function page() {
 
               {farm.bagging.length > 0 && (
                 <div className="flex items-start flex-col space-y-3">
-                  <div className="font-bold">Bagging:</div>
+                  <div className="font-bold text-title-size">Bagging:</div>
                   <ListFarmApplicationsData
                     data={farm.bagging}
                     columns={[
@@ -428,7 +428,7 @@ function page() {
 
               {farm.specialCare.length > 0 && (
                 <div className="flex items-start flex-col space-y-3">
-                  <div className="font-bold">Special care:</div>
+                  <div className="font-bold text-title-size">Special care:</div>
                   <ListFarmApplicationsData
                     data={farm.specialCare}
                     columns={[
@@ -441,15 +441,15 @@ function page() {
 
               {farm.harvest && (
                 <div className="flex items-start flex-col space-y-3">
-                  <div className="font-bold">Harvest:</div>
+                  <div className="font-bold text-title-size">Harvest:</div>
                   <table className="short-table">
                     <thead>
-                      <tr className="table-head-tr">
+                      <tr className="table-head-tr text-table-head-size">
                         <th className="border border-gray-300 px-4 py-2">Date</th>
                         <th className="border border-gray-300 px-4 py-2">Yield (kg)</th>
                       </tr>
                     </thead>
-                    <tbody className="table-body">
+                    <tbody className="table-body text-table-body-size">
                       <tr className="table-body-tr">
                         <td className="table-body-tr-td">
                           {
@@ -470,7 +470,7 @@ function page() {
 
             <div className="text-center">
               <button
-                className="!w-[120px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                className="!w-[120px] text-button-size bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
                 onClick={handleOnEdit}
               >
                 Add data

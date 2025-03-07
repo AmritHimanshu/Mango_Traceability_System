@@ -109,7 +109,7 @@ function Map({ submitForm }: MapProps) {
         <div className="flex justify-between">
           <button
             onClick={handleReset}
-            className="!w-[70px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-gray-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+            className="!w-[70px] text-button-size bg-gray-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
             style={{ marginRight: "10px" }}
           >
             Reset
@@ -118,14 +118,14 @@ function Map({ submitForm }: MapProps) {
           {!tracking ? (
             <button
               onClick={handleStartTracking}
-              className="!w-[150px] lg:!w-[200px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-gray-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+              className="!w-[150px] lg:!w-[200px] text-button-size bg-gray-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
             >
               Start Tracking
             </button>
           ) : (
             <button
               onClick={handleStopTracking}
-              className="!w-[150px] lg:!w-[200px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-gray-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+              className="!w-[150px] lg:!w-[200px] text-button-size bg-gray-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
             >
               Stop Tracking
             </button>
@@ -134,7 +134,7 @@ function Map({ submitForm }: MapProps) {
 
         <div className="text-center">
           <button
-            className="!w-[150px] lg:!w-[200px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+            className="!w-[150px] lg:!w-[200px] text-button-size bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
             onClick={handleSubmit}
           >
             Create farm
