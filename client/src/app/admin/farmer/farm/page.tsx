@@ -460,9 +460,9 @@ function page() {
 
       {isQRCode && (
         <div className="fixed z-[9999] top-0 left-0 w-full h-full bg-neutral-900 bg-opacity-80 flex items-center">
-          <div className="bg-white p-3 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5 rounded-md">
+          <div className="bg-white p-3 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y- rounded-md">
             <div className="flex items-center justify-between">
-              <h2 className="font-bold text-lg">
+              <h2 className="font-bold text-button-size">
                 Scan QR Code for the Certificate
               </h2>
               <CloseIcon
