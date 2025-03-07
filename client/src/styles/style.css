@@ -31,7 +31,7 @@
 }
 
 .table-head-tr{
-    @apply font-bold bg-primarycColor bg-opacity-80 text-white
+    @apply font-bold bg-primarycColor bg-opacity-80 text-white align-middle
 }
 
 .table-body{
@@ -62,6 +62,10 @@
     @apply text-sm lg:text-lg py-[5px] lg:py-[7px]
 }
 
-/* .text-description{
-    @apply 
-} */
+.text-title-size{
+    @apply text-[13px] md:text-base lg:text-lg
+}
+
+.text-description-size{
+    @apply text-[13px] md:text-base lg:text-lg
+}

@@ -11,7 +11,7 @@ function ListFarmApplicationsData({
     <>
       <table className="short-table">
         <thead>
-          <tr className="table-head-tr">
+          <tr className="table-head-tr text-table-head-size">
             {columns.map((column, index) => (
               <th
                 key={index}
@@ -22,7 +22,7 @@ function ListFarmApplicationsData({
             ))}
           </tr>
         </thead>
-        <tbody className="table-body">
+        <tbody className="table-body text-table-body-size">
           {data.map((item, rowIndex) => (
             <tr
               key={rowIndex}
