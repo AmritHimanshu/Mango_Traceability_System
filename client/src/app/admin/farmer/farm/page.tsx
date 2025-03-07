@@ -131,7 +131,7 @@ function page() {
       </div>
 
       {farmData && (
-        <div className="my-5 max-w-[90%] m-auto text-black space-y-5 lg:space-y-10 text-[10px] md:text-[13px] lg:text-[16px]">
+        <div className="my-5 max-w-[90%] m-auto text-black space-y-5 lg:space-y-10">
           <div className="space-x-2 text-right">
             <button
               className="!w-[100px] text-button-size bg-green-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
