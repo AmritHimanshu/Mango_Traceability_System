@@ -58,6 +58,10 @@
     @apply text-sm xl:text-base 2xl:text-lg
 }
 
+.text-button-size{
+    @apply text-sm lg:text-lg py-[5px] lg:py-[7px]
+}
+
 /* .text-description{
     @apply 
 } */
