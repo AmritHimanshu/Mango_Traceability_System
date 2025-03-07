@@ -261,7 +261,7 @@ function page() {
             </div>
             <div className="w-full rounded-lg shadow-2xl overflow-hidden">
               <div className="w-full overflow-x-auto">
-                <table className="min-w-[1000px] w-full text-[10px] md:text-[13px] lg:text-[16px] table-fixed">
+                <table className="min-w-[1000px] w-full table-fixed">
                   <thead>
                     <tr className="font-bold bg-primarycColor bg-opacity-80 text-white text-table-head-size">
                       <td className="px-4 py-3 text-left w-[100px]">S. No.</td>

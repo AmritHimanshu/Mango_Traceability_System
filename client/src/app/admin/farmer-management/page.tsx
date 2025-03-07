@@ -99,8 +99,8 @@ function page() {
       </div>
 
       <div className="my-5">
-        <div className="max-w-[80%] m-auto space-y-5">
-          <div className="text-center font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-black">
+        <div className="max-w-[90%] m-auto space-y-5">
+          <div className="text-center font-bold text-black text-heading-size">
             Farmers
           </div>
           {farmers.length > 0 ? (
