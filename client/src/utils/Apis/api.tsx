@@ -9,6 +9,7 @@ export const VERIFY_OTP_PHONE = "api/verify-otp-phone";
 export const FORGOT_SEND_OTP_EMAIL = "api/forgot-password/send-otp-email";
 export const UPDATE_PASSWORD = "api/update-password";
 export const CERTIFICATE_FARM_DETAIL = "api/certificate-farm-detail";
+export const GENERATE_PDF = "api/generate-pdf";
 
 // Admin GET APIs
 export const ADMIN_FEW_PENDING_REQUESTS = "admin/api/few-pending-requests";

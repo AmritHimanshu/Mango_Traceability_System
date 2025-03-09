@@ -5,7 +5,7 @@ import { LoadingBarRef } from "react-top-loading-bar";
 import { useSearchParams } from "next/navigation";
 import { Farm, userCert } from "@/utils/Types/interfaces";
 import dynamic from "next/dynamic";
-import { CERTIFICATE_FARM_DETAIL } from "@/utils/Apis/api";
+import { CERTIFICATE_FARM_DETAIL, GENERATE_PDF } from "@/utils/Apis/api";
 import { isMobile } from "@/utils/IsMobile/isMobile";
 import ListFarmApplicationsData from "@/app/components/farmer/ListFarmApplicationsData";
 import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
@@ -69,17 +69,53 @@ function page() {
     fetchFarmData();
   }, []);
 
-  const handleDownload = () => {
-    if (isMobile()) {
-      setIsPDF(true);
-    } else {
-      setIsPDF(true);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+
+  const handleDownload = async () => {
+    // if (isMobile()) {
+    //   setIsPDF(true);
+    // } else {
+    //   setIsPDF(true);
+    // }
+
+    try {
+      const res = await fetch(
+        `${BASE_URL}/${GENERATE_PDF}?farm_id=${farm_id}`,
+        {
+          method: "GET",
+        }
+      );
+
+      const contentType = res.headers.get("Content-Type");
+      console.log(contentType);
+
+      const blob = await res.blob();
+      console.log(res);
+      console.log(blob);
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`Failed to fetch PDF: ${errorText}`);
+      }
+
+      if (contentType !== "application/pdf") {
+        throw new Error("Response is not a valid PDF file.");
+      }
+
+      const url = URL.createObjectURL(blob);
+      // window.open(url, "_blank");
+
+      setPdfUrl(url);
+    } catch (error) {
+      console.error("Error fetching PDF:", error);
     }
   };
 
   return (
     <div className="page-main-div-certificate">
       <CustomLoadingBar ref={loadingBarRef} />
+
+      {pdfUrl && <iframe src={pdfUrl} width="100%" height="600px"></iframe>}
 
       {farmData && !isPDF ? (
         <>
@@ -357,12 +393,12 @@ function page() {
             </div>
 
             <div className="text-center">
-            <button
-              onClick={handleDownload}
-              className="!w-[130px] md:!w-[150px] lg:!w-[200px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
-            >
-              Download PDF
-            </button>
+              <button
+                onClick={handleDownload}
+                className="!w-[130px] md:!w-[150px] lg:!w-[200px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+              >
+                Download PDF
+              </button>
             </div>
           </div>
         </>

@@ -3,12 +3,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { ADMIN_FETCH_FARMER_FARM_DATA } from "@/utils/Apis/api";
+import { ADMIN_FETCH_FARMER_FARM_DATA, GENERATE_PDF } from "@/utils/Apis/api";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
 import {
   ADMIN_FARM,
-  CERTIFICATE,
   FARMER,
   LOGIN,
   NOT_FOUND,
@@ -26,7 +25,6 @@ import Edit_Farm from "@/app/components/admin/Edit_Farm";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-  const FRONTEND_BASE_URL = process.env.NEXT_PUBLIC_FRONTEND_BASE_URL;
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
 
@@ -472,7 +470,7 @@ function page() {
             </div>
             <div className="flex justify-center items-center bg-white p-4">
               <QRCode
-                value={`${FRONTEND_BASE_URL}/${CERTIFICATE}?farm_id=${farm_id}`}
+                value={`${BASE_URL}/${GENERATE_PDF}?farm_id=${farm_id}`}
                 size={200}
               />
             </div>

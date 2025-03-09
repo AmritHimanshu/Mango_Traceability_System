@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const parsePhoneNumberFromString = require('libphonenumber-js');
+const puppeteer = require('puppeteer');
 
 const { notifyAdmins } = require('../../functions/sendMail');
 const { sendOtpToEmail, verifyOtpForEmail, sendOtpToPhone, verifyOtpForPhone } = require('../../functions/otpService');
+const generateHTML = require('../../functions/generate-pdf');
 
 const User = require('../../model/userSchema');
 const Farmer = require('../../model/farmerSchema');
@@ -169,7 +171,7 @@ router.post("/api/send-otp-phone", async (req, res) => {
         if (!verificationData.success) {
             return res.status(400).json({ error: "reCAPTCHA validation failed." });
         }
-        
+
         await sendOtpToPhone(phone);
         res.status(201).json({ message: "OTP sent successfully." });
     } catch (error) {
@@ -238,6 +240,36 @@ router.get('/api/logout', (req, res) => {
     res.clearCookie('jwtoken', { path: '/' });
     res.status(201).json({ message: 'User Logout' });
 })
+
+router.get('/api/generate-pdf', async (req, res) => {
+    try {
+        const { farm_id } = req.query;
+
+        const farmData = await Farmer.findOne({ uniqueID: farm_id });
+
+        const html = generateHTML(farmData);
+
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+
+        await page.setContent(html, { waitUntil: "networkidle0" });
+
+        const pdfBuffer = await page.pdf({
+            format: "A4",
+            printBackground: true,
+        });
+
+        await browser.close();
+
+        res.setHeader("Content-Type", "application/pdf");
+        res.setHeader("Content-Disposition", "inline; filename=farm-report.pdf");
+
+        res.end(pdfBuffer);
+    } catch (error) {
+        console.log("/api/generate-pdf: ", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 router.get('/', (req, res) => {
     return res.status(201).json({ message: "I am Singh Sahab" });
