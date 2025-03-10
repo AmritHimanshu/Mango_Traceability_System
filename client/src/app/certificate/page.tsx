@@ -87,20 +87,8 @@ function page() {
       );
 
       const contentType = res.headers.get("Content-Type");
-      console.log(contentType);
 
       const blob = await res.blob();
-      console.log(res);
-      console.log(blob);
-
-      if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(`Failed to fetch PDF: ${errorText}`);
-      }
-
-      if (contentType !== "application/pdf") {
-        throw new Error("Response is not a valid PDF file.");
-      }
 
       const url = URL.createObjectURL(blob);
       // window.open(url, "_blank");
