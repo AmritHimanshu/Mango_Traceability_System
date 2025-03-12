@@ -162,7 +162,7 @@ function page() {
             />
           </div>
           <div className="bg-white text-black flex-grow flex items-center">
-            <div className="p-3 w-full lg:w-[400px] m-auto space-y-5">
+            <div className="p-3 w-full lg:w-[450px] m-auto space-y-5">
               <div className="mt-2 text-xl text-center">Login</div>
               <div className="space-y-2">
                 <label htmlFor="email">Email</label>
