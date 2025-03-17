@@ -4,10 +4,11 @@ import {
   MANAGER_MANAGEMENT,
   ADMIN_OVERVIEW,
   PENDING_REQUESTS,
-  PROFILE,
   FARMER_OVERVIEW,
   FARMS,
   NOTIFICATIONS,
+  ADMIN_PROFILE,
+  FARMER_PROFILE,
 } from "../Paths/paths";
 
 export const admin = [
@@ -33,7 +34,7 @@ export const admin = [
   },
   {
     name: "Profile",
-    path: PROFILE,
+    path: ADMIN_PROFILE,
     base_path: "",
   },
   {
@@ -61,7 +62,7 @@ export const farmer = [
   },
   {
     name: "Profile",
-    path: PROFILE,
+    path: FARMER_PROFILE,
     base_path: '',
   },
   {
