@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
 import { FARMER_NEW_FARM } from "@/utils/Apis/api";
@@ -31,6 +32,7 @@ function page() {
   const [message, setMessage] = useState({ text: "", type: "" });
   const [farmName, setFarmName] = useState("");
   const [cropName, setCropName] = useState("");
+  const [landmark, setLandmark] = useState("");
 
   const calculateAreaOfLand = (coordinates: [number, number][]) => {
     if (coordinates.length < 3) {
@@ -49,7 +51,7 @@ function page() {
   };
 
   const handlesubmitForm = async (coordinates: [number, number][]) => {
-    if (!farmName || !cropName) {
+    if (!farmName || !cropName || !landmark) {
       setMessage({ text: "Fill all the form", type: "error" });
     }
     if (coordinates.length < 3) {
@@ -76,6 +78,7 @@ function page() {
         body: JSON.stringify({
           farmName,
           cropName,
+          landmark,
           coordinates,
           area,
         }),
@@ -135,8 +138,8 @@ function page() {
           Create Your <span className="text-customGreen">Farm</span>
         </div>
         <div className="space-y-10 max-w-[80%] m-auto">
-          <div className="flex items-center justify-between flex-col space-y-7 md:flex-row md:space-y-0 text-black">
-            <div className="space-y-2 w-[100%] md:w-[40%] xl:w-[20%]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-black">
+            <div className="space-y-2 w-[100%]">
               <label htmlFor="farmName">
                 Name of the farm <span className="text-red-600">*</span>
               </label>
@@ -151,7 +154,7 @@ function page() {
               />
             </div>
 
-            <div className="space-y-2 w-[100%] md:w-[40%] xl:w-[20%]">
+            <div className="space-y-2 w-[100%]">
               <label htmlFor="cropName">
                 Name of the crop <span className="text-red-600">*</span>
               </label>
@@ -166,6 +169,21 @@ function page() {
                 <option value="Mango">Mango</option>
                 <option value="Lichi">Lichi</option>
               </select>
+            </div>
+
+            <div className="space-y-2 w-[100%]">
+              <label htmlFor="landmark">
+                Landmark <span className="text-red-600">*</span>
+              </label>
+              <input
+                type="text"
+                id="landmark"
+                name="landmark"
+                value={landmark}
+                className="input-tag"
+                required
+                onChange={(e) => setLandmark(e.target.value)}
+              />
             </div>
           </div>
 

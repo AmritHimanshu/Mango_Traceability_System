@@ -6,12 +6,7 @@ import Image from "next/image";
 import { ADMIN_FETCH_FARMER_FARM_DATA, GENERATE_PDF } from "@/utils/Apis/api";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
-import {
-  ADMIN_FARM,
-  FARMER,
-  LOGIN,
-  NOT_FOUND,
-} from "@/utils/Paths/paths";
+import { ADMIN_FARM, FARMER, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import dynamic from "next/dynamic";
 import QRCode from "react-qr-code";
 import { Farm, userCert } from "@/utils/Types/interfaces";
@@ -123,9 +118,6 @@ function page() {
             <div className="text-[30px] md:text-[50px] font-bold text-white">
               {userData?.name}
             </div>
-            {/* <div className="text-[30px] md:text-[50px] font-bold text-customOrange">
-              Farm
-            </div> */}
             <div className="text-customOrange text-[20px] md:text-[30px]">
               {farmData?.farm}
             </div>
@@ -167,6 +159,15 @@ function page() {
                   <div className="text-description-size">{farmData.crop}</div>
                 </div>
               )}
+
+              {farmData.landmark && (
+                <div className="flex items-start space-x-3">
+                  <div className="font-bold text-title-size">Landmark:</div>
+                  <div className="text-description-size">
+                    {farmData.landmark}
+                  </div>
+                </div>
+              )}
             </div>
             <div>
               <div className="flex items-center space-x-3">
@@ -176,7 +177,9 @@ function page() {
               {farmData.area && (
                 <div className="flex items-center space-x-3">
                   <div className="font-bold text-title-size">Area:</div>
-                  <div className="text-description-size">{farmData.area.toFixed(2)} sq. m</div>
+                  <div className="text-description-size">
+                    {farmData.area.toFixed(2)} sq. m
+                  </div>
                 </div>
               )}
             </div>
@@ -305,7 +308,9 @@ function page() {
             {(farmData.irrigationDates.artificial.length > 0 ||
               farmData.irrigationDates.natural.length > 0) && (
               <div className="flex items-start flex-col space-y-3">
-                <div className="font-bold text-title-size">Irrigation Dates:</div>
+                <div className="font-bold text-title-size">
+                  Irrigation Dates:
+                </div>
                 <>
                   <table className="short-table">
                     <thead>
@@ -369,7 +374,9 @@ function page() {
 
             {farmData.fertilizerApplications.length > 0 && (
               <div className="flex items-start flex-col space-y-3">
-                <div className="font-bold text-title-size">Fertilizer Application:</div>
+                <div className="font-bold text-title-size">
+                  Fertilizer Application:
+                </div>
                 <ListFarmApplicationsData
                   data={farmData.fertilizerApplications}
                   columns={[
@@ -382,7 +389,9 @@ function page() {
 
             {farmData.pesticideApplications.length > 0 && (
               <div className="flex items-start flex-col space-y-3">
-                <div className="font-bold text-title-size">Pesticide Application:</div>
+                <div className="font-bold text-title-size">
+                  Pesticide Application:
+                </div>
                 <ListFarmApplicationsData
                   data={farmData.pesticideApplications}
                   columns={[

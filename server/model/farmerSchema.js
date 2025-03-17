@@ -35,6 +35,10 @@ const farmerSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        landmark: {
+            type: String,
+            required: true
+        },
         ploughingDate: {
             type: Date
         },

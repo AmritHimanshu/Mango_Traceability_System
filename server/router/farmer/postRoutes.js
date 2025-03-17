@@ -5,9 +5,9 @@ const Farmer = require('../../model/farmerSchema');
 
 router.post('/api/new-farm', async (req, res) => {
     try {
-        const { farmName, cropName, coordinates, area } = req.body;
+        const { farmName, cropName, landmark, coordinates, area } = req.body;
 
-        if (!farmName || !cropName || !coordinates || !area) {
+        if (!farmName || !cropName || !landmark || !coordinates || !area) {
             return res.status(400).json({ error: "Fill all the fields" });
         }
 
@@ -19,6 +19,7 @@ router.post('/api/new-farm', async (req, res) => {
             userUniqueId: req.rootUser.uniqueID,
             farm: farmName,
             crop: cropName,
+            landmark: landmark,
             geoFenceData: coordinates.map(coord => ({
                 lat: coord[0],
                 lng: coord[1],
@@ -30,9 +31,11 @@ router.post('/api/new-farm', async (req, res) => {
 
         farm.uniqueID = ID;
 
+        console.log(farm);
+
         const farmRegister = await farm.save();
 
-        return res.status(201).json({message: "Farm registered successfully!"});
+        return res.status(201).json({ message: "Farm registered successfully!" });
     } catch (error) {
         console.log("/api/new-farm: ", error);
         return res.status(500).json({ error: "Internal Server Error" });

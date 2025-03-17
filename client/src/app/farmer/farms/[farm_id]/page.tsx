@@ -146,8 +146,8 @@ function page() {
       <Banner
         img_src="/assets/plant.jpg"
         img_alt="Plant"
-        heading="Your Farm"
-        description={farm?.farm}
+        heading={farm?.farm}
+        description={farm?.landmark}
       />
 
       {farm && (
@@ -188,7 +188,9 @@ function page() {
                 {farm.area && (
                   <div className="flex items-center space-x-3">
                     <div className="font-bold text-title-size">Area:</div>
-                    <div className="text-description-size">{farm.area.toFixed(2)} sq. m</div>
+                    <div className="text-description-size">
+                      {farm.area.toFixed(2)} sq. m
+                    </div>
                   </div>
                 )}
               </div>
@@ -315,7 +317,9 @@ function page() {
               {(farm.irrigationDates.artificial.length > 0 ||
                 farm.irrigationDates.natural.length > 0) && (
                 <div className="flex items-start flex-col space-y-3">
-                  <div className="font-bold text-title-size">Irrigation Dates:</div>
+                  <div className="font-bold text-title-size">
+                    Irrigation Dates:
+                  </div>
                   <>
                     <table className="short-table">
                       <thead>
@@ -376,7 +380,9 @@ function page() {
 
               {farm.fertilizerApplications.length > 0 && (
                 <div className="flex items-start flex-col space-y-3">
-                  <div className="font-bold text-title-size">Fertilizer Application:</div>
+                  <div className="font-bold text-title-size">
+                    Fertilizer Application:
+                  </div>
                   <ListFarmApplicationsData
                     data={farm.fertilizerApplications}
                     columns={[
@@ -389,7 +395,9 @@ function page() {
 
               {farm.pesticideApplications.length > 0 && (
                 <div className="flex items-start flex-col space-y-3">
-                  <div className="font-bold text-title-size">Pesticide Application:</div>
+                  <div className="font-bold text-title-size">
+                    Pesticide Application:
+                  </div>
                   <ListFarmApplicationsData
                     data={farm.pesticideApplications}
                     columns={[
@@ -432,8 +440,12 @@ function page() {
                   <table className="short-table">
                     <thead>
                       <tr className="table-head-tr text-table-head-size">
-                        <th className="border border-gray-300 px-4 py-2">Date</th>
-                        <th className="border border-gray-300 px-4 py-2">Yield (kg)</th>
+                        <th className="border border-gray-300 px-4 py-2">
+                          Date
+                        </th>
+                        <th className="border border-gray-300 px-4 py-2">
+                          Yield (kg)
+                        </th>
                       </tr>
                     </thead>
                     <tbody className="table-body text-table-body-size">
