@@ -142,3 +142,10 @@ export type userCert = {
   email: string;
   phone: number;
 }
+
+export type bannerProps = {
+  img_src: string;
+  img_alt: string;
+  heading: string;
+  description: string | undefined;
+}

@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import Image from "next/image";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
 import {
@@ -12,6 +11,7 @@ import {
 import { FARMS, LOGIN, NOT_FOUND } from "@/utils/Paths/paths";
 import { Farm } from "@/utils/Types/interfaces";
 import Message from "@/app/components/common/Message";
+import Banner from "@/app/components/common/Banner";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -230,25 +230,12 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="h-[500px] md:h-[600px] xl:h-[400px] relative">
-        <Image
-          src="/assets/plant.jpg"
-          alt="Plant"
-          fill
-          priority
-          style={{ objectPosition: "top", objectFit: "cover" }}
-        />
-        <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-70 flex items-center justify-start">
-          <div className="w-[80%] m-auto">
-            <div className="text-[30px] md:text-[50px] font-bold text-white">
-              Edit Your Farm
-            </div>
-            <div className="text-customOrange text-[20px] md:text-[30px]">
-              {farm?.farm}
-            </div>
-          </div>
-        </div>
-      </div>
+      <Banner
+        img_src="/assets/plant.jpg"
+        img_alt="Plant"
+        heading="Edit Your Farm"
+        description={farm?.farm}
+      />
 
       <div className="my-5 max-w-[90%] m-auto text-black">
         <div className="text-end my-3">

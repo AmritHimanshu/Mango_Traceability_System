@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
 import { FARMER_NEW_FARM } from "@/utils/Apis/api";
@@ -14,6 +13,7 @@ const Map = dynamic(() => import("@/app/components/farmer/Map"), {
   ssr: false,
 });
 import { polygon, area } from "@turf/turf";
+import Banner from "@/app/components/common/Banner";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -123,16 +123,12 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="h-[500px] md:h-[600px] xl:h-[400px] relative">
-        <Image
-          src="/assets/lychee-fruit.jpg"
-          alt="Lychee Fruit"
-          fill
-          priority
-          style={{ objectPosition: "center", objectFit: "cover" }}
-        />
-        <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-50 flex items-center justify-center"></div>
-      </div>
+      <Banner
+        img_src="/assets/lychee-fruit.jpg"
+        img_alt="Lychee Fruit"
+        heading=""
+        description=""
+      />
 
       <div className="my-5 !space-y-5 p-2">
         <div className="text-center font-bold text-heading-size text-black">

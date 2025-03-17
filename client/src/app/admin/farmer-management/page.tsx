@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
 import { User } from "@/utils/Types/interfaces";
@@ -10,6 +9,7 @@ import { FARMER, LOGIN } from "@/utils/Paths/paths";
 import { ADMIN_FARMER_MANAGEMENT } from "@/utils/Apis/api";
 import Message from "@/app/components/common/Message";
 import Table_List from "@/app/components/admin/Table_List";
+import Banner from "@/app/components/common/Banner";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -81,22 +81,12 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="h-[500px] md:h-[600px] xl:h-[400px] relative">
-        <Image
-          src="/assets/farmers_image.jpg"
-          alt="Farmer"
-          fill
-          priority
-          style={{ objectPosition: "center", objectFit: "cover" }}
-        />
-        <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-50 flex items-center justify-center">
-          <div className="w-[80%] m-auto">
-            <div className="text-[30px] md:text-[50px] font-bold text-white">
-              Farmer Management
-            </div>
-          </div>
-        </div>
-      </div>
+      <Banner
+        img_src="/assets/farmers_image.jpg"
+        img_alt="Farmer"
+        heading="Farmer Management"
+        description=""
+      />
 
       <div className="my-5">
         <div className="max-w-[90%] m-auto space-y-5">
