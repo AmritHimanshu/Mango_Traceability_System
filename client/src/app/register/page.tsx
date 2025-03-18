@@ -12,7 +12,11 @@ import CustomLoadingBar from "../components/common/loadingBar/CustomLoadingBar";
 import {
   LOGOUT_USER,
   REGISTER_USER,
+  SEND_OTP_EMAIL,
+  SEND_OTP_EMAIL_WITHOUTCAPTCHA,
   SEND_OTP_PHONE,
+  SEND_OTP_PHONE_WITHOUTCAPTCHA,
+  VERIFY_OTP_EMAIL,
   VERIFY_OTP_PHONE,
 } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
@@ -214,12 +218,14 @@ function page() {
     }
 
     try {
-      const res = await fetch(`${BASE_URL}/${VERIFY_OTP_PHONE}`, {
+      const res = await fetch(`${BASE_URL}/${VERIFY_OTP_EMAIL}`, {
+      // const res = await fetch(`${BASE_URL}/${VERIFY_OTP_PHONE}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ phone: formData.phone, otp: phoneOtp }),
+        body: JSON.stringify({ email: formData.email, otp: phoneOtp }),
+        // body: JSON.stringify({ phone: formData.phone, otp: phoneOtp }),
       });
 
       const data = await res.json();
@@ -256,12 +262,14 @@ function page() {
     }
 
     try {
-      const res = await fetch(`${BASE_URL}/${SEND_OTP_PHONE}`, {
+      // const res = await fetch(`${BASE_URL}/${SEND_OTP_PHONE_WITHOUTCAPTCHA}`, {
+      const res = await fetch(`${BASE_URL}/${SEND_OTP_EMAIL_WITHOUTCAPTCHA}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ phone: formData.phone }),
+        // body: JSON.stringify({ phone: formData.phone }),
+        body: JSON.stringify({ email: formData.email }),
       });
 
       const data = await res.json();
@@ -355,12 +363,14 @@ function page() {
     }
 
     try {
-      const res = await fetch(`${BASE_URL}/${SEND_OTP_PHONE}`, {
+      // const res = await fetch(`${BASE_URL}/${SEND_OTP_PHONE}`, {
+      const res = await fetch(`${BASE_URL}/${SEND_OTP_EMAIL}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ phone: formData.phone, capchaToken }),
+        body: JSON.stringify({ email: formData.email, capchaToken }),
+        // body: JSON.stringify({ phone: formData.phone, capchaToken }),
       });
 
       const data = await res.json();
@@ -405,7 +415,7 @@ function page() {
           <Message text={message.text} type={message.type} />
         )}
 
-        <div className="rounded-md overflow-hidden w-[1200px] m-auto h-[800px] flex shadow-xl">
+        <div className={`rounded-md overflow-hidden w-[1200px] m-auto ${!isOtp ? "h-[800px]" : "h-[500px]"} flex shadow-xl`}>
           <div className="w-[50%] hidden lg:block relative h-full">
             <Image
               src="/assets/registration_image.jpg"
@@ -547,7 +557,7 @@ function page() {
               <>
                 <div className="p-3 w-full lg:w-[400px] m-auto space-y-5">
                   <div className="mb-3 text-sm">
-                    Enter the One Time Password (OTP) sent to your mobile
+                    Enter the One Time Password (OTP) sent to your email
                   </div>
                   <hr />
                   <div className="space-y-2">
@@ -565,7 +575,7 @@ function page() {
 
                   <div className="flex items-center justify-between">
                     <button
-                      className="!w-[70px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-[#6b7280] text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                      className="!w-[150px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-[#6b7280] text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
                       onClick={() => reSendOTP()}
                     >
                       RESEND OTP
@@ -573,14 +583,14 @@ function page() {
 
                     {!flagPhone ? (
                       <button
-                        className="!w-[70px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                        className="!w-[100px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
                         onClick={() => verifyOtp()}
                       >
                         VERIFY
                       </button>
                     ) : (
                       <button
-                        className="!w-[70px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                        className="!w-[150px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
                         disabled
                       >
                         VERIFYING...

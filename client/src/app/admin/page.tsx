@@ -171,6 +171,13 @@ function page() {
       fetchPendingRequests();
     } catch (error) {}
 
+    setIsConfirm(false);
+    setParameter({
+      id: "",
+      role: "",
+      status: false,
+    });
+
     setTimeout(() => {
       setMessage({ text: "", type: "" });
     }, 2000);

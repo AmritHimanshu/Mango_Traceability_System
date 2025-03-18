@@ -18,9 +18,7 @@ const sendEmail = async (email, otp) => {
             subject: "Your OTP for Verification",
             text: `Your OTP is ${otp}. It is valid for 5 minutes.`,
         };
-        console.log(mailOptions)
         const info = await transporter.sendMail(mailOptions);
-        console.log(info)
         console.log("Otp sent to your email:", info.response);
     } catch (error) {
         // console.error("Error sending email to user:", error.message);

@@ -57,6 +57,7 @@ export type Farm = {
   geoFenceData: { lat: number; lng: number }[];
   area: number;
   crop: string;
+  landmark: string;
   ploughingDate: string;
   weedingDate: string[];
   sowingDate: string;
@@ -146,6 +147,6 @@ export type userCert = {
 export type bannerProps = {
   img_src: string;
   img_alt: string;
-  heading: string;
+  heading: string | undefined;
   description: string | undefined;
 }

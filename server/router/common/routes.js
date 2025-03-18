@@ -100,14 +100,43 @@ router.post('/api/signin-user', async (req, res) => {
     }
 });
 
-router.post("/api/send-otp-email", async (req, res) => {
+router.post("/api/send-otp-email-withoutCaptcha", async (req, res) => {
     const { email } = req.body;
 
     if (!email) {
-        return res.status(400).json({ error: "Email is required." });
+        return res.status(422).json({ error: "Fill the email" });
+    }
+
+    try {        
+        await sendOtpToEmail(email);
+        res.status(201).json({ message: "OTP sent successfully." });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to send OTP." });
+    }
+});
+
+router.post("/api/send-otp-email", async (req, res) => {
+    const { email, capchaToken } = req.body;
+
+    if (!email || !capchaToken) {
+        return res.status(422).json({ error: "Fill the email and complete the captcha." });
     }
 
     try {
+        const recaptchaResponse = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+                secret: process.env.RECAPTCHA_SECRET_KEY,
+                response: capchaToken
+            })
+        });
+
+        const verificationData = await recaptchaResponse.json();
+        if (!verificationData.success) {
+            return res.status(400).json({ error: "reCAPTCHA validation failed." });
+        }
+
         await sendOtpToEmail(email);
         res.status(201).json({ message: "OTP sent successfully." });
     } catch (error) {
@@ -147,6 +176,21 @@ router.post("/api/verify-otp-email", (req, res) => {
         res.status(201).json({ message: "OTP verified successfully." });
     } else {
         res.status(400).json({ error: "Invalid or expired OTP." });
+    }
+});
+
+router.post("/api/send-otp-phone-withoutCaptcha", async (req, res) => {
+    const { phone } = req.body;
+
+    if (!phone) {
+        return res.status(422).json({ error: "Fill all the fields" });
+    }
+
+    try {
+        await sendOtpToPhone(phone);
+        res.status(201).json({ message: "OTP sent successfully." });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to send OTP ( Internal Server Error )" });
     }
 });
 

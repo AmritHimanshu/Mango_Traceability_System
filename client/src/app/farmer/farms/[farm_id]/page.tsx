@@ -152,12 +152,12 @@ function page() {
 
       {farm && (
         <div className="my-5 max-w-[90%] m-auto text-black">
-          <div className="my-3 text-right">
+          <div className="text-end">
             <button
-              onClick={() => setIsDelete(true)}
-              className="!w-[100px] text-button-size bg-red-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+              className="!w-[120px] text-button-size bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+              onClick={handleOnEdit}
             >
-              Delete
+              Add data
             </button>
           </div>
 
@@ -467,12 +467,12 @@ function page() {
               )}
             </div>
 
-            <div className="text-center">
+            <div className="my-3 text-center">
               <button
-                className="!w-[120px] text-button-size bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
-                onClick={handleOnEdit}
+                onClick={() => setIsDelete(true)}
+                className="!w-[100px] text-button-size bg-red-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
               >
-                Add data
+                Delete
               </button>
             </div>
           </div>
