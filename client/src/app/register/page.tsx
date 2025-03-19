@@ -526,7 +526,7 @@ function page() {
 
                   <div className="text-center">
                     <button
-                      className="green-btn"
+                      className="custom-btn bg-customGreen"
                       onClick={(e) => sendOTP(e)}
                     >
                       Register
@@ -565,7 +565,7 @@ function page() {
 
                   <div className="flex items-center justify-between">
                     <button
-                      className="text-sm py-[5px] lg:py-[7px] px-[20px] bg-[#6b7280] text-white rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                      className="custom-btn bg-[#6b7280]"
                       onClick={() => reSendOTP()}
                     >
                       RESEND OTP
@@ -573,14 +573,14 @@ function page() {
 
                     {!flagPhone ? (
                       <button
-                        className="text-sm py-[5px] lg:py-[7px] px-[20px] bg-green-600 text-white rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                        className="custom-btn bg-customGreen"
                         onClick={() => verifyOtp()}
                       >
                         VERIFY
                       </button>
                     ) : (
                       <button
-                        className="text-sm py-[5px] lg:py-[7px] px-[20px] bg-green-600 text-white rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                        className="custom-btn bg-customGreen"
                         disabled
                       >
                         VERIFYING...

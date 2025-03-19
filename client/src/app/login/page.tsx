@@ -189,7 +189,7 @@ function page() {
 
               <div className="text-center">
                 <button
-                  className="green-btn"
+                  className="custom-btn bg-customGreen"
                   onClick={(e) => handleFormData(e)}
                 >
                   Login

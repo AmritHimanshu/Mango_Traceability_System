@@ -267,7 +267,7 @@ function page() {
 
                   <div>
                     <button
-                      className="green-btn"
+                      className="custom-btn bg-customGreen"
                       onClick={() => sendOtpToEmail()}
                     >
                       Verify Email
@@ -293,7 +293,7 @@ function page() {
 
                   <div>
                     <button
-                      className="green-btn"
+                      className="custom-btn bg-customGreen"
                       onClick={() => verifyOtpToEmail()}
                     >
                       Submit
@@ -363,7 +363,7 @@ function page() {
 
                   <div>
                     <button
-                      className="green-btn"
+                      className="custom-btn bg-customGreen"
                       onClick={() => changePassword()}
                     >
                       Change password
