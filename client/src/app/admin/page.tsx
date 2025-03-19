@@ -140,7 +140,7 @@ function page() {
         <HomeAboutUs />
       </div>
 
-      <div className="my-5 bg-customGreen bg-opacity-10 p-5">
+      <div className="my-5 bg-customGreen bg-opacity-5 p-5">
         <div className="max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] 2xl:max-w-[60%] m-auto grid grid-cols-1 md:grid-cols-2 gap-20">
           <HomeCard
             title="Total number of pending requests"

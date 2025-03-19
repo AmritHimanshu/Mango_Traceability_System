@@ -10,6 +10,7 @@ import { LOGIN } from "@/utils/Paths/paths";
 import { FewFarmList } from "@/utils/Types/interfaces";
 import HomeCard from "../components/farmer/HomeCard";
 import Message from "../components/common/Message";
+import HomeAboutUs from "../components/common/HomeAboutUs";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -119,9 +120,13 @@ function page() {
         </div>
       </div>
 
+      <div className="my-5 p-3 md:p-5">
+        <HomeAboutUs />
+      </div>
+
       <div>
         {farmList.length > 0 && (
-          <div className="my-5 !space-y-5 p-2">
+          <div className="my-5 !space-y-5 p-3 bg-customGreen bg-opacity-5">
             <div className="text-center font-bold text-heading-size text-black">
               Recent <span className="text-customGreen">Farms</span>
             </div>

@@ -15,13 +15,13 @@ function HomeCard({ data }: farmerHomeCardProps) {
 
       <div className="flex items-center justify-between">
         <div>
-          <div className="text-sm font-bold text-gray-500">{data.uniqueID}</div>
-          <div className="font-bold">{data.farm}</div>
-          <div className="text-base">{data.crop}</div>
+          <div className="text-xs text-gray-900">{data.uniqueID}</div>
+          <div className="text-black">{data.farm}</div>
+          <div className="text-xs text-black">{data.crop}</div>
         </div>
         <div>
           <button
-            className="w-[100px] text-button-size bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+            className="outline-btn text-customGreen border-customGreen hover:text-white hover:bg-customGreen"
             onClick={() => router.push(`${FARMS}/${data.uniqueID}`)}
           >
             view
