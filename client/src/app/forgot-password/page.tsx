@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../components/common/loadingBar/CustomLoadingBar";
@@ -224,25 +223,17 @@ function page() {
 
   return (
     <>
-      <div className="p-2 xl:p-5 w-full h-[100vh] overflow-y-auto relative bg-gradient-to-tr from-customOrange to-customGreen flex items-center justify-center">
+      <div className="p-2 xl:p-5 w-full h-[100vh] overflow-y-auto relative bg-[url(/assets/login-bg.jpg)] bg-cover bg-bottom bg-no-repeat flex items-center justify-center">
         <CustomLoadingBar ref={loadingBarRef} />
 
         {message.text && message.type && (
           <Message text={message.text} type={message.type} />
         )}
 
-        <div className="rounded-md overflow-hidden w-[1000px] m-auto h-[500px] flex shadow-xl">
-          <div className="w-[50%] hidden lg:block relative h-full">
-            <Image
-              src="/assets/login_image.jpg"
-              alt=""
-              fill
-              className="object-fill"
-            />
-          </div>
+        <div className="rounded-md overflow-hidden w-[500px] m-auto flex shadow-xl">
 
-          <div className="bg-white text-black flex-grow flex items-center">
-            <div className="p-3 w-full lg:w-[400px] m-auto space-y-5">
+          <div className="bg-white bg-opacity-50 backdrop-blur-md text-black flex-grow flex items-center">
+            <div className="px-5 py-3 w-full m-auto space-y-5">
               {!isEmailOtpSent && !isOtpVerified && (
                 <div className="mt-2 text-xl text-center">
                   Reset your Password
@@ -276,10 +267,10 @@ function page() {
 
                   <div>
                     <button
-                      className="text-sm lg:text-lg py-[5px] lg:py-[7px] px-2 bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                      className="green-btn"
                       onClick={() => sendOtpToEmail()}
                     >
-                      Verify email
+                      Verify Email
                     </button>
                   </div>
                 </>
@@ -302,7 +293,7 @@ function page() {
 
                   <div>
                     <button
-                      className="!w-[70px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                      className="green-btn"
                       onClick={() => verifyOtpToEmail()}
                     >
                       Submit
@@ -329,7 +320,7 @@ function page() {
                     />
                   </div>
                   {errorMessage && (
-                    <div className="text-yellow-400 text-[12px]">
+                    <div className="text-red-600 text-[12px]">
                       {errorMessage}
                     </div>
                   )}
@@ -372,7 +363,7 @@ function page() {
 
                   <div>
                     <button
-                      className="!w-[180px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                      className="green-btn"
                       onClick={() => changePassword()}
                     >
                       Change password

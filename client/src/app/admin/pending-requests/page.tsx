@@ -195,7 +195,7 @@ function page() {
                 <div className="w-full overflow-x-auto">
                   <table className="min-w-[1000px] w-full table-fixed">
                     <thead>
-                      <tr className="font-bold bg-primarycColor bg-opacity-80 text-white text-table-head-size">
+                      <tr className="font-bold bg-lime-600 bg-opacity-80 text-white text-table-head-size">
                         <td className="px-4 py-3 text-left w-[100px]">
                           S. No.
                         </td>
@@ -205,8 +205,8 @@ function page() {
                         <td className="px-4 py-3 text-left">Date</td>
                         <td className="px-4 py-3 text-left">Assign role</td>
                         <td className="px-4 py-3 text-center">
-                          <span className="text-green-400">Accept</span>/
-                          <span className="text-red-400">Reject</span>
+                          <span className="">Accept</span>/
+                          <span className="">Reject</span>
                         </td>
                       </tr>
                     </thead>

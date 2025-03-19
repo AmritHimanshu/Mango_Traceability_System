@@ -2,8 +2,8 @@ import Link from "next/link";
 
 function Footer() {
   return (
-    <div className="bg-neutral-900 p-5 mt- text-left text-white grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-      <div className="my-5">
+    <div className="bg-neutral-900 p-5 text-left text-white grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+      <div className="">
         <div className="font-bold text-xl">About Us</div>
         <p className="leading-7 mt-4 text-gray-100">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
@@ -29,7 +29,7 @@ function Footer() {
           </div> */}
       </div>
 
-      <div className="my-5 md:text-center">
+      <div className="md:text-center">
         <div className="font-bold text-xl">Quicks Links</div>
         <div className="text-start w-[100px] md:m-auto">
           <div className="cursor-default text-sm my-4">
@@ -44,7 +44,7 @@ function Footer() {
         </div>
       </div>
 
-      <div className="my-5 mb-10 md:w-[250px] lg:w-[300px]">
+      <div className="md:w-[250px] lg:w-[300px]">
         <div className="font-bold text-xl">Contact Information</div>
         <div className="text-sm my-4 flex space-x-2">
           <img

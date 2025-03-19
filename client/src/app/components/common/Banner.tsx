@@ -4,7 +4,7 @@ import { bannerProps } from "@/utils/Types/interfaces";
 
 function Banner({ img_src, img_alt, heading, description }: bannerProps) {
   return (
-    <div className="h-[500px] md:h-[600px] xl:h-[400px] relative">
+    <div className="h-[500px] md:h-[600px] xl:h-[400px] h-[50px relative">
       <Image
         src={img_src}
         alt={img_alt}

@@ -7,15 +7,19 @@
 }
 
 .page-main-div-certificate{
-    @apply p-5 w-full h-[100vh] overflow-y-auto relative [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-secondaryColor [&::-webkit-scrollbar-thumb]:bg-primarycColor [&::-webkit-scrollbar-thumb]:rounded-full
+    @apply p-5 w-full h-[100vh] overflow-y-auto relative [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-secondaryColor [&::-webkit-scrollbar-thumb]:bg-primaryColor [&::-webkit-scrollbar-thumb]:rounded-full
 }
 
 .btn{
     @apply py-2 px-4 text-[13px] md:text-[15px] rounded-sm font-bold w-full m-auto
 }
 
+.green-btn{
+    @apply text-sm py-[5px] lg:py-[7px] px-[20px] bg-green-600 text-white rounded-md hover:shadow-md hover:bg-opacity-95 duration-200
+}
+
 .input-tag{
-    @apply w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200
+    @apply w-full px-3 py-2 border border-gray-400 rounded-lg bg-white text-black focus:ring-2 focus:ring-green-600 focus:border-green-600 outline-none transition-all duration-200
 }
 
 .input-tag-edit{
@@ -31,7 +35,7 @@
 }
 
 .table-head-tr{
-    @apply font-bold bg-primarycColor bg-opacity-80 text-white align-middle
+    @apply font-bold bg-primaryColor bg-opacity-80 text-white align-middle
 }
 
 .table-body{

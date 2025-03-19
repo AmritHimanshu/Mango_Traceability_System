@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { setUserState } from "@/store/features/userSlice";
 import { useAppDispatch } from "@/store/store";
@@ -22,8 +21,6 @@ function page() {
 
   const router = useRouter();
   const dispatch = useAppDispatch();
-
-  const [isVisiblePassword, setIsVisiblePassword] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -145,25 +142,17 @@ function page() {
 
   return (
     <>
-      <div className="p-2 xl:p-5 w-full h-[100vh] overflow-y-auto relative bg-gradient-to-tr from-customOrange to-customGreen flex items-center justify-center">
+      <div className="p-2 xl:p-5 w-full h-[100vh] overflow-y-auto relative bg-[url(/assets/login-bg.jpg)] bg-cover bg-bottom bg-no-repeat flex items-center justify-center">
         <CustomLoadingBar ref={loadingBarRef} />
 
         {message.text && message.type && (
           <Message text={message.text} type={message.type} />
         )}
 
-        <div className="rounded-md overflow-hidden w-[1000px] m-auto h-[500px] flex shadow-xl">
-          <div className="w-[50%] hidden lg:block relative h-full">
-            <Image
-              src="/assets/login_image.jpg"
-              alt=""
-              fill
-              className="object-fill"
-            />
-          </div>
-          <div className="bg-white text-black flex-grow flex items-center">
-            <div className="p-3 w-full lg:w-[450px] m-auto space-y-5">
-              <div className="mt-2 text-xl text-center">Login</div>
+        <div className="rounded-md overflow-hidden w-[500px] m-auto h-[500px] flex shadow-xl">
+          <div className="bg-white bg-opacity-50 backdrop-blur-md text-black flex-grow flex items-center">
+            <div className="px-5 py-3 w-full m-auto space-y-5">
+              <div className="mt-2 text-xl text-center font-bold">Login</div>
               <div className="space-y-2">
                 <label htmlFor="email">Email</label>
                 <input
@@ -200,18 +189,18 @@ function page() {
 
               <div className="text-center">
                 <button
-                  className="!w-[70px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                  className="green-btn"
                   onClick={(e) => handleFormData(e)}
                 >
                   Login
                 </button>
               </div>
 
-              <div className="flex text-[9px] md:text-[13px] my-3">
+              <div className="flex text-[10px] md:text-[13px] mt-3">
                 <div className="w-[100%] text-start">
                   Forgot password?{" "}
                   <Link href={FORGOT_PASSWORD}>
-                    <span className="text-blue-600 hover:underline">
+                    <span className="text-blue-800 hover:underline">
                       click here
                     </span>
                   </Link>
@@ -220,7 +209,7 @@ function page() {
                 <div className="w-[100%] text-end">
                   Don't have an account?{" "}
                   <Link href={REGISTER}>
-                    <span className="text-blue-600 hover:underline">
+                    <span className="text-blue-800 hover:underline">
                       Sign up.
                     </span>
                   </Link>

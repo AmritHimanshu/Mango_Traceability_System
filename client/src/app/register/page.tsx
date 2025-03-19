@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/store/store";
@@ -408,28 +407,19 @@ function page() {
 
   return (
     <>
-      <div className="p-2 xl:p-5 w-full h-[100vh] overflow-y-auto relative bg-gradient-to-tr from-customOrange to-customGreen flex items-center justify-center">
+      <div className="p-2 xl:p-5 w-full h-[100vh] overflow-y-auto relative bg-[url(/assets/login-bg.jpg)] bg-cover bg-bottom bg-no-repeat flex items-center justify-center">
         <CustomLoadingBar ref={loadingBarRef} />
 
         {message.text && message.type && (
           <Message text={message.text} type={message.type} />
         )}
 
-        <div className={`rounded-md overflow-hidden w-[1200px] m-auto ${!isOtp ? "h-[800px]" : "h-[500px]"} flex shadow-xl`}>
-          <div className="w-[50%] hidden lg:block relative h-full">
-            <Image
-              src="/assets/registration_image.jpg"
-              alt=""
-              fill
-              className="object-fill"
-            />
-          </div>
-
-          <div className="bg-white text-black flex-grow flex items-center overflow-y-auto">
+        <div className={`rounded-md overflow-hidden w-[500px] m-auto  flex shadow-xl`}>
+          <div className="bg-white bg-opacity-50 backdrop-blur-md text-black flex-grow flex items-center overflow-y-auto">
             {!isOtp ? (
               <>
-                <div className="p-3 w-full lg:w-[400px] m-auto space-y-5">
-                  <div className="mt-2 text-xl text-center">Registration</div>
+                <div className="px-5 py-3 w-full m-auto space-y-5">
+                  <div className="mt-2 text-xl text-center font-bold">Registration</div>
                   <div className="space-y-2">
                     <label htmlFor="name">Name</label>
                     <input
@@ -484,7 +474,7 @@ function page() {
                       className="input-tag"
                     />
                     {errorMessage && (
-                      <div className="text-yellow-300 text-[12px] text-start">
+                      <div className="text-red-600 text-[12px] text-start">
                         {errorMessage}
                       </div>
                     )}
@@ -536,7 +526,7 @@ function page() {
 
                   <div className="text-center">
                     <button
-                      className="!w-[100px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                      className="green-btn"
                       onClick={(e) => sendOTP(e)}
                     >
                       Register
@@ -546,7 +536,7 @@ function page() {
                   <div className="w-[100%] my-3 text-[11px] md:text-[15px] text-center">
                     Already have an account?{" "}
                     <Link href="/login">
-                      <span className="text-blue-600 hover:underline">
+                      <span className="text-blue-800 hover:underline">
                         Sign in.
                       </span>
                     </Link>
@@ -555,8 +545,8 @@ function page() {
               </>
             ) : (
               <>
-                <div className="p-3 w-full lg:w-[400px] m-auto space-y-5">
-                  <div className="mb-3 text-sm">
+                <div className="p-3 w-full m-auto space-y-5">
+                  <div className="mb-3 text-sm font-bold">
                     Enter the One Time Password (OTP) sent to your email
                   </div>
                   <hr />
@@ -575,7 +565,7 @@ function page() {
 
                   <div className="flex items-center justify-between">
                     <button
-                      className="!w-[150px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-[#6b7280] text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                      className="text-sm py-[5px] lg:py-[7px] px-[20px] bg-[#6b7280] text-white rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
                       onClick={() => reSendOTP()}
                     >
                       RESEND OTP
@@ -583,14 +573,14 @@ function page() {
 
                     {!flagPhone ? (
                       <button
-                        className="!w-[100px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                        className="text-sm py-[5px] lg:py-[7px] px-[20px] bg-green-600 text-white rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
                         onClick={() => verifyOtp()}
                       >
                         VERIFY
                       </button>
                     ) : (
                       <button
-                        className="!w-[150px] text-sm lg:text-lg py-[5px] lg:py-[7px] bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                        className="text-sm py-[5px] lg:py-[7px] px-[20px] bg-green-600 text-white rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
                         disabled
                       >
                         VERIFYING...
