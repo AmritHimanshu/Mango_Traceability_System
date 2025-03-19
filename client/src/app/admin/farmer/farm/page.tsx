@@ -129,13 +129,13 @@ function page() {
         <div className="my-5 max-w-[90%] m-auto text-black space-y-5 lg:space-y-10">
           <div className="space-x-2 text-right">
             <button
-              className="!w-[100px] text-button-size bg-green-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+              className="custom-btn bg-customGreen"
               onClick={() => handleOnAddData()}
             >
               Add data
             </button>
             <button
-              className="!w-[100px] text-button-size bg-red-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+              className="custom-btn bg-red-600"
               onClick={() => setIsEdit(true)}
             >
               Edit
@@ -461,7 +461,7 @@ function page() {
 
           <div className="text-center">
             <button
-              className="!w-[130px] md:!w-[150px] lg:!w-[200px] text-button-size bg-green-900 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+              className="custom-btn bg-blue-600"
               onClick={() => setIsQRCode(true)}
             >
               Generate QR code

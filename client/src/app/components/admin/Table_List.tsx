@@ -24,7 +24,7 @@ function Table_List({
         <div className="w-full overflow-x-auto">
           <table className="min-w-[1000px] w-full table-fixed">
             <thead>
-              <tr className="font-bold bg-primarycColor bg-opacity-80 text-white text-table-head-size">
+              <tr className="font-bold bg-customGreen text-white text-table-head-size">
                 <td className="px-4 py-3 text-left w-[100px]">S. No.</td>
                 <td className="px-4 py-3 text-left">ID</td>
                 <td className="px-4 py-3 text-left">Name</td>
@@ -39,7 +39,7 @@ function Table_List({
               {users.map((user, index) => (
                 <tr
                   key={index}
-                  className="text-black bg-secondaryColor odd:bg-opacity-30 border-b-[1px] border-black last:border-b-0"
+                  className="text-black bg-customGreen bg-opacity-10 odd:bg-opacity-5 border-b-[1px] border-black last:border-b-0"
                 >
                   <td className="px-4 py-3 align-middle w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
                     {idxCalc + index + 1}

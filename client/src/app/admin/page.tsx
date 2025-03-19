@@ -20,6 +20,7 @@ import { useAppSelector } from "@/store/store";
 import Message from "../components/common/Message";
 import HomeCard from "../components/admin/HomeCard";
 import PendingUserTable from "../components/admin/PendingUserTable";
+import HomeAboutUs from "../components/common/HomeAboutUs";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -36,13 +37,6 @@ function page() {
   const [noOfVerifiedFarmers, setNoOfVerifiedFarmers] = useState(0);
   const [noOfPendingRequests, setNoOfPendingRequests] = useState(0);
   const [noOfRejectedRequests, sestNoOfRejectedRequests] = useState(0);
-  const [pendingRequests, setPendingRequests] = useState<User[]>([]);
-  const [isConfirm, setIsConfirm] = useState(false);
-  const [parameter, setParameter] = useState({
-    id: "",
-    role: "",
-    status: false,
-  });
 
   const fetchNoOfUsers = async () => {
     if (loadingBarRef.current) {
@@ -88,108 +82,8 @@ function page() {
     }
   };
 
-  const fetchPendingRequests = async () => {
-    try {
-      const res = await fetch(`${BASE_URL}/${ADMIN_FEW_PENDING_REQUESTS}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-
-      const data = await res.json();
-      if (res.status !== 201 && res.status !== 500) {
-        setMessage({ text: data.error, type: "error" });
-        router.push(LOGIN);
-        const error = new Error(data.error);
-        throw error;
-      }
-
-      if (res.status === 500) {
-        setMessage({ text: data.error, type: "error" });
-        const error = new Error(data.error);
-        throw error;
-      }
-
-      setPendingRequests(data);
-    } catch (error) {}
-
-    setTimeout(() => {
-      setMessage({ text: "", type: "" });
-    }, 2000);
-  };
-
-  const authenticateReq = async (id: string, role: string, status: boolean) => {
-    if (!role && status === true) {
-      setMessage({ text: "Please assign role to the user!", type: "error" });
-      setTimeout(() => {
-        setMessage({ text: "", type: "" });
-      }, 2000);
-
-      setIsConfirm(false);
-      return;
-    }
-
-    if (loadingBarRef.current) {
-      loadingBarRef.current.continuousStart();
-    }
-
-    try {
-      const res = await fetch(`${BASE_URL}/${ADMIN_AUTHENTICATE_USER}/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ role: role, isAuthenticated: status }),
-      });
-
-      const data = await res.json();
-      if (res.status === 400 || res.status === 404) {
-        setMessage({ text: data.error, type: "error" });
-        const error = new Error(data.error);
-        throw error;
-      }
-
-      if (res.status !== 201 && res.status !== 500) {
-        setMessage({ text: data.error, type: "error" });
-        router.push(LOGIN);
-        const error = new Error(data.error);
-        throw error;
-      }
-
-      if (res.status === 500) {
-        setMessage({ text: data.error, type: "error" });
-        const error = new Error(data.error);
-        throw error;
-      }
-
-      setMessage({ text: data.message, type: "success" });
-
-      fetchNoOfUsers();
-      fetchPendingRequests();
-    } catch (error) {}
-
-    setIsConfirm(false);
-    setParameter({
-      id: "",
-      role: "",
-      status: false,
-    });
-
-    setTimeout(() => {
-      setMessage({ text: "", type: "" });
-    }, 2000);
-
-    if (loadingBarRef.current) {
-      loadingBarRef.current.complete();
-    }
-  };
-
   useEffect(() => {
     fetchNoOfUsers();
-    fetchPendingRequests();
 
     const welcomeShown = localStorage.getItem("welcomeShown");
 
@@ -206,24 +100,6 @@ function page() {
       };
     }
   }, []);
-
-  const confirmReq = (id: string, role: string, status: boolean) => {
-    setIsConfirm(true);
-    setParameter({
-      id: id,
-      role: role,
-      status: status,
-    });
-  };
-
-  const handleOnCancel = () => {
-    setIsConfirm(false);
-    setParameter({
-      id: "",
-      role: "",
-      status: false,
-    });
-  };
 
   return (
     <div className="page-main-div">
@@ -260,58 +136,12 @@ function page() {
         </div>
       </div>
 
-      <div className="my-5">
-        {pendingRequests.length > 0 && (
-          <div className="max-w-[90%] m-auto space-y-5">
-            <div className="text-heading-size font-bold text-black text-center">
-              Recent Pending Requests
-            </div>
-            <div className="w-full rounded-lg shadow-2xl overflow-hidden">
-              <div className="w-full overflow-x-auto">
-                <table className="min-w-[1000px] w-full table-fixed">
-                  <thead>
-                    <tr className="font-bold bg-primaryColor bg-opacity-80 text-white text-table-head-size">
-                      <td className="px-4 py-3 text-left w-[100px]">S. No.</td>
-                      <td className="px-4 py-3 text-left">Name</td>
-                      <td className="px-4 py-3 text-left">Email</td>
-                      <td className="px-4 py-3 text-left">Phone</td>
-                      <td className="px-4 py-3 text-left">Date</td>
-                      <td className="px-4 py-3 text-left">Assign role</td>
-                      <td className="px-4 py-3 text-center">
-                        <span className="text-green-400">Accept</span>/
-                        <span className="text-red-400">Reject</span>
-                      </td>
-                    </tr>
-                  </thead>
-
-                  <tbody className="text-table-body-size">
-                    {pendingRequests.map((user, index) => (
-                      <PendingUserTable
-                        key={index}
-                        idx={index}
-                        user={user}
-                        confirmReq={confirmReq}
-                      />
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="text-end">
-              <span
-                className="text-[14px] md:text-[15px] lg:text-[17px] mt-3 underline text-end cursor-pointer hover:text-customGreen duration-200"
-                onClick={() => router.push("/admin/pending-requests")}
-              >
-                view all
-              </span>
-            </div>
-          </div>
-        )}
+      <div className="my-5 p-3 md:p-5">
+        <HomeAboutUs />
       </div>
 
       <div className="my-5 bg-customGreen bg-opacity-10 p-5">
-        <div className="max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] 2xl:max-w-[60%] m-auto grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] 2xl:max-w-[60%] m-auto grid grid-cols-1 md:grid-cols-2 gap-20">
           <HomeCard
             title="Total number of pending requests"
             description="pending_requests"
@@ -342,41 +172,6 @@ function page() {
           />
         </div>
       </div>
-
-      {isConfirm && (
-        <div className="fixed z-[9999] top-0 left-0 w-full h-full bg-neutral-900 bg-opacity-80 flex items-center">
-          <div className="bg-white p-3 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5 rounded-md">
-            <div>
-              <div className="text-sm md:text-xl">
-                Are you sure, you want to save?
-              </div>
-              <div className="text-[10px] md:text-[13px]">
-                You will not be able to edit/change after saving!
-              </div>
-            </div>
-            <div className="text-end text-[11px] md:text-lg space-x-2">
-              <button
-                className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
-                onClick={() => handleOnCancel()}
-              >
-                Cancel
-              </button>
-              <button
-                className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
-                onClick={() =>
-                  authenticateReq(
-                    parameter.id,
-                    parameter.role,
-                    parameter.status
-                  )
-                }
-              >
-                Confirm
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

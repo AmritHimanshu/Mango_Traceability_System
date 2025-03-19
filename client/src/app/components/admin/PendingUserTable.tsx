@@ -28,7 +28,7 @@ function PendingUserTable({ idx, user, confirmReq }: PendingUserTableProps) {
   };
 
   return (
-    <tr className="text-black bg-lime-100 odd:bg-opacity-30 border-b-[1px] border-black last:border-b-0">
+    <tr className="text-black bg-customGreen bg-opacity-10 odd:bg-opacity-5 border-b-[1px] border-black last:border-b-0">
       <td className="px-4 py-3 align-middle overflow-hidden text-ellipsis whitespace-nowrap">
         {idx + 1}
       </td>
