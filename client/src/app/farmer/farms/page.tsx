@@ -105,7 +105,7 @@ function page() {
         <div className="p-3 md:p-5 absolute top-0 w-full h-full bg-neutral-950 bg-opacity-50 flex items-center justify-center">
           <div className="">
             <button
-              className="outline-btn font-bold border-customOrange text-white hover:bg-customOrange"
+              className="outline-btn font-bold border-customOrange bg-customOrange bg-opacity-80 text-white hover:bg-customOrange hover:bg-opacity-100"
               onClick={() => router.push(CREATE_FARM)}
             >
               Click here to Add farm

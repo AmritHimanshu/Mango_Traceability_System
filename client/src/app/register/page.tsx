@@ -26,6 +26,7 @@ import useRecaptcha from "@/utils/Services/useRecaptcha";
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import Login_Footer from "../components/common/Login_Footer";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -407,7 +408,7 @@ function page() {
 
   return (
     <>
-      <div className="p-2 xl:p-5 w-full h-[100vh] overflow-y-auto relative bg-[url(/assets/login-bg.jpg)] bg-cover bg-bottom bg-no-repeat flex items-center justify-center">
+      <div className="p-2 xl:p-5 w-full flex items-center justify-center">
         <CustomLoadingBar ref={loadingBarRef} />
 
         {message.text && message.type && (
@@ -592,7 +593,10 @@ function page() {
             )}
           </div>
         </div>
+
       </div>
+
+      <Login_Footer />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "../../styles/style.css"
+import Login_Header from "../components/common/Header/Login_Header";
 
 export const metadata: Metadata = {
   title: "Login - Mango Traceability System",
@@ -8,7 +9,8 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
+    <div className="h-[100vh] overflow-y-auto relative bg-[url(/assets/login-bg.jpg)] bg-cover bg-bottom bg-no-repeat">
+      <Login_Header />
       <div>{children}</div>
     </div>
   );

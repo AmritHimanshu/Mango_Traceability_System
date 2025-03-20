@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { admin, farmer } from "@/utils/Sidebar/sidebarList";
 import { useAppSelector } from "@/store/store";
 import { usePathname, useRouter } from "next/navigation";
@@ -67,14 +68,15 @@ function Header() {
         <div className="py-3 px-5 flex items-center justify-between">
           {!isMenu ? (
             <Link href="/" className="hover:text-customOrange">
-              <div className="flex items-center justify-start">
+              <Image src="/assets/cdac-logo.png" alt="Logo" width={50} height={50}/>
+              {/* <div className="flex items-center justify-start">
                 <div className="flex flex-col items-center">
                   <p className="text-xl font-bold">MTS</p>
                   <div className="text-[5px] font-bold">
                     Mango Traceability System
                   </div>
                 </div>
-              </div>
+              </div> */}
             </Link>
           ) : (
             <div

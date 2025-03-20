@@ -154,7 +154,7 @@ function page() {
         <div className="my-5 max-w-[90%] m-auto text-black">
           <div className="text-end">
             <button
-              className="!w-[120px] text-button-size bg-customGreen text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+              className="custom-btn bg-customGreen"
               onClick={handleOnEdit}
             >
               Add data
@@ -470,7 +470,7 @@ function page() {
             <div className="my-3 text-center">
               <button
                 onClick={() => setIsDelete(true)}
-                className="!w-[100px] text-button-size bg-red-600 text-white font-bold rounded-md hover:shadow-md hover:bg-opacity-95 duration-200"
+                className="custom-btn bg-red-600"
               >
                 Delete
               </button>
@@ -489,13 +489,13 @@ function page() {
             </div>
             <div className="text-end text-[11px] md:text-lg space-x-2">
               <button
-                className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                className="custom-btn bg-red-600"
                 onClick={() => setIsDelete(false)}
               >
                 Cancel
               </button>
               <button
-                className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                className="custom-btn bg-customGreen"
                 onClick={() => handleOnDelete()}
               >
                 Confirm
