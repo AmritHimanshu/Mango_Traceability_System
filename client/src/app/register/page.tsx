@@ -26,7 +26,6 @@ import useRecaptcha from "@/utils/Services/useRecaptcha";
 // Material UI Icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import Login_Footer from "../components/common/Login_Footer";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -219,7 +218,7 @@ function page() {
 
     try {
       const res = await fetch(`${BASE_URL}/${VERIFY_OTP_EMAIL}`, {
-      // const res = await fetch(`${BASE_URL}/${VERIFY_OTP_PHONE}`, {
+        // const res = await fetch(`${BASE_URL}/${VERIFY_OTP_PHONE}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -415,105 +414,132 @@ function page() {
           <Message text={message.text} type={message.type} />
         )}
 
-        <div className={`rounded-md overflow-hidden w-[500px] m-auto  flex shadow-xl`}>
+        <div
+          className={`rounded-md overflow-hidden w-[400px] md:w-[500px] lg:w-[700px] m-auto  flex shadow-xl`}
+        >
           <div className="bg-white bg-opacity-50 backdrop-blur-md text-black flex-grow flex items-center overflow-y-auto">
             {!isOtp ? (
               <>
                 <div className="px-5 py-3 w-full m-auto space-y-5">
-                  <div className="mt-2 text-xl text-center font-bold">Registration</div>
-                  <div className="space-y-2">
-                    <label htmlFor="name">Name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      required
-                      onChange={(e) => handleFormState(e)}
-                      className="input-tag"
-                    />
+                  <div className="mt-2 text-xl text-center font-bold">
+                    Registration
                   </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="email">Email</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      required
-                      onChange={(e) => handleFormState(e)}
-                      className="input-tag"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="phone">Phone</label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      required
-                      onChange={(e) => handleFormState(e)}
-                      className="input-tag"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="password">Password</label>
-                    <input
-                      type="password"
-                      id="password"
-                      name="password"
-                      value={formData.password}
-                      required
-                      onChange={(e) => {
-                        handleFormState(e);
-                        handlePasswordCheck(e);
-                      }}
-                      className="input-tag"
-                    />
-                    {errorMessage && (
-                      <div className="text-red-600 text-[12px] text-start">
-                        {errorMessage}
+                  <div className="space-y-5 lg:space-y-0 lg:flex justify-between">
+                    <div className="lg:w-[46%] space-y-5">
+                      <div className="space-y-2">
+                        <label htmlFor="name">Name</label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          value={formData.name}
+                          required
+                          onChange={(e) => handleFormState(e)}
+                          className="input-tag"
+                        />
                       </div>
-                    )}
-                  </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="confirm_password">Confirm Password</label>
-                    <div className="flex items-center justify-between space-x-2 input-tag">
-                      <input
-                        type={`${
-                          isVisibleConfirmPassword ? "text" : "password"
-                        }`}
-                        id="confirm_password"
-                        name="confirm_password"
-                        value={formData.confirm_password}
-                        required
-                        onChange={(e) => handleFormState(e)}
-                        className="outline-0"
-                      />
-                      {isVisibleConfirmPassword ? (
-                        <VisibilityIcon
-                          className="cursor-pointer"
-                          onClick={() =>
-                            setIsVisibleConfirmPassword(
-                              !isVisibleConfirmPassword
-                            )
-                          }
+                      <div className="space-y-2">
+                        <label htmlFor="phone">Phone</label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          value={formData.phone}
+                          required
+                          onChange={(e) => handleFormState(e)}
+                          className="input-tag"
                         />
-                      ) : (
-                        <VisibilityOffIcon
-                          className="cursor-pointer"
-                          onClick={() =>
-                            setIsVisibleConfirmPassword(
-                              !isVisibleConfirmPassword
-                            )
-                          }
+                      </div>
+
+                      <div className="space-y-2">
+                        <label htmlFor="password">Password</label>
+                        <input
+                          type="password"
+                          id="password"
+                          name="password"
+                          value={formData.password}
+                          required
+                          onChange={(e) => {
+                            handleFormState(e);
+                            handlePasswordCheck(e);
+                          }}
+                          className="input-tag"
                         />
-                      )}
+                        {errorMessage && (
+                          <div className="text-red-600 text-[12px] text-start">
+                            {errorMessage}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="lg:w-[46%] space-y-5">
+                      <div className="space-y-2">
+                        <label htmlFor="email">Email</label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          value={formData.email}
+                          required
+                          onChange={(e) => handleFormState(e)}
+                          className="input-tag"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <label htmlFor="name">Role</label>
+                        <div>
+                          <select
+                            name=""
+                            id=""
+                            className="w-full px-3 py-2 outline-1 rounded-lg bg-white text-black focus:ring-2 focus:ring-customGreen focus:border-customGreen outline-none transition-all duration-200"
+                          >
+                            <option value="">select role</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Farmer">Farmer</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label htmlFor="confirm_password">
+                          Confirm Password
+                        </label>
+                        <div className="flex items-center justify-between space-x-2 input-tag">
+                          <input
+                            type={`${
+                              isVisibleConfirmPassword ? "text" : "password"
+                            }`}
+                            id="confirm_password"
+                            name="confirm_password"
+                            value={formData.confirm_password}
+                            required
+                            onChange={(e) => handleFormState(e)}
+                            className="outline-0"
+                          />
+                          {isVisibleConfirmPassword ? (
+                            <VisibilityIcon
+                              className="cursor-pointer"
+                              onClick={() =>
+                                setIsVisibleConfirmPassword(
+                                  !isVisibleConfirmPassword
+                                )
+                              }
+                            />
+                          ) : (
+                            <VisibilityOffIcon
+                              className="cursor-pointer"
+                              onClick={() =>
+                                setIsVisibleConfirmPassword(
+                                  !isVisibleConfirmPassword
+                                )
+                              }
+                            />
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -580,10 +606,7 @@ function page() {
                         VERIFY
                       </button>
                     ) : (
-                      <button
-                        className="custom-btn bg-customGreen"
-                        disabled
-                      >
+                      <button className="custom-btn bg-customGreen" disabled>
                         VERIFYING...
                       </button>
                     )}
@@ -593,10 +616,7 @@ function page() {
             )}
           </div>
         </div>
-
       </div>
-
-      <Login_Footer />
     </>
   );
 }
