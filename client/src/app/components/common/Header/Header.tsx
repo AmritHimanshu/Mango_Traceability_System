@@ -61,8 +61,8 @@ function Header() {
   return (
     <>
       <div
-        className={`fixed w-full top-0 z-[9999] transition-all duration-300 ${
-          scrolling ? "bg-white text-black shadow-sm" : "bg-transparent text-white"
+        className={`sticky w-full top-0 z-[9999] transition-all duration-300 ${
+          scrolling ? "bg-white text-black shadow-sm" : "bg-white text-black"
         }`}
       >
         <div className="py-3 px-5 flex items-center justify-between">
@@ -104,7 +104,7 @@ function Header() {
                         key={index}
                         className={`cursor-pointer ${
                           pathname === list.path || path === list.base_path
-                            ? "font-bold text-[16px] text-customOrange"
+                            ? "font-bold text-[16px] text-customGreen"
                             : "bg-transparent"
                         }`}
                         onClick={() => router.push(list.path)}
@@ -119,7 +119,7 @@ function Header() {
                         key={index}
                         className={`cursor-pointer ${
                           pathname === list.path || path === list.base_path
-                            ? "font-bold text-[16px] text-customOrange"
+                            ? "font-bold text-[16px] text-customGreen"
                             : "bg-transparent"
                         }`}
                         onClick={() => router.push(list.path)}

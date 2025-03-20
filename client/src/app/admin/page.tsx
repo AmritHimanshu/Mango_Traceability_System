@@ -4,22 +4,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../components/common/loadingBar/CustomLoadingBar";
-import { User } from "@/utils/Types/interfaces";
 import {
-  FARMER_MANAGEMENT,
   LOGIN,
-  MANAGER_MANAGEMENT,
+  USER_MANAGEMENT,
   PENDING_REQUESTS,
 } from "@/utils/Paths/paths";
 import {
-  ADMIN_AUTHENTICATE_USER,
   ADMIN_FETCH_NO_OF_USERS,
-  ADMIN_FEW_PENDING_REQUESTS,
 } from "@/utils/Apis/api";
 import { useAppSelector } from "@/store/store";
 import Message from "../components/common/Message";
 import HomeCard from "../components/admin/HomeCard";
-import PendingUserTable from "../components/admin/PendingUserTable";
 import HomeAboutUs from "../components/common/HomeAboutUs";
 
 function page() {
@@ -154,14 +149,14 @@ function page() {
             description="verified_managers"
             count={noOfVerifiedManagers}
             textColor="green"
-            url={MANAGER_MANAGEMENT}
+            url={USER_MANAGEMENT}
           />
           <HomeCard
             title="Total number of verified farmers"
             description="verified_farmers"
             count={noOfVerifiedFarmers}
             textColor="green"
-            url={FARMER_MANAGEMENT}
+            url="{FARMER_MANAGEMENT}"
           />
           <HomeCard
             title="Total number of rejected requests"

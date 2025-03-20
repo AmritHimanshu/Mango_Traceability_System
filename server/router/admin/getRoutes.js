@@ -49,17 +49,28 @@ router.get('/api/fetch-no-of-users', async (req, res) => {
     }
 });
 
-router.get('/api/manager-management', async (req, res) => {
+router.get('/api/user-management', async (req, res) => {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
+    const whichUser = req.query.user;
+
     try {
-        const managers = await User.find({ role: 'Manager', isAuthenticated: true, isRejected: false }).select("-password -tokens -updatedAt").skip((page - 1) * limit).limit(limit);
+        let users = [];
+        let totalUsers = 0;
+        if (whichUser === "All") {
+            users = await User.find({ role: { $in: ["Farmer", "Manager"] }, isAuthenticated: true, isRejected: false }).select("-password -tokens -updatedAt").skip((page - 1) * limit).limit(limit);
 
-        const totalManagers = await User.countDocuments({ role: 'Manager', isAuthenticated: true, isRejected: false });
+            totalUsers = await User.countDocuments({ role: { $in: ["Farmer", "Manager"] }, isAuthenticated: true, isRejected: false });
+        }
+        else {
+            users = await User.find({ role: whichUser, isAuthenticated: true, isRejected: false }).select("-password -tokens -updatedAt").skip((page - 1) * limit).limit(limit);
 
-        return res.status(201).json({ managers, totalPages: Math.ceil(totalManagers / limit) });
+            totalUsers = await User.countDocuments({ role: whichUser, isAuthenticated: true, isRejected: false });
+        }
+
+        return res.status(201).json({ users, totalPages: Math.ceil(totalUsers / limit) });
     } catch (error) {
-        console.log("/api/manager-management: ", error);
+        console.log("/api/user-management: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 });

@@ -1,7 +1,6 @@
 import {
-  FARMER_MANAGEMENT,
   LOGIN,
-  MANAGER_MANAGEMENT,
+  USER_MANAGEMENT,
   ADMIN_OVERVIEW,
   PENDING_REQUESTS,
   FARMER_OVERVIEW,
@@ -18,14 +17,9 @@ export const admin = [
     base_path: "",
   },
   {
-    name: "Manager Management",
-    path: MANAGER_MANAGEMENT,
-    base_path: "manager",
-  },
-  {
-    name: "Farmer Management",
-    path: FARMER_MANAGEMENT,
-    base_path: "farmer",
+    name: "User Management",
+    path: USER_MANAGEMENT,
+    base_path: "user",
   },
   {
     name: "Pending requests",

@@ -2,20 +2,17 @@ import React from "react";
 import { User } from "@/utils/Types/interfaces";
 import { useRouter } from "next/navigation";
 import InfoIcon from "@mui/icons-material/Info";
+import { FARMER, MANAGER } from "@/utils/Paths/paths";
 
-function Table_List({
-  users,
-  idxCalc,
-  url,
-}: {
-  users: User[];
-  idxCalc: number;
-  url: string;
-}) {
+function Table_List({ users, idxCalc }: { users: User[]; idxCalc: number }) {
   const router = useRouter();
 
-  const handleOnView = async (user_id: string) => {
-    router.push(`${url}/${user_id}`);
+  const handleOnView = async (user_id: string, role: string) => {
+    if (role === "Manager") {
+      router.push(`${MANAGER}/${user_id}`);
+    } else {
+      router.push(`${FARMER}/${user_id}`);
+    }
   };
 
   return (
@@ -30,7 +27,7 @@ function Table_List({
                 <td className="px-4 py-3 text-left">Name</td>
                 <td className="px-4 py-3 text-left">Email</td>
                 <td className="px-4 py-3 text-left">Phone</td>
-                <td className="px-4 py-3 text-left">Joined on</td>
+                <td className="px-4 py-3 text-left">Role</td>
                 <td className="px-4 py-3 text-left"></td>
               </tr>
             </thead>
@@ -70,16 +67,9 @@ function Table_List({
                   </td>
                   <td
                     className="px-4 py-3 align-middle w-[100px] min-w-[80px] lg:min-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
-                    title={String(user.phone)}
+                    title={user.role}
                   >
-                    {new Date(user.createdAt).toLocaleString("en-IN", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "numeric",
-                      hour: "numeric",
-                      minute: "numeric",
-                      hour12: true,
-                    })}
+                    {user.role}
                   </td>
                   <td className="px-4 text-end">
                     <InfoIcon
@@ -88,7 +78,7 @@ function Table_List({
                         cursor: "pointer",
                         fontSize: "30px",
                       }}
-                      onClick={() => handleOnView(user.uniqueID)}
+                      onClick={() => handleOnView(user.uniqueID, user.role)}
                     />
                   </td>
                 </tr>
