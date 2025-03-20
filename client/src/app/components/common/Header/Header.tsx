@@ -12,6 +12,7 @@ import Header_Menu from "./Header_Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { ADMIN_PROFILE, FARMER_PROFILE, LOGIN } from "@/utils/Paths/paths";
 
 function Header() {
   const userState = useAppSelector((state) => state.user.userState);
@@ -23,6 +24,7 @@ function Header() {
 
   const [isClient, setIsClient] = useState(false);
   const [isMenu, setIsMenu] = useState(false);
+  const [isDropDown, setIsDropDown] = useState(false);
   const [scrolling, setScrolling] = useState(false);
 
   const handleIsMenuState = () => {
@@ -68,7 +70,12 @@ function Header() {
         <div className="py-3 px-5 flex items-center justify-between">
           {!isMenu ? (
             <Link href="/" className="hover:text-customOrange">
-              <Image src="/assets/cdac-logo.png" alt="Logo" width={50} height={50}/>
+              <Image
+                src="/assets/cdac-logo.png"
+                alt="Logo"
+                width={50}
+                height={50}
+              />
               {/* <div className="flex items-center justify-start">
                 <div className="flex flex-col items-center">
                   <p className="text-xl font-bold">MTS</p>
@@ -98,35 +105,117 @@ function Header() {
               </div>
               <div className="hidden lg:block text-center text-sm">
                 <div className="flex space-x-5">
-                  {userState?.role === "Admin" &&
-                    admin.map((list, index) => (
-                      <div
-                        key={index}
-                        className={`cursor-pointer ${
-                          pathname === list.path || path === list.base_path
-                            ? "font-bold text-[16px] text-customGreen"
-                            : "bg-transparent"
-                        }`}
-                        onClick={() => router.push(list.path)}
-                      >
-                        {list.name}
-                      </div>
-                    ))}
+                  {userState?.role === "Admin" && (
+                    <>
+                      {admin
+                        .filter(
+                          (list) =>
+                            list.name !== "Profile" && list.name !== "Logout"
+                        )
+                        .map((list, index) => (
+                          <div
+                            key={index}
+                            className={`cursor-pointer ${
+                              pathname === list.path || path === list.base_path
+                                ? "font-bold text-[16px] text-customGreen"
+                                : "bg-transparent"
+                            }`}
+                            onClick={() => router.push(list.path)}
+                          >
+                            {list.name}
+                          </div>
+                        ))}
 
-                  {userState?.role === "Farmer" &&
-                    farmer.map((list, index) => (
-                      <div
-                        key={index}
-                        className={`cursor-pointer ${
-                          pathname === list.path || path === list.base_path
-                            ? "font-bold text-[16px] text-customGreen"
-                            : "bg-transparent"
-                        }`}
-                        onClick={() => router.push(list.path)}
-                      >
-                        {list.name}
+                      <div className="relative">
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => setIsDropDown(!isDropDown)}
+                        >
+                          ADMIN
+                        </div>
+                        {!isDropDown && (
+                          <div className="absolute z-[999999] bg-white py-2 px-3 space-y-3 rounded-sm top-10">
+                            <div
+                              className={`cursor-pointer ${
+                                pathname === `${ADMIN_PROFILE}`
+                                  ? "font-bold text-[16px] text-customGreen"
+                                  : "bg-transparent"
+                              }`}
+                              onClick={() => router.push(ADMIN_PROFILE)}
+                            >
+                              Profile
+                            </div>
+                            <div
+                              className={`cursor-pointer ${
+                                pathname === `${LOGIN}`
+                                  ? "font-bold text-[16px] text-customGreen"
+                                  : "bg-transparent"
+                              }`}
+                              onClick={() => router.push(LOGIN)}
+                            >
+                              Logout
+                            </div>
+                          </div>
+                        )}
                       </div>
-                    ))}
+                    </>
+                  )}
+
+                  {userState?.role === "Farmer" && (
+                    <>
+                      {farmer
+                        .filter(
+                          (list) =>
+                            list.name !== "Profile" && list.name !== "Logout"
+                        )
+                        .map((list, index) => (
+                          <div
+                            key={index}
+                            className={`cursor-pointer ${
+                              pathname === list.path || path === list.base_path
+                                ? "font-bold text-[16px] text-customGreen"
+                                : "bg-transparent"
+                            }`}
+                            onClick={() => router.push(list.path)}
+                          >
+                            {list.name}
+                          </div>
+                        ))}
+
+                      <div className="relative">
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => setIsDropDown(!isDropDown)}
+                        >
+                          FARMER
+                        </div>
+                        {!isDropDown && (
+                          <div className="absolute z-[999999] bg-white py-2 px-3 space-y-3 rounded-sm top-10">
+                            <div
+                              className={`cursor-pointer ${
+                                pathname === `${FARMER_PROFILE}`
+                                  ? "font-bold text-[16px] text-customGreen"
+                                  : "bg-transparent"
+                              }`}
+                              onClick={() => router.push(FARMER_PROFILE)}
+                            >
+                              Profile
+                            </div>
+                            <div
+                              className={`cursor-pointer ${
+                                pathname === `${LOGIN}`
+                                  ? "font-bold text-[16px] text-customGreen"
+                                  : "bg-transparent"
+                              }`}
+                              onClick={() => router.push(LOGIN)}
+                            >
+                              Logout
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </>
