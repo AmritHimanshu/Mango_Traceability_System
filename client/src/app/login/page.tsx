@@ -12,7 +12,6 @@ import { FORGOT_PASSWORD, REGISTER } from "@/utils/Paths/paths";
 import Message from "../components/common/Message";
 import ReCAPTCHA from "react-google-recaptcha";
 import useRecaptcha from "@/utils/Services/useRecaptcha";
-import Login_Footer from "../components/common/Login_Footer";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -150,7 +149,7 @@ function page() {
           <Message text={message.text} type={message.type} />
         )}
 
-        <div className="rounded-md overflow-hidden w-[500px] m-auto h-[500px] flex shadow-xl">
+        <div className="rounded-md overflow-hidden w-[400px] md:w-[500px] m-auto h-[500px] flex shadow-xl">
           <div className="bg-white bg-opacity-50 backdrop-blur-md text-black flex-grow flex items-center">
             <div className="px-5 py-3 w-full m-auto space-y-5">
               <div className="mt-2 text-xl text-center font-bold">Login</div>
@@ -220,8 +219,6 @@ function page() {
           </div>
         </div>
       </div>
-
-      <Login_Footer />
     </>
   );
 }

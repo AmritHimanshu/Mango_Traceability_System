@@ -70,7 +70,7 @@ function HomeCard({
   }, [isVisible, count]);
 
   return (
-    <div ref={cardRef} className="w-[100%] flex items-center justify-between">
+    <div ref={cardRef} className="w-[100%] flex items-center justify-between border-[1px] border-gray-600 rounded-md p-2">
       <div className="w-[30%] text-black text-center space-y-2">
         <div>
           {description === "pending_requests" && (
