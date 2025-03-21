@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { admin, farmer } from "@/utils/Sidebar/sidebarList";
@@ -21,6 +21,8 @@ function Header() {
   const path = pathname.split("/")[2];
 
   const router = useRouter();
+
+  const headRef = useRef<HTMLDivElement>(null);
 
   const [isClient, setIsClient] = useState(false);
   const [isMenu, setIsMenu] = useState(false);
@@ -57,6 +59,19 @@ function Header() {
       document.body.style.overflow = "auto";
     };
   }, [isMenu]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+        if (headRef.current && !headRef.current.contains(event.target as Node)) {
+            setIsDropDown(false);
+        }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+    };
+}, [headRef]);
 
   if (!isClient) return null;
 
@@ -115,7 +130,7 @@ function Header() {
                         .map((list, index) => (
                           <div
                             key={index}
-                            className={`cursor-pointer ${
+                            className={`cursor-pointer hover:text-green-700 duration-150 ${
                               pathname === list.path || path === list.base_path
                                 ? "font-bold text-[16px] text-customGreen"
                                 : "bg-transparent"
@@ -128,15 +143,15 @@ function Header() {
 
                       <div className="relative">
                         <div
-                          className="cursor-pointer"
+                          className="cursor-pointer font-bold hover:text-green-700 duration-150"
                           onClick={() => setIsDropDown(!isDropDown)}
                         >
                           ADMIN
                         </div>
-                        {!isDropDown && (
-                          <div className="absolute z-[999999] bg-white py-2 px-3 space-y-3 rounded-sm top-10">
+                        {isDropDown && (
+                          <div ref={headRef} className="absolute z-[999999] bg-white py-2 px-3 space-y-3 rounded-sm top-10">
                             <div
-                              className={`cursor-pointer ${
+                              className={`cursor-pointer hover:text-green-700 duration-150 ${
                                 pathname === `${ADMIN_PROFILE}`
                                   ? "font-bold text-[16px] text-customGreen"
                                   : "bg-transparent"
@@ -146,7 +161,7 @@ function Header() {
                               Profile
                             </div>
                             <div
-                              className={`cursor-pointer ${
+                              className={`cursor-pointer hover:text-green-700 duration-150 ${
                                 pathname === `${LOGIN}`
                                   ? "font-bold text-[16px] text-customGreen"
                                   : "bg-transparent"
@@ -171,7 +186,7 @@ function Header() {
                         .map((list, index) => (
                           <div
                             key={index}
-                            className={`cursor-pointer ${
+                            className={`cursor-pointer hover:text-green-700 duration-150 ${
                               pathname === list.path || path === list.base_path
                                 ? "font-bold text-[16px] text-customGreen"
                                 : "bg-transparent"
@@ -184,15 +199,15 @@ function Header() {
 
                       <div className="relative">
                         <div
-                          className="cursor-pointer"
+                          className="cursor-pointer font-bold hover:text-green-700 duration-150"
                           onClick={() => setIsDropDown(!isDropDown)}
                         >
                           FARMER
                         </div>
-                        {!isDropDown && (
-                          <div className="absolute z-[999999] bg-white py-2 px-3 space-y-3 rounded-sm top-10">
+                        {isDropDown && (
+                          <div ref={headRef} className="absolute z-[999999] bg-white py-2 px-3 space-y-3 rounded-sm top-10">
                             <div
-                              className={`cursor-pointer ${
+                              className={`cursor-pointer hover:text-green-700 duration-150 ${
                                 pathname === `${FARMER_PROFILE}`
                                   ? "font-bold text-[16px] text-customGreen"
                                   : "bg-transparent"
@@ -202,7 +217,7 @@ function Header() {
                               Profile
                             </div>
                             <div
-                              className={`cursor-pointer ${
+                              className={`cursor-pointer hover:text-green-700 duration-150 ${
                                 pathname === `${LOGIN}`
                                   ? "font-bold text-[16px] text-customGreen"
                                   : "bg-transparent"
