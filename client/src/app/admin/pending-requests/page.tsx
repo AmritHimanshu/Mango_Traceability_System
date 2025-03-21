@@ -9,6 +9,7 @@ import { LOGIN } from "@/utils/Paths/paths";
 import {
   ADMIN_AUTHENTICATE_USER,
   ADMIN_PENDING_REQUESTS,
+  ADMIN_SEARCH_PENDING_REQUESTS,
 } from "@/utils/Apis/api";
 import Message from "@/app/components/common/Message";
 import PendingUserTable from "@/app/components/admin/PendingUserTable";
@@ -24,6 +25,8 @@ function page() {
   const [pendingRequests, setPendingRequests] = useState<User[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [message, setMessage] = useState({ text: "", type: "" });
   const [isConfirm, setIsConfirm] = useState(false);
@@ -79,9 +82,54 @@ function page() {
     }
   };
 
+  const fetchSearchedPendingRequests = async () => {
+    try {
+      const res = await fetch(
+        `${BASE_URL}/${ADMIN_SEARCH_PENDING_REQUESTS}?page=${currentPage}&limit=${limit}&search=${searchQuery}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+
+      const data = await res.json();
+
+      if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
+        router.push(LOGIN);
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      setPendingRequests(data.users);
+      setTotalPages(data.totalPages);
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
+  };
+
   useEffect(() => {
-    fetchPendingRequests();
-  }, [currentPage]);
+      const delayDebounce = setTimeout(() => {
+        if (!searchQuery) {
+          fetchPendingRequests();
+        } else {
+          fetchSearchedPendingRequests();
+        }
+      }, 500);
+  
+      return () => clearTimeout(delayDebounce);
+    }, [searchQuery, currentPage]);
 
   const authenticateReq = async (id: string, role: string, status: boolean) => {
     if (!role && status === true) {
@@ -188,6 +236,20 @@ function page() {
         <div className="max-w-[80%] m-auto space-y-5">
           <div className="text-center font-bold text-black text-heading-size">
             Pending Requests
+          </div>
+          <div className="md:space-x-11 lg:space-x-3 text-black md:flex items-center">
+            <div>
+              <label htmlFor="search">Search</label>
+            </div>
+            <input
+              type="text"
+              id="search"
+              name="search"
+              value={searchQuery}
+              required
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="input-tag !w-[300px]"
+            />
           </div>
           {pendingRequests.length > 0 ? (
             <>

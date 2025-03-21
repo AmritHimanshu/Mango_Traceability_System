@@ -28,7 +28,6 @@ function page() {
   const [message, setMessage] = useState({ text: "", type: "" });
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentSearchPage, setCurrentSearchPage] = useState(1);
 
   const limit = 5;
 
@@ -79,7 +78,7 @@ function page() {
   const fetchSearchedUsers = async () => {
     try {
       const res = await fetch(
-        `${BASE_URL}/${ADMIN_SEARCH_USER_MANAGEMENT}?page=${currentSearchPage}&limit=${limit}&role=${whichUser}&search=${searchQuery}`,
+        `${BASE_URL}/${ADMIN_SEARCH_USER_MANAGEMENT}?page=${currentPage}&limit=${limit}&role=${whichUser}&search=${searchQuery}`,
         {
           method: "GET",
           headers: {
