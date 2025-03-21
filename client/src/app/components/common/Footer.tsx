@@ -60,7 +60,8 @@ function Footer() {
               className="w-[30px] h-[30px]"
             />
             <div>
-              Lorem ipsum, dolor sit amet, consectetur adipisicing, India
+              14th Floor ,Biscomaun Tower, West Gandhi Maidan, Patna - 800001
+              Bihar (India)
             </div>
           </div>
 
@@ -70,7 +71,7 @@ function Footer() {
               alt="Phone"
               className="w-[30px] h-[30px]"
             />
-            <div>(+91) 9876543201 / (+91) 9876543210</div>
+            <div>+91-612-2219021 / +91-8757570233</div>
           </div>
 
           <div className="text-sm my-4 flex items-center space-x-2">
@@ -80,8 +81,7 @@ function Footer() {
               className="w-[27px] h-[30px]"
             />
             <div className="space-y-2">
-              <div>official@example.com</div>
-              <div>info@example.com</div>
+              <div>infocdacpatna@cdac.in</div>
             </div>
           </div>
         </div>
