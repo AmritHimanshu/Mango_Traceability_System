@@ -20,21 +20,6 @@ router.get('/api/few-pending-requests', async (req, res) => {
     }
 });
 
-router.get('/api/pending-requests', async (req, res) => {
-    const page = parseInt(req.query.page);
-    const limit = parseInt(req.query.limit);
-    try {
-        const pendingRequests = await User.find({ isAuthenticated: false, isRejected: false }).select("-password -tokens -updatedAt").sort("-createdAt").skip((page - 1) * limit).limit(limit);
-
-        const totalPendingRequests = await User.countDocuments({ isAuthenticated: false, isRejected: false });
-
-        return res.status(201).json({ pendingRequests, totalPages: Math.ceil(totalPendingRequests / limit) });
-    } catch (error) {
-        console.log("/api/pending-farmers: ", error);
-        return res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-
 router.get('/api/fetch-no-of-users', async (req, res) => {
     try {
         const verifiedManagers = await User.find({ role: 'Manager', isAuthenticated: true, isRejected: false });
@@ -113,6 +98,21 @@ router.get('/api/search-user-management', async (req, res) => {
     }
 });
 
+router.get('/api/pending-requests', async (req, res) => {
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    try {
+        const pendingRequests = await User.find({ isAuthenticated: false, isRejected: false }).select("-password -tokens -updatedAt").sort("-createdAt").skip((page - 1) * limit).limit(limit);
+
+        const totalPendingRequests = await User.countDocuments({ isAuthenticated: false, isRejected: false });
+
+        return res.status(201).json({ pendingRequests, totalPages: Math.ceil(totalPendingRequests / limit) });
+    } catch (error) {
+        console.log("/api/pending-farmers: ", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 router.get('/api/search-pending-requests', async (req, res) => {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
@@ -121,7 +121,7 @@ router.get('/api/search-pending-requests', async (req, res) => {
     const query = {
         isAuthenticated: false,
         isRejected: false,
-        role: {$ne: "Admin"}
+        role: { $ne: "Admin" }
     };
 
     if (search) {
@@ -145,21 +145,6 @@ router.get('/api/search-pending-requests', async (req, res) => {
     }
 });
 
-router.get('/api/farmer-management', async (req, res) => {
-    const page = parseInt(req.query.page);
-    const limit = parseInt(req.query.limit);
-    try {
-        const farmers = await User.find({ role: 'Farmer', isAuthenticated: true, isRejected: false }).select("-password -tokens -updatedAt").skip((page - 1) * limit).limit(limit);
-
-        const totalFarmers = await User.countDocuments({ role: 'Farmer', isAuthenticated: true, isRejected: false });
-
-        return res.status(201).json({ farmers, totalPages: Math.ceil(totalFarmers / limit) });
-    } catch (error) {
-        console.log("/api/farmer-management: ", error);
-        return res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-
 router.get('/api/fetch-farmer-farms-list/:id', async (req, res) => {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
@@ -176,6 +161,38 @@ router.get('/api/fetch-farmer-farms-list/:id', async (req, res) => {
         return res.status(201).send({ farmList, totalPages: Math.ceil(totalFarms / limit), user });
     } catch (error) {
         console.log("/api/fetch-farmer-farms-list: ", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+router.get('/api/fetch-search-farmer-farms-list/:id', async (req, res) => {
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const search = req.query.search;
+
+    const { id } = req.params;
+
+    const query = {
+        userUniqueId: id
+    };
+
+    if (search) {
+        query.$or = [
+            { farm: { $regex: search, $options: "i" } },
+            { crop: { $regex: search, $options: "i" } },
+            { uniqueID: { $regex: search, $options: "i" } },
+        ].filter(Boolean)
+    }
+
+    try {
+        const farmList = await Farmer.find(query).skip((page - 1) * limit).limit(Number(limit));
+
+        const totalFarms = await User.countDocuments(query);
+        const totalPages = Math.ceil(totalFarms / limit);
+
+        return res.status(201).json({ farmList, totalPages });
+    } catch (error) {
+        console.log("/api/search-user-management: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 });

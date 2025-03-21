@@ -5,7 +5,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { FarmList } from "@/utils/Types/interfaces";
 import { LoadingBarRef } from "react-top-loading-bar";
 import { ADMIN_FARM, LOGIN } from "@/utils/Paths/paths";
-import { ADMIN_FETCH_FARMER_FARM_LIST } from "@/utils/Apis/api";
+import {
+  ADMIN_FETCH_FARMER_FARM_LIST,
+  ADMIN_FETCH_SEARCH_FARMER_FARM_LIST,
+} from "@/utils/Apis/api";
 import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
 import Message from "@/app/components/common/Message";
 import ListFarmTable from "@/app/components/admin/ListFarmTable";
@@ -26,6 +29,8 @@ function page() {
   const [currentPage, setCurrentPage] = useState(1);
   const [farmerName, setFarmerName] = useState("");
   const [message, setMessage] = useState({ text: "", type: "" });
+
+  const [searchQuery, setSearchQuery] = useState("");
 
   const limit = 5;
 
@@ -76,6 +81,55 @@ function page() {
     }
   };
 
+  const fetchSearchedFarms = async () => {
+    try {
+      const res = await fetch(
+        `${BASE_URL}/${ADMIN_FETCH_SEARCH_FARMER_FARM_LIST}/${user_id}?page=${currentPage}&limit=${limit}&search=${searchQuery}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+
+      const data = await res.json();
+
+      if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
+        router.push(LOGIN);
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      setFarms(data.farmList);
+      setTotalPages(data.totalPages);
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
+  };
+
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      if (!searchQuery) {
+        fetchFarms();
+      } else {
+        fetchSearchedFarms();
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounce);
+  }, [searchQuery, currentPage]);
+
   const handleSelectedFarm = async (id: string) => {
     if (loadingBarRef.current) {
       loadingBarRef.current.continuousStart();
@@ -87,10 +141,6 @@ function page() {
       loadingBarRef.current.complete();
     }
   };
-
-  useEffect(() => {
-    fetchFarms();
-  }, [currentPage]);
 
   return (
     <div className="page-main-div">
@@ -112,9 +162,27 @@ function page() {
           <div className="text-center font-bold text-black text-heading-size">
             List of <span className="text-customGreen">Farms</span>
           </div>
+          <div className="md:space-x-11 lg:space-x-3 text-black md:flex items-center">
+            <div>
+              <label htmlFor="search">Search</label>
+            </div>
+            <input
+              type="text"
+              id="search"
+              name="search"
+              value={searchQuery}
+              required
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="input-tag !w-[300px]"
+            />
+          </div>
           {farms.length > 0 ? (
             <>
-              <ListFarmTable farms={farms} idxCalc={(currentPage - 1) * limit} handleClick={handleSelectedFarm} />
+              <ListFarmTable
+                farms={farms}
+                idxCalc={(currentPage - 1) * limit}
+                handleClick={handleSelectedFarm}
+              />
 
               <div className="space-x-5 text-center text-black">
                 {[...Array(totalPages)].map((_, i) => (
