@@ -6,7 +6,10 @@ import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../../components/common/loadingBar/CustomLoadingBar";
 import { User } from "@/utils/Types/interfaces";
 import { LOGIN } from "@/utils/Paths/paths";
-import { ADMIN_USER_MANAGEMENT } from "@/utils/Apis/api";
+import {
+  ADMIN_SEARCH_USER_MANAGEMENT,
+  ADMIN_USER_MANAGEMENT,
+} from "@/utils/Apis/api";
 import Message from "@/app/components/common/Message";
 import Table_List from "@/app/components/admin/Table_List";
 import Banner from "@/app/components/common/Banner";
@@ -23,6 +26,9 @@ function page() {
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [message, setMessage] = useState({ text: "", type: "" });
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentSearchPage, setCurrentSearchPage] = useState(1);
 
   const limit = 5;
 
@@ -70,9 +76,54 @@ function page() {
     }
   };
 
+  const fetchSearchedUsers = async () => {
+    try {
+      const res = await fetch(
+        `${BASE_URL}/${ADMIN_SEARCH_USER_MANAGEMENT}?page=${currentSearchPage}&limit=${limit}&role=${whichUser}&search=${searchQuery}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+
+      const data = await res.json();
+
+      if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
+        router.push(LOGIN);
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      setUsers(data.users);
+      setTotalPages(data.totalPages);
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
+  };
+
   useEffect(() => {
-    fetchUsers();
-  }, [currentPage, whichUser]);
+    const delayDebounce = setTimeout(() => {
+      if (!searchQuery) {
+        fetchUsers();
+      } else {
+        fetchSearchedUsers();
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounce);
+  }, [searchQuery, currentPage, whichUser]);
 
   return (
     <div className="page-main-div">
@@ -94,26 +145,41 @@ function page() {
           <div className="text-center font-bold text-black text-heading-size">
             Users
           </div>
+          <div className="space-y-3 lg:space-y-0 lg:flex items-center justify-between">
+            <div className="md:space-x-3 text-black md:flex items-center">
+              <div>
+                <label htmlFor="role">Select role:</label>
+              </div>
+              <select
+                name="role"
+                id="role"
+                className="w-[300px] px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
+                onChange={(e) => setWhichUser(e.target.value)}
+                // disabled
+              >
+                <option value="All">All</option>
+                <option value="Farmer">Farmer</option>
+                <option value="Manager">Manager</option>
+              </select>
+            </div>
+            <div className="md:space-x-11 lg:space-x-3 text-black md:flex items-center">
+              <div>
+                <label htmlFor="search">Search</label>
+              </div>
+              <input
+                type="text"
+                id="search"
+                name="search"
+                value={searchQuery}
+                required
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="input-tag !w-[300px]"
+              />
+            </div>
+          </div>
           {users.length > 0 ? (
             <>
-              <div className="space-x-3 text-black">
-                <label htmlFor="role">Select role:</label>
-                <select
-                  name="role"
-                  id="role"
-                  className="w-[300px] px-3 py-2 border border-gray-400 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all duration-200"
-                  onChange={(e) => setWhichUser(e.target.value)}
-                >
-                  <option value="All">All</option>
-                  <option value="Farmer">Farmer</option>
-                  <option value="Manager">Manager</option>
-                </select>
-              </div>
-
-              <Table_List
-                users={users}
-                idxCalc={(currentPage - 1) * limit}
-              />
+              <Table_List users={users} idxCalc={(currentPage - 1) * limit} />
 
               <div className="space-x-5 text-center text-black">
                 {[...Array(totalPages)].map((_, i) => (

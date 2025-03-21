@@ -16,7 +16,7 @@ function ListFarmTable({ farms, idxCalc, handleClick }: ListFarmTableProps) {
               <td className="px-4 py-3 text-left">Farm Name</td>
               <td className="px-4 py-3 text-left">Crop Name</td>
               <td className="px-4 py-3 text-left">Created on</td>
-              <td className="px-4 py-3 text-left"></td>
+              <td className="px-4 py-3 text-right">Info</td>
             </tr>
           </thead>
 

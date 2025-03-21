@@ -75,6 +75,44 @@ router.get('/api/user-management', async (req, res) => {
     }
 });
 
+router.get('/api/search-user-management', async (req, res) => {
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const search = req.query.search;
+    const role = req.query.role;
+
+    const query = {
+        isAuthenticated: true,
+    };
+
+    if (role && role !== "All") {
+        query.role = role;
+    } else {
+        query.role = { $ne: "Admin" };
+    }
+
+    if (search) {
+        query.$or = [
+            { name: { $regex: search, $options: "i" } },
+            { email: { $regex: search, $options: "i" } },
+            { $expr: { $regexMatch: { input: { $toString: "$phone" }, regex: search, options: "i" } } },
+            { uniqueID: { $regex: search, $options: "i" } },
+        ].filter(Boolean)
+    }
+
+    try {
+        const users = await User.find(query).skip((page - 1) * limit).limit(Number(limit));
+
+        const totalUsers = await User.countDocuments(query);
+        const totalPages = Math.ceil(totalUsers / limit);
+
+        return res.status(201).json({ users, totalPages });
+    } catch (error) {
+        console.log("/api/search-user-management: ", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 router.get('/api/farmer-management', async (req, res) => {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);

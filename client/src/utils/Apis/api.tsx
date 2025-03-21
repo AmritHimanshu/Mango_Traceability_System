@@ -18,6 +18,7 @@ export const ADMIN_FEW_PENDING_REQUESTS = "admin/api/few-pending-requests";
 export const ADMIN_PENDING_REQUESTS = "admin/api/pending-requests";
 export const ADMIN_FETCH_NO_OF_USERS = "admin/api/fetch-no-of-users";
 export const ADMIN_USER_MANAGEMENT = "admin/api/user-management";
+export const ADMIN_SEARCH_USER_MANAGEMENT = "admin/api/search-user-management";
 export const ADMIN_FARMER_MANAGEMENT = "admin/api/farmer-management";
 export const ADMIN_FETCH_FARMER_FARM_LIST = "admin/api/fetch-farmer-farms-list";
 export const ADMIN_FETCH_FARMER_FARM_DATA = "admin/api/fetch-farmer-farm-data";

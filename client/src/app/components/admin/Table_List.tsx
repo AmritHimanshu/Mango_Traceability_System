@@ -28,7 +28,7 @@ function Table_List({ users, idxCalc }: { users: User[]; idxCalc: number }) {
                 <td className="px-4 py-3 text-left">Email</td>
                 <td className="px-4 py-3 text-left">Phone</td>
                 <td className="px-4 py-3 text-left">Role</td>
-                <td className="px-4 py-3 text-left"></td>
+                <td className="px-4 py-3 text-right">Info</td>
               </tr>
             </thead>
 
