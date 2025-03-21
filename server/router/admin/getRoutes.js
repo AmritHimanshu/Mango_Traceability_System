@@ -187,7 +187,7 @@ router.get('/api/fetch-search-farmer-farms-list/:id', async (req, res) => {
     try {
         const farmList = await Farmer.find(query).skip((page - 1) * limit).limit(Number(limit));
 
-        const totalFarms = await User.countDocuments(query);
+        const totalFarms = await Farmer.countDocuments(query);
         const totalPages = Math.ceil(totalFarms / limit);
 
         return res.status(201).json({ farmList, totalPages });

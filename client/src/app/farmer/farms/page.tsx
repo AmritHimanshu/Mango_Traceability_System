@@ -6,7 +6,10 @@ import Image from "next/image";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
 import { CREATE_FARM, FARMS, LOGIN } from "@/utils/Paths/paths";
-import { FARMER_FETCH_FARMS_LIST } from "@/utils/Apis/api";
+import {
+  FARMER_FETCH_FARMS_LIST,
+  FARMER_FETCH_SEARCH_FARMS_LIST,
+} from "@/utils/Apis/api";
 import { FarmList } from "@/utils/Types/interfaces";
 import ListFarmTable from "@/app/components/admin/ListFarmTable";
 import Message from "@/app/components/common/Message";
@@ -22,6 +25,8 @@ function page() {
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [message, setMessage] = useState({ text: "", type: "" });
+
+  const [searchQuery, setSearchQuery] = useState("");
 
   const limit = 5;
 
@@ -70,9 +75,54 @@ function page() {
     }
   };
 
+  const fetchSearchedFarms = async () => {
+    try {
+      const res = await fetch(
+        `${BASE_URL}/${FARMER_FETCH_SEARCH_FARMS_LIST}?page=${currentPage}&limit=${limit}&search=${searchQuery}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+
+      const data = await res.json();
+
+      if (res.status !== 201 && res.status !== 500) {
+        setMessage({ text: data.error, type: "error" });
+        router.push(LOGIN);
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      if (res.status === 500) {
+        setMessage({ text: data.error, type: "error" });
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      setFarms(data.farmList);
+      setTotalPages(data.totalPages);
+    } catch (error) {}
+
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
+  };
+
   useEffect(() => {
-    fetchFarms();
-  }, [currentPage]);
+    const delayDebounce = setTimeout(() => {
+      if (!searchQuery) {
+        fetchFarms();
+      } else {
+        fetchSearchedFarms();
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounce);
+  }, [searchQuery, currentPage]);
 
   const handleSelectedFarm = async (id: string) => {
     if (loadingBarRef.current) {
@@ -117,6 +167,20 @@ function page() {
       <div className="my-5 !space-y-5 max-w-[90%] m-auto p-2">
         <div className="text-center font-bold text-heading-size text-black">
           Your <span className="text-customGreen">Farms</span>
+        </div>
+        <div className="md:space-x-11 lg:space-x-3 text-black md:flex items-center">
+          <div>
+            <label htmlFor="search">Search</label>
+          </div>
+          <input
+            type="text"
+            id="search"
+            name="search"
+            value={searchQuery}
+            required
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="input-tag !w-[300px]"
+          />
         </div>
         {farms.length > 0 ? (
           <>

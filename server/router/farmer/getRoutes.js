@@ -23,6 +23,36 @@ router.get('/api/fetch-farms-list', async (req, res) => {
     }
 });
 
+router.get('/api/fetch-search-farms-list', async (req, res) => {
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const search = req.query.search;
+
+    const query = {
+        userUniqueId: req.rootUser.uniqueID
+    };
+
+    if (search) {
+        query.$or = [
+            { farm: { $regex: search, $options: "i" } },
+            { crop: { $regex: search, $options: "i" } },
+            { uniqueID: { $regex: search, $options: "i" } },
+        ].filter(Boolean)
+    }
+
+    try {
+        const farmList = await Farmer.find(query).skip((page - 1) * limit).limit(Number(limit));
+
+        const totalFarms = await Farmer.countDocuments(query);
+        const totalPages = Math.ceil(totalFarms / limit);
+
+        return res.status(201).json({ farmList, totalPages });
+    } catch (error) {
+        console.log("/api/search-user-management: ", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 router.get('/api/fetch-few-farms-list', async (req, res) => {
     try {
         const farmList = await Farmer.find({ userUniqueId: req.rootUser.uniqueID }).sort("-createdAt").select('farm crop geoFenceData uniqueID').limit(4);

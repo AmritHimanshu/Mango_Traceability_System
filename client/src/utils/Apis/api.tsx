@@ -35,6 +35,7 @@ export const ADMIN_DELETE_FARM_DATA = "admin/api/delete-farm-data";
 
 // Farmer GET APIs
 export const FARMER_FETCH_FARMS_LIST = "farmer/api/fetch-farms-list";
+export const FARMER_FETCH_SEARCH_FARMS_LIST = "farmer/api/fetch-search-farms-list";
 export const FARMER_FETCH_FEW_FARMS_LIST = "farmer/api/fetch-few-farms-list";
 export const FARMER_FETCH_FARM_DATA = "farmer/api/fetch-farm-data";
 
