@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <ReduxProvider>
       <html lang="en">
-        <body className={`${nunito.className} antialiased bg-customGreen bg-opacity-10`}>{children}</body>
+        <body className={`${nunito.className} antialiased bg-customGreen bg-opacity-5`}>{children}</body>
       </html>
     </ReduxProvider>
   );
