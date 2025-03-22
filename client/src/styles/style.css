@@ -3,7 +3,7 @@
 }
 
 .page-main-div{
-    @apply w-full relative
+    @apply w-full relative min-h-[500px]
 }
 
 .page-main-div-certificate{
