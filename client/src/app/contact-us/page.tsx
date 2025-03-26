@@ -6,6 +6,7 @@ import CustomLoadingBar from "../components/common/loadingBar/CustomLoadingBar";
 import { LoadingBarRef } from "react-top-loading-bar";
 import Message from "../components/common/Message";
 import Footer from "../components/common/Footer";
+import { CONTACT_US_MAIL } from "@/utils/Apis/api";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -27,7 +28,51 @@ function page() {
     setUserInfo((prev) => ({ ...prev, [name]: value }));
   };
 
-  const sendMail = async () => {};
+  const sendMail = async () => {
+    const { name, email, message } = userInfo;
+
+    if (!name || !email || !message) {
+      setMessage({ text: "Fill all the fields", type: "error" });
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
+      return;
+    }
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.continuousStart();
+    }
+    try {
+      const res = await fetch(`${BASE_URL}/${CONTACT_US_MAIL}`, {
+        method: "POSt",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.status !== 201) {
+        setMessage({ text: data.error, type: "error" });
+        const error = new Error(data.error);
+        throw error;
+      }
+
+      setMessage({ text: data.message, type: "success" });
+    } catch (error) {}
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 2000);
+
+    if (loadingBarRef.current) {
+      loadingBarRef.current.complete();
+    }
+  };
 
   return (
     <div className="page-main-div">
@@ -119,9 +164,11 @@ function page() {
             </div>
             <div className="space-y-3">
               <div>About us</div>
-              <div className="text-xs md:text-lg lg:text-xl text-gray-800">we are dedicated to deliver fresh and natural mangoes which are
-              grown chemical residue free to your door step. We provide all
-              variety of mangoes to our customers.</div>
+              <div className="text-xs md:text-lg lg:text-xl text-gray-800">
+                we are dedicated to deliver fresh and natural mangoes which are
+                grown chemical residue free to your door step. We provide all
+                variety of mangoes to our customers.
+              </div>
             </div>
           </div>
         </div>
