@@ -3,7 +3,7 @@ import Link from "next/link";
 function Footer() {
   return (
     <div className="p-5 bg-neutral-900 text-white">
-      <div className="text-left grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+      <div className="text-left grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5">
         <div className="">
           <div className="font-bold text-xl">About Us</div>
           <p className="leading-7 mt-4 text-gray-100">
@@ -30,20 +30,20 @@ function Footer() {
           </div> */}
         </div>
 
-        <div className="md:text-center">
+        <div className="md:text-center space-y-4">
           <div className="font-bold text-xl">Quicks Links</div>
-          <div className="text-start w-[100px] md:m-auto">
-            <div className="cursor-default text-sm my-4">
+          <div className="text-start w-[100px] md:m-auto space-y-4">
+            <div className="cursor-default text-sm">
               <Link href="/" className="hover:text-customOrange">
                 Home
               </Link>
             </div>
-            <div className="cursor-default text-sm my-4">
+            <div className="cursor-default text-sm">
               <Link href="#" className="hover:text-customOrange">
                 About Us
               </Link>
             </div>
-            <div className="cursor-default text-sm my-4">
+            <div className="cursor-default text-sm">
               <Link href="/contact-us" className="hover:text-customOrange">
                 Contact Us
               </Link>
