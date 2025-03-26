@@ -156,7 +156,7 @@ function Header() {
                                   ? "font-bold text-[16px] text-customGreen"
                                   : "bg-transparent"
                               }`}
-                              onClick={() => router.push(ADMIN_PROFILE)}
+                              onClick={() => {router.push(ADMIN_PROFILE); setIsDropDown(false)}}
                             >
                               Profile
                             </div>
@@ -212,7 +212,7 @@ function Header() {
                                   ? "font-bold text-[16px] text-customGreen"
                                   : "bg-transparent"
                               }`}
-                              onClick={() => router.push(FARMER_PROFILE)}
+                              onClick={() => {router.push(FARMER_PROFILE); setIsDropDown(false)}}
                             >
                               Profile
                             </div>
