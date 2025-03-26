@@ -7,6 +7,7 @@ const puppeteer = require('puppeteer');
 const { notifyAdmins } = require('../../functions/sendMail');
 const { sendOtpToEmail, verifyOtpForEmail, sendOtpToPhone, verifyOtpForPhone } = require('../../functions/otpService');
 const generateHTML = require('../../functions/generate-pdf');
+const sendMessageOnMail = require('../../functions/sendMessageOnMail');
 
 const User = require('../../model/userSchema');
 const Farmer = require('../../model/farmerSchema');
@@ -103,7 +104,11 @@ router.post('/api/signin-user', async (req, res) => {
 router.post('/api/contact-us-mail', async (req, res) => {
     try {
         const { name, email, message } = req.body;
-        console.log(name, email, message);
+
+        if (!name || !email || !message) {
+            return res.status(422).json({ error: "Fill all fields" });
+        }
+        await sendMessageOnMail(name, email, message);
         res.status(201).json({message: "Message sent"});
     } catch (error) {
         console.log("/api/contact-us-mail: ", error);
