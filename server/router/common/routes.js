@@ -100,6 +100,17 @@ router.post('/api/signin-user', async (req, res) => {
     }
 });
 
+router.post('/api/contact-us-mail', async (req, res) => {
+    try {
+        const { name, email, message } = req.body;
+        console.log(name, email, message);
+        res.status(201).json({message: "Message sent"});
+    } catch (error) {
+        console.log("/api/contact-us-mail: ", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 router.post("/api/send-otp-email-withoutCaptcha", async (req, res) => {
     const { email } = req.body;
 
@@ -107,7 +118,7 @@ router.post("/api/send-otp-email-withoutCaptcha", async (req, res) => {
         return res.status(422).json({ error: "Fill the email" });
     }
 
-    try {        
+    try {
         await sendOtpToEmail(email);
         res.status(201).json({ message: "OTP sent successfully." });
     } catch (error) {
