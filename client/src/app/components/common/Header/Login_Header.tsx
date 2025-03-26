@@ -2,8 +2,11 @@
 
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 function Login_Header() {
+  const router = useRouter();
+
   return (
     <div className="sticky w-full top-0 z-[9999] bg-white transition-all duration-300 flex items-center justify-between">
       <div className="py-3 px-5">
@@ -15,7 +18,7 @@ function Login_Header() {
           className="bg-white p-1 rounded-sm"
         />
       </div>
-      <div className="text-center">
+      <div className="text-center px-2 hidden md:block">
         <div className="font-bold text-customOrange text-xs md:text-sm lg:text-xl">
           Making Maldha Aam Accessible to every Indian
         </div>
@@ -25,7 +28,7 @@ function Login_Header() {
           mangoes to our customers.
         </div>
       </div>
-      <div className="py-3 px-5"></div>
+      <div className="py-3 px-5 text-black cursor-pointer hover:!text-green-700 duration-150" onClick={() => router.push('/contact-us')}>Contact us</div>
     </div>
   );
 }

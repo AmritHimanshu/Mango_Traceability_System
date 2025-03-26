@@ -44,7 +44,7 @@ function Footer() {
               </Link>
             </div>
             <div className="cursor-default text-sm my-4">
-              <Link href="/#" className="hover:text-customOrange">
+              <Link href="/contact-us" className="hover:text-customOrange">
                 Contact Us
               </Link>
             </div>
