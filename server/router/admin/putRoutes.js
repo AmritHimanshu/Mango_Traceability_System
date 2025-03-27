@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { ADMIN_AUTHENTICATE_USER, ADMIN_EDIT_FARM_DATA, ADMIN_ADD_FARM_DATA } = require('../../utils/api');
 
 const { notifyUser } = require('../../functions/sendMail');
 
@@ -7,50 +8,50 @@ const User = require('../../model/userSchema');
 const Farmer = require('../../model/farmerSchema');
 
 
-router.put('/api/authenticate-user/:id', async (req, res) => {
-    const { id } = req.params;
-    const { role, isAuthenticated } = req.body;
+router.put(`${ADMIN_AUTHENTICATE_USER}/:id`, async (req, res) => {
+  const { id } = req.params;
+  const { role, isAuthenticated } = req.body;
 
-    try {
-        if (isAuthenticated === undefined) {
-            return res.status(400).json({ error: "Bad request" });
-        }
-
-        if (!role && isAuthenticated === true) {
-            return res.status(400).json({ error: "Bad request" });
-        }
-
-        const user = await User.findById(id);
-        if (!user) {
-            return res.status(404).json({ error: "User not found" });
-        }
-
-        if (role) user.role = role;
-        user.isAuthenticated = isAuthenticated;
-
-        if (isAuthenticated === false) user.isRejected = true;
-        if (isAuthenticated === true) {
-            const usersOfSameRole = await User.find({ role, isAuthenticated: true, isRejected: false });
-
-            const lengthOfUsers = usersOfSameRole.length;
-
-            const ID = await user.generateUniqueID(role, user.createdAt, lengthOfUsers);
-            user.uniqueID = ID;
-        }
-
-        await user.save();
-
-        await notifyUser(user, isAuthenticated);
-
-        const status = isAuthenticated ? "approved" : "rejected";
-        return res.status(201).json({ message: `User has been ${status}` });
-    } catch (error) {
-        console.log("/api/authenticate-user: ", error);
-        return res.status(500).json({ error: "Internal Server Error" });
+  try {
+    if (isAuthenticated === undefined) {
+      return res.status(400).json({ error: "Bad request" });
     }
+
+    if (!role && isAuthenticated === true) {
+      return res.status(400).json({ error: "Bad request" });
+    }
+
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    if (role) user.role = role;
+    user.isAuthenticated = isAuthenticated;
+
+    if (isAuthenticated === false) user.isRejected = true;
+    if (isAuthenticated === true) {
+      const usersOfSameRole = await User.find({ role, isAuthenticated: true, isRejected: false });
+
+      const lengthOfUsers = usersOfSameRole.length;
+
+      const ID = await user.generateUniqueID(role, user.createdAt, lengthOfUsers);
+      user.uniqueID = ID;
+    }
+
+    await user.save();
+
+    await notifyUser(user, isAuthenticated);
+
+    const status = isAuthenticated ? "approved" : "rejected";
+    return res.status(201).json({ message: `User has been ${status}` });
+  } catch (error) {
+    console.log("/api/authenticate-user: ", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
-router.put('/api/edit-farm-data/:id', async (req, res) => {
+router.put(`${ADMIN_EDIT_FARM_DATA}/:id`, async (req, res) => {
   try {
     const { id } = req.params;
     const { field, value, index, subField } = req.body;
@@ -125,66 +126,66 @@ router.put('/api/edit-farm-data/:id', async (req, res) => {
   }
 });
 
-router.put('/api/add-farm-data/:id', async (req, res) => {
+router.put(`${ADMIN_ADD_FARM_DATA}/:id`, async (req, res) => {
   try {
-      const { id } = req.params;
-      const updates = req.body;
+    const { id } = req.params;
+    const updates = req.body;
 
-      if (!updates || Object.keys(updates).length === 0) {
-          return res.status(400).json({ error: "No fields to update provided." });
+    if (!updates || Object.keys(updates).length === 0) {
+      return res.status(400).json({ error: "No fields to update provided." });
+    }
+
+    const arrayFieldsKeys = ['weedingDate', 'fertilizerApplications', 'pesticideApplications', 'bagging', 'specialCare'];
+
+    const arrayFields = {};
+    const nonArrayFields = {};
+
+    for (const key in updates) {
+      if (arrayFieldsKeys.includes(key)) {
+        arrayFields[key] = updates[key];
+      } else if (key === 'irrigationDates') {
+        const { artificial, natural } = updates[key];
+
+        if (artificial && artificial.length > 0) {
+          arrayFields['irrigationDates.artificial'] = artificial;
+        }
+
+        if (natural && natural.length > 0) {
+          arrayFields['irrigationDates.natural'] = natural;
+        }
+      } else {
+        nonArrayFields[key] = updates[key];
       }
+    }
 
-      const arrayFieldsKeys = ['weedingDate', 'fertilizerApplications', 'pesticideApplications', 'bagging', 'specialCare'];
+    const updateQuery = {};
 
-      const arrayFields = {};
-      const nonArrayFields = {};
+    if (Object.keys(arrayFields).length > 0) {
+      updateQuery.$push = {};
 
-      for (const key in updates) {
-          if (arrayFieldsKeys.includes(key)) {
-              arrayFields[key] = updates[key];
-          } else if (key === 'irrigationDates') {
-              const { artificial, natural } = updates[key];
-
-              if (artificial && artificial.length > 0) {
-                  arrayFields['irrigationDates.artificial'] = artificial;
-              }
-
-              if (natural && natural.length > 0) {
-                  arrayFields['irrigationDates.natural'] = natural;
-              }
-          } else {
-              nonArrayFields[key] = updates[key];
-          }
+      for (const key in arrayFields) {
+        updateQuery.$push[key] = { $each: Array.isArray(arrayFields[key]) ? arrayFields[key] : [arrayFields[key]] };
       }
+    }
 
-      const updateQuery = {};
+    if (Object.keys(nonArrayFields).length > 0) {
+      updateQuery.$set = nonArrayFields;
+    }
 
-      if (Object.keys(arrayFields).length > 0) {
-          updateQuery.$push = {};
+    const updatedFarmer = await Farmer.findOneAndUpdate(
+      { uniqueID: id },
+      updateQuery,
+      { new: true }
+    );
 
-          for (const key in arrayFields) {
-              updateQuery.$push[key] = { $each: Array.isArray(arrayFields[key]) ? arrayFields[key] : [arrayFields[key]] };
-          }
-      }
+    if (!updatedFarmer) {
+      return res.status(404).json({ error: "Farm not found." });
+    }
 
-      if (Object.keys(nonArrayFields).length > 0) {
-          updateQuery.$set = nonArrayFields;
-      }
-
-      const updatedFarmer = await Farmer.findOneAndUpdate(
-          { uniqueID: id },
-          updateQuery,
-          { new: true }
-      );
-
-      if (!updatedFarmer) {
-          return res.status(404).json({ error: "Farm not found." });
-      }
-
-      return res.status(201).json({ message: "Farm data updated successfully!" });
+    return res.status(201).json({ message: "Farm data updated successfully!" });
   } catch (error) {
-      console.log("/api/save-farm-data: ", error);
-      return res.status(500).json({ error: "Internal Server Error" });
+    console.log("/api/save-farm-data: ", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

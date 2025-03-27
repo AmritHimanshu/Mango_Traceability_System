@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const { FARMER_DELETE_FARM } = require('../../utils/api');
+
 const Farmer = require('../../model/farmerSchema');
 
-router.delete('/api/delete-farm/:id', async (req, res) => {
+router.delete(`${FARMER_DELETE_FARM}/:id`, async (req, res) => {
     const { id } = req.params;
 
     try {

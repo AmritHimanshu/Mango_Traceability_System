@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 const parsePhoneNumberFromString = require('libphonenumber-js');
 const puppeteer = require('puppeteer');
 
+const { SIGNIN_USER, CONTACT_US_MAIL, REGISTER_USER, SEND_OTP_EMAIL_WITHOUTCAPTCHA, SEND_OTP_EMAIL, FORGOT_SEND_OTP_EMAIL, VERIFY_OTP_EMAIL, SEND_OTP_PHONE_WITHOUTCAPTCHA, SEND_OTP_PHONE, VERIFY_OTP_PHONE, UPDATE_PASSWORD, LOGOUT_USER, CERTIFICATE_FARM_DETAIL, GENERATE_PDF } = require('../../utils/api');
+
 const { notifyAdmins } = require('../../functions/sendMail');
 const { sendOtpToEmail, verifyOtpForEmail, sendOtpToPhone, verifyOtpForPhone } = require('../../functions/otpService');
 const generateHTML = require('../../functions/generate-pdf');
@@ -13,7 +15,7 @@ const User = require('../../model/userSchema');
 const Farmer = require('../../model/farmerSchema');
 
 
-router.post('/api/register-user', async (req, res) => {
+router.post(REGISTER_USER, async (req, res) => {
     const { name, email, phone, password, confirm_password } = req.body;
     if (!name || !email || !phone || !password || !confirm_password) {
         return res.status(400).json({ error: "Fill all the fields" });
@@ -48,7 +50,7 @@ router.post('/api/register-user', async (req, res) => {
     }
 });
 
-router.post('/api/signin-user', async (req, res) => {
+router.post(SIGNIN_USER, async (req, res) => {
     const { email, password, capchaToken } = req.body;
     if (!email || !password || !capchaToken) {
         return res.status(422).json({ error: "Fill all the fields and complete the captcha." });
@@ -101,7 +103,7 @@ router.post('/api/signin-user', async (req, res) => {
     }
 });
 
-router.post('/api/contact-us-mail', async (req, res) => {
+router.post(CONTACT_US_MAIL, async (req, res) => {
     try {
         const { name, email, phone, message } = req.body;
 
@@ -109,14 +111,14 @@ router.post('/api/contact-us-mail', async (req, res) => {
             return res.status(422).json({ error: "Fill all fields" });
         }
         await sendMessageOnMail(name, email, phone, message);
-        res.status(201).json({message: "Message sent"});
+        res.status(201).json({ message: "Message sent" });
     } catch (error) {
         console.log("/api/contact-us-mail: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 });
 
-router.post("/api/send-otp-email-withoutCaptcha", async (req, res) => {
+router.post(SEND_OTP_EMAIL_WITHOUTCAPTCHA, async (req, res) => {
     const { email } = req.body;
 
     if (!email) {
@@ -131,7 +133,7 @@ router.post("/api/send-otp-email-withoutCaptcha", async (req, res) => {
     }
 });
 
-router.post("/api/send-otp-email", async (req, res) => {
+router.post(SEND_OTP_EMAIL, async (req, res) => {
     const { email, capchaToken } = req.body;
 
     if (!email || !capchaToken) {
@@ -160,7 +162,7 @@ router.post("/api/send-otp-email", async (req, res) => {
     }
 });
 
-router.post("/api/forgot-password/send-otp-email", async (req, res) => {
+router.post(FORGOT_SEND_OTP_EMAIL, async (req, res) => {
     const { email } = req.body;
 
     if (!email) {
@@ -180,7 +182,7 @@ router.post("/api/forgot-password/send-otp-email", async (req, res) => {
     }
 });
 
-router.post("/api/verify-otp-email", (req, res) => {
+router.post(VERIFY_OTP_EMAIL, (req, res) => {
     const { email, otp } = req.body;
 
     if (!email || !otp) {
@@ -195,7 +197,7 @@ router.post("/api/verify-otp-email", (req, res) => {
     }
 });
 
-router.post("/api/send-otp-phone-withoutCaptcha", async (req, res) => {
+router.post(SEND_OTP_PHONE_WITHOUTCAPTCHA, async (req, res) => {
     const { phone } = req.body;
 
     if (!phone) {
@@ -210,7 +212,7 @@ router.post("/api/send-otp-phone-withoutCaptcha", async (req, res) => {
     }
 });
 
-router.post("/api/send-otp-phone", async (req, res) => {
+router.post(SEND_OTP_PHONE, async (req, res) => {
     const { phone, capchaToken } = req.body;
 
     if (!phone || !capchaToken) {
@@ -239,7 +241,7 @@ router.post("/api/send-otp-phone", async (req, res) => {
     }
 });
 
-router.post("/api/verify-otp-phone", (req, res) => {
+router.post(VERIFY_OTP_PHONE, (req, res) => {
     const { phone, otp } = req.body;
 
     if (!phone || !otp) {
@@ -254,7 +256,7 @@ router.post("/api/verify-otp-phone", (req, res) => {
     }
 });
 
-router.post("/api/update-password", async (req, res) => {
+router.post(UPDATE_PASSWORD, async (req, res) => {
     const { email, password, confirm_password } = req.body;
 
     if (!password || !confirm_password) {
@@ -281,7 +283,7 @@ router.post("/api/update-password", async (req, res) => {
     }
 });
 
-router.get('/api/certificate-farm-detail/:farm_id', async (req, res) => {
+router.get(`${CERTIFICATE_FARM_DETAIL}/:farm_id`, async (req, res) => {
     const { farm_id } = req.params;
 
     try {
@@ -296,12 +298,12 @@ router.get('/api/certificate-farm-detail/:farm_id', async (req, res) => {
     }
 });
 
-router.get('/api/logout', (req, res) => {
+router.get(LOGOUT_USER, (req, res) => {
     res.clearCookie('jwtoken', { path: '/' });
     res.status(201).json({ message: 'User Logout' });
 })
 
-router.get('/api/generate-pdf', async (req, res) => {
+router.get(GENERATE_PDF, async (req, res) => {
     try {
         const { farm_id } = req.query;
 

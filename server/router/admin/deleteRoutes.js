@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const User = require('../../model/userSchema');
+const { ADMIN_DELETE_FARM_DATA } = require('../../utils/api');
+
 const Farmer = require('../../model/farmerSchema');
 
-router.delete('/api/delete-farm-data/:id', async (req, res) => {
+router.delete(`${ADMIN_DELETE_FARM_DATA}/:id`, async (req, res) => {
     const { id } = req.params;
     const { field, index, subField } = req.body;
 

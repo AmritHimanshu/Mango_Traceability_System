@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-var mongoose = require('mongoose');
+
+const { FARMER_FETCH_FARMS_LIST, FARMER_FETCH_SEARCH_FARMS_LIST, FARMER_FETCH_FEW_FARMS_LIST, FARMER_FETCH_FARM_DATA } = require('../../utils/api');
 
 const Farmer = require('../../model/farmerSchema');
 
-router.get('/api/fetch-farms-list', async (req, res) => {
+router.get(FARMER_FETCH_FARMS_LIST, async (req, res) => {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
     try {
@@ -23,7 +24,7 @@ router.get('/api/fetch-farms-list', async (req, res) => {
     }
 });
 
-router.get('/api/fetch-search-farms-list', async (req, res) => {
+router.get(FARMER_FETCH_SEARCH_FARMS_LIST, async (req, res) => {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
     const search = req.query.search;
@@ -53,7 +54,7 @@ router.get('/api/fetch-search-farms-list', async (req, res) => {
     }
 });
 
-router.get('/api/fetch-few-farms-list', async (req, res) => {
+router.get(FARMER_FETCH_FEW_FARMS_LIST, async (req, res) => {
     try {
         const farmList = await Farmer.find({ userUniqueId: req.rootUser.uniqueID }).sort("-createdAt").select('farm crop geoFenceData uniqueID').limit(4);
 
@@ -64,7 +65,7 @@ router.get('/api/fetch-few-farms-list', async (req, res) => {
     }
 });
 
-router.get('/api/fetch-farm-data/:id', async (req, res) => {
+router.get(`${FARMER_FETCH_FARM_DATA}/:id`, async (req, res) => {
     try {
         const { id } = req.params;
 

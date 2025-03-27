@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const { FARMER_SAVE_FARM_DATA } = require('../../utils/api');
 
 const Farmer = require('../../model/farmerSchema');
 
-router.put('/api/save-farm-data/:id', async (req, res) => {
+router.put(`${FARMER_SAVE_FARM_DATA}/:id`, async (req, res) => {
     try {
         const { id } = req.params;
         const updates = req.body;

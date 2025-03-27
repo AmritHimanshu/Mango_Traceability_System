@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const { ADMIN_FEW_PENDING_REQUESTS, ADMIN_FETCH_NO_OF_USERS, ADMIN_USER_MANAGEMENT, ADMIN_SEARCH_USER_MANAGEMENT, ADMIN_PENDING_REQUESTS, ADMIN_SEARCH_PENDING_REQUESTS, ADMIN_FETCH_FARMER_FARM_LIST, ADMIN_FETCH_SEARCH_FARMER_FARM_LIST, ADMIN_FETCH_FARMER_FARM_DATA } = require('../../utils/api');
 
 const User = require('../../model/userSchema');
 const Farmer = require('../../model/farmerSchema');
 
 
-router.get('/api/few-pending-requests', async (req, res) => {
+router.get(ADMIN_FEW_PENDING_REQUESTS, async (req, res) => {
     try {
         if (req.rootUser.role !== 'Admin') {
             return res.status(401).json({ error: "You don't have permission." });
@@ -20,7 +21,7 @@ router.get('/api/few-pending-requests', async (req, res) => {
     }
 });
 
-router.get('/api/fetch-no-of-users', async (req, res) => {
+router.get(ADMIN_FETCH_NO_OF_USERS, async (req, res) => {
     try {
         const verifiedManagers = await User.find({ role: 'Manager', isAuthenticated: true, isRejected: false });
         const verifiedFarmers = await User.find({ role: 'Farmer', isAuthenticated: true });
@@ -34,7 +35,7 @@ router.get('/api/fetch-no-of-users', async (req, res) => {
     }
 });
 
-router.get('/api/user-management', async (req, res) => {
+router.get(ADMIN_USER_MANAGEMENT, async (req, res) => {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
     const whichUser = req.query.user;
@@ -60,7 +61,7 @@ router.get('/api/user-management', async (req, res) => {
     }
 });
 
-router.get('/api/search-user-management', async (req, res) => {
+router.get(ADMIN_SEARCH_USER_MANAGEMENT, async (req, res) => {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
     const search = req.query.search;
@@ -98,7 +99,7 @@ router.get('/api/search-user-management', async (req, res) => {
     }
 });
 
-router.get('/api/pending-requests', async (req, res) => {
+router.get(ADMIN_PENDING_REQUESTS, async (req, res) => {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
     try {
@@ -113,7 +114,7 @@ router.get('/api/pending-requests', async (req, res) => {
     }
 });
 
-router.get('/api/search-pending-requests', async (req, res) => {
+router.get(ADMIN_SEARCH_PENDING_REQUESTS, async (req, res) => {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
     const search = req.query.search;
@@ -145,7 +146,7 @@ router.get('/api/search-pending-requests', async (req, res) => {
     }
 });
 
-router.get('/api/fetch-farmer-farms-list/:id', async (req, res) => {
+router.get(`${ADMIN_FETCH_FARMER_FARM_LIST}/:id`, async (req, res) => {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
 
@@ -165,7 +166,7 @@ router.get('/api/fetch-farmer-farms-list/:id', async (req, res) => {
     }
 });
 
-router.get('/api/fetch-search-farmer-farms-list/:id', async (req, res) => {
+router.get(`${ADMIN_FETCH_SEARCH_FARMER_FARM_LIST}/:id`, async (req, res) => {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
     const search = req.query.search;
@@ -197,7 +198,7 @@ router.get('/api/fetch-search-farmer-farms-list/:id', async (req, res) => {
     }
 });
 
-router.get('/api/fetch-farmer-farm-data/:farm_id', async (req, res) => {
+router.get(`${ADMIN_FETCH_FARMER_FARM_DATA}/:farm_id`, async (req, res) => {
     const { farm_id } = req.params;
 
     try {
