@@ -17,6 +17,7 @@ function page() {
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
 
@@ -29,9 +30,9 @@ function page() {
   };
 
   const sendMail = async () => {
-    const { name, email, message } = userInfo;
+    const { name, email, phone, message } = userInfo;
 
-    if (!name || !email || !message) {
+    if (!name || !email || !phone || !message) {
       setMessage({ text: "Fill all the fields", type: "error" });
       setTimeout(() => {
         setMessage({ text: "", type: "" });
@@ -51,6 +52,7 @@ function page() {
         body: JSON.stringify({
           name,
           email,
+          phone,
           message,
         }),
       });
@@ -113,6 +115,18 @@ function page() {
                   id="email"
                   name="email"
                   value={userInfo.email}
+                  required
+                  onChange={(e) => handleOnChange(e)}
+                  className="input-tag"
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="phone">Phone</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={userInfo.phone}
                   required
                   onChange={(e) => handleOnChange(e)}
                   className="input-tag"

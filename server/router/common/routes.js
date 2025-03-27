@@ -103,12 +103,12 @@ router.post('/api/signin-user', async (req, res) => {
 
 router.post('/api/contact-us-mail', async (req, res) => {
     try {
-        const { name, email, message } = req.body;
+        const { name, email, phone, message } = req.body;
 
-        if (!name || !email || !message) {
+        if (!name || !email || !phone || !message) {
             return res.status(422).json({ error: "Fill all fields" });
         }
-        await sendMessageOnMail(name, email, message);
+        await sendMessageOnMail(name, email, phone, message);
         res.status(201).json({message: "Message sent"});
     } catch (error) {
         console.log("/api/contact-us-mail: ", error);

@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-const sendMessageOnMail = async (name, email, message) => {
+const sendMessageOnMail = async (name, email, phone, message) => {
     try {
         const admins = await User.find({ role: "Admin", isAuthenticated: true }, "email");
 
@@ -18,7 +18,7 @@ const sendMessageOnMail = async (name, email, message) => {
         const mailOptions = {
             from: process.env.EMAIL_ID,
             to: adminEmails,
-            subject: `Message from ${name}, email: ${email}`,
+            subject: `Message from ${name}, email: ${email}, phone: ${phone}`,
             text: `${message}`,
         };
         const info = await transporter.sendMail(mailOptions);
