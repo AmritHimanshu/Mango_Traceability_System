@@ -120,9 +120,9 @@ function page() {
         </div>
       </div>
 
-      <div className="my-5 p-3 md:p-5">
+      {/* <div className="my-5 p-3 md:p-5">
         <HomeAboutUs />
-      </div>
+      </div> */}
 
       <div>
         {farmList.length > 0 && (

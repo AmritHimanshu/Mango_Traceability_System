@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "../../styles/style.css";
 import Login_Header from "../components/common/Header/Login_Header";
-import Login_Footer from "../components/common/Login_Footer";
+import Footer from "../components/common/Footer";
 
 export const metadata: Metadata = {
   title: "Register - Mango Traceability System",
@@ -13,7 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="h-[100vh] overflow-y-auto relative bg-[url(/assets/login-bg.jpg)] bg-cover bg-bottom bg-no-repeat flex flex-col items-center justify-between">
       <Login_Header />
       <div>{children}</div>
-      <Login_Footer />
+      <Footer />
     </div>
   );
 }

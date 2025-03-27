@@ -131,9 +131,9 @@ function page() {
         </div>
       </div>
 
-      <div className="my-5 p-3 md:p-5">
+      {/* <div className="my-5 p-3 md:p-5">
         <HomeAboutUs />
-      </div>
+      </div> */}
 
       <div className="my-5 bg-white p-5">
         <div className="max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] 2xl:max-w-[60%] m-auto grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-20">
