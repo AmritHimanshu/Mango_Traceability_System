@@ -4,6 +4,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
+const cron = require('node-cron');
+const { runWeatherAlertJob } = require('./notification/weatherAlerts.js');
 
 const authenticateAdmin = require('./middleware/authenticateAdmin');
 const authenticateFarmer = require('./middleware/authenticateFarmer');
@@ -41,6 +43,11 @@ app.use('/farmer', authenticateFarmer, farmerPutRoutes);
 app.use('/farmer', authenticateFarmer, farmerDeleteRoutes);
 
 app.use(routes);
+
+cron.schedule('* * * * *', () => {
+    console.log('🌤️ Running weather alert job...');
+    runWeatherAlertJob();
+});
 
 app.listen(PORT, () => {
     console.log(`The server is running at port ${PORT}`);
