@@ -1,3 +1,4 @@
+const { notifyWeatherReport } = require("../functions/sendMail");
 const Farmer = require("../model/farmerSchema");
 const User = require("../model/userSchema");
 
@@ -55,7 +56,7 @@ const runWeatherAlertJob = async () => {
                 //     message,
                 // });
 
-                await sendEmail(user.email, 'Weather Alert', message);
+                await notifyWeatherReport(user.email, 'Weather Alert', message);
 
                 console.log(`Alert sent to ${user.email} for farm "${farm.farm}"`);
             }
