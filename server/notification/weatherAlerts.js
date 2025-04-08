@@ -10,31 +10,34 @@ function getFarmCenter(geoFenceData) {
     };
 }
 
-function checkCustomAlerts(data) {
+function checkCustomAlerts(forecastData) {
     const alerts = [];
 
-    // High temperature
-    const tempCelsius = data.main.temp - 273.15;
-    if (tempCelsius > 35) {
-        alerts.push("🔥 High temperature warning!");
-    }
+    const next24Hours = forecastData.list.slice(0, 8);
 
-    // Rain alert
-    if (data.weather.some(w => w.main.toLowerCase() === "rain")) {
-        alerts.push("🌧️ Rain expected. Consider covering your crops.");
-    }
+    next24Hours.forEach(entry => {
+        const tempCelsius = entry.main.temp - 273.15;
+        const weatherConditions = entry.weather.map(w => w.main.toLowerCase());
 
-    // High wind speed
-    if (data.wind.speed > 10) {
-        alerts.push("💨 Strong winds detected.");
-    }
+        if (tempCelsius > 35) {
+            alerts.push(`🔥 High temperature expected at ${entry.dt_txt} (~${tempCelsius.toFixed(1)}°C)`);
+        }
 
-    // Humidity alert
-    if (data.main.humidity > 90) {
-        alerts.push("💧 High humidity levels.");
-    }
+        if (weatherConditions.includes("rain")) {
+            alerts.push(`🌧️ Rain expected at ${entry.dt_txt}. Consider covering your crops.`);
+        }
 
-    return alerts;
+        if (entry.wind.speed > 10) {
+            alerts.push(`💨 Strong winds (~${entry.wind.speed} m/s) expected at ${entry.dt_txt}`);
+        }
+
+        if (entry.main.humidity > 90) {
+            alerts.push(`💧 High humidity (${entry.main.humidity}%) expected at ${entry.dt_txt}`);
+        }
+    });
+
+    // Remove duplicates (if any) and return
+    return [...new Set(alerts)];
 }
 
 async function fetchWeather(lat, lon) {
@@ -65,11 +68,11 @@ const runWeatherAlertJob = async () => {
 
         for (const farm of farms) {
             const center = getFarmCenter(farm.geoFenceData);
-            const weatherData = await fetchWeather(center.lat, center.lng);
+            const forecastWeatherData = await fetchWeather(center.lat, center.lng);
 
-            console.log("WeatherData: ", weatherData);
+            const alerts = checkCustomAlerts(forecastWeatherData);
 
-            const alerts = checkCustomAlerts(weatherData);
+            console.log(alerts);
 
             if (alerts.length > 0) {
                 const user = await User.findOne({ uniqueID: farm.userUniqueId });
