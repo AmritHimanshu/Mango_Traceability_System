@@ -66,21 +66,4 @@ const notifyUser = async (user, status) => {
     }
 };
 
-// Weather notification to the farmers
-const notifyWeatherReport = async (user, subject, message) => {
-    try {
-        const mailOptions = {
-            from: process.env.EMAIL_ID,
-            to: user.email,
-            subject: subject,
-            text: message,
-        };
-
-        const info = await transporter.sendMail(mailOptions);
-        console.log("Email sent to user about the weather:", info.response);
-    } catch (error) {
-        console.error("Error sending weather notification on email to user:", error.message);
-    }
-};
-
-module.exports = { notifyAdmins, notifyUser, notifyWeatherReport };
+module.exports = { notifyAdmins, notifyUser };

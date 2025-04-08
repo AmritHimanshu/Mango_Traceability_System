@@ -1,4 +1,3 @@
-const { notifyWeatherReport } = require("../functions/sendMail");
 const Farmer = require("../model/farmerSchema");
 const User = require("../model/userSchema");
 
@@ -11,17 +10,43 @@ function getFarmCenter(geoFenceData) {
     };
 }
 
-function checkForAlerts(weatherData) {
-    return weatherData.alerts && weatherData.alerts.length > 0;
+function checkCustomAlerts(data) {
+    const alerts = [];
+
+    // High temperature
+    const tempCelsius = data.main.temp - 273.15;
+    if (tempCelsius > 35) {
+        alerts.push("🔥 High temperature warning!");
+    }
+
+    // Rain alert
+    if (data.weather.some(w => w.main.toLowerCase() === "rain")) {
+        alerts.push("🌧️ Rain expected. Consider covering your crops.");
+    }
+
+    // High wind speed
+    if (data.wind.speed > 10) {
+        alerts.push("💨 Strong winds detected.");
+    }
+
+    // Humidity alert
+    if (data.main.humidity > 90) {
+        alerts.push("💧 High humidity levels.");
+    }
+
+    return alerts;
 }
 
 async function fetchWeather(lat, lon) {
     const API_KEY = process.env.OPENWEATHER_API_KEY;
 
-    const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily&appid=${API_KEY}`;
+    // const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily&appid=${API_KEY}`;
+
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
 
     try {
         const response = await fetch(url);
+        
         if (!response.ok) {
             throw new Error(`Weather API error: ${response.status}`);
         }
@@ -42,21 +67,17 @@ const runWeatherAlertJob = async () => {
             const center = getFarmCenter(farm.geoFenceData);
             const weatherData = await fetchWeather(center.lat, center.lng);
 
-            if (checkForAlerts(weatherData)) {
+            console.log("WeatherData: ", weatherData);
+
+            const alerts = checkCustomAlerts(weatherData);
+
+            if (alerts.length > 0) {
                 const user = await User.findOne({ uniqueID: farm.userUniqueId });
                 if (!user) continue;
 
-                const alert = weatherData.alerts[0];
-                const message = `⚠️ Weather Alert: ${alert.event} near your farm "${farm.farm}".`;
+                const weatherMessage = alerts.join('\n');
 
-                // await Notification.create({
-                //     user: user._id,
-                //     farmId: farm._id,
-                //     type: 'Weather',
-                //     message,
-                // });
-
-                await notifyWeatherReport(user.email, 'Weather Alert', message);
+                const message = `⚠️ Weather Alert: ${weatherMessage} "${farm.farm}".`;
 
                 console.log(`Alert sent to ${user.email} for farm "${farm.farm}"`);
             }
