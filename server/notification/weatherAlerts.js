@@ -13,7 +13,7 @@ function getFarmCenter(geoFenceData) {
     };
 }
 
-function checkCustomAlerts(forecastData) {
+function checkCustomAlerts(forecastData, farm, id) {
     const alerts = [];
 
     const next24Hours = forecastData.list.slice(0, 8);
@@ -23,19 +23,19 @@ function checkCustomAlerts(forecastData) {
         const weatherConditions = entry.weather.map(w => w.main.toLowerCase());
 
         if (tempCelsius > 35) {
-            alerts.push(`🔥 High temperature expected at ${entry.dt_txt} (~${tempCelsius.toFixed(1)}°C)`);
+            alerts.push(`🔥 High temperature expected at ${entry.dt_txt} (~${tempCelsius.toFixed(1)}°C) at farm "${farm} (${id})".`);
         }
 
         if (weatherConditions.includes("rain")) {
-            alerts.push(`🌧️ Rain expected at ${entry.dt_txt}. Consider covering your crops.`);
+            alerts.push(`🌧️ Rain expected at ${entry.dt_txt} at farm "${farm} (${id})".`);
         }
 
         if (entry.wind.speed > 10) {
-            alerts.push(`💨 Strong winds (~${entry.wind.speed} m/s) expected at ${entry.dt_txt}`);
+            alerts.push(`💨 Strong winds (~${entry.wind.speed} m/s) expected at ${entry.dt_txt} at farm "${farm} (${id})".`);
         }
 
         if (entry.main.humidity > 90) {
-            alerts.push(`💧 High humidity (${entry.main.humidity}%) expected at ${entry.dt_txt}`);
+            alerts.push(`💧 High humidity (${entry.main.humidity}%) expected at ${entry.dt_txt} at farm "${farm} (${id})".`);
         }
     });
 
@@ -73,7 +73,7 @@ const runWeatherAlertJob = async () => {
             const center = getFarmCenter(farm.geoFenceData);
             const forecastWeatherData = await fetchWeather(center.lat, center.lng);
 
-            const alerts = checkCustomAlerts(forecastWeatherData);
+            const alerts = checkCustomAlerts(forecastWeatherData, farm.farm, farm.uniqueID);
 
             if (alerts.length > 0) {
                 const user = await User.findOne({ uniqueID: farm.userUniqueId });
@@ -81,16 +81,13 @@ const runWeatherAlertJob = async () => {
 
                 const weatherMessage = alerts.join('\n');
 
-                const message = `⚠️ ${weatherMessage} at farm "${farm.farm} (${farm.uniqueID})".`;
+                const message = `⚠️ ${weatherMessage}`;
 
-                // await Notification.create({})
                 const notification = new Notification({ userUniqueId: user.uniqueID, farmUniqueId: farm.uniqueID, message: message });
 
                 await notification.save();
 
                 sendNotificationToUser(user.uniqueID.toString(), message);
-
-                console.log(`Alert sent to ${user.email} for farm "${farm.farm}"`);
             }
         }
     } catch (err) {

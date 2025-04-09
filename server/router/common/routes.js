@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const parsePhoneNumberFromString = require('libphonenumber-js');
 const puppeteer = require('puppeteer');
 
-const { SIGNIN_USER, CONTACT_US_MAIL, REGISTER_USER, SEND_OTP_EMAIL_WITHOUTCAPTCHA, SEND_OTP_EMAIL, FORGOT_SEND_OTP_EMAIL, VERIFY_OTP_EMAIL, SEND_OTP_PHONE_WITHOUTCAPTCHA, SEND_OTP_PHONE, VERIFY_OTP_PHONE, UPDATE_PASSWORD, LOGOUT_USER, CERTIFICATE_FARM_DETAIL, GENERATE_PDF, NOTIFICATION_STREAM } = require('../../utils/api');
+const { SIGNIN_USER, CONTACT_US_MAIL, REGISTER_USER, SEND_OTP_EMAIL_WITHOUTCAPTCHA, SEND_OTP_EMAIL, FORGOT_SEND_OTP_EMAIL, VERIFY_OTP_EMAIL, SEND_OTP_PHONE_WITHOUTCAPTCHA, SEND_OTP_PHONE, VERIFY_OTP_PHONE, UPDATE_PASSWORD, LOGOUT_USER, CERTIFICATE_FARM_DETAIL, GENERATE_PDF, NOTIFICATION_STREAM, GET_NOTIFICATION } = require('../../utils/api');
 
 const { notifyAdmins } = require('../../functions/sendMail');
 const { sendOtpToEmail, verifyOtpForEmail, sendOtpToPhone, verifyOtpForPhone } = require('../../functions/otpService');
@@ -15,6 +15,7 @@ const { addClient, removeClient } = require('../../functions/sseManager');
 
 const User = require('../../model/userSchema');
 const Farmer = require('../../model/farmerSchema');
+const Notification = require('../../model/notificationSchema');
 
 
 router.post(REGISTER_USER, async (req, res) => {
@@ -331,6 +332,19 @@ router.get(GENERATE_PDF, async (req, res) => {
         res.end(pdfBuffer);
     } catch (error) {
         console.log("/api/generate-pdf: ", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+router.get(GET_NOTIFICATION, async (req,res)=>{
+    try {
+        const userId = req.query.userId;
+
+        const notification = await Notification.find({userUniqueId: userId, read: false});
+
+        return res.status(201).json(notification);
+    } catch (error) {
+        console.log("/api/get-notification: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 });

@@ -15,6 +15,7 @@ module.exports = {
     GENERATE_PDF: "/api/generate-pdf",
     CONTACT_US_MAIL: "/api/contact-us-mail",
     NOTIFICATION_STREAM: "/api/notifications/stream",
+    GET_NOTIFICATION: "/api/get-notification",
 
     // Admin GET APIs
     ADMIN_FEW_PENDING_REQUESTS: "/api/few-pending-requests",

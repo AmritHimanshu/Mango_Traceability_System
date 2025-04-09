@@ -5,7 +5,6 @@ import {
   PENDING_REQUESTS,
   FARMER_OVERVIEW,
   FARMS,
-  NOTIFICATIONS,
   ADMIN_PROFILE,
   FARMER_PROFILE,
 } from "../Paths/paths";
@@ -48,20 +47,5 @@ export const farmer = [
     name: "Farms",
     path: FARMS,
     base_path: 'farms',
-  },
-  {
-    name: "Notifications",
-    path: NOTIFICATIONS,
-    base_path: '',
-  },
-  {
-    name: "Profile",
-    path: FARMER_PROFILE,
-    base_path: '',
-  },
-  {
-    name: "Logout",
-    path: LOGIN,
-    base_path: '',
   },
 ];
