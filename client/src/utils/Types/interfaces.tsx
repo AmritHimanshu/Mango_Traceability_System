@@ -142,11 +142,19 @@ export type userCert = {
   name: string;
   email: string;
   phone: number;
-}
+};
 
 export type bannerProps = {
   img_src: string;
   img_alt: string;
   heading: string | undefined;
   description: string | undefined;
-}
+};
+
+export type notification = {
+  userUniqueId: string;
+  farmUniqueId: string;
+  message: string;
+  read: boolean;
+  createdAt: string;
+};

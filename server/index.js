@@ -44,10 +44,10 @@ app.use('/farmer', authenticateFarmer, farmerDeleteRoutes);
 
 app.use(routes);
 
-// cron.schedule('* * * * *', () => {
-//     console.log('🌤️ Running weather alert job...');
-//     runWeatherAlertJob();
-// });
+cron.schedule('0 */6 * * *', () => {
+    console.log('🌤️ Running weather alert job...');
+    runWeatherAlertJob();
+});
 
 app.listen(PORT, () => {
     console.log(`The server is running at port ${PORT}`);

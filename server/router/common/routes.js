@@ -340,7 +340,7 @@ router.get(GET_NOTIFICATION, async (req,res)=>{
     try {
         const userId = req.query.userId;
 
-        const notification = await Notification.find({userUniqueId: userId, read: false}).sort("-createdAt").limit(2);
+        const notification = await Notification.find({userUniqueId: userId, read: false}).sort("-createdAt");
 
         return res.status(201).json(notification);
     } catch (error) {

@@ -8,6 +8,7 @@ import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBa
 import { GET_NOTIFICATION } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
 import Message from "@/app/components/common/Message";
+import { notification } from "@/utils/Types/interfaces";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -18,7 +19,7 @@ function page() {
 
   const router = useRouter();
 
-  const [notification, setNotification] = useState([]);
+  const [notification, setNotification] = useState<notification[]>([]);
   const [message, setMessage] = useState({ text: "", type: "" });
 
   const fetchNotifications = async () => {
@@ -53,6 +54,8 @@ function page() {
         throw error;
       }
 
+      console.log(data);
+
       setNotification(data);
     } catch (error) {}
 
@@ -78,14 +81,25 @@ function page() {
       )}
 
       <div className="my-5 !space-y-5 max-w-[90%] m-auto p-2">
-        <div className="font-bold text-black">Notifications</div>
+        <div className="font-bold text-black text-heading-size">Notifications</div>
         {notification ? (
-          <div>
+          <div className="space-y-12 w-full lg:w-[55%] text-black">
             {notification.map((noti, index) => (
-              <div key={index} className="space-y-3">
+              <div key={index} className="space-y-5">
                 {noti.message.split('".').map((msg, idx) => (
                   <div key={idx}>{msg}</div>
                 ))}
+
+                <div className="text-right text-gray-600">
+                  {new Date(noti.createdAt).toLocaleString("en-IN", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: true,
+                  })}
+                </div>
               </div>
             ))}
           </div>
