@@ -1,4 +1,7 @@
+const { sendNotificationToUser } = require("../functions/sseManager");
+
 const Farmer = require("../model/farmerSchema");
+const Notification = require("../model/notificationSchema");
 const User = require("../model/userSchema");
 
 function getFarmCenter(geoFenceData) {
@@ -49,7 +52,7 @@ async function fetchWeather(lat, lon) {
 
     try {
         const response = await fetch(url);
-        
+
         if (!response.ok) {
             throw new Error(`Weather API error: ${response.status}`);
         }
@@ -72,15 +75,20 @@ const runWeatherAlertJob = async () => {
 
             const alerts = checkCustomAlerts(forecastWeatherData);
 
-            console.log(alerts);
-
             if (alerts.length > 0) {
                 const user = await User.findOne({ uniqueID: farm.userUniqueId });
                 if (!user) continue;
 
                 const weatherMessage = alerts.join('\n');
 
-                const message = `⚠️ Weather Alert: ${weatherMessage} "${farm.farm}".`;
+                const message = `⚠️ ${weatherMessage} at farm "${farm.farm} (${farm.uniqueID})".`;
+
+                // await Notification.create({})
+                const notification = new Notification({ userUniqueId: user.uniqueID, farmUniqueId: farm.uniqueID, message: message });
+
+                await notification.save();
+
+                sendNotificationToUser(user.uniqueID.toString(), message);
 
                 console.log(`Alert sent to ${user.email} for farm "${farm.farm}"`);
             }

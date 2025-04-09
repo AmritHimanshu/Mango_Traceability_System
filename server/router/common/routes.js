@@ -339,6 +339,10 @@ router.get(GENERATE_PDF, async (req, res) => {
 router.get(NOTIFICATION_STREAM, (req,res)=>{
     const userId = req.query.userId;
 
+    if (!userId) {
+        return res.status(400).json({ error: 'User ID is required' });
+    }
+
     res.set({
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
@@ -346,12 +350,15 @@ router.get(NOTIFICATION_STREAM, (req,res)=>{
     });
     res.flushHeaders();
 
-    res.write(`data: ${JSON.stringify({ message: "SSE Connected" })}\n\n`);
+    console.log("SSE Connected");
 
     const client = { userId, res };
     addClient(client);
 
+    console.log(`Client connected: ${userId}`);
+
     req.on('close', () => {
+        console.log(`Client disconnected: ${userId}`);
         removeClient(client);
         res.end();
     });

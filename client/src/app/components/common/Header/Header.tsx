@@ -13,8 +13,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { ADMIN_PROFILE, FARMER_PROFILE, LOGIN } from "@/utils/Paths/paths";
+import { NOTIFICATION_STREAM } from "@/utils/Apis/api";
 
 function Header() {
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
   const userState = useAppSelector((state) => state.user.userState);
 
   const pathname = usePathname();
@@ -62,16 +65,38 @@ function Header() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-        if (headRef.current && !headRef.current.contains(event.target as Node)) {
-            setIsDropDown(false);
-        }
+      if (headRef.current && !headRef.current.contains(event.target as Node)) {
+        setIsDropDown(false);
+      }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
-}, [headRef]);
+  }, [headRef]);
+
+  useEffect(() => {
+    const eventSource = new EventSource(
+      `${BASE_URL}/${NOTIFICATION_STREAM}?userId=${userState?.uniqueID}`
+    );
+
+    eventSource.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+
+      // TODO: Show this in UI (popup, toast, badge, etc.)
+      console.log(`📢 ${data}`);
+    };
+
+    eventSource.onerror = (err) => {
+      console.error("SSE connection error:", err);
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, [userState?.uniqueID]);
 
   if (!isClient) return null;
 
@@ -149,14 +174,20 @@ function Header() {
                           ADMIN
                         </div>
                         {isDropDown && (
-                          <div ref={headRef} className="absolute z-[999999] bg-white py-2 px-3 space-y-3 rounded-sm top-10">
+                          <div
+                            ref={headRef}
+                            className="absolute z-[999999] bg-white py-2 px-3 space-y-3 rounded-sm top-10"
+                          >
                             <div
                               className={`cursor-pointer hover:text-green-700 duration-150 ${
                                 pathname === `${ADMIN_PROFILE}`
                                   ? "font-bold text-[16px] text-customGreen"
                                   : "bg-transparent"
                               }`}
-                              onClick={() => {router.push(ADMIN_PROFILE); setIsDropDown(false)}}
+                              onClick={() => {
+                                router.push(ADMIN_PROFILE);
+                                setIsDropDown(false);
+                              }}
                             >
                               Profile
                             </div>
@@ -205,14 +236,20 @@ function Header() {
                           FARMER
                         </div>
                         {isDropDown && (
-                          <div ref={headRef} className="absolute z-[999999] bg-white py-2 px-3 space-y-3 rounded-sm top-10">
+                          <div
+                            ref={headRef}
+                            className="absolute z-[999999] bg-white py-2 px-3 space-y-3 rounded-sm top-10"
+                          >
                             <div
                               className={`cursor-pointer hover:text-green-700 duration-150 ${
                                 pathname === `${FARMER_PROFILE}`
                                   ? "font-bold text-[16px] text-customGreen"
                                   : "bg-transparent"
                               }`}
-                              onClick={() => {router.push(FARMER_PROFILE); setIsDropDown(false)}}
+                              onClick={() => {
+                                router.push(FARMER_PROFILE);
+                                setIsDropDown(false);
+                              }}
                             >
                               Profile
                             </div>

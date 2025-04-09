@@ -3,7 +3,6 @@
 import React, { useRef } from "react";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
-import Heading from "@/app/components/common/Heading";
 
 function page() {
 
@@ -13,7 +12,9 @@ function page() {
     <div className="page-main-div">
       <CustomLoadingBar ref={loadingBarRef} />
 
-      <Heading text="NOTIFICATIONS" />
+      <div className="my-5 !space-y-5 max-w-[90%] m-auto p-2">
+        
+      </div>
     </div>
   );
 }
