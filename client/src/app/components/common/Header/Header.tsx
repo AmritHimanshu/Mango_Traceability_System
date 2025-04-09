@@ -27,6 +27,7 @@ function Header() {
   const router = useRouter();
 
   const headRef = useRef<HTMLDivElement>(null);
+  const notificationRef = useRef<HTMLDivElement>(null);
 
   const [isClient, setIsClient] = useState(false);
   const [isMenu, setIsMenu] = useState(false);
@@ -77,6 +78,19 @@ function Header() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [headRef]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
+        setIsNotification(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [notificationRef]);
 
   useEffect(() => {
     const eventSource = new EventSource(
@@ -234,7 +248,7 @@ function Header() {
                           Notifications
                         </div>
                         {isNotification && (
-                          <div>
+                          <div ref={notificationRef}>
                             <Notification />
                           </div>
                         )}
