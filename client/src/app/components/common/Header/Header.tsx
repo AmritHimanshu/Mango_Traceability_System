@@ -14,7 +14,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { ADMIN_PROFILE, FARMER_PROFILE, LOGIN } from "@/utils/Paths/paths";
 import { NOTIFICATION_STREAM } from "@/utils/Apis/api";
-import Notification from "../../farmer/Notification";
 
 function Header() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -27,11 +26,9 @@ function Header() {
   const router = useRouter();
 
   const headRef = useRef<HTMLDivElement>(null);
-  const notificationRef = useRef<HTMLDivElement>(null);
 
   const [isClient, setIsClient] = useState(false);
   const [isMenu, setIsMenu] = useState(false);
-  const [isNotification, setIsNotification] = useState(false);
   const [isDropDown, setIsDropDown] = useState(false);
   const [scrolling, setScrolling] = useState(false);
 
@@ -78,19 +75,6 @@ function Header() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [headRef]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
-        setIsNotification(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [notificationRef]);
 
   useEffect(() => {
     const eventSource = new EventSource(
@@ -239,20 +223,6 @@ function Header() {
                             {list.name}
                           </div>
                         ))}
-
-                      <div className="relative">
-                        <div
-                          className="cursor-pointer hover:text-green-700 duration-150"
-                          onClick={() => setIsNotification(!isNotification)}
-                        >
-                          Notifications
-                        </div>
-                        {isNotification && (
-                          <div ref={notificationRef}>
-                            <Notification />
-                          </div>
-                        )}
-                      </div>
 
                       <div className="relative">
                         <div

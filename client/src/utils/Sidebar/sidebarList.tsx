@@ -5,8 +5,8 @@ import {
   PENDING_REQUESTS,
   FARMER_OVERVIEW,
   FARMS,
+  NOTIFICATIONS,
   ADMIN_PROFILE,
-  FARMER_PROFILE,
 } from "../Paths/paths";
 
 export const admin = [
@@ -47,5 +47,10 @@ export const farmer = [
     name: "Farms",
     path: FARMS,
     base_path: 'farms',
+  },
+  {
+    name: "Notifications",
+    path: NOTIFICATIONS,
+    base_path: '',
   },
 ];

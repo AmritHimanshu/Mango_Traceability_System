@@ -11,6 +11,7 @@ export const ADMIN_PROFILE = "/admin/profile";
 export const FARMER_OVERVIEW = "/farmer";
 export const FARMS = "/farmer/farms";
 export const CREATE_FARM = "/farmer/farms/create-new-farm";
+export const NOTIFICATIONS = "/farmer/notifications";
 export const FARMER_PROFILE = "/farmer/profile";
 
 // Common
