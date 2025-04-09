@@ -11,6 +11,8 @@ const { sendOtpToEmail, verifyOtpForEmail, sendOtpToPhone, verifyOtpForPhone } =
 const generateHTML = require('../../functions/generate-pdf');
 const sendMessageOnMail = require('../../functions/sendMessageOnMail');
 
+const { addClient, removeClient } = require('../../functions/sseManager');
+
 const User = require('../../model/userSchema');
 const Farmer = require('../../model/farmerSchema');
 
@@ -331,6 +333,28 @@ router.get(GENERATE_PDF, async (req, res) => {
         console.log("/api/generate-pdf: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
+});
+
+// SSE connection
+router.get('/api/notifications/stream', (req,res)=>{
+    const userId = req.query.userId;
+
+    res.set({
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+    });
+    res.flushHeaders();
+
+    res.write(`data: ${JSON.stringify({ message: "SSE Connected" })}\n\n`);
+
+    const client = { userId, res };
+    addClient(client);
+
+    req.on('close', () => {
+        removeClient(client);
+        res.end();
+    });
 });
 
 router.get('/', (req, res) => {
