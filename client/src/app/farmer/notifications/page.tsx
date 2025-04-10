@@ -9,6 +9,7 @@ import { GET_NOTIFICATION } from "@/utils/Apis/api";
 import { LOGIN } from "@/utils/Paths/paths";
 import Message from "@/app/components/common/Message";
 import { notification } from "@/utils/Types/interfaces";
+import { getRelativeTime } from "@/utils/Services/getRelativeTime";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -81,27 +82,37 @@ function page() {
       )}
 
       <div className="my-5 !space-y-5 max-w-[90%] m-auto p-2">
-        <div className="font-bold text-black text-heading-size text-center">Notifications</div>
+        <div className="font-bold text-black text-heading-size text-center">
+          Notifications
+        </div>
         {notification ? (
           <div className="space-y-12 w-full lg:w-[55%] m-auto text-black">
-            {notification.map((noti, index) => (
-              <div key={index} className="space-y-5">
-                {noti.message.map((msg, idx) => (
-                  <div key={idx}>{msg}</div>
-                ))}
+            <div className="w-full overflow-x-auto">
+              <table className="w-full table-fixed">
+                <thead>
+                  <tr className="text-table-head-size">
+                    <td className="px-4 py-3 text-left"></td>
+                    <td className="px-4 py-3 text-left"></td>
+                  </tr>
+                </thead>
 
-                <div className="text-right text-gray-600">
-                  {new Date(noti.createdAt).toLocaleString("en-IN", {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                    hour12: true,
-                  })}
-                </div>
-              </div>
-            ))}
+                <tbody className="text-table-body-size">
+                  {notification.map((noti, index) =>
+                    noti.message.map((msg, idx) => (
+                      <tr
+                        key={`${index}-${idx}`}
+                        className="text-black bg-customGreen bg-opacity-10 odd:bg-opacity-5 border-b-[1px] border-black last:border-b-0"
+                      >
+                        <td className="px-4 py-3 text-sm">{msg}</td>
+                        <td className="text-right text-gray-600 px-4 py-3 text-xs">
+                          {getRelativeTime(noti.createdAt)}
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         ) : (
           <div className="text-center text-gray-500 my-2">
