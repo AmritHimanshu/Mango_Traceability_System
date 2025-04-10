@@ -91,7 +91,7 @@ function page() {
               <table className="w-full table-fixed">
                 <thead>
                   <tr className="text-table-head-size">
-                    <td className="px-4 py-3 text-left"></td>
+                    <td className="px-4 py-3 text-left w-[80%]"></td>
                     <td className="px-4 py-3 text-left"></td>
                   </tr>
                 </thead>
