@@ -13,7 +13,6 @@ export const UPDATE_PASSWORD = "api/update-password";
 export const CERTIFICATE_FARM_DETAIL = "api/certificate-farm-detail";
 export const GENERATE_PDF = "api/generate-pdf";
 export const CONTACT_US_MAIL = "api/contact-us-mail";
-export const NOTIFICATION_STREAM = "api/notifications/stream";
 export const GET_NOTIFICATION = "api/get-notification";
 
 // Admin GET APIs

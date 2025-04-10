@@ -1,4 +1,4 @@
-const { sendNotificationToUser } = require("../functions/sseManager");
+const { sendNotificationToUser } = require("../functions/socketManager");
 
 const Farmer = require("../model/farmerSchema");
 const Notification = require("../model/notificationSchema");
@@ -79,15 +79,11 @@ const runWeatherAlertJob = async () => {
                 const user = await User.findOne({ uniqueID: farm.userUniqueId });
                 if (!user) continue;
 
-                const weatherMessage = alerts.join('\n');
+                const notification = new Notification({ userUniqueId: user.uniqueID, farmUniqueId: farm.uniqueID, message: alerts });
 
-                const message = `⚠️ ${weatherMessage}`;
+                // await notification.save();
 
-                const notification = new Notification({ userUniqueId: user.uniqueID, farmUniqueId: farm.uniqueID, message: message });
-
-                await notification.save();
-
-                sendNotificationToUser(user.uniqueID.toString(), message);
+                // sendNotificationToUser(user.uniqueID.toString(), message, global.appInstance);
             }
         }
     } catch (err) {

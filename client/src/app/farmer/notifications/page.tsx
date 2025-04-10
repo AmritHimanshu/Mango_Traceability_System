@@ -81,12 +81,12 @@ function page() {
       )}
 
       <div className="my-5 !space-y-5 max-w-[90%] m-auto p-2">
-        <div className="font-bold text-black text-heading-size">Notifications</div>
+        <div className="font-bold text-black text-heading-size text-center">Notifications</div>
         {notification ? (
-          <div className="space-y-12 w-full lg:w-[55%] text-black">
+          <div className="space-y-12 w-full lg:w-[55%] m-auto text-black">
             {notification.map((noti, index) => (
               <div key={index} className="space-y-5">
-                {noti.message.split('".').map((msg, idx) => (
+                {noti.message.map((msg, idx) => (
                   <div key={idx}>{msg}</div>
                 ))}
 

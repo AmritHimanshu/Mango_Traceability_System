@@ -3,19 +3,16 @@ const app = express();
 const cors = require('cors');
 const dotenv = require('dotenv');
 const cookieParser = require("cookie-parser");
-app.use(cookieParser());
+const http = require('http');
+const { Server } = require('socket.io');
+
+const server = http.createServer(app);
+
 const cron = require('node-cron');
 const { runWeatherAlertJob } = require('./notification/weatherAlerts.js');
 
 const authenticateAdmin = require('./middleware/authenticateAdmin');
 const authenticateFarmer = require('./middleware/authenticateFarmer');
-
-dotenv.config({ path: './.env' });
-
-const PORT = process.env.PORT || 5000;
-
-require('./db/conn');
-
 const routes = require('./router/common/routes');
 const adminGetRoutes = require('./router/admin/getRoutes');
 const adminPutRoutes = require('./router/admin/putRoutes');
@@ -25,6 +22,14 @@ const farmerPostRoutes = require('./router/farmer/postRoutes');
 const farmerPutRoutes = require('./router/farmer/putRoutes');
 const farmerDeleteRoutes = require('./router/farmer/deleteRoutes');
 
+app.use(cookieParser());
+
+dotenv.config({ path: './.env' });
+
+const PORT = process.env.PORT || 5000;
+
+require('./db/conn');
+
 app.use(cors({
     origin: true,
     credentials: true,
@@ -32,6 +37,37 @@ app.use(cors({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+const io = new Server(server, {
+    cors: {
+        origin: true,
+        credentials: true,
+    }
+});
+
+const connectedUsers = new Map();
+
+io.on('connection', (socket) => {
+    console.log('⚡ A user connected:', socket.id);
+
+    socket.on('identify', (userId) => {
+        console.log(`👤 User ${userId} identified.`);
+        connectedUsers.set(userId, socket.id);
+    });
+
+    socket.on('disconnect', () => {
+        console.log(`🔌 User disconnected: ${socket.id}`);
+        for (const [userId, socketId] of connectedUsers.entries()) {
+            if (socketId === socket.id) {
+                connectedUsers.delete(userId);
+                break;
+            }
+        }
+    });
+});
+
+app.set('io', io);
+app.set('connectedUsers', connectedUsers);
 
 app.use('/admin', authenticateAdmin, adminGetRoutes);
 app.use('/admin', authenticateAdmin, adminPutRoutes);
@@ -44,11 +80,13 @@ app.use('/farmer', authenticateFarmer, farmerDeleteRoutes);
 
 app.use(routes);
 
-cron.schedule('0 */6 * * *', () => {
-    console.log('🌤️ Running weather alert job...');
-    runWeatherAlertJob();
+// cron.schedule('* * * * *', () => {
+//     console.log('🌤️ Running weather alert job...');
+//     runWeatherAlertJob();
+// });
+
+server.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
 });
 
-app.listen(PORT, () => {
-    console.log(`The server is running at port ${PORT}`);
-});
+global.appInstance = app;

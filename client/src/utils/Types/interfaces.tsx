@@ -154,7 +154,7 @@ export type bannerProps = {
 export type notification = {
   userUniqueId: string;
   farmUniqueId: string;
-  message: string;
+  message: string[];
   read: boolean;
   createdAt: string;
 };

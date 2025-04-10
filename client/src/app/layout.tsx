@@ -3,6 +3,7 @@
 import ReduxProvider from "@/store/redux-provider";
 import { useEffect } from "react";
 import { Nunito } from "next/font/google";
+import SocketInitializer from "@/utils/Services/SocketInitializer";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./globals.css";
@@ -18,6 +19,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   useEffect(() => {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("/service-worker.js").then(() => {
@@ -29,7 +31,12 @@ export default function RootLayout({
   return (
     <ReduxProvider>
       <html lang="en">
-        <body className={`${nunito.className} antialiased bg-customGreen bg-opacity-5`}>{children}</body>
+        <body
+          className={`${nunito.className} antialiased bg-customGreen bg-opacity-5`}
+        >
+          <SocketInitializer />
+          {children}
+        </body>
       </html>
     </ReduxProvider>
   );

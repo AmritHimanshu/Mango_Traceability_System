@@ -13,7 +13,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { ADMIN_PROFILE, FARMER_PROFILE, LOGIN } from "@/utils/Paths/paths";
-import { NOTIFICATION_STREAM } from "@/utils/Apis/api";
 
 function Header() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -75,28 +74,6 @@ function Header() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [headRef]);
-
-  useEffect(() => {
-    const eventSource = new EventSource(
-      `${BASE_URL}/${NOTIFICATION_STREAM}?userId=${userState?.uniqueID}`
-    );
-
-    eventSource.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-
-      // TODO: Show this in UI (popup, toast, badge, etc.)
-      // console.log(`📢 ${data}`);
-    };
-
-    eventSource.onerror = (err) => {
-      console.error("SSE connection error:", err);
-      eventSource.close();
-    };
-
-    return () => {
-      eventSource.close();
-    };
-  }, [userState?.uniqueID]);
 
   if (!isClient) return null;
 
