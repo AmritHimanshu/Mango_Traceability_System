@@ -23,7 +23,7 @@ function checkCustomAlerts(forecastData, farm, id) {
         const weatherConditions = entry.weather.map(w => w.main.toLowerCase());
 
         if (tempCelsius > 35) {
-            alerts.push(`🔥 High temperature expected at ${entry.dt_txt} (~${tempCelsius.toFixed(1)}°C) at farm "${farm} (${id})".`);
+            alerts.push(`🌡️ High temperature expected at ${entry.dt_txt} (~${tempCelsius.toFixed(1)}°C) at farm "${farm} (${id})".`);
         }
 
         if (weatherConditions.includes("rain")) {
