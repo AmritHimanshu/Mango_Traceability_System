@@ -97,12 +97,12 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="my-5 !space-y-5 max-w-[90%] m-auto p-2">
+      <div className="my-5 max-w-[90%] m-auto p-2">
         <div className="font-bold text-black text-heading-size text-center">
           Notifications
         </div>
         {notification ? (
-          <div className="space-y-12 w-full lg:w-[80%] m-auto text-black">
+          <div className="w-full lg:w-[80%] m-auto text-black">
             <div className="w-full overflow-x-auto">
               <table className="w-full table-fixed">
                 <thead>
