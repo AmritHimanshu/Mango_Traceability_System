@@ -16,30 +16,41 @@ function getFarmCenter(geoFenceData) {
 function checkCustomAlerts(forecastData, farm, id) {
     const alerts = [];
 
-    const next24Hours = forecastData.list.slice(0, 8);
+    const currentTime = Math.floor(Date.now() / 1000);
+    const next24Hours = forecastData.list.filter(entry => entry.dt > currentTime).slice(0, 8);
 
     next24Hours.forEach(entry => {
         const tempCelsius = entry.main.temp - 273.15;
         const weatherConditions = entry.weather.map(w => w.main.toLowerCase());
+        const dateTime = new Date(entry.dt_txt);
+        const timeString = dateTime.toLocaleTimeString("en-IN", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+        });
+        const dateString = dateTime.toLocaleDateString("en-IN", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+        });
 
         if (tempCelsius > 35) {
-            alerts.push(`🌡️ High temperature expected at ${entry.dt_txt} (~${tempCelsius.toFixed(1)}°C) at farm "${farm} (${id})".`);
+            alerts.push(`🌡️ It's expected to be hot (~${tempCelsius.toFixed(1)}°C) on ${dateString} at ${timeString} at your farm "${farm}" (ID: ${id}).`);
         }
 
         if (weatherConditions.includes("rain")) {
-            alerts.push(`🌧️ Rain expected at ${entry.dt_txt} at farm "${farm} (${id})".`);
+            alerts.push(`🌧️ Rain is expected on ${dateString} at ${timeString} at your farm "${farm}" (ID: ${id}).`);
         }
 
         if (entry.wind.speed > 10) {
-            alerts.push(`💨 Strong winds (~${entry.wind.speed} m/s) expected at ${entry.dt_txt} at farm "${farm} (${id})".`);
+            alerts.push(`💨 Strong winds (~${entry.wind.speed} m/s) are expected on ${dateString} at ${timeString} at your farm "${farm}" (ID: ${id}).`);
         }
 
         if (entry.main.humidity > 90) {
-            alerts.push(`💧 High humidity (${entry.main.humidity}%) expected at ${entry.dt_txt} at farm "${farm} (${id})".`);
+            alerts.push(`💧 High humidity (${entry.main.humidity}%) is expected on ${dateString} at ${timeString} at your farm "${farm}" (ID: ${id}).`);
         }
     });
 
-    // Remove duplicates (if any) and return
     return [...new Set(alerts)];
 }
 

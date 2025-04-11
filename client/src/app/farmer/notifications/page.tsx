@@ -102,12 +102,11 @@ function page() {
           Notifications
         </div>
         {notification ? (
-          <div className="space-y-12 w-full lg:w-[55%] m-auto text-black">
+          <div className="space-y-12 w-full lg:w-[80%] m-auto text-black">
             <div className="w-full overflow-x-auto">
               <table className="w-full table-fixed">
                 <thead>
                   <tr className="text-table-head-size">
-                    <td className="px-4 py-3 text-left w-[80%]"></td>
                     <td className="px-4 py-3 text-left"></td>
                   </tr>
                 </thead>
@@ -119,9 +118,9 @@ function page() {
                         key={`${index}-${idx}`}
                         className="text-black bg-customGreen bg-opacity-10 odd:bg-opacity-5 border-b-[1px] border-black last:border-b-0"
                       >
-                        <td className="px-4 py-3 text-sm">{msg}</td>
-                        <td className="text-right text-gray-600 px-4 py-3 text-xs">
-                          {getRelativeTime(noti.createdAt)}
+                        <td className="px-4 py-3 text-sm">
+                          <div>{msg}</div>
+                          <div className="text-right text-gray-600 text-xs">{getRelativeTime(noti.createdAt)}</div>
                         </td>
                       </tr>
                     ))
