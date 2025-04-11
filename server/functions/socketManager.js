@@ -7,7 +7,7 @@ function sendNotificationToUser(userId, message, app) {
         io.to(socketId).emit('notification', {
             userId,
             message,
-            timestamp: new Date(),
+            createdAt: new Date(),
         });
     } else {
         console.log(`User ${userId} is not connected via WebSocket.`);

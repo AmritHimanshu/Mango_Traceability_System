@@ -10,6 +10,7 @@ import { LOGIN } from "@/utils/Paths/paths";
 import Message from "@/app/components/common/Message";
 import { notification } from "@/utils/Types/interfaces";
 import { getRelativeTime } from "@/utils/Services/getRelativeTime";
+import socket from "@/utils/Services/socket";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -55,8 +56,6 @@ function page() {
         throw error;
       }
 
-      console.log(data);
-
       setNotification(data);
     } catch (error) {}
 
@@ -71,6 +70,18 @@ function page() {
 
   useEffect(() => {
     fetchNotifications();
+  }, []);
+  
+  useEffect(() => {
+    const handleNotification = (data: notification) => {
+      setNotification((prev) => [data, ...prev]);
+    };
+  
+    socket.on("notification", handleNotification);
+  
+    return () => {
+      socket.off("notification", handleNotification);
+    };
   }, []);
 
   return (
