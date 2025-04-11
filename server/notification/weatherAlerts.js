@@ -81,9 +81,9 @@ const runWeatherAlertJob = async () => {
 
                 const notification = new Notification({ userUniqueId: user.uniqueID, farmUniqueId: farm.uniqueID, message: alerts });
 
-                // await notification.save();
+                await notification.save();
 
-                // sendNotificationToUser(user.uniqueID.toString(), message, global.appInstance);
+                sendNotificationToUser(user.uniqueID.toString(), message, global.appInstance);
             }
         }
     } catch (err) {
