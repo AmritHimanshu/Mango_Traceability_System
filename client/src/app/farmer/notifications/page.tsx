@@ -3,6 +3,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { LoadingBarRef } from "react-top-loading-bar";
 import { useAppSelector } from "@/store/store";
+import { useDispatch } from "react-redux";
+import { resetUnread } from "@/store/features/notificationSlice";
 import { useRouter } from "next/navigation";
 import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
 import { GET_NOTIFICATION } from "@/utils/Apis/api";
@@ -20,6 +22,8 @@ function page() {
   const loadingBarRef = useRef<LoadingBarRef>(null);
 
   const router = useRouter();
+
+  const dispatch = useDispatch();
 
   const [notification, setNotification] = useState<notification[]>([]);
   const [message, setMessage] = useState({ text: "", type: "" });
@@ -69,6 +73,7 @@ function page() {
   };
 
   useEffect(() => {
+    dispatch(resetUnread());
     fetchNotifications();
   }, []);
   

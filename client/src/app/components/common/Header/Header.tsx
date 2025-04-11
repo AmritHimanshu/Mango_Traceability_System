@@ -18,6 +18,7 @@ function Header() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const userState = useAppSelector((state) => state.user.userState);
+  const unreadCount = useAppSelector((state) => state.notification.unreadCount);
 
   const pathname = usePathname();
   const path = pathname.split("/")[2];
@@ -186,20 +187,24 @@ function Header() {
 
                   {userState?.role === "Farmer" && (
                     <>
-                      {farmer
-                        .map((list, index) => (
-                          <div
-                            key={index}
-                            className={`cursor-pointer hover:text-green-700 duration-150 ${
-                              pathname === list.path || path === list.base_path
-                                ? "font-bold text-[16px] text-customGreen"
-                                : "bg-transparent"
-                            }`}
-                            onClick={() => router.push(list.path)}
-                          >
-                            {list.name}
-                          </div>
-                        ))}
+                      {farmer.map((list, index) => (
+                        <div
+                          key={index}
+                          className={`cursor-pointer hover:text-green-700 duration-150 ${
+                            pathname === list.path || path === list.base_path
+                              ? "font-bold text-[16px] text-customGreen"
+                              : "bg-transparent"
+                          }`}
+                          onClick={() => router.push(list.path)}
+                        >
+                          {list.name}
+                          {list.name === "Notifications" && unreadCount > 0 && (
+                            <span className="ml-1 bg-red-600 text-white text-[10px] rounded-full px-1">
+                              {unreadCount}
+                            </span>
+                          )}
+                        </div>
+                      ))}
 
                       <div className="relative">
                         <div
