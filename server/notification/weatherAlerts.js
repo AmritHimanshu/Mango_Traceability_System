@@ -83,7 +83,7 @@ const runWeatherAlertJob = async () => {
 
                 await notification.save();
 
-                sendNotificationToUser(user.uniqueID.toString(), message, global.appInstance);
+                sendNotificationToUser(user.uniqueID.toString(), alerts, global.appInstance);
             }
         }
     } catch (err) {
