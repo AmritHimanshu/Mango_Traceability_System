@@ -7,6 +7,7 @@ import {
   FARMS,
   NOTIFICATIONS,
   ADMIN_PROFILE,
+  FARMER_PROFILE,
 } from "../Paths/paths";
 
 export const admin = [
@@ -52,5 +53,15 @@ export const farmer = [
     name: "Notifications",
     path: NOTIFICATIONS,
     base_path: '',
+  },
+  {
+    name: "Profile",
+    path: FARMER_PROFILE,
+    base_path: '',
+  },
+  {
+    name: "Logout",
+    path: LOGIN,
+    base_path: "",
   },
 ];
