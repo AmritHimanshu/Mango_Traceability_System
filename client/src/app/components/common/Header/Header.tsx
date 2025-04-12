@@ -146,10 +146,10 @@ function Header() {
 
                       <div className="relative">
                         <div
-                          className="cursor-pointer font-bold hover:text-green-700 duration-150"
+                          className="cursor-pointer hover:text-green-700 duration-150"
                           onClick={() => setIsDropDown(!isDropDown)}
                         >
-                          ADMIN
+                          Admin
                         </div>
                         {isDropDown && (
                           <div
@@ -214,10 +214,10 @@ function Header() {
 
                       <div className="relative">
                         <div
-                          className="cursor-pointer font-bold hover:text-green-700 duration-150"
+                          className="cursor-pointer hover:text-green-700 duration-150"
                           onClick={() => setIsDropDown(!isDropDown)}
                         >
-                          FARMER
+                          Farmer
                         </div>
                         {isDropDown && (
                           <div
