@@ -28,11 +28,22 @@ router.post(FARMER_NEW_FARM, async (req, res) => {
             area: area,
         });
 
+        const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${coordinates[0][0]}+${coordinates[0][1]}&key=${process.env.OPENCAGEDATA_API_KEY}`);
+
+        const data = await response.json();
+
+        const components = data?.results?.[0]?.components;
+
+        farm.address = {
+            city_district: components.state_district,
+            state: components.state,
+            block: components.county,
+            country: components.country
+        };
+
         const ID = await farm.generateUniqueID(cropName);
 
         farm.uniqueID = ID;
-
-        console.log(farm);
 
         const farmRegister = await farm.save();
 

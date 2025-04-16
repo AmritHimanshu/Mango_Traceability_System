@@ -95,6 +95,12 @@ const farmerSchema = new mongoose.Schema(
         {
             type: String,
         },
+        address: {
+            city_district: String,
+            state: String,
+            block: String,
+            country: String,
+        },
         qrCode: String,
     },
     {
