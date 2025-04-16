@@ -1,4 +1,8 @@
 module.exports = {
+    // External APIs
+    OPENWEATHERMAP_API_FETCH_WEATHER: "https://api.openweathermap.org/data/2.5/forecast",
+    OPENCAGEDATA_API_FETCH_ADDRESS: "https://api.opencagedata.com/geocode/v1/json",
+
     // Common APIs
     REGISTER_USER: "/api/register-user",
     SIGNIN_USER: "/api/signin-user",

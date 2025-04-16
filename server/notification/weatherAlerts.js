@@ -3,6 +3,7 @@ const { sendNotificationToUser } = require("../functions/socketManager");
 const Farmer = require("../model/farmerSchema");
 const Notification = require("../model/notificationSchema");
 const User = require("../model/userSchema");
+const { OPENWEATHERMAP_API_FETCH_WEATHER } = require("../utils/api");
 
 function getFarmCenter(geoFenceData) {
     const latSum = geoFenceData.reduce((sum, point) => sum + point.lat, 0);
@@ -57,9 +58,7 @@ function checkCustomAlerts(forecastData, farm, id) {
 async function fetchWeather(lat, lon) {
     const API_KEY = process.env.OPENWEATHER_API_KEY;
 
-    // const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily&appid=${API_KEY}`;
-
-    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+    const url = `${OPENWEATHERMAP_API_FETCH_WEATHER}?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
 
     try {
         const response = await fetch(url);

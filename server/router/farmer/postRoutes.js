@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { FARMER_NEW_FARM } = require('../../utils/api');
+const { FARMER_NEW_FARM, OPENCAGEDATA_API_FETCH_ADDRESS } = require('../../utils/api');
 
 const Farmer = require('../../model/farmerSchema');
 
@@ -28,7 +28,7 @@ router.post(FARMER_NEW_FARM, async (req, res) => {
             area: area,
         });
 
-        const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${coordinates[0][0]}+${coordinates[0][1]}&key=${process.env.OPENCAGEDATA_API_KEY}`);
+        const response = await fetch(`${OPENCAGEDATA_API_FETCH_ADDRESS}?q=${coordinates[0][0]}+${coordinates[0][1]}&key=${process.env.OPENCAGEDATA_API_KEY}`);
 
         const data = await response.json();
 
