@@ -79,23 +79,46 @@ const runWeatherAlertJob = async () => {
     try {
         const farms = await Farmer.find({});
 
-        for (const farm of farms) {
-            const center = getFarmCenter(farm.geoFenceData);
-            const forecastWeatherData = await fetchWeather(center.lat, center.lng);
+        const userNotifiedBlocks = {};
 
-            const alerts = checkCustomAlerts(forecastWeatherData, farm.farm, farm.uniqueID);
+        for(const farm of farms) {
+            const { userUniqueId, address } = farm;
+            const block = address.block;
 
-            if (alerts.length > 0) {
-                const user = await User.findOne({ uniqueID: farm.userUniqueId });
-                if (!user) continue;
+            if (!block || !userUniqueId) continue;
 
-                const notification = new Notification({ userUniqueId: user.uniqueID, farmUniqueId: farm.uniqueID, message: alerts });
-
-                await notification.save();
-
-                sendNotificationToUser(user.uniqueID.toString(), alerts, global.appInstance);
+            if (!userNotifiedBlocks[userUniqueId]) {
+                userNotifiedBlocks[userUniqueId] = new Set();
             }
+
+            if (userNotifiedBlocks[userUniqueId].has(block)) {
+                continue;
+            }
+
+            const center = getFarmCenter(farm.geoFenceData);
+
+            const weatherData = await fetchWeather(center.lat, center.lng);
+
+            const alerts = checkCustomAlerts(weatherData, farm.farm, farm.uniqueID);
         }
+
+        // for (const farm of farms) {
+        //     const center = getFarmCenter(farm.geoFenceData);
+        //     const forecastWeatherData = await fetchWeather(center.lat, center.lng);
+
+        //     const alerts = checkCustomAlerts(forecastWeatherData, farm.farm, farm.uniqueID);
+
+        //     if (alerts.length > 0) {
+        //         const user = await User.findOne({ uniqueID: farm.userUniqueId });
+        //         if (!user) continue;
+
+        //         const notification = new Notification({ userUniqueId: user.uniqueID, farmUniqueId: farm.uniqueID, message: alerts });
+
+        //         await notification.save();
+
+        //         sendNotificationToUser(user.uniqueID.toString(), alerts, global.appInstance);
+        //     }
+        // }
     } catch (err) {
         console.error('Error in weather alert job:', err.message);
     }
