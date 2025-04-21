@@ -17,40 +17,25 @@ function getFarmCenter(geoFenceData) {
 function checkCustomAlerts(forecastData, farm, id) {
     const alerts = [];
 
-    const currentTime = Math.floor(Date.now() / 1000);
-    const next24Hours = forecastData.list.filter(entry => entry.dt > currentTime).slice(0, 8);
+    const tempCelsius = forecastData.main.temp - 273.15;
+    const weatherConditions = forecastData.weather.map(w => w.main.toLowerCase());
 
-    next24Hours.forEach(entry => {
-        const tempCelsius = entry.main.temp - 273.15;
-        const weatherConditions = entry.weather.map(w => w.main.toLowerCase());
-        const dateTime = new Date(entry.dt_txt);
-        const timeString = dateTime.toLocaleTimeString("en-IN", {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-        });
-        const dateString = dateTime.toLocaleDateString("en-IN", {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-        });
+    if (tempCelsius > 35) {
+        // alerts.push(`🌡️ It's expected to be hot (~${tempCelsius.toFixed(1)}°C) on ${dateString} at ${timeString} at your farm "${farm}" (ID: ${id}).`);
+        
+    }
 
-        if (tempCelsius > 35) {
-            alerts.push(`🌡️ It's expected to be hot (~${tempCelsius.toFixed(1)}°C) on ${dateString} at ${timeString} at your farm "${farm}" (ID: ${id}).`);
-        }
+    if (weatherConditions.includes("rain")) {
+        // alerts.push(`🌧️ Rain is expected on ${dateString} at ${timeString} at your farm "${farm}" (ID: ${id}).`);
+    }
 
-        if (weatherConditions.includes("rain")) {
-            alerts.push(`🌧️ Rain is expected on ${dateString} at ${timeString} at your farm "${farm}" (ID: ${id}).`);
-        }
+    if (forecastData.wind.speed > 10) {
+        // alerts.push(`💨 Strong winds (~${forecastData.wind.speed} m/s) are expected on ${dateString} at ${timeString} at your farm "${farm}" (ID: ${id}).`);
+    }
 
-        if (entry.wind.speed > 10) {
-            alerts.push(`💨 Strong winds (~${entry.wind.speed} m/s) are expected on ${dateString} at ${timeString} at your farm "${farm}" (ID: ${id}).`);
-        }
-
-        if (entry.main.humidity > 90) {
-            alerts.push(`💧 High humidity (${entry.main.humidity}%) is expected on ${dateString} at ${timeString} at your farm "${farm}" (ID: ${id}).`);
-        }
-    });
+    if (forecastData.main.humidity > 90) {
+        // alerts.push(`💧 High humidity (${forecastData.main.humidity}%) is expected on ${dateString} at ${timeString} at your farm "${farm}" (ID: ${id}).`);
+    }
 
     return [...new Set(alerts)];
 }
@@ -81,7 +66,7 @@ const runWeatherAlertJob = async () => {
 
         const userNotifiedBlocks = {};
 
-        for(const farm of farms) {
+        for (const farm of farms) {
             const { userUniqueId, address } = farm;
             const block = address.block;
 
@@ -98,6 +83,11 @@ const runWeatherAlertJob = async () => {
             const center = getFarmCenter(farm.geoFenceData);
 
             const weatherData = await fetchWeather(center.lat, center.lng);
+
+            // console.log("Block: ", address.block);
+            // console.log(weatherData);
+
+            userNotifiedBlocks[userUniqueId].add(block);
 
             const alerts = checkCustomAlerts(weatherData, farm.farm, farm.uniqueID);
         }
