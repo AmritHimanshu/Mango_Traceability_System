@@ -10,7 +10,7 @@ function getFarmCenter(geoFenceData) {
         lat: latSum / geoFenceData.length,
         lng: lngSum / geoFenceData.length
     };
-}
+};
 
 function checkCustomAlerts(weatherData) {
     const tempCelsius = (weatherData.main.temp - 273.15).toFixed(2);
@@ -24,7 +24,7 @@ function checkCustomAlerts(weatherData) {
     };
 
     return alert;
-}
+};
 
 async function fetchWeather(lat, lon) {
     const API_KEY = process.env.OPENWEATHER_API_KEY;
@@ -43,7 +43,7 @@ async function fetchWeather(lat, lon) {
         console.error('Failed to fetch weather data:', err.message);
         return null;
     }
-}
+};
 
 
 const runWeatherAlertJob = async () => {
@@ -72,13 +72,41 @@ const runWeatherAlertJob = async () => {
 
             userNotifiedBlocks[userUniqueId].add(block);
 
-            const alerts = checkCustomAlerts(weatherData, farm.farm, farm.uniqueID);
+            const alerts = checkCustomAlerts(weatherData);
 
             sendNotificationToUser(farm.userUniqueId.toString(), farm.farm, alerts, global.appInstance);
         }
     } catch (err) {
         console.error('Error in weather alert job:', err.message);
     }
-}
+};
 
-module.exports = { runWeatherAlertJob };
+const sendInstantAlertToUser = async (userId) => {
+    try {
+        const farms = await Farmer.find({ userUniqueId: userId });
+
+        const notifiedBlocks = new Set();
+
+        const alerts = [];
+
+        for (const farm of farms) {
+            const block = farm.address.block;
+            if (!block || notifiedBlocks.has(block)) continue;
+
+            const center = getFarmCenter(farm.geoFenceData);
+            const weatherData = await fetchWeather(center.lat, center.lng);
+
+            const alert = checkCustomAlerts(weatherData, farm);
+
+            alerts.push(alert);
+
+            notifiedBlocks.add(block);
+        }
+
+        if (alerts.length > 0) sendNotificationToUser(farm.userUniqueId.toString(), alerts, global.appInstance);
+    } catch (err) {
+        console.error(`⚠️ Error sending instant alert to user ${userId}:`, err.message);
+    }
+};
+
+module.exports = { runWeatherAlertJob, sendInstantAlertToUser };

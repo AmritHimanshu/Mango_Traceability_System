@@ -9,7 +9,7 @@ const { Server } = require('socket.io');
 const server = http.createServer(app);
 
 const cron = require('node-cron');
-const { runWeatherAlertJob } = require('./notification/weatherAlerts.js');
+const { runWeatherAlertJob, sendInstantAlertToUser } = require('./notification/weatherAlerts.js');
 
 const authenticateAdmin = require('./middleware/authenticateAdmin');
 const authenticateFarmer = require('./middleware/authenticateFarmer');
@@ -50,9 +50,11 @@ const connectedUsers = new Map();
 io.on('connection', (socket) => {
     console.log('⚡ A user connected:', socket.id);
 
-    socket.on('identify', (userId) => {
+    socket.on('identify', async (userId) => {
         console.log(`👤 User ${userId} identified.`);
         connectedUsers.set(userId, socket.id);
+
+        // await sendInstantAlertToUser(userId);
     });
 
     socket.on('disconnect', () => {
@@ -79,8 +81,6 @@ app.use('/farmer', authenticateFarmer, farmerPutRoutes);
 app.use('/farmer', authenticateFarmer, farmerDeleteRoutes);
 
 app.use(routes);
-
-runWeatherAlertJob();
 
 // cron.schedule('* * * * *', () => {
 //     console.log('🌤️ Running weather alert job...');

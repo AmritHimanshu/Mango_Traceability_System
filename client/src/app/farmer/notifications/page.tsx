@@ -33,7 +33,7 @@ function page() {
 
   useEffect(() => {
     const handleNotification = (data: notification) => {
-      setNotifications((prev) => [data, ...prev]);
+      setNotifications([data]);
     };
 
     socket.on("notification", handleNotification);
@@ -51,14 +51,14 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="my-3 max-w-[50%] m-auto p-2 space-y-2 text-black">
-        <div className="text-center border-b-[1px] p-2">
+      <div className="my-3 max-w-[50%] m-auto p-2 space-y-5 text-black">
+        <div className="text-center border-b-[1px] p-2 font-semibold">
           {currentDate.toDateString()}
         </div>
 
         <div className="space-y-5">
           {notifications.map((notification, index) => (
-            <div key={index} className="bg-white p-2 space-y-5">
+            <div key={index} className="bg-white p-2 space-y-5 shadow-lg">
               <div className="flex items-center justify-between py-2 border-b-[1px]">
                 <div>Current Weather</div>
                 <div className="font-semibold">{notification.farmName}</div>
