@@ -18,7 +18,6 @@ function Header() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const userState = useAppSelector((state) => state.user.userState);
-  const unreadCount = useAppSelector((state) => state.notification.unreadCount);
 
   const pathname = usePathname();
   const path = pathname.split("/")[2];
@@ -203,12 +202,6 @@ function Header() {
                             onClick={() => router.push(list.path)}
                           >
                             {list.name}
-                            {list.name === "Notifications" &&
-                              unreadCount > 0 && (
-                                <span className="ml-1 bg-red-600 text-white text-[10px] rounded-full px-1">
-                                  {unreadCount}
-                                </span>
-                              )}
                           </div>
                         ))}
 

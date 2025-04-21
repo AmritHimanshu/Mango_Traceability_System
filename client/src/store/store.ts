@@ -1,7 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 import { userReducer } from "@/store/features/userSlice";
-import { notificationReducer } from "@/store/features/notificationSlice";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -11,15 +10,8 @@ const userPersistConfig = {
   whitelist: ["userState"],
 };
 
-const notificationPersistConfig = {
-  key: "notification",
-  storage: storage,
-  whitelist: ["unreadCount"],
-};
-
 const rootReducer = combineReducers({
   user: persistReducer(userPersistConfig, userReducer),
-  notification: persistReducer(notificationPersistConfig, notificationReducer),
 });
 
 export const store = configureStore({

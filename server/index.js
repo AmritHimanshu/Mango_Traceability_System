@@ -80,6 +80,8 @@ app.use('/farmer', authenticateFarmer, farmerDeleteRoutes);
 
 app.use(routes);
 
+runWeatherAlertJob();
+
 // cron.schedule('* * * * *', () => {
 //     console.log('🌤️ Running weather alert job...');
 //     runWeatherAlertJob();

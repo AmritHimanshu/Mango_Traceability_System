@@ -153,8 +153,12 @@ export type bannerProps = {
 
 export type notification = {
   userUniqueId: string;
-  farmUniqueId: string;
-  message: string[];
-  read: boolean;
+  farmName: string;
+  message: {
+    temperature: string;
+    weather: string;
+    wind: string;
+    humidity: string;
+  };
   createdAt: string;
 };

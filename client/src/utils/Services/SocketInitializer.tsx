@@ -3,14 +3,10 @@
 import { useEffect } from "react";
 import { useAppSelector } from "@/store/store";
 import socket from "@/utils/Services/socket";
-import { useDispatch } from "react-redux";
-import { incrementUnread } from "@/store/features/notificationSlice";
 
 const SocketInitializer = () => {
   const user = useAppSelector((state) => state.user.userState);
   const userId = user?.uniqueID;
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (userId) {
@@ -18,8 +14,6 @@ const SocketInitializer = () => {
       socket.emit("identify", userId);
 
       socket.on("notification", (data) => {
-        // console.log("📬 Notification received:", data);
-        dispatch(incrementUnread());
       });
     }
 
