@@ -1,4 +1,4 @@
-function sendNotificationToUser(userId, farmName, message, app) {
+function sendNotificationToUser(userId, farmAlerts, app) {
     const io = app.get('io');
     const connectedUsers = app.get('connectedUsers');
 
@@ -6,8 +6,7 @@ function sendNotificationToUser(userId, farmName, message, app) {
     if (socketId) {
         io.to(socketId).emit('notification', {
             userId,
-            farmName,
-            message,
+            farmAlerts,
             createdAt: new Date(),
         });
     } else {

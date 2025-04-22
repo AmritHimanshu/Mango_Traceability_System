@@ -48,9 +48,19 @@ async function fetchWeather(lat, lon) {
 
 const runWeatherAlertJob = async () => {
     try {
-        const farms = await Farmer.find({});
+        const connectedUsers = global.appInstance.get('connectedUsers');
+
+        const connectedUserIds = Array.from(connectedUsers.keys());
+
+        if (connectedUserIds.length === 0) {
+            console.log('🛑 No users connected. Skipping weather alert job.');
+            return;
+        }
+
+        const farms = await Farmer.find({ userUniqueId: { $in: connectedUserIds } });
 
         const userNotifiedBlocks = {};
+        const userAlertsMap = {};
 
         for (const farm of farms) {
             const { userUniqueId, address } = farm;
@@ -70,12 +80,24 @@ const runWeatherAlertJob = async () => {
 
             const weatherData = await fetchWeather(center.lat, center.lng);
 
+            const alert = checkCustomAlerts(weatherData);
+
+            if (!userAlertsMap[userUniqueId]) {
+                userAlertsMap[userUniqueId] = [];
+            }
+
+            userAlertsMap[userUniqueId].push({
+                farm: farm.farm,
+                alerts: alert
+            });
+
             userNotifiedBlocks[userUniqueId].add(block);
-
-            const alerts = checkCustomAlerts(weatherData);
-
-            sendNotificationToUser(farm.userUniqueId.toString(), farm.farm, alerts, global.appInstance);
         }
+
+        for (const [userId, farmAlerts] of Object.entries(userAlertsMap)) {
+            sendNotificationToUser(userId, farmAlerts, global.appInstance);
+        }
+
     } catch (err) {
         console.error('Error in weather alert job:', err.message);
     }
