@@ -109,7 +109,9 @@ const sendInstantAlertToUser = async (userId) => {
 
         const notifiedBlocks = new Set();
 
-        const alerts = [];
+        const userAlertsMap = {};
+
+        userAlertsMap[userId] = [];
 
         for (const farm of farms) {
             const block = farm.address.block;
@@ -120,12 +122,17 @@ const sendInstantAlertToUser = async (userId) => {
 
             const alert = checkCustomAlerts(weatherData, farm);
 
-            alerts.push(alert);
+            userAlertsMap[userId].push({
+                farm: farm.farm,
+                alerts: alert
+            });
 
             notifiedBlocks.add(block);
         }
 
-        if (alerts.length > 0) sendNotificationToUser(farm.userUniqueId.toString(), alerts, global.appInstance);
+        for (const [userId, farmAlerts] of Object.entries(userAlertsMap)) {
+            sendNotificationToUser(userId, farmAlerts, global.appInstance);
+        }
     } catch (err) {
         console.error(`⚠️ Error sending instant alert to user ${userId}:`, err.message);
     }

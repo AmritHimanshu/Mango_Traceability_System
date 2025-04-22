@@ -54,7 +54,7 @@ io.on('connection', (socket) => {
         console.log(`👤 User ${userId} identified.`);
         connectedUsers.set(userId, socket.id);
 
-        // await sendInstantAlertToUser(userId);
+        await sendInstantAlertToUser(userId);
     });
 
     socket.on('disconnect', () => {
@@ -82,13 +82,13 @@ app.use('/farmer', authenticateFarmer, farmerDeleteRoutes);
 
 app.use(routes);
 
-// cron.schedule('* * * * *', () => {
-//     console.log('🌤️ Running weather alert job...');
-//     runWeatherAlertJob();
-// });
+cron.schedule('* * * * *', () => {
+    console.log('🌤️ Running weather alert job...');
+    runWeatherAlertJob();
+});
 
 server.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`🚀 Server running on ports ${PORT}`);
 });
 
 global.appInstance = app;
