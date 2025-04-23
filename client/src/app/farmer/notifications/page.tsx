@@ -68,7 +68,7 @@ function page() {
             <div key={index} className="bg-white p-2 space-y-5 shadow-lg">
               <div className="flex items-center justify-between py-2 border-b-[1px]">
                 <div>Current Weather</div>
-                <div className="font-semibold">{notification.farm}</div>
+                <div className="font-semibold">{notification.block}</div>
                 <div>
                   {currentDate.toLocaleTimeString([], {
                     hour: "2-digit",

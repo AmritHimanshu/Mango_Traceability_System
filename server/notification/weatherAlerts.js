@@ -123,7 +123,7 @@ const sendInstantAlertToUser = async (userId) => {
             const alert = checkCustomAlerts(weatherData, farm);
 
             userAlertsMap[userId].push({
-                farm: farm.farm,
+                block: block,
                 alerts: alert
             });
 
