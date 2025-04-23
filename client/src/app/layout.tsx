@@ -34,7 +34,7 @@ export default function RootLayout({
         <body
           className={`${nunito.className} antialiased bg-customGreen bg-opacity-5`}
         >
-          <SocketInitializer />
+          {/* <SocketInitializer /> */}
           {children}
         </body>
       </html>
