@@ -15,6 +15,7 @@ function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const userState = useAppSelector((state) => state.user.userState);
+  const userId = userState?.uniqueID;
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
 
@@ -32,21 +33,23 @@ function page() {
   }, []);
 
   useEffect(() => {
+    console.log("HI")
     const handleNotification = (data: notification) => {
       setNotifications([data]);
     };
 
     if(userState){
       socket.connect();
-      socket.emit("identify", userState?.uniqueID);
+      socket.emit("identify", userId);
 
       socket.on("notification", handleNotification);
     }
 
     return () => {
       socket.off("notification", handleNotification);
+      socket.disconnect();
     };
-  }, []);
+  }, [userId]);
 
   return (
     <div className="page-main-div">

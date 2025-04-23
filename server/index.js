@@ -46,6 +46,7 @@ const io = new Server(server, {
 });
 
 const connectedUsers = new Map();
+const userIntervals = new Map();
 
 io.on('connection', (socket) => {
     console.log('⚡ A user connected:', socket.id);
@@ -55,6 +56,12 @@ io.on('connection', (socket) => {
         connectedUsers.set(userId, socket.id);
 
         await sendInstantAlertToUser(userId);
+
+        const interval = setInterval(() => {
+            sendInstantAlertToUser(userId);
+        }, 60 * 1000);
+
+        userIntervals.set(socket.id, interval);
     });
 
     socket.on('disconnect', () => {
@@ -64,6 +71,13 @@ io.on('connection', (socket) => {
                 connectedUsers.delete(userId);
                 break;
             }
+        }
+
+        const interval = userIntervals.get(socket.id);
+        if (interval) {
+            clearInterval(interval);
+            userIntervals.delete(socket.id);
+            console.log(`🛑 Stopped periodic alerts for ${socket.id}`);
         }
     });
 });
