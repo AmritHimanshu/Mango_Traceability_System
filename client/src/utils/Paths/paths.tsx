@@ -11,6 +11,7 @@ export const ADMIN_PROFILE = "/admin/profile";
 export const FARMER_OVERVIEW = "/farmer";
 export const FARMS = "/farmer/farms";
 export const CREATE_FARM = "/farmer/farms/create-new-farm";
+export const WEATHER_REPORT = "/farmer/weather-report";
 export const NOTIFICATIONS = "/farmer/notifications";
 export const FARMER_PROFILE = "/farmer/profile";
 
@@ -19,5 +20,5 @@ export const LOGIN = "/login";
 export const REGISTER = "/register";
 export const FORGOT_PASSWORD = "/forgot-password";
 export const LOGOUT = "/logout";
-export const NOT_FOUND = "/404"
-export const CERTIFICATE = "/certificate"
+export const NOT_FOUND = "/404";
+export const CERTIFICATE = "/certificate";

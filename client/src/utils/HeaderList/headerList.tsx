@@ -8,7 +8,8 @@ import {
   NOTIFICATIONS,
   ADMIN_PROFILE,
   FARMER_PROFILE,
-} from "../Paths/paths";
+  WEATHER_REPORT,
+} from "../../../../../utils/Paths/paths";
 
 export const admin = [
   {
@@ -42,22 +43,27 @@ export const farmer = [
   {
     name: "Overview",
     path: FARMER_OVERVIEW,
-    base_path: '',
+    base_path: "",
   },
   {
     name: "Farms",
     path: FARMS,
-    base_path: 'farms',
+    base_path: "farms",
+  },
+  {
+    name: "Weather Report",
+    path: WEATHER_REPORT,
+    base_path: "",
   },
   {
     name: "Notifications",
     path: NOTIFICATIONS,
-    base_path: '',
+    base_path: "",
   },
   {
     name: "Profile",
     path: FARMER_PROFILE,
-    base_path: '',
+    base_path: "",
   },
   {
     name: "Logout",

@@ -3,7 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import { HandleOnClickProps } from "@/utils/Types/interfaces";
-import { admin } from "@/utils/Sidebar/sidebarList";
+import { admin } from "@/app/components/common/Header/HeaderList/headerList";
 
 function Admin_Header({ handleOnClick }: HandleOnClickProps) {
   const pathname = usePathname();

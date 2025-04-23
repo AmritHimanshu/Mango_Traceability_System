@@ -3,7 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import { HandleOnClickProps } from "@/utils/Types/interfaces";
-import { farmer } from "@/utils/Sidebar/sidebarList";
+import { farmer } from "@/app/components/common/Header/HeaderList/headerList";
 
 function Farmer_Header({ handleOnClick }: HandleOnClickProps) {
   const pathname = usePathname();

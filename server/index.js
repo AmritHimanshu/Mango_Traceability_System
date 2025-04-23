@@ -57,27 +57,36 @@ io.on('connection', (socket) => {
 
         await sendInstantAlertToUser(userId);
 
+        const oldInterval = userIntervals.get(userId);
+        if (oldInterval) {
+            clearInterval(oldInterval);
+            console.log(`♻️ Cleared old interval for user ${userId}`);
+        }
+
         const interval = setInterval(() => {
+            console.log("Interval running for user:", userId);
             sendInstantAlertToUser(userId);
         }, 60 * 1000);
 
-        userIntervals.set(socket.id, interval);
+        userIntervals.set(userId, interval);
     });
 
     socket.on('disconnect', () => {
         console.log(`🔌 User disconnected: ${socket.id}`);
+
         for (const [userId, socketId] of connectedUsers.entries()) {
             if (socketId === socket.id) {
                 connectedUsers.delete(userId);
+
+                const interval = userIntervals.get(userId);
+                if (interval) {
+                    clearInterval(interval);
+                    userIntervals.delete(userId);
+                    console.log(`🛑 Stopped periodic alerts for user ${userId}`);
+                }
+
                 break;
             }
-        }
-
-        const interval = userIntervals.get(socket.id);
-        if (interval) {
-            clearInterval(interval);
-            userIntervals.delete(socket.id);
-            console.log(`🛑 Stopped periodic alerts for ${socket.id}`);
         }
     });
 });
