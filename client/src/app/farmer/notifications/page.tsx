@@ -36,7 +36,12 @@ function page() {
       setNotifications([data]);
     };
 
-    socket.on("notification", handleNotification);
+    if(userState){
+      socket.connect();
+      socket.emit("identify", userState?.uniqueID);
+
+      socket.on("notification", handleNotification);
+    }
 
     return () => {
       socket.off("notification", handleNotification);
