@@ -33,7 +33,6 @@ function page() {
   }, []);
 
   useEffect(() => {
-    console.log("HI")
     const handleNotification = (data: notification) => {
       setNotifications([data]);
     };
