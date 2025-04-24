@@ -60,11 +60,9 @@ io.on('connection', (socket) => {
         const oldInterval = userIntervals.get(userId);
         if (oldInterval) {
             clearInterval(oldInterval);
-            console.log(`♻️ Cleared old interval for user ${userId}`);
         }
 
         const interval = setInterval(() => {
-            console.log("Interval running for user:", userId);
             sendInstantAlertToUser(userId);
         }, 60 * 1000);
 

@@ -105,7 +105,6 @@ const runWeatherAlertJob = async () => {
 
 const sendInstantAlertToUser = async (userId) => {
     try {
-        console.log("Hi")
         const farms = await Farmer.find({ userUniqueId: userId });
 
         const notifiedBlocks = new Set();
