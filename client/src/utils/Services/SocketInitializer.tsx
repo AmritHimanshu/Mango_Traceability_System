@@ -9,14 +9,14 @@ const SocketInitializer = () => {
   const userId = user?.uniqueID;
 
   useEffect(() => {
-    if (userId) {
+    if (user && userId) {
       socket.connect();
     }
 
     return () => {
       socket.disconnect();
     };
-  }, [userId]);
+  }, [user, userId]);
 
   return null;
 };
