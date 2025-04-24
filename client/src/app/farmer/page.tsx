@@ -112,9 +112,9 @@ function page() {
             </div>
 
             <div className="w-full lg:w-[45%] text-base md:text-lg lg:text-base 2xl:text-xl">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Cupiditate soluta asperiores ipsam at quaerat modi quia ex id
-              inventore? Vero.
+              we are dedicated to deliver fresh and natural mangoes which are
+              grown chemical residue free to your door step. We provide all
+              variety of mangoes to our customers.
             </div>
           </div>
         </div>

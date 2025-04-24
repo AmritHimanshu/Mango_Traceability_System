@@ -4,14 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../components/common/loadingBar/CustomLoadingBar";
-import {
-  LOGIN,
-  USER_MANAGEMENT,
-  PENDING_REQUESTS,
-} from "@/utils/Paths/paths";
-import {
-  ADMIN_FETCH_NO_OF_USERS,
-} from "@/utils/Apis/api";
+import { LOGIN, USER_MANAGEMENT, PENDING_REQUESTS } from "@/utils/Paths/paths";
+import { ADMIN_FETCH_NO_OF_USERS } from "@/utils/Apis/api";
 import { useAppSelector } from "@/store/store";
 import Message from "../components/common/Message";
 import HomeCard from "../components/admin/HomeCard";
@@ -123,9 +117,9 @@ function page() {
             </div>
 
             <div className="w-full lg:w-[45%] text-base md:text-lg lg:text-base 2xl:text-xl">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Cupiditate soluta asperiores ipsam at quaerat modi quia ex id
-              inventore? Vero.
+              we are dedicated to deliver fresh and natural mangoes which are
+              grown chemical residue free to your door step. We provide all
+              variety of mangoes to our customers.
             </div>
           </div>
         </div>

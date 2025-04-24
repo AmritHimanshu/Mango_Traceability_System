@@ -7,9 +7,9 @@ function Footer() {
         <div className="">
           <div className="font-bold text-xl">About Us</div>
           <p className="leading-7 mt-4 text-gray-100">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-            obcaecati reprehenderit maiores. Dolorum delectus sit recusandae
-            nemo voluptatum ad officia.
+            we are dedicated to deliver fresh and natural mangoes which are
+            grown chemical residue free to your door step. We provide all
+            variety of mangoes to our customers.
           </p>
           {/* <div className="flex space-x-10 mt-10">
             <img
