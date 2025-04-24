@@ -1,4 +1,4 @@
-const { sendNotificationToUser } = require("../functions/socketManager");
+const { sendWeatherNotificationToUser } = require("../functions/socketManager");
 const { OPENWEATHERMAP_API_FETCH_WEATHER } = require("../utils/api");
 
 const Farmer = require("../model/farmerSchema");
@@ -103,8 +103,9 @@ const runWeatherAlertJob = async () => {
     }
 };
 
-const sendInstantAlertToUser = async (userId) => {
+const sendInstantWeatherAlertToUser = async (userId) => {
     try {
+        console.log("hi")
         const farms = await Farmer.find({ userUniqueId: userId });
 
         const notifiedBlocks = new Set();
@@ -131,11 +132,11 @@ const sendInstantAlertToUser = async (userId) => {
         }
 
         for (const [userId, farmAlerts] of Object.entries(userAlertsMap)) {
-            sendNotificationToUser(userId, farmAlerts, global.appInstance);
+            sendWeatherNotificationToUser(userId, farmAlerts, global.appInstance);
         }
     } catch (err) {
         console.error(`⚠️ Error sending instant alert to user ${userId}:`, err.message);
     }
 };
 
-module.exports = { runWeatherAlertJob, sendInstantAlertToUser };
+module.exports = { runWeatherAlertJob, sendInstantWeatherAlertToUser };

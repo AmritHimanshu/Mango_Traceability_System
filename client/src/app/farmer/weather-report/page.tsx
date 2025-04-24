@@ -33,22 +33,21 @@ function page() {
   }, []);
 
   useEffect(() => {
-    const handleNotification = (data: notification) => {
+    const handleWeatherNotification = (data: notification) => {
       setNotifications([data]);
     };
 
     if (userState && userId) {
-      socket.connect();
-      socket.emit("identify", userId);
+      socket.emit("identify_for_weather_report", userId);
 
-      socket.on("notification", handleNotification);
+      socket.on("weather_notification", handleWeatherNotification);
     }
 
     return () => {
-      socket.off("notification", handleNotification);
-      socket.disconnect();
+      socket.emit("stop_weather_notification", userId);
+      socket.off("weather_notification", handleWeatherNotification);
     };
-  }, [userState, userId]);  
+  }, [userState, userId]);
 
   return (
     <div className="page-main-div">
@@ -64,52 +63,56 @@ function page() {
         </div>
 
         <div className="space-y-5">
-          {notifications.length > 0 ? notifications[0].farmAlerts?.map((notification, index) => (
-            <div key={index} className="bg-white p-2 space-y-5 shadow-lg">
-              <div className="flex items-center justify-between py-2 border-b-[1px]">
-                <div>Current Weather</div>
-                <div className="font-semibold">{notification.block}</div>
-                <div>
-                  {currentDate.toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: true,
-                  })}
+          {notifications.length > 0 ? (
+            notifications[0].farmAlerts?.map((notification, index) => (
+              <div key={index} className="bg-white p-2 space-y-5 shadow-lg">
+                <div className="flex items-center justify-between py-2 border-b-[1px]">
+                  <div>Current Weather</div>
+                  <div className="font-semibold">{notification.block}</div>
+                  <div>
+                    {currentDate.toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                    })}
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex">
-                <div className="space-y-2 w-[50%]">
-                  <div className="flex items-center space-x-2">
-                    <WbSunnyOutlinedIcon
-                      sx={{ color: "orange", fontSize: "50px" }}
-                    />
-                    <div>
-                      <span className="text-[40px]">
-                        {notification.alerts.temperature}&deg;
-                      </span>
-                      <span>C</span>
+                <div className="flex">
+                  <div className="space-y-2 w-[50%]">
+                    <div className="flex items-center space-x-2">
+                      <WbSunnyOutlinedIcon
+                        sx={{ color: "orange", fontSize: "50px" }}
+                      />
+                      <div>
+                        <span className="text-[40px]">
+                          {notification.alerts.temperature}&deg;
+                        </span>
+                        <span>C</span>
+                      </div>
+                    </div>
+                    <div className="text-18px]">
+                      {notification.alerts.weather}
                     </div>
                   </div>
-                  <div className="text-18px]">
-                    {notification.alerts.weather}
-                  </div>
-                </div>
 
-                <div className="w-[50%]">
-                  <div className="flex justify-between py-2 border-b-[1px]">
-                    <span>Wind</span>
-                    <span>{notification.alerts.wind}</span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b-[1px]">
-                    <span>Humidity</span>
-                    <span>{notification.alerts.humidity}</span>
+                  <div className="w-[50%]">
+                    <div className="flex justify-between py-2 border-b-[1px]">
+                      <span>Wind</span>
+                      <span>{notification.alerts.wind}</span>
+                    </div>
+                    <div className="flex justify-between py-2 border-b-[1px]">
+                      <span>Humidity</span>
+                      <span>{notification.alerts.humidity}</span>
+                    </div>
                   </div>
                 </div>
               </div>
+            ))
+          ) : (
+            <div className="text-center my-10 text-gray-700">
+              Fetching weather reports...
             </div>
-          )):(
-            <div className="text-center my-10 text-gray-700">Fetching weather reports...</div>
           )}
         </div>
       </div>

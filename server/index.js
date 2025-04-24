@@ -9,7 +9,7 @@ const { Server } = require('socket.io');
 const server = http.createServer(app);
 
 const cron = require('node-cron');
-const { runWeatherAlertJob, sendInstantAlertToUser } = require('./notification/weatherAlerts.js');
+const { runWeatherAlertJob, sendInstantWeatherAlertToUser } = require('./notification/weatherAlerts.js');
 
 const authenticateAdmin = require('./middleware/authenticateAdmin');
 const authenticateFarmer = require('./middleware/authenticateFarmer');
@@ -51,11 +51,11 @@ const userIntervals = new Map();
 io.on('connection', (socket) => {
     console.log('⚡ A user connected:', socket.id);
 
-    socket.on('identify', async (userId) => {
-        console.log(`👤 User ${userId} identified.`);
+    socket.on('identify_for_weather_report', async (userId) => {
+        console.log(`👤 User ${userId} identified for weather report.`);
         connectedUsers.set(userId, socket.id);
 
-        await sendInstantAlertToUser(userId);
+        await sendInstantWeatherAlertToUser(userId);
 
         const oldInterval = userIntervals.get(userId);
         if (oldInterval) {
@@ -63,10 +63,21 @@ io.on('connection', (socket) => {
         }
 
         const interval = setInterval(() => {
-            sendInstantAlertToUser(userId);
+            sendInstantWeatherAlertToUser(userId);
         }, 60 * 1000);
 
         userIntervals.set(userId, interval);
+    });
+
+    socket.on('stop_weather_notification', (userId) => {
+        console.log(`Stopped weather notification for user ${userId}`);
+
+        const interval = userIntervals.get(userId);
+        if (interval) {
+            clearInterval(interval);
+            userIntervals.delete(userId);
+            console.log(`🛑 Stopped periodic alerts for user ${userId}`);
+        }
     });
 
     socket.on('disconnect', () => {
@@ -75,14 +86,6 @@ io.on('connection', (socket) => {
         for (const [userId, socketId] of connectedUsers.entries()) {
             if (socketId === socket.id) {
                 connectedUsers.delete(userId);
-
-                const interval = userIntervals.get(userId);
-                if (interval) {
-                    clearInterval(interval);
-                    userIntervals.delete(userId);
-                    console.log(`🛑 Stopped periodic alerts for user ${userId}`);
-                }
-
                 break;
             }
         }

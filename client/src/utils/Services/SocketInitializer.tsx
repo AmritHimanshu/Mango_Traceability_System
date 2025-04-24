@@ -11,14 +11,9 @@ const SocketInitializer = () => {
   useEffect(() => {
     if (userId) {
       socket.connect();
-      socket.emit("identify", userId);
-
-      socket.on("notification", (data) => {
-      });
     }
 
     return () => {
-      socket.off("notification");
       socket.disconnect();
     };
   }, [userId]);

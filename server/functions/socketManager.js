@@ -1,10 +1,10 @@
-function sendNotificationToUser(userId, farmAlerts, app) {
+function sendWeatherNotificationToUser(userId, farmAlerts, app) {
     const io = app.get('io');
     const connectedUsers = app.get('connectedUsers');
 
     const socketId = connectedUsers.get(userId);
     if (socketId) {
-        io.to(socketId).emit('notification', {
+        io.to(socketId).emit('weather_notification', {
             userId,
             farmAlerts,
             createdAt: new Date(),
@@ -14,4 +14,4 @@ function sendNotificationToUser(userId, farmAlerts, app) {
     }
 }
 
-module.exports = { sendNotificationToUser };
+module.exports = { sendWeatherNotificationToUser };

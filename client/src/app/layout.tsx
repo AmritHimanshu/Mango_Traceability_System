@@ -19,7 +19,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   useEffect(() => {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("/service-worker.js").then(() => {
@@ -34,7 +33,7 @@ export default function RootLayout({
         <body
           className={`${nunito.className} antialiased bg-customGreen bg-opacity-5`}
         >
-          {/* <SocketInitializer /> */}
+          <SocketInitializer />
           {children}
         </body>
       </html>
