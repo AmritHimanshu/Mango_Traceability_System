@@ -12,6 +12,7 @@ import { FORGOT_PASSWORD, REGISTER } from "@/utils/Paths/paths";
 import Message from "../components/common/Message";
 import ReCAPTCHA from "react-google-recaptcha";
 import useRecaptcha from "@/utils/Services/useRecaptcha";
+import CustomCaptcha from "@/utils/Services/cutomCaptcha/CustomCaptcha";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -185,6 +186,8 @@ function page() {
                   sitekey={`${RECAPTCHA_SITE_KEY}`}
                   onChange={handleRecaptcha}
                 />
+
+                  {/* <CustomCaptcha /> */}
               </div>
 
               <div className="text-center">
