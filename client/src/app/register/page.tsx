@@ -508,7 +508,6 @@ function page() {
                           >
                             <option value="">
                               select role{" "}
-                              <span className="text-red-600">*</span>
                             </option>
                             <option value="Manager">Manager</option>
                             <option value="Farmer">Farmer</option>
