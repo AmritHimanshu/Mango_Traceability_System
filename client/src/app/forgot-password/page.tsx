@@ -14,6 +14,7 @@ import Message from "../components/common/Message";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import Link from "next/link";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -231,7 +232,6 @@ function page() {
         )}
 
         <div className="rounded-md overflow-hidden w-[500px] m-auto flex shadow-xl">
-
           <div className="bg-white bg-opacity-50 backdrop-blur-md text-black flex-grow flex items-center">
             <div className="px-5 py-3 w-full m-auto space-y-5">
               {!isEmailOtpSent && !isOtpVerified && (
@@ -265,13 +265,22 @@ function page() {
                     />
                   </div>
 
-                  <div>
+                  <div className="text-center">
                     <button
                       className="custom-btn bg-customGreen"
                       onClick={() => sendOtpToEmail()}
                     >
                       Verify Email
                     </button>
+                  </div>
+
+                  <div className="w-[100%] my-3 text-[11px] md:text-[15px] text-center">
+                    Already have an account?{" "}
+                    <Link href="/login">
+                      <span className="text-blue-800 hover:underline">
+                        Sign in.
+                      </span>
+                    </Link>
                   </div>
                 </>
               )}
@@ -291,13 +300,22 @@ function page() {
                     />
                   </div>
 
-                  <div>
+                  <div className="text-center">
                     <button
                       className="custom-btn bg-customGreen"
                       onClick={() => verifyOtpToEmail()}
                     >
                       Submit
                     </button>
+                  </div>
+
+                  <div className="w-[100%] my-3 text-[11px] md:text-[15px] text-center">
+                    Already have an account?{" "}
+                    <Link href="/login">
+                      <span className="text-blue-800 hover:underline">
+                        Sign in.
+                      </span>
+                    </Link>
                   </div>
                 </>
               )}

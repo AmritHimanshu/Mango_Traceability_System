@@ -425,9 +425,11 @@ function page() {
                     Registration
                   </div>
                   <div className="space-y-5 lg:space-y-0 lg:flex justify-between">
-                    <div className="lg:w-[46%] space-y-5">
+                    <div className="lg:w-[46%] space-y-2">
                       <div className="space-y-2">
-                        <label htmlFor="name">Name</label>
+                        <label htmlFor="name">
+                          Name <span className="text-red-600">*</span>
+                        </label>
                         <input
                           type="text"
                           id="name"
@@ -440,7 +442,9 @@ function page() {
                       </div>
 
                       <div className="space-y-2">
-                        <label htmlFor="phone">Phone</label>
+                        <label htmlFor="phone">
+                          Phone <span className="text-red-600">*</span>
+                        </label>
                         <input
                           type="tel"
                           id="phone"
@@ -453,7 +457,9 @@ function page() {
                       </div>
 
                       <div className="space-y-2">
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password">
+                          Password <span className="text-red-600">*</span>
+                        </label>
                         <input
                           type="password"
                           id="password"
@@ -474,9 +480,11 @@ function page() {
                       </div>
                     </div>
 
-                    <div className="lg:w-[46%] space-y-5">
+                    <div className="lg:w-[46%] space-y-2">
                       <div className="space-y-2">
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email">
+                          Email <span className="text-red-600">*</span>
+                        </label>
                         <input
                           type="email"
                           id="email"
@@ -489,14 +497,19 @@ function page() {
                       </div>
 
                       <div className="space-y-2">
-                        <label htmlFor="name">Role</label>
+                        <label htmlFor="name">
+                          Role <span className="text-red-600">*</span>
+                        </label>
                         <div>
                           <select
                             name=""
                             id=""
                             className="w-full px-3 py-2 outline-1 rounded-lg bg-white text-black focus:ring-2 focus:ring-customGreen focus:border-customGreen outline-none transition-all duration-200"
                           >
-                            <option value="">select role</option>
+                            <option value="">
+                              select role{" "}
+                              <span className="text-red-600">*</span>
+                            </option>
                             <option value="Manager">Manager</option>
                             <option value="Farmer">Farmer</option>
                           </select>
@@ -505,7 +518,8 @@ function page() {
 
                       <div className="space-y-2">
                         <label htmlFor="confirm_password">
-                          Confirm Password
+                          Confirm Password{" "}
+                          <span className="text-red-600">*</span>
                         </label>
                         <div className="flex items-center justify-between space-x-2 input-tag">
                           <input

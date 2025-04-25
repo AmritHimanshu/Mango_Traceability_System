@@ -155,7 +155,9 @@ function page() {
             <div className="px-5 py-3 w-full m-auto space-y-5">
               <div className="mt-2 text-xl text-center font-bold">Login</div>
               <div className="space-y-2">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">
+                  Email <span className="text-red-600">*</span>
+                </label>
                 <input
                   type="email"
                   id="email"
@@ -168,7 +170,9 @@ function page() {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">
+                  Password <span className="text-red-600">*</span>
+                </label>
                 <input
                   type="password"
                   id="password"
@@ -187,7 +191,7 @@ function page() {
                   onChange={handleRecaptcha}
                 />
 
-                  {/* <CustomCaptcha /> */}
+                {/* <CustomCaptcha /> */}
               </div>
 
               <div className="text-center">
@@ -217,6 +221,10 @@ function page() {
                     </span>
                   </Link>
                 </div>
+              </div>
+
+              <div className="text-center text-[7px] md:text-[10px] xl:text-[12px]">
+                <div>&#169; 2025 C-DAC Patna. All rights reserved.</div>
               </div>
             </div>
           </div>

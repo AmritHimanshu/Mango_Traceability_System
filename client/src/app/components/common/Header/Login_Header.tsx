@@ -8,8 +8,8 @@ function Login_Header() {
   const router = useRouter();
 
   return (
-    <div className="sticky w-full top-0 z-[9999] bg-white transition-all duration-300 flex items-center justify-between">
-      <div className="py-3 px-5">
+    <div className="absolulte w-full top-0 z-[9999] bg-whit transition-all duration-300 flex items-center justify-between">
+      <div className="py-2 px-5">
         <Image
           src="/assets/cdac-logo.png"
           alt="Logo"
@@ -18,17 +18,16 @@ function Login_Header() {
           className="bg-white p-1 rounded-sm"
         />
       </div>
-      <div className="text-center px-2 hidden md:block">
-        <div className="font-bold text-customOrange text-xs md:text-sm lg:text-xl">
-          Making Maldha Aam Accessible to every Indian
-        </div>
-        <div className="text-xs text-black hidden lg:block">
-          we are dedicated to deliver fresh and natural mangoes which are grown
-          chemical residue free to your door step. We provide all variety of
-          mangoes to our customers.
-        </div>
+      
+      <div className="py-2 px-5">
+        <Image
+          src="/assets/bau-logo.png"
+          alt="Logo"
+          width={50}
+          height={50}
+          className="bg-white p-1 rounded-sm"
+        />
       </div>
-      <div className="py-3 px-5 text-black cursor-pointer hover:!text-green-700 duration-150" onClick={() => router.push('/contact-us')}>Contact us</div>
     </div>
   );
 }
