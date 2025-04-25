@@ -506,9 +506,7 @@ function page() {
                             id=""
                             className="w-full px-3 py-2 outline-1 rounded-lg bg-white text-black focus:ring-2 focus:ring-customGreen focus:border-customGreen outline-none transition-all duration-200"
                           >
-                            <option value="">
-                              select role{" "}
-                            </option>
+                            <option value="">select role </option>
                             <option value="Manager">Manager</option>
                             <option value="Farmer">Farmer</option>
                           </select>
@@ -580,6 +578,10 @@ function page() {
                         Sign in.
                       </span>
                     </Link>
+                  </div>
+
+                  <div className="text-center text-[7px] md:text-[10px] xl:text-[12px]">
+                    <div>&#169; 2025 C-DAC Patna. All rights reserved.</div>
                   </div>
                 </div>
               </>
