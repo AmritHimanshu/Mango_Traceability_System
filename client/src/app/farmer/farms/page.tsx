@@ -137,7 +137,7 @@ function page() {
   };
 
   return (
-    <div className="page-main-div">
+    <div className="page-main-div bg-customGreen">
       <CustomLoadingBar ref={loadingBarRef} />
 
       {message.text && message.type && (
@@ -164,49 +164,51 @@ function page() {
         </div>
       </div>
 
-      <div className="my-5 !space-y-5 max-w-[90%] m-auto p-2">
-        <div className="text-center font-bold text-heading-size text-black">
-          Your <span className="text-customGreen">Farms</span>
-        </div>
-        <div className="md:space-x-11 lg:space-x-3 text-black md:flex items-center">
-          <div>
-            <label htmlFor="search">Search</label>
+      <div className="my-5">
+        <div className="space-y-7 py-5 px-3 lg:p-5 w-full xl:w-[70%] m-auto bg-white shadow-lg">
+          <div className="text-center font-bold text-heading-size text-black">
+            Your <span className="text-customGreen">Farms</span>
           </div>
-          <input
-            type="text"
-            id="search"
-            name="search"
-            value={searchQuery}
-            required
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="input-tag !w-[300px]"
-          />
-        </div>
-        {farms.length > 0 ? (
-          <>
-            <ListFarmTable
-              farms={farms}
-              idxCalc={(currentPage - 1) * limit}
-              handleClick={handleSelectedFarm}
-            />
-
-            <div className="space-x-5 text-center text-black">
-              {[...Array(totalPages)].map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrentPage(i + 1)}
-                  className={`${currentPage == i + 1 && "text-customGreen"}`}
-                >
-                  {i + 1}
-                </button>
-              ))}
+          <div className="md:space-x-11 lg:space-x-3 text-black md:flex items-center">
+            <div>
+              <label htmlFor="search">Search</label>
             </div>
-          </>
-        ) : (
-          <div className="text-center text-gray-500 my-2">
-            No records found!
+            <input
+              type="text"
+              id="search"
+              name="search"
+              value={searchQuery}
+              required
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="input-tag !w-[300px]"
+            />
           </div>
-        )}
+          {farms.length > 0 ? (
+            <>
+              <ListFarmTable
+                farms={farms}
+                idxCalc={(currentPage - 1) * limit}
+                handleClick={handleSelectedFarm}
+              />
+
+              <div className="space-x-5 text-center text-black">
+                {[...Array(totalPages)].map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={`${currentPage == i + 1 && "text-customGreen"}`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="text-center text-gray-500 my-2">
+              No records found!
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

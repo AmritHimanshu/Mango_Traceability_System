@@ -31,7 +31,7 @@ export default function RootLayout({
     <ReduxProvider>
       <html lang="en">
         <body
-          className={`${nunito.className} antialiased bg-customGreen bg-opacity-5`}
+          className={`${nunito.className} antialiased bg-white`}
         >
           <SocketInitializer />
           {children}

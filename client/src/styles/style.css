@@ -7,7 +7,7 @@
 }
 
 .page-main-div-certificate{
-    @apply p-5 w-full h-[100vh] overflow-y-auto relative [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-secondaryColor [&::-webkit-scrollbar-thumb]:bg-primaryColor [&::-webkit-scrollbar-thumb]:rounded-full
+    @apply p-5 w-full h-[100vh] overflow-y-auto relative [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-customOrange [&::-webkit-scrollbar-thumb]:bg-customOrange [&::-webkit-scrollbar-thumb]:rounded-full
 }
 
 .btn{

@@ -467,7 +467,7 @@ function page() {
               )}
             </div>
 
-            <div className="my-3 text-center">
+            <div className="my-5 text-center">
               <button
                 onClick={() => setIsDelete(true)}
                 className="custom-btn bg-red-600"

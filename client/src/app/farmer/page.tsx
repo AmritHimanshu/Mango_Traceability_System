@@ -121,11 +121,11 @@ function page() {
 
       <div>
         {farmList.length > 0 && (
-          <div className="my-5 !space-y-5 p-3 bg-customGreen bg-opacity-5">
-            <div className="text-center font-bold text-heading-size text-black">
-              Recent <span className="text-customGreen">Farms</span>
+          <div className="my-5 w-full xl:w-[70%] m-auto !space-y-7 py-5 px-3 lg:p-5 bg-customGreen shadow-lg">
+            <div className="text-center font-bold text-heading-size text-white">
+              Recent <span className="text-customOrange">Farms</span>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 w-fit mx-auto justify-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-5 w-fit mx-auto justify-center">
               {farmList.map((farm, index) => (
                 <HomeCard key={index} data={farm} />
               ))}
