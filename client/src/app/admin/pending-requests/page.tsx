@@ -225,12 +225,12 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      {/* <Banner
+      <Banner
         img_src="/assets/pending_requests.jpg"
         img_alt="Pending Requests"
         heading="Pending Requests"
         description=""
-      /> */}
+      />
 
       <div className="my-5">
         <div className="max-w-[80%] m-auto space-y-5">

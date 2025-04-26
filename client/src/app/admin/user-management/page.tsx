@@ -132,12 +132,12 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      {/* <Banner
+      <Banner
         img_src="/assets/manager_image.jpeg"
         img_alt="Manager"
         heading="Manager Management"
         description=""
-      /> */}
+      />
 
       <div className="my-5">
         <div className="max-w-[90%] m-auto space-y-5">
