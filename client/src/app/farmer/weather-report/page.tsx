@@ -59,7 +59,7 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="my-3 max-w-[50%] m-auto p-2 space-y-10 text-black">
+      <div className="my-3 w-full xl:max-w-[50%] m-auto p-2 space-y-10 text-black">
         <div className="text-center border-b-[1px] border-black p-2 font-semibold">
           {currentDate.toDateString()}
         </div>
@@ -80,8 +80,8 @@ function page() {
                   </div>
                 </div>
 
-                <div className="flex">
-                  <div className="space-y-5 w-[50%]">
+                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0">
+                  <div className="space-y-5 w-full md:w-[50%]">
                     <div className="flex items-center space-x-2">
                       {notification.alerts.weather === "clouds" ? (
                         <CloudIcon sx={{ color: "gray", fontSize: "50px" }} />
@@ -114,7 +114,7 @@ function page() {
                     </div>
                   </div>
 
-                  <div className="w-[50%]">
+                  <div className="w-full md:w-[50%]">
                     <div className="flex justify-between py-2 border-b-[1px]">
                       <span>Wind</span>
                       <span>{notification.alerts.wind}</span>
