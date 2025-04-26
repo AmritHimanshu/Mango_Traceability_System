@@ -3,16 +3,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { admin, farmer } from "@/app/components/common/Header/HeaderList/headerList";
+import {
+  admin,
+  farmer,
+} from "@/app/components/common/Header/HeaderList/headerList";
 import { useAppSelector } from "@/store/store";
 import { usePathname, useRouter } from "next/navigation";
+import { ADMIN_PROFILE, FARMER_PROFILE, LOGIN } from "@/utils/Paths/paths";
 import Header_Menu from "./Header_Menu";
 
 // Material UI Icon
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { ADMIN_PROFILE, FARMER_PROFILE, LOGIN } from "@/utils/Paths/paths";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 function Header() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -121,7 +125,7 @@ function Header() {
                 />
               </div>
               <div className="hidden lg:block text-center text-sm">
-                <div className="flex space-x-5">
+                <div className="flex items-center space-x-5">
                   {userState?.role === "Admin" && (
                     <>
                       {admin
@@ -148,12 +152,12 @@ function Header() {
                           className="cursor-pointer hover:text-green-700 duration-150"
                           onClick={() => setIsDropDown(!isDropDown)}
                         >
-                          Admin
+                          <AccountCircleIcon sx={{ fontSize: "30px" }} />
                         </div>
                         {isDropDown && (
                           <div
                             ref={headRef}
-                            className="absolute z-[999999] bg-white py-2 px-3 space-y-3 rounded-sm top-10"
+                            className="absolute left-1/2 top-10 transform -translate-x-1/2 z-[999999] bg-white py-2 px-3 space-y-3 rounded-sm"
                           >
                             <div
                               className={`cursor-pointer hover:text-green-700 duration-150 ${
@@ -207,15 +211,15 @@ function Header() {
 
                       <div className="relative">
                         <div
-                          className="cursor-pointer hover:text-green-700 duration-150"
+                          className="cursor-pointer hover:text-green-700 duration-150 text-center"
                           onClick={() => setIsDropDown(!isDropDown)}
                         >
-                          Farmer
+                          <AccountCircleIcon sx={{ fontSize: "30px" }} />
                         </div>
                         {isDropDown && (
                           <div
                             ref={headRef}
-                            className="absolute z-[999999] bg-white py-2 px-3 space-y-3 rounded-sm top-10"
+                            className="absolute left-1/2 top-10 transform -translate-x-1/2 z-[999999] bg-white py-2 px-3 space-y-3 rounded-sm"
                           >
                             <div
                               className={`cursor-pointer hover:text-green-700 duration-150 ${
