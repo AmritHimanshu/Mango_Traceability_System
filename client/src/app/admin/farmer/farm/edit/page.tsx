@@ -242,10 +242,7 @@ function page() {
 
       <div className="my-5 max-w-[90%] m-auto text-black">
         <div className="text-end my-3">
-          <button
-            onClick={handleOnCancel}
-            className="custom-btn bg-red-600"
-          >
+          <button onClick={handleOnCancel} className="custom-btn bg-red-600">
             Cancel
           </button>
         </div>
@@ -630,13 +627,13 @@ function page() {
             </div>
             <div className="text-end space-x-2">
               <button
-                className="w-[100px] text-button-size bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                className="custom-btn bg-red-600"
                 onClick={() => setIsSave(false)}
               >
                 Cancel
               </button>
               <button
-                className="w-[100px] text-button-size bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                className="custom-btn bg-customGreen"
                 onClick={() => handleOnSave()}
               >
                 Confirm
