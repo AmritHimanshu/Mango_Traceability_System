@@ -27,6 +27,9 @@ function page() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState({ text: "", type: "" });
 
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
   const { capchaToken, recaptchaRef, handleRecaptcha } = useRecaptcha();
 
   const logOut = async () => {
@@ -74,13 +77,22 @@ function page() {
   ) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      setMessage({ text: "Fill all the fields", type: "error" });
-      setTimeout(() => {
-        setMessage({ text: "", type: "" });
-      }, 2000);
-      return;
+    setEmailError("");
+    setPasswordError("");
+    setMessage({ text: "", type: "" });
+
+    let hasError = false;
+
+    if (!email) {
+      setEmailError("Email is required.");
+      hasError = true;
     }
+    if (!password) {
+      setPasswordError("Password is required.");
+      hasError = true;
+    }
+
+    if (hasError) return;
 
     if (!capchaToken) {
       setMessage({ text: "Complete the captcha.", type: "error" });
@@ -167,6 +179,9 @@ function page() {
                   onChange={(e) => setEmail(e.target.value)}
                   className="input-tag"
                 />
+                {emailError && (
+                  <p className="text-red-600 text-sm">{emailError}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -182,6 +197,9 @@ function page() {
                   onChange={(e) => setPassword(e.target.value)}
                   className="input-tag"
                 />
+                {passwordError && (
+                  <p className="text-red-600 text-sm">{passwordError}</p>
+                )}
               </div>
 
               <div className="flex items-center justify-center">

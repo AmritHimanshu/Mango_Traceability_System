@@ -43,9 +43,17 @@ function page() {
     name: "",
     email: "",
     phone: "",
+    role: "",
     password: "",
     confirm_password: "",
   });
+
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [roleError, setRoleError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confimrPasswordError, setConfirmPasswordError] = useState("");
 
   const [isOtp, setIsOtp] = useState(false);
   const [isOTPVerified, setIsOTPVerified] = useState(false);
@@ -299,15 +307,49 @@ function page() {
   ) => {
     e.preventDefault();
 
-    const { name, email, phone, password, confirm_password } = formData;
+    const { name, email, phone, role, password, confirm_password } = formData;
 
-    if (!name || !email || !phone || !password || !confirm_password) {
-      setMessage({ text: "Fill all the fields", type: "error" });
-      setTimeout(() => {
-        setMessage({ text: "", type: "" });
-      }, 2000);
-      return;
+    setNameError("");
+    setEmailError("");
+    setPhoneError("");
+    setRoleError("");
+    setPasswordError("");
+    setConfirmPasswordError("");
+    setMessage({ text: "", type: "" });
+
+    let hasError = false;
+
+    if (!name) {
+      setNameError("Name is required.");
+      hasError = true;
     }
+
+    if (!email) {
+      setEmailError("Email is required.");
+      hasError = true;
+    }
+
+    if (!phone) {
+      setPhoneError("Phone is required.");
+      hasError = true;
+    }
+
+    if (!role) {
+      setRoleError("Role is required.");
+      hasError = true;
+    }
+
+    if (!password) {
+      setPasswordError("Password is required.");
+      hasError = true;
+    }
+
+    if (!confirm_password) {
+      setConfirmPasswordError("Confirm Password is required.");
+      hasError = true;
+    }
+
+    if (hasError) return;
 
     if (!isPasswordVerified) {
       setMessage({ text: "Password is weak!", type: "error" });
@@ -439,6 +481,9 @@ function page() {
                           onChange={(e) => handleFormState(e)}
                           className="input-tag"
                         />
+                        {nameError && (
+                          <p className="text-red-600 text-sm">{nameError}</p>
+                        )}
                       </div>
 
                       <div className="space-y-2">
@@ -454,6 +499,9 @@ function page() {
                           onChange={(e) => handleFormState(e)}
                           className="input-tag"
                         />
+                        {phoneError && (
+                          <p className="text-red-600 text-sm">{phoneError}</p>
+                        )}
                       </div>
 
                       <div className="space-y-2">
@@ -472,6 +520,11 @@ function page() {
                           }}
                           className="input-tag"
                         />
+                        {passwordError && (
+                          <p className="text-red-600 text-sm">
+                            {passwordError}
+                          </p>
+                        )}
                         {errorMessage && (
                           <div className="text-red-600 text-[12px] text-start">
                             {errorMessage}
@@ -494,6 +547,9 @@ function page() {
                           onChange={(e) => handleFormState(e)}
                           className="input-tag"
                         />
+                        {emailError && (
+                          <p className="text-red-600 text-sm">{emailError}</p>
+                        )}
                       </div>
 
                       <div className="space-y-2">
@@ -505,12 +561,16 @@ function page() {
                             name=""
                             id=""
                             className="w-full px-3 py-2 outline-1 rounded-lg bg-white text-black focus:ring-2 focus:ring-customGreen focus:border-customGreen outline-none transition-all duration-200"
+                            onChange={(e) => handleFormState(e)}
                           >
                             <option value="">select role </option>
                             <option value="Manager">Manager</option>
                             <option value="Farmer">Farmer</option>
                           </select>
                         </div>
+                        {roleError && (
+                          <p className="text-red-600 text-sm">{roleError}</p>
+                        )}
                       </div>
 
                       <div className="space-y-2">
@@ -550,6 +610,11 @@ function page() {
                             />
                           )}
                         </div>
+                        {confimrPasswordError && (
+                          <p className="text-red-600 text-sm">
+                            {confimrPasswordError}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
