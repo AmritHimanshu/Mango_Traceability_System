@@ -8,7 +8,7 @@ function Login_Header() {
   const router = useRouter();
 
   return (
-    <div className="absolulte w-full top-0 z-[9999] bg-whit transition-all duration-300 flex items-center justify-between">
+    <div className="absolute w-full top-0 z-[9999] transition-all duration-300 flex items-center justify-between">
       <div className="py-2 px-5">
         <Image
           src="/assets/cdac-logo.png"

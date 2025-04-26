@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-[100vh] overflow-y-auto relative bg-[url(/assets/login-bg.jpg)] bg-cover bg-bottom bg-no-repeat flex flex-col items-center">
+    <div className="h-[100vh] overflow-y-auto relative bg-[url(/assets/login-bg.jpg)] bg-cover bg-bottom bg-no-repeat flex flex-col items-center justify-center">
       <Login_Header />
       <div>{children}</div>
     </div>
