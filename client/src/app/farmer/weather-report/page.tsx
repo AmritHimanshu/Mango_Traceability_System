@@ -10,6 +10,8 @@ import Message from "@/app/components/common/Message";
 import { notification } from "@/utils/Types/interfaces";
 import socket from "@/utils/Services/socket";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
+import CloudIcon from "@mui/icons-material/Cloud";
+import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
 
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -57,16 +59,16 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="my-3 max-w-[50%] m-auto p-2 space-y-5 text-black">
-        <div className="text-center border-b-[1px] p-2 font-semibold">
+      <div className="my-3 max-w-[50%] m-auto p-2 space-y-10 text-black">
+        <div className="text-center border-b-[1px] border-black p-2 font-semibold">
           {currentDate.toDateString()}
         </div>
 
-        <div className="space-y-5">
+        <div className="space-y-10">
           {notifications.length > 0 ? (
             notifications[0].farmAlerts?.map((notification, index) => (
-              <div key={index} className="bg-white p-2 space-y-5 shadow-lg">
-                <div className="flex items-center justify-between py-2 border-b-[1px]">
+              <div key={index} className="bg-white p-3 space-y-10 shadow-lg">
+                <div className="flex items-center justify-between py-2 border-b-[1px] border-black">
                   <div>Current Weather</div>
                   <div className="font-semibold">{notification.block}</div>
                   <div>
@@ -79,11 +81,24 @@ function page() {
                 </div>
 
                 <div className="flex">
-                  <div className="space-y-2 w-[50%]">
+                  <div className="space-y-5 w-[50%]">
                     <div className="flex items-center space-x-2">
-                      <WbSunnyOutlinedIcon
-                        sx={{ color: "orange", fontSize: "50px" }}
-                      />
+                      {notification.alerts.weather === "clouds" ? (
+                        <CloudIcon sx={{ color: "gray", fontSize: "50px" }} />
+                      ) : notification.alerts.weather === "thunderstorm" ? (
+                        <ThunderstormIcon
+                          sx={{ color: "gray", fontSize: "50px" }}
+                        />
+                      ) : notification.alerts.weather === "rain" ? (
+                        <ThunderstormIcon
+                          sx={{ color: "gray", fontSize: "50px" }}
+                        />
+                      ) : (
+                        <WbSunnyOutlinedIcon
+                          sx={{ color: "orange", fontSize: "50px" }}
+                        />
+                      )}
+
                       <div>
                         <span className="text-[40px]">
                           {notification.alerts.temperature}&deg;
@@ -92,7 +107,10 @@ function page() {
                       </div>
                     </div>
                     <div className="text-18px]">
-                      {notification.alerts.weather}
+                      Condition:{" "}
+                      <span className="capitalize">
+                        {notification.alerts.weather}
+                      </span>
                     </div>
                   </div>
 
