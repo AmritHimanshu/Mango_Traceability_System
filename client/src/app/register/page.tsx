@@ -558,7 +558,7 @@ function page() {
                         </label>
                         <div>
                           <select
-                            name=""
+                            name="role"
                             id=""
                             className="w-full px-3 py-2 outline-1 rounded-lg bg-white text-black focus:ring-2 focus:ring-customGreen focus:border-customGreen outline-none transition-all duration-200"
                             onChange={(e) => handleFormState(e)}

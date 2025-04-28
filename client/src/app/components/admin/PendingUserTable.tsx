@@ -6,23 +6,13 @@ import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutli
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function PendingUserTable({ idx, user, confirmReq }: PendingUserTableProps) {
-  const [selectedButton, setSelectedButton] = useState("");
-
   const [selectRole, setSelectRole] = useState("");
 
-  const handleOnClick = async (
-    id: string,
-    role: string,
-    status: boolean,
-    buttonText: string
-  ) => {
+  const handleOnClick = async (id: string, role: string, status: boolean) => {
     try {
-      setSelectedButton(buttonText);
       confirmReq(id, role, status);
-      setSelectedButton("");
       setSelectRole("");
     } catch (error) {
-      setSelectedButton("");
       setSelectRole("");
     }
   };
@@ -67,11 +57,11 @@ function PendingUserTable({ idx, user, confirmReq }: PendingUserTableProps) {
         <div className="flex items-center justify-evenly">
           <CheckCircleOutlineOutlinedIcon
             style={{ color: "green", cursor: "pointer", fontSize: "30px" }}
-            onClick={() => handleOnClick(user._id, selectRole, true, "Accept")}
+            onClick={() => handleOnClick(user._id, selectRole, true)}
           />
           <DeleteIcon
             style={{ color: "red", cursor: "pointer", fontSize: "30px" }}
-            onClick={() => handleOnClick(user._id, selectRole, false, "Reject")}
+            onClick={() => handleOnClick(user._id, selectRole, false)}
           />
         </div>
       </td>

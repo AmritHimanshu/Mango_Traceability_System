@@ -8,7 +8,7 @@ const sendOtpToEmail = async (email) => {
     const otp = randomInt(100000, 999999).toString();
     const expiry = Date.now() + 5 * 60 * 1000;
     otpEmailStore.set(email, { otp, expiry });
-
+    console.log(otp)
     await sendEmail(email, otp);
 };
 

@@ -1,6 +1,8 @@
 const nodemailer = require("nodemailer");
 const User = require("../model/userSchema");
+const dotenv = require('dotenv');
 
+dotenv.config({ path: './.env' });
 
 const transporter = nodemailer.createTransport({
     service: "Gmail",

@@ -1,12 +1,15 @@
 const nodemailer = require("nodemailer");
 const twilio = require('twilio');
+const dotenv = require('dotenv');
+
+dotenv.config({ path: './.env' });
 
 // Send OTP for Email verification
 const transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: {
-        user: process.env.EMAIL_ID,
-        pass: process.env.PASSWORD,
+        user: process.env.EMAIL_ID?.trim(),
+        pass: process.env.PASSWORD?.trim(),
     },
 });
 
@@ -21,6 +24,7 @@ const sendEmail = async (email, otp) => {
         const info = await transporter.sendMail(mailOptions);
         console.log("Otp sent to your email:", info.response);
     } catch (error) {
+        console.log("Error in sending otp: ", error);
     }
 };
 

@@ -156,6 +156,11 @@ router.post(SEND_OTP_EMAIL, async (req, res) => {
             return res.status(400).json({ error: "reCAPTCHA validation failed." });
         }
 
+        const emailExist = await User.findOne({ email: email });
+        if (emailExist) {
+            return res.status(400).json({ error: "Email ID already registered" });
+        }
+
         await sendOtpToEmail(email);
         res.status(201).json({ message: "OTP sent successfully." });
     } catch (error) {

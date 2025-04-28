@@ -120,16 +120,16 @@ function page() {
   };
 
   useEffect(() => {
-      const delayDebounce = setTimeout(() => {
-        if (!searchQuery) {
-          fetchPendingRequests();
-        } else {
-          fetchSearchedPendingRequests();
-        }
-      }, 500);
-  
-      return () => clearTimeout(delayDebounce);
-    }, [searchQuery, currentPage]);
+    const delayDebounce = setTimeout(() => {
+      if (!searchQuery) {
+        fetchPendingRequests();
+      } else {
+        fetchSearchedPendingRequests();
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounce);
+  }, [searchQuery, currentPage]);
 
   const authenticateReq = async (id: string, role: string, status: boolean) => {
     if (!role && status === true) {
@@ -309,22 +309,22 @@ function page() {
         <div className="fixed z-[9999] top-0 left-0 w-full h-full bg-neutral-900 bg-opacity-80 flex items-center">
           <div className="bg-white p-3 w-[300px] md:w-[400px] lg:w-[450px] m-auto space-y-5 rounded-md">
             <div>
-              <div className="text-sm md:text-xl">
-                Are you sure, you want to save?
-              </div>
-              <div className="text-[10px] md:text-[13px]">
-                You will not be able to edit/change after saving!
+              <div className="text-sm md:text-lg text-black">
+                {parameter.status === false &&
+                  "Are you sure, you want to reject this user?"}
+                {parameter.status === true &&
+                  `Are you sure, you want to assign role ${parameter.role} to this user?`}
               </div>
             </div>
             <div className="text-end text-[11px] md:text-lg space-x-2">
               <button
-                className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-red-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                className="custom-btn bg-red-600"
                 onClick={() => handleOnCancel()}
               >
                 Cancel
               </button>
               <button
-                className="!w-[30px] md:!w-[50px] lg:!w-[100px] !text-[9px] md:!text-[12px] lg:!text-[16px] py-[3px] lg:py-[7px] bg-green-600 bg-opacity-80 text-white font-bold rounded-[5px] hover:shadow-md hover:bg-opacity-85 duration-200"
+                className="custom-btn bg-customGreen"
                 onClick={() =>
                   authenticateReq(
                     parameter.id,
