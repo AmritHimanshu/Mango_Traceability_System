@@ -36,6 +36,7 @@ function page() {
 
   useEffect(() => {
     const handleWeatherNotification = (data: notification) => {
+      console.log(data);
       setNotifications([data]);
     };
 
@@ -83,13 +84,13 @@ function page() {
                 <div className="flex flex-col md:flex-row space-y-5 md:space-y-0">
                   <div className="space-y-5 w-full md:w-[50%]">
                     <div className="flex items-center space-x-2">
-                      {notification.alerts.weather === "clouds" ? (
+                      {notification.currentAlert.weather === "clouds" ? (
                         <CloudIcon sx={{ color: "gray", fontSize: "50px" }} />
-                      ) : notification.alerts.weather === "thunderstorm" ? (
+                      ) : notification.currentAlert.weather === "thunderstorm" ? (
                         <ThunderstormIcon
                           sx={{ color: "gray", fontSize: "50px" }}
                         />
-                      ) : notification.alerts.weather === "rain" ? (
+                      ) : notification.currentAlert.weather === "rain" ? (
                         <ThunderstormIcon
                           sx={{ color: "gray", fontSize: "50px" }}
                         />
@@ -101,7 +102,7 @@ function page() {
 
                       <div>
                         <span className="text-[40px]">
-                          {notification.alerts.temperature}&deg;
+                          {notification.currentAlert.temperature}&deg;
                         </span>
                         <span>C</span>
                       </div>
@@ -109,7 +110,7 @@ function page() {
                     <div className="text-18px]">
                       Condition:{" "}
                       <span className="capitalize">
-                        {notification.alerts.weather}
+                        {notification.currentAlert.weather}
                       </span>
                     </div>
                   </div>
@@ -117,11 +118,11 @@ function page() {
                   <div className="w-full md:w-[50%]">
                     <div className="flex justify-between py-2 border-b-[1px]">
                       <span>Wind</span>
-                      <span>{notification.alerts.wind}</span>
+                      <span>{notification.currentAlert.wind}</span>
                     </div>
                     <div className="flex justify-between py-2 border-b-[1px]">
                       <span>Humidity</span>
-                      <span>{notification.alerts.humidity}</span>
+                      <span>{notification.currentAlert.humidity}</span>
                     </div>
                   </div>
                 </div>

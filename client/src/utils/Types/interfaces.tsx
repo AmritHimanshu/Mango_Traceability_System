@@ -155,7 +155,7 @@ export type notification = {
   userUniqueId: string;
   farmAlerts: {
     block: string;
-    alerts: {
+    currentAlert: {
       temperature: string;
       weather: string;
       wind: number;

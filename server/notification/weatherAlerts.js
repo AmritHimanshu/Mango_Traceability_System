@@ -13,7 +13,11 @@ function getFarmCenter(geoFenceData) {
 };
 
 function checkCustomAlerts(weatherData) {
-    const tempCelsius = (weatherData.main.temp - 273.15).toFixed(2);
+    let tempCelsius;
+    tempCelsius = (weatherData.main.temp - 273.15).toFixed(2);
+    if (tempCelsius <= 0) {
+        tempCelsius = weatherData.main.temp;
+    }
     const weatherConditions = weatherData.weather.map(w => w.main.toLowerCase());
 
     const alert = {
@@ -38,7 +42,8 @@ function format_forecast_weather(forecastList) {
         const localTime = localDate.toISOString().split('T')[1].split('.')[0];
 
         if (localTime === '11:30:00') {
-            dailyForecast[date] = localTime;
+            const alert = checkCustomAlerts(item);
+            dailyForecast[date] = alert;
         }
     });
 
@@ -65,11 +70,11 @@ async function fetchWeather(lat, lon) {
         }
 
         const data_current = await response_current.json();
-        const data_forecast = await response_forecast.json();
+        const data = await response_forecast.json();
 
-        const d = format_forecast_weather(data_forecast.list);
+        const data_forecast = format_forecast_weather(data.list);
 
-        return data_current;
+        return { currentWeatherData: data_current, forecastWeatherData: data_forecast };
     } catch (err) {
         console.error('Failed to fetch weather data:', err.message);
         return null;
@@ -149,17 +154,20 @@ const sendInstantWeatherAlertToUser = async (userId) => {
             if (!block || notifiedBlocks.has(block)) continue;
 
             const center = getFarmCenter(farm.geoFenceData);
-            const weatherData = await fetchWeather(center.lat, center.lng);
+            const { currentWeatherData, forecastWeatherData } = await fetchWeather(center.lat, center.lng);
 
-            const alert = checkCustomAlerts(weatherData, farm);
+            const alert = checkCustomAlerts(currentWeatherData, farm);
 
             userAlertsMap[userId].push({
                 block: block,
-                alerts: alert
+                currentAlert: alert,
+                forecastAlert: forecastWeatherData,
             });
 
             notifiedBlocks.add(block);
         }
+
+        console.log(userAlertsMap);
 
         for (const [userId, farmAlerts] of Object.entries(userAlertsMap)) {
             sendWeatherNotificationToUser(userId, farmAlerts, global.appInstance);
