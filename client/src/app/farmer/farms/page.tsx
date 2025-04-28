@@ -144,7 +144,7 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="h-[500px] md:h-[600px] xl:h-[400px] relative">
+      <div className="h-[50vh] relative">
         <Image
           src="/assets/lychee-fruit.jpg"
           alt="Lychee Fruit"
