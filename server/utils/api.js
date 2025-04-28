@@ -2,7 +2,8 @@ module.exports = {
     // External APIs
     RECAPTCHA_API: "https://www.google.com/recaptcha/api/siteverify",
     // OPENWEATHERMAP_API_FETCH_WEATHER: "https://api.openweathermap.org/data/2.5/forecast",
-    OPENWEATHERMAP_API_FETCH_WEATHER: "https://api.openweathermap.org/data/2.5/weather",
+    OPENWEATHERMAP_API_FETCH_CURRENT_WEATHER: "https://api.openweathermap.org/data/2.5/weather",
+    OPENWEATHERMAP_API_FETCH_FORECAST_WEATHER: "https://api.openweathermap.org/data/2.5/forecast",
     OPENCAGEDATA_API_FETCH_ADDRESS: "https://api.opencagedata.com/geocode/v1/json",
 
     // Common APIs

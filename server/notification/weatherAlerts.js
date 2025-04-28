@@ -1,5 +1,5 @@
 const { sendWeatherNotificationToUser } = require("../functions/socketManager");
-const { OPENWEATHERMAP_API_FETCH_WEATHER } = require("../utils/api");
+const { OPENWEATHERMAP_API_FETCH_CURRENT_WEATHER, OPENWEATHERMAP_API_FETCH_FORECAST_WEATHER } = require("../utils/api");
 
 const Farmer = require("../model/farmerSchema");
 
@@ -26,19 +26,50 @@ function checkCustomAlerts(weatherData) {
     return alert;
 };
 
+function format_forecast_weather(forecastList) {
+    const dailyForecast = {};
+
+    forecastList.forEach(item => {
+        const date = item.dt_txt.split(' ')[0];
+
+        const utcDate = new Date(item.dt * 1000);
+        const localDate = new Date(utcDate.getTime() + 5.5 * 60 * 60 * 1000);
+
+        const localTime = localDate.toISOString().split('T')[1].split('.')[0];
+
+        if (localTime === '11:30:00') {
+            dailyForecast[date] = localTime;
+        }
+    });
+
+    return dailyForecast;
+};
+
 async function fetchWeather(lat, lon) {
     const API_KEY = process.env.OPENWEATHER_API_KEY;
 
-    const url = `${OPENWEATHERMAP_API_FETCH_WEATHER}?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+    const url_current = `${OPENWEATHERMAP_API_FETCH_CURRENT_WEATHER}?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+
+    const url_forecast = `${OPENWEATHERMAP_API_FETCH_FORECAST_WEATHER}?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
 
     try {
-        const response = await fetch(url);
+        const response_current = await fetch(url_current);
+        const response_forecast = await fetch(url_forecast);
 
-        if (!response.ok) {
-            throw new Error(`Weather API error: ${response.status}`);
+        if (!response_current.ok) {
+            throw new Error(`Current Weather API error: ${response_current.status}`);
         }
-        const data = await response.json();
-        return data;
+
+        if (!response_forecast.ok) {
+            throw new Error(`Forecast Weather API error: ${response_forecast.status}`);
+        }
+
+        const data_current = await response_current.json();
+        const data_forecast = await response_forecast.json();
+
+        const d = format_forecast_weather(data_forecast.list);
+
+        return data_current;
     } catch (err) {
         console.error('Failed to fetch weather data:', err.message);
         return null;
