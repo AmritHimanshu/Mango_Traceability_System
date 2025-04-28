@@ -97,7 +97,7 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="h-[500px] md:h-[600px] xl:h-[600px] relative">
+      <div className="h-[60vh] relative">
         <video
           autoPlay
           loop
