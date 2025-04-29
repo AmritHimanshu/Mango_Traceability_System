@@ -34,6 +34,11 @@ function page() {
   const [landmark, setLandmark] = useState("");
   const [varietyName, setVarietyName] = useState("");
 
+  const [farmNameError, setFarmNameError] = useState("");
+  const [cropNameError, setCropNameError] = useState("");
+  const [landmarkError, setLandmarkError] = useState("");
+  const [varietyNameError, setVarietyNameError] = useState("");
+
   const calculateAreaOfLand = (coordinates: [number, number][]) => {
     if (coordinates.length < 3) {
       setMessage({ text: "Select minimum three coordinates", type: "error" });
@@ -51,10 +56,34 @@ function page() {
   };
 
   const handlesubmitForm = async (coordinates: [number, number][]) => {
-    if (!farmName || !cropName || !landmark || !varietyName) {
-      setMessage({ text: "Fill all the form", type: "error" });
-      return;
+    setFarmNameError("");
+    setCropNameError("");
+    setLandmarkError("");
+    setVarietyNameError("");
+
+    let hasError = false;
+
+    if (!farmName) {
+      setFarmNameError("Farm name is required.");
+      hasError = true;
     }
+
+    if (!cropName) {
+      setCropNameError("Crop name is required.");
+      hasError = true;
+    }
+
+    if (!landmark) {
+      setLandmarkError("Landmark is required.");
+      hasError = true;
+    }
+
+    if (!varietyName) {
+      setVarietyNameError("Variety is required.");
+      hasError = true;
+    }
+
+    if (hasError) return;
 
     if (coordinates.length < 3) {
       setMessage({ text: "Select minimum three coordinates", type: "error" });
@@ -157,6 +186,9 @@ function page() {
                 required
                 onChange={(e) => setFarmName(e.target.value)}
               />
+              {farmNameError && (
+                <p className="text-red-600 text-sm">{farmNameError}</p>
+              )}
             </div>
 
             <div className="space-y-2 w-[100%]">
@@ -174,6 +206,9 @@ function page() {
                 <option value="Mango">Mango</option>
                 {/* <option value="Lichi">Lichi</option> */}
               </select>
+              {cropNameError && (
+                <p className="text-red-600 text-sm">{cropNameError}</p>
+              )}
             </div>
 
             <div className="space-y-2 w-[100%]">
@@ -189,6 +224,9 @@ function page() {
                 required
                 onChange={(e) => setLandmark(e.target.value)}
               />
+              {landmarkError && (
+                <p className="text-red-600 text-sm">{landmarkError}</p>
+              )}
             </div>
 
             <div className="space-y-2 w-[100%]">
@@ -206,6 +244,9 @@ function page() {
                 <option value="Mango variety">Mango Variety</option>
                 <option value="Lichi variety">Lichi Variety</option>
               </select>
+              {varietyNameError && (
+                <p className="text-red-600 text-sm">{varietyNameError}</p>
+              )}
             </div>
           </div>
 
