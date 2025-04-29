@@ -162,7 +162,7 @@ function page() {
                             </div>
                             <div>
                               <span>{weatherData.temperature}&deg;</span>
-                              <span>c</span>
+                              <span>{" "}c</span>
                             </div>
                           </div>
                           <div className="capitalize">
