@@ -16,7 +16,7 @@ function checkCustomAlerts(weatherData) {
     let tempCelsius;
     tempCelsius = (weatherData.main.temp - 273.15).toFixed(2);
     if (tempCelsius <= 0) {
-        tempCelsius = weatherData.main.temp;
+        tempCelsius = weatherData.main.temp.toFixed(2);
     }
     const weatherConditions = weatherData.weather.map(w => w.main.toLowerCase());
 
@@ -35,13 +35,12 @@ function format_forecast_weather(forecastList) {
 
     forecastList.forEach(item => {
         const date = item.dt_txt.split(' ')[0];
+        const time = item.dt_txt.split(' ')[1];
 
-        const utcDate = new Date(item.dt * 1000);
-        const localDate = new Date(utcDate.getTime() + 5.5 * 60 * 60 * 1000);
+        const todayLocalDate = new Date();
+        const todayDateString = todayLocalDate.toISOString().split('T')[0];
 
-        const localTime = localDate.toISOString().split('T')[1].split('.')[0];
-
-        if (localTime === '11:30:00') {
+        if (date > todayDateString && time === '06:00:00') {
             const alert = checkCustomAlerts(item);
             dailyForecast[date] = alert;
         }
@@ -166,8 +165,6 @@ const sendInstantWeatherAlertToUser = async (userId) => {
 
             notifiedBlocks.add(block);
         }
-
-        console.log(userAlertsMap);
 
         for (const [userId, farmAlerts] of Object.entries(userAlertsMap)) {
             sendWeatherNotificationToUser(userId, farmAlerts, global.appInstance);

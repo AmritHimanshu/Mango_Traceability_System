@@ -36,7 +36,6 @@ function page() {
 
   useEffect(() => {
     const handleWeatherNotification = (data: notification) => {
-      console.log(data);
       setNotifications([data]);
     };
 
@@ -60,7 +59,7 @@ function page() {
         <Message text={message.text} type={message.type} />
       )}
 
-      <div className="my-3 w-full xl:max-w-[50%] m-auto p-2 space-y-10 text-black">
+      <div className="my-3 w-full lg:max-w-[70%] xl:max-w-[70%] m-auto p-2 space-y-10 text-black">
         <div className="text-center border-b-[1px] border-black p-2 font-semibold">
           {currentDate.toDateString()}
         </div>
@@ -68,63 +67,111 @@ function page() {
         <div className="space-y-10">
           {notifications.length > 0 ? (
             notifications[0].farmAlerts?.map((notification, index) => (
-              <div key={index} className="bg-white p-3 space-y-10 shadow-lg">
-                <div className="flex items-center justify-between py-2 border-b-[1px] border-black">
-                  <div>Current Weather</div>
-                  <div className="font-semibold">{notification.block}</div>
-                  <div>
-                    {currentDate.toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: true,
-                    })}
+              <div key={index} className="bg-white p-3 shadow-lg space-y-5">
+                <div className="space-y-10">
+                  <div className="flex items-center justify-between py-2 border-b-[1px] border-black">
+                    <div>Current Weather</div>
+                    <div className="font-semibold">{notification.block}</div>
+                    <div>
+                      {currentDate.toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col md:flex-row space-y-5 md:space-y-0">
+                    <div className="space-y-5 w-full md:w-[50%]">
+                      <div className="flex items-center space-x-2">
+                        {notification.currentAlert.weather === "clouds" ? (
+                          <CloudIcon sx={{ color: "gray", fontSize: "50px" }} />
+                        ) : notification.currentAlert.weather ===
+                          "thunderstorm" ? (
+                          <ThunderstormIcon
+                            sx={{ color: "gray", fontSize: "50px" }}
+                          />
+                        ) : notification.currentAlert.weather === "rain" ? (
+                          <ThunderstormIcon
+                            sx={{ color: "gray", fontSize: "50px" }}
+                          />
+                        ) : (
+                          <WbSunnyOutlinedIcon
+                            sx={{ color: "orange", fontSize: "50px" }}
+                          />
+                        )}
+
+                        <div>
+                          <span className="text-[20px] md:text-[30px] xl:text-[40px]">
+                            {notification.currentAlert.temperature}&deg;
+                          </span>
+                          <span>C</span>
+                        </div>
+                      </div>
+                      <div className="text-18px]">
+                        Condition:{" "}
+                        <span className="capitalize">
+                          {notification.currentAlert.weather}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="w-full md:w-[50%]">
+                      <div className="flex justify-between py-2 border-b-[1px]">
+                        <span>Wind</span>
+                        <span>{notification.currentAlert.wind}</span>
+                      </div>
+                      <div className="flex justify-between py-2 border-b-[1px]">
+                        <span>Humidity</span>
+                        <span>{notification.currentAlert.humidity}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0">
-                  <div className="space-y-5 w-full md:w-[50%]">
-                    <div className="flex items-center space-x-2">
-                      {notification.currentAlert.weather === "clouds" ? (
-                        <CloudIcon sx={{ color: "gray", fontSize: "50px" }} />
-                      ) : notification.currentAlert.weather === "thunderstorm" ? (
-                        <ThunderstormIcon
-                          sx={{ color: "gray", fontSize: "50px" }}
-                        />
-                      ) : notification.currentAlert.weather === "rain" ? (
-                        <ThunderstormIcon
-                          sx={{ color: "gray", fontSize: "50px" }}
-                        />
-                      ) : (
-                        <WbSunnyOutlinedIcon
-                          sx={{ color: "orange", fontSize: "50px" }}
-                        />
-                      )}
+                <hr />
 
-                      <div>
-                        <span className="text-[40px]">
-                          {notification.currentAlert.temperature}&deg;
-                        </span>
-                        <span>C</span>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 text-sm">
+                  {Object.entries(notification.forecastAlert).map(
+                    ([date, weatherData], index) => (
+                      <div
+                        key={index}
+                        className="space-y-3 bg-customGreen bg-opacity-35 p-2"
+                      >
+                        <div className="text-center text-black">{date}</div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex space-x-2">
+                            <div>
+                              {weatherData.weather === "clouds" ? (
+                                <CloudIcon
+                                  sx={{ color: "white", fontSize: "20px" }}
+                                />
+                              ) : weatherData.weather === "thunderstorm" ? (
+                                <ThunderstormIcon
+                                  sx={{ color: "gray", fontSize: "20px" }}
+                                />
+                              ) : weatherData.weather === "rain" ? (
+                                <ThunderstormIcon
+                                  sx={{ color: "gray", fontSize: "20px" }}
+                                />
+                              ) : (
+                                <WbSunnyOutlinedIcon
+                                  sx={{ color: "orange", fontSize: "20px" }}
+                                />
+                              )}
+                            </div>
+                            <div>
+                              <span>{weatherData.temperature}&deg;</span>
+                              <span>c</span>
+                            </div>
+                          </div>
+                          <div className="capitalize">
+                            {weatherData.weather}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-18px]">
-                      Condition:{" "}
-                      <span className="capitalize">
-                        {notification.currentAlert.weather}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="w-full md:w-[50%]">
-                    <div className="flex justify-between py-2 border-b-[1px]">
-                      <span>Wind</span>
-                      <span>{notification.currentAlert.wind}</span>
-                    </div>
-                    <div className="flex justify-between py-2 border-b-[1px]">
-                      <span>Humidity</span>
-                      <span>{notification.currentAlert.humidity}</span>
-                    </div>
-                  </div>
+                    )
+                  )}
                 </div>
               </div>
             ))

@@ -151,15 +151,20 @@ export type bannerProps = {
   description: string | undefined;
 };
 
+interface WeatherData {
+  temperature: string;
+  weather: string;
+  wind: number;
+  humidity: number;
+}
+
 export type notification = {
   userUniqueId: string;
   farmAlerts: {
     block: string;
-    currentAlert: {
-      temperature: string;
-      weather: string;
-      wind: number;
-      humidity: number;
+    currentAlert: WeatherData;
+    forecastAlert: {
+      [date: string]: WeatherData;
     };
   }[];
   createdAt: string;
