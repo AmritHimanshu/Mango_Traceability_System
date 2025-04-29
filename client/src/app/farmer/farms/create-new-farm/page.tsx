@@ -241,8 +241,12 @@ function page() {
                 onChange={(e) => setVarietyName(e.target.value)}
               >
                 <option value="">Select variety</option>
-                <option value="Mango variety">Mango Variety</option>
-                <option value="Lichi variety">Lichi Variety</option>
+                <option value="Jardalu">Jardalu</option>
+                <option value="Malda">Malda</option>
+                <option value="Gulabkhash">Gulabkhash</option>
+                <option value="Dasheri">Dasheri</option>
+                <option value="Amrapali">Amrapali</option>
+                <option value="Chausa">Chausa</option>
               </select>
               {varietyNameError && (
                 <p className="text-red-600 text-sm">{varietyNameError}</p>
