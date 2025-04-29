@@ -6,9 +6,9 @@ const Farmer = require('../../model/farmerSchema');
 
 router.post(FARMER_NEW_FARM, async (req, res) => {
     try {
-        const { farmName, cropName, landmark, coordinates, area } = req.body;
+        const { farmName, cropName, landmark, varietyName, coordinates, area } = req.body;
 
-        if (!farmName || !cropName || !landmark || !coordinates || !area) {
+        if (!farmName || !cropName || !landmark || !varietyName || !coordinates || !area) {
             return res.status(400).json({ error: "Fill all the fields" });
         }
 
@@ -20,6 +20,7 @@ router.post(FARMER_NEW_FARM, async (req, res) => {
             userUniqueId: req.rootUser.uniqueID,
             farm: farmName,
             crop: cropName,
+            variety: varietyName,
             landmark: landmark,
             geoFenceData: coordinates.map(coord => ({
                 lat: coord[0],

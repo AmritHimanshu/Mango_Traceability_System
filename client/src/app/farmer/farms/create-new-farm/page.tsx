@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "@/app/components/common/loadingBar/CustomLoadingBar";
 import { FARMER_NEW_FARM } from "@/utils/Apis/api";
@@ -33,6 +32,7 @@ function page() {
   const [farmName, setFarmName] = useState("");
   const [cropName, setCropName] = useState("");
   const [landmark, setLandmark] = useState("");
+  const [varietyName, setVarietyName] = useState("");
 
   const calculateAreaOfLand = (coordinates: [number, number][]) => {
     if (coordinates.length < 3) {
@@ -51,17 +51,21 @@ function page() {
   };
 
   const handlesubmitForm = async (coordinates: [number, number][]) => {
-    if (!farmName || !cropName || !landmark) {
+    if (!farmName || !cropName || !landmark || !varietyName) {
       setMessage({ text: "Fill all the form", type: "error" });
+      return;
     }
+
     if (coordinates.length < 3) {
       setMessage({ text: "Select minimum three coordinates", type: "error" });
+      return;
     }
 
     const area = calculateAreaOfLand(coordinates);
 
     if (!area) {
       setMessage({ text: "Select minimum three coordinates", type: "error" });
+      return;
     }
 
     if (loadingBarRef.current) {
@@ -79,6 +83,7 @@ function page() {
           farmName,
           cropName,
           landmark,
+          varietyName,
           coordinates,
           area,
         }),
@@ -167,7 +172,7 @@ function page() {
               >
                 <option value="">Select crop</option>
                 <option value="Mango">Mango</option>
-                <option value="Lichi">Lichi</option>
+                {/* <option value="Lichi">Lichi</option> */}
               </select>
             </div>
 
@@ -184,6 +189,23 @@ function page() {
                 required
                 onChange={(e) => setLandmark(e.target.value)}
               />
+            </div>
+
+            <div className="space-y-2 w-[100%]">
+              <label htmlFor="varietyName">
+                Variety of the crop <span className="text-red-600">*</span>
+              </label>
+              <select
+                name="varietyName"
+                id="varietyName"
+                value={varietyName}
+                className="input-tag"
+                onChange={(e) => setVarietyName(e.target.value)}
+              >
+                <option value="">Select variety</option>
+                <option value="Mango variety">Mango Variety</option>
+                <option value="Lichi variety">Lichi Variety</option>
+              </select>
             </div>
           </div>
 

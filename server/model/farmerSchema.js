@@ -35,6 +35,9 @@ const farmerSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        variety: {
+            type: String,
+        },
         landmark: {
             type: String,
             required: true

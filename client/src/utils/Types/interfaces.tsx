@@ -57,6 +57,7 @@ export type Farm = {
   geoFenceData: { lat: number; lng: number }[];
   area: number;
   crop: string;
+  variety: string;
   landmark: string;
   ploughingDate: string;
   weedingDate: string[];

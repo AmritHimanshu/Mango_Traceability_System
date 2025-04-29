@@ -160,12 +160,10 @@ function page() {
                 </div>
               )}
 
-              {farmData.landmark && (
+              {farmData.variety && (
                 <div className="flex items-start space-x-3">
-                  <div className="font-bold text-title-size">Landmark:</div>
-                  <div className="text-description-size">
-                    {farmData.landmark}
-                  </div>
+                  <div className="font-bold text-title-size">Variety Name:</div>
+                  <div className="text-description-size">{farmData.variety}</div>
                 </div>
               )}
             </div>
@@ -179,6 +177,15 @@ function page() {
                   <div className="font-bold text-title-size">Area:</div>
                   <div className="text-description-size">
                     {farmData.area.toFixed(2)} sq. m
+                  </div>
+                </div>
+              )}
+
+              {farmData.landmark && (
+                <div className="flex items-start space-x-3">
+                  <div className="font-bold text-title-size">Landmark:</div>
+                  <div className="text-description-size">
+                    {farmData.landmark}
                   </div>
                 </div>
               )}

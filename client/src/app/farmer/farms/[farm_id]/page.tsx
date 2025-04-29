@@ -179,6 +179,15 @@ function page() {
                     <div className="text-description-size">{farm.crop}</div>
                   </div>
                 )}
+
+                {farm.variety && (
+                  <div className="flex items-start space-x-3">
+                    <div className="font-bold text-title-size">
+                      Variety Name:
+                    </div>
+                    <div className="text-description-size">{farm.variety}</div>
+                  </div>
+                )}
               </div>
               <div>
                 <div className="flex items-center space-x-3">
