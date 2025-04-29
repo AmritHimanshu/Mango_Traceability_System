@@ -59,7 +59,7 @@
 }
 
 .text-table-head-size{
-    @apply text-sm md:text-base xl:text-lg
+    @apply text-sm md:text-base
 }
 
 .text-table-body-size{

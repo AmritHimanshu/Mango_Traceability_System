@@ -21,7 +21,7 @@ function Table_List({ users, idxCalc }: { users: User[]; idxCalc: number }) {
         <div className="w-full overflow-x-auto">
           <table className="min-w-[1000px] w-full table-fixed">
             <thead>
-              <tr className="font-bold bg-customGreen text-white text-table-head-size">
+              <tr className="bg-customGreen text-white text-table-head-size">
                 <td className="px-4 py-3 text-left w-[100px]">S. No.</td>
                 <td className="px-4 py-3 text-left">ID</td>
                 <td className="px-4 py-3 text-left">Name</td>
