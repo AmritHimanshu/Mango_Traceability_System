@@ -33,7 +33,7 @@ function page() {
     geoFenceData: [{ lat: 0, lng: 0 }],
     ploughingDate: "",
     weedingDate: [],
-    sowingDate: "",
+    plantingDate: "",
     floweringDate: "",
     pheromoneTrapDate: "",
     lureChangeDate: "",
@@ -284,19 +284,19 @@ function page() {
             />
           </div>
 
-          {!farm?.sowingDate && (
+          {!farm?.plantingDate && (
             <div className="flex items-start flex-col">
-              <label htmlFor="sowingDate" className="font-bold">
-                Sowing Date:
+              <label htmlFor="plantingDate" className="font-bold">
+                Planting Date:
               </label>
               <input
                 type="date"
-                id="sowingDate"
-                name="sowingDate"
+                id="plantingDate"
+                name="plantingDate"
                 max={new Date().toISOString().split("T")[0]}
                 value={
-                  farmData.sowingDate
-                    ? new Date(farmData.sowingDate).toISOString().split("T")[0]
+                  farmData.plantingDate
+                    ? new Date(farmData.plantingDate).toISOString().split("T")[0]
                     : ""
                 }
                 className="input-tag"

@@ -191,7 +191,7 @@ function page() {
                 <thead>
                   <tr className="table-head-tr text-table-head-size">
                     <th>Ploughing Date</th>
-                    <th>Sowing Date</th>
+                    <th>Planting Date</th>
                     <th>Flowering Date:</th>
                     <th>Pheromone Trap Date</th>
                     <th>Lure Change Date</th>
@@ -213,10 +213,10 @@ function page() {
                       )}
                     </td>
                     <td className="table-body-tr-td">
-                      {farmData?.sowingDate ? (
+                      {farmData?.plantingDate ? (
                         <>
                           {
-                            new Date(farmData.sowingDate)
+                            new Date(farmData.plantingDate)
                               .toISOString()
                               .split("T")[0]
                           }

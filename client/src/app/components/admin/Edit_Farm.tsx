@@ -316,7 +316,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
           />
         );
       case "ploughingDate":
-      case "sowingDate":
+      case "plantingDate":
       case "floweringDate":
       case "pheromoneTrapDate":
       case "lureChangeDate":
@@ -575,7 +575,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
             <option value="farm">Farm Name</option>
             <option value="crop">Crop Name</option>
             <option value="ploughingDate">Ploughing Date</option>
-            <option value="sowingDate">Sowing Date</option>
+            <option value="plantingDate">Planting Date</option>
             <option value="floweringDate">Flowering Date</option>
             <option value="pheromoneTrapDate">Pheromone Trap Date</option>
             <option value="lureChangeDate">Lure Change Date</option>

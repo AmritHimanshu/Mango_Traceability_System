@@ -60,7 +60,7 @@ export type Farm = {
   landmark: string;
   ploughingDate: string;
   weedingDate: string[];
-  sowingDate: string;
+  plantingDate: string;
   floweringDate: string;
   pheromoneTrapDate: string;
   lureChangeDate: string;

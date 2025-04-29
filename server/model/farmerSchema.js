@@ -47,7 +47,7 @@ const farmerSchema = new mongoose.Schema(
                 type: Date
             },
         ],
-        sowingDate: {
+        plantingDate: {
             type: Date
         },
         floweringDate: {
