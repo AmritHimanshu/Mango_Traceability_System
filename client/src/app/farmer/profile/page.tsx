@@ -11,7 +11,7 @@ function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   const userState = useAppSelector((state) => state.user.userState);
-  // console.log(userState);
+  console.log(userState);
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
 
