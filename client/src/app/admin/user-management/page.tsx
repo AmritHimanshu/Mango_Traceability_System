@@ -135,7 +135,7 @@ function page() {
       <Banner
         img_src="/assets/manager_image.jpeg"
         img_alt="Manager"
-        heading="Manager Management"
+        heading="User Management"
         description=""
       />
 
