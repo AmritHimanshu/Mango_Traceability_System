@@ -28,15 +28,13 @@ export default function RootLayout({
   }, []);
 
   return (
-    <ReduxProvider>
       <html lang="en">
         <body
           className={`${nunito.className} antialiased bg-white`}
         >
           <SocketInitializer />
-          {children}
+          <ReduxProvider>{children}</ReduxProvider>
         </body>
       </html>
-    </ReduxProvider>
   );
 }
