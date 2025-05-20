@@ -69,6 +69,7 @@ router.get(ADMIN_SEARCH_USER_MANAGEMENT, async (req, res) => {
 
     const query = {
         isAuthenticated: true,
+        isRejected: false,
     };
 
     if (role && role !== "All") {
@@ -87,7 +88,7 @@ router.get(ADMIN_SEARCH_USER_MANAGEMENT, async (req, res) => {
     }
 
     try {
-        const users = await User.find(query).skip((page - 1) * limit).limit(Number(limit));
+        const users = await User.find(query).select("-password -tokens -updatedAt").skip((page - 1) * limit).limit(Number(limit));
 
         const totalUsers = await User.countDocuments(query);
         const totalPages = Math.ceil(totalUsers / limit);
