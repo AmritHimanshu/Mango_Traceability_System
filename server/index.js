@@ -8,7 +8,6 @@ const { Server } = require('socket.io');
 
 const server = http.createServer(app);
 
-const cron = require('node-cron');
 const { runWeatherAlertJob, sendInstantWeatherAlertToUser } = require('./notification/weatherAlerts.js');
 
 const authenticateAdmin = require('./middleware/authenticateAdmin');
@@ -105,11 +104,6 @@ app.use('/farmer', authenticateFarmer, farmerPutRoutes);
 app.use('/farmer', authenticateFarmer, farmerDeleteRoutes);
 
 app.use(routes);
-
-// cron.schedule('* * * * *', () => {
-//     console.log('🌤️ Running weather alert job...');
-//     runWeatherAlertJob();
-// });
 
 server.listen(PORT, () => {
     console.log(`🚀 Server running on ports ${PORT}`);
