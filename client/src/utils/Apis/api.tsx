@@ -1,19 +1,19 @@
 // Common APIs
-export const REGISTER_USER = "api/register-user";
-export const SIGNIN_USER = "api/signin-user";
-export const LOGOUT_USER = "api/logout";
-export const SEND_OTP_EMAIL = "api/send-otp-email";
-export const SEND_OTP_EMAIL_WITHOUTCAPTCHA = "api/send-otp-email-withoutCaptcha";
-export const SEND_OTP_PHONE = "api/send-otp-phone";
-export const SEND_OTP_PHONE_WITHOUTCAPTCHA = "api/send-otp-phone-withoutCaptcha";
-export const VERIFY_OTP_EMAIL = "api/verify-otp-email";
-export const VERIFY_OTP_PHONE = "api/verify-otp-phone";
-export const FORGOT_SEND_OTP_EMAIL = "api/forgot-password/send-otp-email";
-export const UPDATE_PASSWORD = "api/update-password";
-export const CERTIFICATE_FARM_DETAIL = "api/certificate-farm-detail";
-export const GENERATE_PDF = "api/generate-pdf";
-export const CONTACT_US_MAIL = "api/contact-us-mail";
-export const GET_NOTIFICATION = "api/get-notification";
+export const REGISTER_USER = "common/api/register-user";
+export const SIGNIN_USER = "common/api/signin-user";
+export const LOGOUT_USER = "common/api/logout";
+export const SEND_OTP_EMAIL = "common/api/send-otp-email";
+export const SEND_OTP_EMAIL_WITHOUTCAPTCHA = "common/api/send-otp-email-withoutCaptcha";
+export const SEND_OTP_PHONE = "common/api/send-otp-phone";
+export const SEND_OTP_PHONE_WITHOUTCAPTCHA = "common/api/send-otp-phone-withoutCaptcha";
+export const VERIFY_OTP_EMAIL = "common/api/verify-otp-email";
+export const VERIFY_OTP_PHONE = "common/api/verify-otp-phone";
+export const FORGOT_SEND_OTP_EMAIL = "common/api/forgot-password/send-otp-email";
+export const UPDATE_PASSWORD = "common/api/update-password";
+export const CERTIFICATE_FARM_DETAIL = "common/api/certificate-farm-detail";
+export const GENERATE_PDF = "common/api/generate-pdf";
+export const CONTACT_US_MAIL = "common/api/contact-us-mail";
+export const GET_NOTIFICATION = "common/api/get-notification";
 
 // Admin GET APIs
 export const ADMIN_FEW_PENDING_REQUESTS = "admin/api/few-pending-requests";

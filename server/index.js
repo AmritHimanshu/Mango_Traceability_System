@@ -12,7 +12,7 @@ const { runWeatherAlertJob, sendInstantWeatherAlertToUser } = require('./notific
 
 const authenticateAdmin = require('./middleware/authenticateAdmin');
 const authenticateFarmer = require('./middleware/authenticateFarmer');
-const routes = require('./router/common/routes');
+const commonRoutes = require('./router/common/routes');
 const adminGetRoutes = require('./router/admin/getRoutes');
 const adminPutRoutes = require('./router/admin/putRoutes');
 const adminDeleteRoutes = require('./router/admin/deleteRoutes');
@@ -103,7 +103,7 @@ app.use('/farmer', authenticateFarmer, farmerPostRoutes);
 app.use('/farmer', authenticateFarmer, farmerPutRoutes);
 app.use('/farmer', authenticateFarmer, farmerDeleteRoutes);
 
-app.use(routes);
+app.use('/common', commonRoutes);
 
 server.listen(PORT, () => {
     console.log(`🚀 Server running on ports ${PORT}`);
