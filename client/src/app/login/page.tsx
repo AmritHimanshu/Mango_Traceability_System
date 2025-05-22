@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { setUserState } from "@/store/features/userSlice";
-import { useAppDispatch } from "@/store/store";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../components/common/loadingBar/CustomLoadingBar";
 import { LOGOUT_USER, SIGNIN_USER } from "@/utils/Apis/api";
@@ -17,6 +17,8 @@ import CustomCaptcha from "@/utils/Services/cutomCaptcha/CustomCaptcha";
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
   const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
+  const userState = useAppSelector((state) => state.user.userState);
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
 
@@ -46,14 +48,13 @@ function page() {
       const data = await res.json();
 
       if (res.status !== 201) {
+        setMessage({ text: `${data.error}`, type: "error" });
         const error = new Error(data.error);
         throw error;
       }
 
       dispatch(setUserState(null));
-    } catch (error) {
-      setMessage({ text: `${error}`, type: "error" });
-    }
+    } catch (error) {}
 
     setTimeout(() => {
       setMessage({ text: "", type: "" });
@@ -61,7 +62,9 @@ function page() {
   };
 
   useEffect(() => {
-    logOut();
+    if (userState) {
+      logOut();
+    }
 
     const welcomeShown = localStorage.getItem("welcomeShown");
 

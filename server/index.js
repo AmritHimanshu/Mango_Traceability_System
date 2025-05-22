@@ -5,10 +5,33 @@ const dotenv = require('dotenv');
 const cookieParser = require("cookie-parser");
 const http = require('http');
 const { Server } = require('socket.io');
+const rateLimit = require('express-rate-limit');
 
 const server = http.createServer(app);
 
 const { runWeatherAlertJob, sendInstantWeatherAlertToUser } = require('./notification/weatherAlerts.js');
+
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 10,
+    handler: (req, res, next, options) => {
+        res.status(options.statusCode).json({
+            success: false,
+            error: 'Too many attempts. Please wait 15 minutes before trying again.'
+        });
+    }
+});
+
+const sensitiveLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 50,
+    handler: (req, res, next, options) => {
+        res.status(options.statusCode).json({
+            success: false,
+            error: 'Too many requests, slow down please.'
+        });
+    }
+});
 
 const authenticateAdmin = require('./middleware/authenticateAdmin');
 const authenticateFarmer = require('./middleware/authenticateFarmer');
@@ -95,15 +118,15 @@ app.set('io', io);
 app.set('connectedUsers', connectedUsers);
 
 app.use('/admin', authenticateAdmin, adminGetRoutes);
-app.use('/admin', authenticateAdmin, adminPutRoutes);
-app.use('/admin', authenticateAdmin, adminDeleteRoutes);
+app.use('/admin', sensitiveLimiter, authenticateAdmin, adminPutRoutes);
+app.use('/admin', sensitiveLimiter, authenticateAdmin, adminDeleteRoutes);
 
 app.use('/farmer', authenticateFarmer, farmerGetRoutes);
-app.use('/farmer', authenticateFarmer, farmerPostRoutes);
-app.use('/farmer', authenticateFarmer, farmerPutRoutes);
-app.use('/farmer', authenticateFarmer, farmerDeleteRoutes);
+app.use('/farmer', sensitiveLimiter, authenticateFarmer, farmerPostRoutes);
+app.use('/farmer', sensitiveLimiter, authenticateFarmer, farmerPutRoutes);
+app.use('/farmer', sensitiveLimiter, authenticateFarmer, farmerDeleteRoutes);
 
-app.use('/common', commonRoutes);
+app.use('/common', authLimiter, commonRoutes);
 
 server.listen(PORT, () => {
     console.log(`🚀 Server running on ports ${PORT}`);
