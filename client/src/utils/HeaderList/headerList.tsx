@@ -9,7 +9,7 @@ import {
   ADMIN_PROFILE,
   FARMER_PROFILE,
   WEATHER_REPORT,
-} from "../../../../../utils/Paths/paths";
+} from "@/utils/Paths/paths";
 
 export const admin = [
   {

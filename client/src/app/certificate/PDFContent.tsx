@@ -60,8 +60,8 @@ function PDFContent({
                     : " - "}
                 </TD>
                 <TD style={styles.tableBodyData}>
-                  {farmData?.sowingDate
-                    ? new Date(farmData.sowingDate).toISOString().split("T")[0]
+                  {farmData?.plantingDate
+                    ? new Date(farmData.plantingDate).toISOString().split("T")[0]
                     : " - "}
                 </TD>
                 <TD style={styles.tableBodyData}>

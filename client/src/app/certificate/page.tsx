@@ -151,11 +151,11 @@ function page() {
                 </div>
               )}
 
-              {farmData.sowingDate && (
+              {farmData.plantingDate && (
                 <div className="flex items-start space-x-3">
                   <div className="font-bold">Sowing Date:</div>
                   <div>
-                    {new Date(farmData.sowingDate).toISOString().split("T")[0]}
+                    {new Date(farmData.plantingDate).toISOString().split("T")[0]}
                   </div>
                 </div>
               )}
