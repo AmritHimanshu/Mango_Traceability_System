@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/store/store";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setUserState } from "@/store/features/userSlice";
 import { LoadingBarRef } from "react-top-loading-bar";
 import CustomLoadingBar from "../components/common/loadingBar/CustomLoadingBar";
@@ -30,6 +30,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 function page() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
   const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
+  const userState = useAppSelector((state) => state.user.userState);
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
 
@@ -142,7 +144,9 @@ function page() {
   };
 
   useEffect(() => {
-    logOut();
+    if (userState) {
+      logOut();
+    }
 
     const welcomeShown = localStorage.getItem("welcomeShown");
 
