@@ -313,28 +313,46 @@ function page() {
                 {parameter.status === false &&
                   "Are you sure, you want to reject this user?"}
                 {parameter.status === true &&
+                  parameter.role &&
                   `Are you sure, you want to assign role ${parameter.role} to this user?`}
+                {parameter.status === true &&
+                  !parameter.role &&
+                  `Please assign role to the user`}
               </div>
             </div>
             <div className="text-end text-[11px] md:text-lg space-x-2">
-              <button
-                className="custom-btn bg-red-600"
-                onClick={() => handleOnCancel()}
-              >
-                Cancel
-              </button>
-              <button
-                className="custom-btn bg-customGreen"
-                onClick={() =>
-                  authenticateReq(
-                    parameter.id,
-                    parameter.role,
-                    parameter.status
-                  )
-                }
-              >
-                Confirm
-              </button>
+              {parameter.status === false ||
+              (parameter.status === true && parameter.role) ? (
+                <>
+                  <button
+                    className="custom-btn bg-red-600"
+                    onClick={() => handleOnCancel()}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="custom-btn bg-customGreen"
+                    onClick={() =>
+                      authenticateReq(
+                        parameter.id,
+                        parameter.role,
+                        parameter.status
+                      )
+                    }
+                  >
+                    Confirm
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    className="custom-btn bg-red-600"
+                    onClick={() => setIsConfirm(false)}
+                  >
+                    OK
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
