@@ -119,11 +119,11 @@ function page() {
                     <div className="w-full md:w-[50%]">
                       <div className="flex justify-between py-2 border-b-[1px]">
                         <span>Wind</span>
-                        <span>{notification.currentAlert.wind}</span>
+                        <span>{notification.currentAlert.wind} km/h</span>
                       </div>
                       <div className="flex justify-between py-2 border-b-[1px]">
                         <span>Humidity</span>
-                        <span>{notification.currentAlert.humidity}</span>
+                        <span>{notification.currentAlert.humidity} %</span>
                       </div>
                     </div>
                   </div>
