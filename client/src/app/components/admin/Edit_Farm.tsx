@@ -150,6 +150,18 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
       return;
     }
 
+    if (!isArrayField && !isObjectField && !newSingleValue) {
+      setMessage({
+        text: "Please enter a value",
+        type: "error",
+      });
+
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 2000);
+      return;
+    }
+
     if (isObjectField && (!newMultiValue.date || !newMultiValue.yield)) {
       setMessage({
         text: "Please fill all fields for the harvest entry",
@@ -162,9 +174,9 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
       return;
     }
 
-    if (!isArrayField && !isObjectField && !newSingleValue) {
+    if (isArrayField && (!newMultiValue.date || !newMultiValue.yield)) {
       setMessage({
-        text: "Please enter a value",
+        text: "Please fill all fields",
         type: "error",
       });
 
@@ -332,10 +344,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
       case "weedingDate":
         return (
           <>
-            <select
-              className="input-tag"
-              onChange={handleIndexChange}
-            >
+            <select className="input-tag" onChange={handleIndexChange}>
               <option value="">Select a date to edit/delete</option>
               {farmData.weedingDate.map((date, index) => (
                 <option key={index} value={index}>
@@ -355,10 +364,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
       case "irrigationDates":
         return (
           <>
-            <select
-              className="input-tag"
-              onChange={handleSubFieldChange}
-            >
+            <select className="input-tag" onChange={handleSubFieldChange}>
               <option value="">Select a sub-field</option>
               <option value="artificial">Artificial</option>
               <option value="natural">Natural</option>
@@ -366,10 +372,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
 
             {selectedSubField && (
               <>
-                <select
-                  className="input-tag"
-                  onChange={handleIndexChange}
-                >
+                <select className="input-tag" onChange={handleIndexChange}>
                   <option value="">Select a date to edit</option>
                   {farmData.irrigationDates[
                     selectedSubField as keyof typeof farmData.irrigationDates
@@ -397,10 +400,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
       case "pesticideApplications":
         return (
           <>
-            <select
-              className="input-tag"
-              onChange={handleIndexChange}
-            >
+            <select className="input-tag" onChange={handleIndexChange}>
               <option value="">Select an entry to edit/delete</option>
               {farmData[selectedField].map((entry, index) => (
                 <option key={index} value={index}>
@@ -439,10 +439,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
       case "bagging":
         return (
           <>
-            <select
-              className="input-tag"
-              onChange={handleIndexChange}
-            >
+            <select className="input-tag" onChange={handleIndexChange}>
               <option value="">Select an entry to edit/delete</option>
               {farmData[selectedField].map((entry, index) => (
                 <option key={index} value={index}>
@@ -481,10 +478,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
       case "specialCare":
         return (
           <>
-            <select
-              className="input-tag"
-              onChange={handleIndexChange}
-            >
+            <select className="input-tag" onChange={handleIndexChange}>
               <option value="">Select an entry to edit/delete</option>
               {farmData[selectedField].map((entry, index) => (
                 <option key={index} value={index}>
@@ -567,10 +561,7 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
         </div>
         <div className="space-y-2">
           <label>Select Field:</label>
-          <select
-            className="input-tag"
-            onChange={handleFieldChange}
-          >
+          <select className="input-tag" onChange={handleFieldChange}>
             <option value="">Select a field</option>
             <option value="farm">Farm Name</option>
             <option value="crop">Crop Name</option>
@@ -601,17 +592,11 @@ function Edit_Farm({ onclick }: { onclick: (value: boolean) => void }) {
         )}
 
         <div className="flex items-center justify-between">
-          <button
-            className="custom-btn bg-red-600"
-            onClick={handleDelete}
-          >
+          <button className="custom-btn bg-red-600" onClick={handleDelete}>
             Delete
           </button>
 
-          <button
-            className="custom-btn bg-customGreen"
-            onClick={handleUpdate}
-          >
+          <button className="custom-btn bg-customGreen" onClick={handleUpdate}>
             Update
           </button>
         </div>
