@@ -1076,14 +1076,6 @@ git push origin feature/your-feature
 
 ---
 
-# 📄 License
-
-No explicit open-source license is specified in the project configuration.
-
-If this repository is intended to be publicly distributed, add an appropriate license before publishing it.
-
----
-
 # 👨‍💻 Project Highlights
 
 This project demonstrates practical implementation of:
