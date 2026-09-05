@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "@/store/store";
 import { useRouter } from "next/navigation";
 import { ADMIN_OVERVIEW, FARMER_OVERVIEW, LOGIN } from "@/utils/Paths/paths";
-import "../styles/style.css";
-import "leaflet/dist/leaflet.css";
 
 export default function Home() {
   const userState = useAppSelector((state) => state.user.userState);
