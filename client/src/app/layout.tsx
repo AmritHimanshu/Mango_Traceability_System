@@ -4,17 +4,9 @@ import ReduxProvider from "@/store/redux-provider";
 import { useEffect } from "react";
 import { Nunito } from "next/font/google";
 import SocketInitializer from "@/utils/Services/SocketInitializer";
-// CSS is handled by Next.js; it has no TypeScript module declaration.
-// @ts-expect-error -- intentional side-effect import for global styles
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
-// CSS is handled by Next.js; it has no TypeScript module declaration.
-// @ts-expect-error -- intentional side-effect import for global styles
 import "@fortawesome/fontawesome-free/css/all.min.css";
-// CSS is handled by Next.js; it has no TypeScript module declaration.
-// @ts-expect-error -- intentional side-effect import for global styles
 import "./globals.css";
-// CSS is handled by Next.js; it has no TypeScript module declaration.
-// @ts-expect-error -- intentional side-effect import for global styles
 import "../styles/style.css";
 
 const nunito = Nunito({
