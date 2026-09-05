@@ -1035,48 +1035,6 @@ Potential improvements include:
 
 ---
 
-# 🧪 Testing
-
-The current project contains basic Android unit/instrumentation test scaffolding.
-
-For a production-grade deployment, the testing strategy can be expanded to include:
-
-### Frontend
-
-- Component testing
-- Page testing
-- Form validation testing
-- Authentication-flow testing
-
-### Backend
-
-- API unit tests
-- Authentication tests
-- Authorization tests
-- Database integration tests
-- Weather-service tests
-- PDF-generation tests
-
-### End-to-End
-
-```text
-Registration
-     ↓
-Verification
-     ↓
-Authentication
-     ↓
-Farm Creation
-     ↓
-Farm Management
-     ↓
-Weather Monitoring
-     ↓
-Certificate Generation
-```
-
----
-
 # 🤝 Contribution
 
 Contributions are welcome.
