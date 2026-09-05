@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+// CSS is handled by Next.js; it has no TypeScript module declaration.
+// @ts-expect-error -- intentional side-effect import for global styles
 import "../../styles/style.css";
 import Login_Header from "../components/common/Header/Login_Header";
 
