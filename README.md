@@ -826,9 +826,7 @@ SECRET_KEY=<JWT_SECRET>
 EMAIL_ID=<EMAIL_ADDRESS>
 PASSWORD=<EMAIL_APP_PASSWORD>
 
-TWILIO_ACCOUNT_SID=<TWILIO_ACCOUNT_SID>
-TWILIO_AUTH_TOKEN=<TWILIO_AUTH_TOKEN>
-PHONE_NUMBER=<TWILIO_PHONE_NUMBER>
+RECAPTCHA_SECRET_KEY=6LceNOMqAAAAAKj1EMZvjxlkKa2_5EJnqjPEfc7C
 
 OPENWEATHER_API_KEY=<OPENWEATHER_API_KEY>
 
@@ -854,7 +852,7 @@ The project incorporates several security mechanisms:
 - JWT-based authentication
 - HTTP cookie-based token handling
 - Role-specific route middleware
-- Email and phone OTP verification
+- Email OTP verification
 - Google reCAPTCHA
 - Authentication rate limiting
 - Sensitive-operation rate limiting
@@ -1001,7 +999,6 @@ For production deployment:
 4. Configure external services such as:
    - OpenWeatherMap
    - OpenCage
-   - Twilio
    - Gmail/Nodemailer
    - Google reCAPTCHA
 5. Build and deploy the frontend.
